@@ -174,7 +174,7 @@
             </plugin>
 
             <!-- https://mvnrepository.com/artifact/io.github.git-commit-id/git-commit-id-maven-plugin -->
-            <plugin>
+            <!--<plugin>
                 <groupId>io.github.git-commit-id</groupId>
                 <artifactId>git-commit-id-maven-plugin</artifactId>
                 <version>5.0.0</version>
@@ -182,24 +182,24 @@
                     <execution>
                         <id>get-the-git-infos</id>
                         <goals>
-                            <!-- 父子项目必须添加 -->
+                            &lt;!&ndash; 父子项目必须添加 &ndash;&gt;
                             <goal>revision</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- 父子项目必须添加 -->
+                    &lt;!&ndash; 父子项目必须添加 &ndash;&gt;
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <offline>true</offline>
-                    <!-- 输出详细内容 -->
-                    <!--<verbose>true</verbose>-->
+                    &lt;!&ndash; 输出详细内容 &ndash;&gt;
+                    &lt;!&ndash;<verbose>true</verbose>&ndash;&gt;
                     <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
                     <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
                     <format>json</format>
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.json
                     </generateGitPropertiesFilename>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
         </plugins>
     </build>
