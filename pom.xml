@@ -27,10 +27,19 @@
         <!-- https://repo.spring.io/milestone -->
         <spring-boot.version>3.0.0-M2</spring-boot.version>
 
+        <!-- Spring Cloud 依赖 -->
+        <!-- https://repo.spring.io/milestone -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+        <spring-cloud.version>2022.0.0-M2</spring-cloud.version>
+
         <!-- 打包时跳过单元测试 -->
         <skipTests>true</skipTests>
 
     </properties>
+
+    <modules>
+        <module>gateway</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -39,6 +48,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Spring Cloud 依赖 -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
