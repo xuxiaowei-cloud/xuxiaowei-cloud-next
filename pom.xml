@@ -20,6 +20,9 @@
         <!-- https://repo.spring.io/milestone -->
         <spring-boot.version>3.0.0-M2</spring-boot.version>
 
+        <!-- 打包时跳过单元测试 -->
+        <skipTests>true</skipTests>
+
     </properties>
 
     <dependencyManagement>
