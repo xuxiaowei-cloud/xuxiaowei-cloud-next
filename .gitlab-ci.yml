@@ -12,5 +12,6 @@ image: maven:3.6.3-jdk-8
 
 sast:
   stage: test
+  image: maven:3.6.3-jdk-8
 include:
   - template: Security/SAST.gitlab-ci.yml
