@@ -1,6 +1,10 @@
 stages:
   - package
 
+cache:
+  paths:
+    - .m2/repository
+
 #
 # package
 package:
