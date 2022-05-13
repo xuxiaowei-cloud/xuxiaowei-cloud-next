@@ -6,6 +6,7 @@
     <groupId>cloud.xuxiaowei.next</groupId>
     <artifactId>xuxiaowei-cloud-starter-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <name>xuxiaowei-cloud-starter-parent</name>
     <description>xuxiaowei-cloud-starter-parent</description>
