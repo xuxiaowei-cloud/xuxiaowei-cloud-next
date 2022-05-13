@@ -141,7 +141,7 @@
 
             <!-- mvn lombok:delombok -->
             <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
-            <!--<plugin>
+            <plugin>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok-maven-plugin</artifactId>
                 <version>1.18.20.0</version>
@@ -159,7 +159,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
 
             <!-- mvn lombok:delombok -->
             <!-- mvn javadoc:jar deploy -->
