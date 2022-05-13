@@ -93,19 +93,93 @@
     </developers>
 
     <build>
+
+        <!-- mvn clean lombok:delombok -->
+        <!-- mvn source:jar javadoc:jar deploy -DskipTests -->
+
         <plugins>
+
+            <!-- mvn clean deploy -DskipTests -->
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+            </plugin>
+
+            <!-- mvn clean source:jar deploy -->
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+            </plugin>
+
+            <!-- mvn lombok:delombok -->
+            <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
+            <plugin>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok-maven-plugin</artifactId>
+                <version>1.18.20.0</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                    <encoding>UTF-8</encoding>
+                    <sourceDirectory>src/main/java</sourceDirectory>
+                    <outputDirectory>target/sources/delombok</outputDirectory>
+                    <addOutputDirectory>false</addOutputDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>delombok</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- mvn lombok:delombok -->
+            <!-- mvn javadoc:jar deploy -->
+            <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <sourcepath>target/sources/delombok</sourcepath>
+                    <encoding>UTF-8</encoding>
+                    <charset>UTF-8</charset>
+                    <docencoding>UTF-8</docencoding>
                 </configuration>
             </plugin>
+
+            <!-- https://mvnrepository.com/artifact/io.github.git-commit-id/git-commit-id-maven-plugin -->
+            <plugin>
+                <groupId>io.github.git-commit-id</groupId>
+                <artifactId>git-commit-id-maven-plugin</artifactId>
+                <version>5.0.0</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <!-- 父子项目必须添加 -->
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- 父子项目必须添加 -->
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <offline>true</offline>
+                    <!-- 输出详细内容 -->
+                    <!--<verbose>true</verbose>-->
+                    <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
+                    <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
+                    <format>json</format>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.json
+                    </generateGitPropertiesFilename>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
     <repositories>
