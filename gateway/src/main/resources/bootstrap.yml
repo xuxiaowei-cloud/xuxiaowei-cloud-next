@@ -1,0 +1,109 @@
+# 服务器
+server:
+  # 端口
+  port: ${gateway_port:1101}
+#
+# Spring 配置
+spring:
+  application:
+    name: gateway
+  # 配置环境
+  profiles:
+    # 激活
+    active:
+      - dev
+  # Cloud 配置
+  cloud:
+    # 网络工具
+    inetutils:
+      # 将被忽略的网络接口的 Java 正则表达式列表。
+      ignored-interfaces:
+        # 正则表达式
+        # 忽略 VMware 虚拟机网卡
+        - VMware.*
+        # 忽略 VirtualBox 虚拟机网卡
+        - VirtualBox.*
+    consul:
+      host: ${consul_xuxiaowei_cloud_host:consul.example.xuxiaowei.cloud}
+      port: ${consul_xuxiaowei_cloud_port:8500}
+
+---
+# 以下配置可放入 nacos 中
+
+
+#
+# Spring 配置
+spring:
+  # 微服务 配置
+  cloud:
+    # 网关 配置
+    gateway:
+      # 发现 配置
+      discovery:
+        # 定位器
+        locator:
+          # 服务名小写
+          lowerCaseServiceId: true
+          # 启用 DiscoveryClient 网关集成的标志。
+          # 服务自动映射
+          enabled: true
+
+#
+# 日志 配置
+#
+logging:
+  # 日志等级
+  level:
+    # 在微服务中，直接使用 `web: debug` 无效
+    # web: debug
+    # org.springframework.web: debug
+    # 包：日志等级
+    cloud.xuxiaowei: debug
+  # 日志文件
+  file:
+    # 文件名及路径
+    name: /logs/${spring.application.name}/${spring.application.name}.log
+    # 文件最大大小，单位: org.springframework.util.unit.DataSize
+    # 已废弃，推荐使用：logging.logback.rollingpolicy.max-file-size
+    # max-size: 20MB
+    # 日志保存天数
+    # 已废弃，推荐使用：logging.logback.rollingpolicy.max-history
+    # max-history: 365
+  logback:
+    rollingpolicy:
+      # 文件最大大小，单位: org.springframework.util.unit.DataSize
+      # 旧版使用：logging.file.max-size
+      max-file-size: 20MB
+      # 日志保存天数
+      # 旧版使用：logging.file.max-history
+      max-history: 365
+      # 压缩文件命名
+      # 后缀名中比原始配置添加了 `.log`，解压后方便打开看
+      # 旧版使用：logging.pattern.rolling-file-name
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz
+  # 格式
+  pattern:
+    # 压缩文件命名
+    # 后缀名中比原始配置添加了 `.log`，解压后方便打开看
+    # 已废弃，推荐使用：logging.logback.rollingpolicy.file-name-pattern
+    # rolling-file-name: "${LOG_FILE}.%d{yyyy-MM-dd}.%i.log.gz"
+    # 控制台日志格式
+    # 默认值："%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    # 增加了：%X{NAME} %clr(:){faint} %X{IP} %clr(:){faint} %X{REQUEST_ID} %clr(:){faint}
+    # LOG_LEVEL_PATTERN：日志等级
+    # -%5p：宽度
+    # PID：线程
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %X{NAME} %clr(:){faint} %X{IP} %clr(:){faint} %X{REQUEST_ID} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    # 日志文件格式
+    # 默认值："%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    # 增加了：%X{NAME} : %X{IP} : %X{REQUEST_ID} :
+    file: "%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %X{NAME} : %X{IP} : %X{REQUEST_ID} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    # 日期时间格式
+    dateformat: "yyyy-MM-dd HH:mm:ss.SSS"
+
+# 管理服务
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
