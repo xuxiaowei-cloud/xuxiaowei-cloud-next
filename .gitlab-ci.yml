@@ -7,6 +7,9 @@
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 stages:
   - test
+
+image: maven:3.6.3-jdk-8
+
 sast:
   stage: test
 include:
