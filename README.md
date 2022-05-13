@@ -75,6 +75,10 @@
     <img alt="Spring Boot" src="https://img.shields.io/static/v1?logo=Spring Boot&message=3.0.0-M2">
   </a>
 
+  <a href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/blob/main/pom.xml">
+    <img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.0-M2">
+  </a>
+
   <a href="https://github.com/alibaba/dragonwell17/releases/tag/dragonwell-17.0.3.0.3%2B7_jdk-17.0.3-ga">
     <img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.3-blue.svg"/>
   </a>
