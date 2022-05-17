@@ -13,6 +13,10 @@
 </div>
 
 <p align="center">
+  基于 Spring Boot 3.0.0
+</p>
+
+<p align="center">
   为简化开发工作、提高生产率、解决常见问题而生
 </p>
 
@@ -87,8 +91,6 @@
     <img alt="code style" src="https://img.shields.io/badge/license-Apache 2-blue">
   </a>
 </p>
-
-## [阿里云盘分享](https://www.aliyundrive.com/s/QaUy1DQRkV4)
 
 ## Stargazers over time
 
