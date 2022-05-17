@@ -92,6 +92,8 @@
   </a>
 </p>
 
+## [脚本](./sh/README.md)
+
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/xuxiaowei-cloud/xuxiaowei-cloud-next.svg)](https://starchart.cc/xuxiaowei-cloud/xuxiaowei-cloud-next)
