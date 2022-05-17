@@ -32,5 +32,6 @@ package:
     paths:
       - target/xuxiaowei-cloud-starter-parent-*
       - gateway/target/gateway-*
+      - cloud-commons-parent/target/cloud-commons-parent-*
   only:
     - main

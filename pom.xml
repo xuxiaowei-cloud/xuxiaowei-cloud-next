@@ -38,7 +38,10 @@
     </properties>
 
     <modules>
+        <!-- 网关服务 -->
         <module>gateway</module>
+        <!-- 微服务公共组件父模块 -->
+        <module>cloud-commons-parent</module>
     </modules>
 
     <dependencyManagement>
