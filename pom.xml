@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <name>xuxiaowei-cloud-starter-parent</name>
-    <description>xuxiaowei-cloud-starter-parent</description>
+    <description>徐晓伟微服务父模块</description>
     <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>
 
