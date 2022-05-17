@@ -38,6 +38,8 @@
     </properties>
 
     <modules>
+        <!-- 授权服务 -->
+        <module>authorization-server</module>
         <!-- 网关服务 -->
         <module>gateway</module>
         <!-- 微服务公共组件父模块 -->
