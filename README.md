@@ -101,7 +101,7 @@
 ## 鸣谢
 
 1. 感谢 [![jetbrains](./static/jetbrains.ico)](https://www.jetbrains.com/)
-   提供开发工具 [![IDEA](./static/idea.svg)](https://www.jetbrains.com/idea) 的免费授权
+   提供开发工具 [![IDEA](./static/idea.png)](https://www.jetbrains.com/idea) 的免费授权
 
 ## Stargazers over time
 
