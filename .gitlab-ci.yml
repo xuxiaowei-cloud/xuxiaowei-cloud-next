@@ -31,7 +31,9 @@ package:
     name: package
     paths:
       - target/xuxiaowei-cloud-starter-parent-*
-      - gateway/target/gateway-*
+      - authorization-server/target/authorization-server-*
       - cloud-commons-parent/target/cloud-commons-parent-*
+      - gateway/target/gateway-*
+      - utils/target/utils-*
   only:
     - main
