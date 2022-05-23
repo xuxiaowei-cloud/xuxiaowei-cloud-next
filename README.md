@@ -75,6 +75,10 @@
     <img alt="Gitlab forks" src="https://badgen.net/gitlab/forks/xuxiaowei-cloud/xuxiaowei-cloud-next?icon=gitlab">
   </a>
 
+  <a href="https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next">
+    <img alt="OSCS Status" src="https://www.oscs1024.com/platform/badge/xuxiaowei-cloud/xuxiaowei-cloud-next.svg?size=small">
+  </a>
+
   <a href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next">
     <img alt="total lines" src="https://tokei.rs/b1/github/xuxiaowei-cloud/xuxiaowei-cloud-next">
   </a>
