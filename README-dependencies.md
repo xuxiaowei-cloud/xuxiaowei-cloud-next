@@ -26,5 +26,4 @@ cloud.xuxiaowei.next.commons:cloud-commons-parent:pom:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
-│        └──org.springframework.boot:spring-boot-starter:jar:3.0.0-M3:compile
 ```
