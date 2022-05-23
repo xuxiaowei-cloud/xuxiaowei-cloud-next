@@ -21,7 +21,7 @@ package:
   stage: package
   image: maven:3.6.3-openjdk-17
   script:
-    - GPG_FILE=/builds/xuxiaowei-cloud-next/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
+    - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
     - echo $GPG_FILE
     - gpg --import $GPG_FILE
     - SETTINGS_FILE=/usr/share/maven/conf/settings.xml
