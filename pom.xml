@@ -44,6 +44,8 @@
         <module>gateway</module>
         <!-- 微服务公共组件父模块 -->
         <module>cloud-commons-parent</module>
+        <!-- 工具类 -->
+        <module>utils</module>
     </modules>
 
     <dependencyManagement>
@@ -64,6 +66,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- 工具类 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei</groupId>
+                <artifactId>utils</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
