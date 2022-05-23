@@ -6,13 +6,9 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 
 # GitCode 禁用缓存（GitCode 未启用缓存），节省时间
-cache:
-  paths:
-    - .m2/repository
-    - passport-ui/node/
-    - passport-ui/node_modules/
-    - ui/node/
-    - ui/node_modules/
+#cache:
+#  paths:
+#    - .m2/repository
 
 #
 # package
