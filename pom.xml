@@ -23,13 +23,23 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Spring Boot 依赖 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-parent -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-dependencies -->
+        <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-starter-parent -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-dependencies -->
+        <!-- https://github.com/spring-projects/spring-boot -->
         <spring-boot.version>3.0.0-M3</spring-boot.version>
 
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/cloud/spring-cloud-dependencies -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/cloud/spring-cloud-dependencies -->
+        <!-- https://github.com/spring-cloud -->
+        <!-- https://github.com/spring-cloud/spring-cloud-gateway -->
+        <!-- https://github.com/spring-cloud/spring-cloud-openfeign -->
+        <!-- https://github.com/spring-cloud/spring-cloud-circuitbreaker -->
         <spring-cloud.version>2022.0.0-M2</spring-cloud.version>
 
         <!-- 打包时跳过单元测试 -->
