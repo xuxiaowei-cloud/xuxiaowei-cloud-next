@@ -13,7 +13,7 @@
 </div>
 
 <p align="center">
-  基于 Spring Boot 3.0.0
+  基于 Spring Boot 3.0.0、OAuth 2.1 的微服务
 </p>
 
 <p align="center">
