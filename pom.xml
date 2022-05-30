@@ -107,7 +107,7 @@
 
             <!-- 工具类 -->
             <dependency>
-                <groupId>cloud.xuxiaowei</groupId>
+                <groupId>cloud.xuxiaowei.next</groupId>
                 <artifactId>utils</artifactId>
                 <version>${project.version}</version>
             </dependency>
