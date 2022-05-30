@@ -31,6 +31,17 @@
         <!-- https://github.com/spring-projects/spring-boot -->
         <spring-boot.version>2.7.0</spring-boot.version>
 
+        <!-- Spring Cloud 依赖 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/cloud/spring-cloud-dependencies -->
+        <!-- https://repo.spring.io/ui/native/milestone/org/springframework/cloud/spring-cloud-dependencies -->
+        <!-- https://github.com/spring-cloud -->
+        <!-- https://github.com/spring-cloud/spring-cloud-gateway -->
+        <!-- https://github.com/spring-cloud/spring-cloud-openfeign -->
+        <!-- https://github.com/spring-cloud/spring-cloud-circuitbreaker -->
+        <!-- https://github.com/spring-cloud/spring-cloud-consul -->
+        <spring-cloud.version>2021.0.3</spring-cloud.version>
+
     </properties>
     <dependencies>
 
