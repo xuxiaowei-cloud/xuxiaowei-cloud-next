@@ -40,6 +40,7 @@
         <!-- https://github.com/spring-cloud/spring-cloud-gateway -->
         <!-- https://github.com/spring-cloud/spring-cloud-openfeign -->
         <!-- https://github.com/spring-cloud/spring-cloud-circuitbreaker -->
+        <!-- https://github.com/spring-cloud/spring-cloud-consul -->
         <spring-cloud.version>2022.0.0-M2</spring-cloud.version>
 
         <!-- OAuth 2.1 依赖 -->
