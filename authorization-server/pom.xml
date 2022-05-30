@@ -70,6 +70,12 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- 核心组件 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next</groupId>
+            <artifactId>cloud-starter-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-config</artifactId>

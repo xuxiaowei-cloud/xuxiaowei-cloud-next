@@ -1,6 +1,13 @@
 package cloud.xuxiaowei.next.authorizationserver.configuration;
 
+import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -29,6 +36,13 @@ import javax.sql.DataSource;
 @Slf4j
 @Configuration
 public class AuthorizationServerConfiguration {
+
+    private JwkKeyProperties jwkKeyProperties;
+
+    @Autowired
+    public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
+        this.jwkKeyProperties = jwkKeyProperties;
+    }
 
     /**
      * @see <a href="https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html">协议端点的</a> Spring Security 过滤器链。
@@ -72,6 +86,16 @@ public class AuthorizationServerConfiguration {
     @Bean
     public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
         return new JdbcRegisteredClientRepository(jdbcTemplate);
+    }
+
+    /**
+     * @see JWKSource 用于签署访问令牌的实例。
+     */
+    @Bean
+    public JWKSource<SecurityContext> jwkSource() {
+        RSAKey rsaKey = new RSAKey.Builder(jwkKeyProperties.rsaPublicKey()).privateKey(jwkKeyProperties.privateKey()).build();
+        JWKSet jwkSet = new JWKSet(rsaKey);
+        return new ImmutableJWKSet<>(jwkSet);
     }
 
     /**
