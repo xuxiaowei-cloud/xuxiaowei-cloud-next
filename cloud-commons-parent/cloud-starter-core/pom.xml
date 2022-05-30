@@ -3,42 +3,29 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cloud.xuxiaowei.next</groupId>
-        <artifactId>xuxiaowei-cloud-starter-parent</artifactId>
+        <groupId>cloud.xuxiaowei.next.commons</groupId>
+        <artifactId>cloud-commons-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-
-    <groupId>cloud.xuxiaowei.next.commons</groupId>
-    <artifactId>cloud-commons-parent</artifactId>
+    <groupId>cloud.xuxiaowei.next</groupId>
+    <artifactId>cloud-starter-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
-    <name>cloud-commons-parent</name>
-    <description>微服务公共组件父模块</description>
-    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
+    <name>cloud-starter-core</name>
+    <description>核心组件</description>
+    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud</url>
     <inceptionYear>2022</inceptionYear>
 
     <properties>
         <java.version>17</java.version>
     </properties>
-
-    <modules>
-        <!-- 核心组件 -->
-        <module>cloud-starter-core</module>
-    </modules>
-
     <dependencies>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

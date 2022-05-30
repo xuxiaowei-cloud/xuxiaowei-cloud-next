@@ -25,5 +25,10 @@ cloud.xuxiaowei.next.commons:cloud-commons-parent:pom:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M3:compile
 
 
+cloud.xuxiaowei.next:cloud-starter-core:jar:0.0.1-SNAPSHOT
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M3:test
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M3:compile
+
+
 cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
 ```

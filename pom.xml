@@ -112,6 +112,13 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- 核心组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next</groupId>
+                <artifactId>cloud-starter-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
