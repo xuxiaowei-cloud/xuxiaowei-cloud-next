@@ -20,6 +20,17 @@
 
     <properties>
         <java.version>17</java.version>
+
+        <!-- Spring Boot 依赖 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-parent -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-dependencies -->
+        <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-starter-parent -->
+        <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-dependencies -->
+        <!-- https://github.com/spring-projects/spring-boot -->
+        <spring-boot.version>2.7.0</spring-boot.version>
+
     </properties>
     <dependencies>
 
