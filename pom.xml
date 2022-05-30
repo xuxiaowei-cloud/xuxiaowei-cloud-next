@@ -54,6 +54,9 @@
         <!-- https://github.com/p6spy/p6spy -->
         <p6spy.version>3.9.1</p6spy.version>
 
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+        <hutool-all.version>5.8.2</hutool-all.version>
+
         <!-- 打包时跳过单元测试 -->
         <skipTests>true</skipTests>
 
@@ -103,6 +106,13 @@
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
                 <version>${p6spy.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool-all.version}</version>
             </dependency>
 
             <!-- 工具类 -->
