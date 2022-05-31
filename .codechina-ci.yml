@@ -33,8 +33,10 @@ package:
     name: package
     paths:
       - target/xuxiaowei-cloud-starter-parent-*
+      - admin-server/target/admin-server-*
       - authorization-server/target/authorization-server-*
       - cloud-commons-parent/target/cloud-commons-parent-*
+      - cloud-commons-parent/cloud-starter-core/target/cloud-starter-core-*
       - gateway/target/gateway-*
       - utils/target/utils-*
   only:
