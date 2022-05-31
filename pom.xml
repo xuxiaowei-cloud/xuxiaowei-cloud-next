@@ -73,6 +73,8 @@
         <module>admin-server</module>
         <!-- 授权服务 -->
         <module>authorization-server</module>
+        <!-- 登录服务 -->
+        <module>passport</module>
         <!-- 网关服务 -->
         <module>gateway</module>
         <!-- 微服务公共组件父模块 -->

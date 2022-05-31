@@ -40,6 +40,20 @@ cloud.xuxiaowei.next:authorization-server:jar:0.0.1-SNAPSHOT
 │        └──org.projectlombok:lombok:jar:1.18.24:compile
 
 
+cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
+│        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M2:compile
+│        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M2:compile
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-oauth2-client:jar:3.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-security:jar:3.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-webflux:jar:3.0.0-M2:compile
+│        └──org.projectlombok:lombok:jar:1.18.22:compile
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
+│        └──io.projectreactor:reactor-test:jar:3.4.16:test
+
+
 cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M2:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M2:compile
