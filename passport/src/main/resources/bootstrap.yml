@@ -102,3 +102,27 @@ spring:
     url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.xuxiaowei.cloud:3306}/xuxiaowei_cloud_next?useSSL=false&serverTimezone=GMT%2B8
     username: ${mysql_xuxiaowei_cloud_username:root}
     password: ${mysql_xuxiaowei_cloud_password:xuxiaowei.com.cn}
+
+---
+
+#
+# OAuth 2 客户配置
+#
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          authorization-server-oidc:
+            provider: spring
+            client-id: xuxiaowei_client_id
+            client-secret: xuxiaowei_client_secret
+            authorization-grant-type: authorization_code
+            redirect-uri: http://127.0.0.1:1401/login/oauth2/code/{registrationId}
+            scope: openid
+            client-name: xuxiaowei_client_id
+        provider:
+          spring:
+            # 访问地址
+            # http://localhost:1301/.well-known/openid-configuration
+            issuer-uri: http://localhost:1301
