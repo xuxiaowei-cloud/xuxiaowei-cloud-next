@@ -12,16 +12,19 @@
     </div>
 </div>
 
-<p align="center" style="text-align: center;">
+<div align="center" style="text-align: center;">
   基于 JDK 17、基于 Spring Boot 3.0.0、OAuth 2.1 的微服务
-</p>
+</div>
 
-<p align="center" style="text-align: center;">
+<p></p>
+
+<div align="center" style="text-align: center;">
   为简化开发工作、提高生产率、解决常见问题而生
-</p>
+</div>
 
+<p></p>
 
-<p align="center" style="text-align: center;">
+<div align="center" style="text-align: center;">
 
   <a href="https://blog.csdn.net/qq_32596527">
     <img alt="CSDN 码龄" src="https://img.shields.io/badge/dynamic/xml?color=orange&label=CSDN&query=%2F%2Fdiv%5B%40class%3D%27person-code-age%27%5D%5B1%5D%2Fspan%5B1%5D%2Ftext%28%29%5B1%5D&url=https%3A%2F%2Fblog.csdn.net%2Fqq_32596527">
@@ -98,7 +101,7 @@
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache 2-blue">
   </a>
-</p>
+</div>
 
 ## [脚本](./sh/README.md)
 
