@@ -344,6 +344,17 @@
     </profiles>
 
     <repositories>
+
+        <repository>
+            <id>aliyun</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public</url>
+        </repository>
+
+        <repository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
@@ -353,10 +364,6 @@
             </snapshots>
         </repository>
 
-        <repository>
-            <id>oss</id>
-            <url>https://oss.sonatype.org/content/repositories/releases/</url>
-        </repository>
     </repositories>
     <pluginRepositories>
         <pluginRepository>
