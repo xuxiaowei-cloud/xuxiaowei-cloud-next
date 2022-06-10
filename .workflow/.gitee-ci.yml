@@ -22,7 +22,7 @@ stages:
       - step: build@maven
         name: build_maven
         displayName: Maven 构建
-        jdkVersion: '11'
+        jdkVersion: '17'
         mavenVersion: 3.6.3
         commands:
           - mvn package source:jar javadoc:jar install -DskipTests
