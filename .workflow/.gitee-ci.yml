@@ -1,0 +1,46 @@
+version: '1.0'
+name: package
+displayName: 打包
+triggers:
+  trigger: auto
+  push:
+    branches:
+      precise:
+        - main
+        - xuxiaowei
+  pr:
+    branches:
+      precise:
+        - main
+stages:
+  - name: package
+    displayName: 打包
+    strategy: naturally
+    trigger: auto
+    executor: [ ]
+    steps:
+      - step: build@maven
+        name: build_maven
+        displayName: Maven 构建
+        jdkVersion: '11'
+        mavenVersion: 3.6.3
+        commands:
+          - mvn package source:jar javadoc:jar install -DskipTests
+        artifacts:
+          - name: BUILD_ARTIFACT
+            path:
+              - admin-server/target/admin-server-0.0.1-SNAPSHOT.jar
+              - authorization-server/target/authorization-server-0.0.1-SNAPSHOT.jar
+              - cloud-commons-parent/cloud-starter-core/target/cloud-starter-core-0.0.1-SNAPSHOT.jar
+              - gateway/target/gateway-0.0.1-SNAPSHOT.jar
+              - passport/target/passport-0.0.1-SNAPSHOT.jar
+              - pom.xml
+              - utils/target/utils-0.0.1-SNAPSHOT.jar
+        settings: [ ]
+        strategy:
+          retry: '0'
+strategy:
+  blocking: false
+permissions:
+  - role: admin
+    members: [ ]
