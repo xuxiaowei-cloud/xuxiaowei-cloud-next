@@ -45,10 +45,6 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
-          cache: maven
-
-      - name: Build with Maven
-        run: mvn clean -e -U package source:jar javadoc:jar install -DskipTests
 
       # Initializes the CodeQL tools for scanning.
       - name: Initialize CodeQL
