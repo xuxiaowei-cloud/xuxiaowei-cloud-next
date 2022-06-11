@@ -54,6 +54,11 @@
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
         <spring-security-oauth2-authorization-server.version>0.3.0</spring-security-oauth2-authorization-server.version>
 
+        <!-- OAuth 2.1 依赖，支持 spring-boot 3.0.0 -->
+        <!-- https://github.com/xuxiaowei-io/spring-security-oauth2-authorization-server -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server -->
+        <spring-security-oauth2-authorization-server-next.version>0.3.0-SNAPSHOT</spring-security-oauth2-authorization-server-next.version>
+
         <!-- SQL 性能分析 -->
         <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
         <!-- https://oss.sonatype.org/content/repositories/public/p6spy/p6spy -->
@@ -116,6 +121,14 @@
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring-security-oauth2-authorization-server.version}</version>
+            </dependency>
+
+            <!-- OAuth 2.1 依赖 -->
+            <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server -->
+            <dependency>
+                <groupId>io.xuxiaowei.security.next</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring-security-oauth2-authorization-server-next.version}</version>
             </dependency>
 
             <!-- SQL 性能分析 -->
@@ -342,6 +355,11 @@
         <repository>
             <id>oss</id>
             <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+
+        <repository>
+            <id>oss-snapshots</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
 
         <repository>
