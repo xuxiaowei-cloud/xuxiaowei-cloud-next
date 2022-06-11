@@ -47,7 +47,7 @@
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/de/codecentric/spring-boot-admin-dependencies -->
         <!-- https://github.com/codecentric/spring-boot-admin -->
-        <spring-boot-admin.version>3.0.0-M1</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.0-M2</spring-boot-admin.version>
 
         <!-- OAuth 2.1 依赖 -->
         <!-- https://github.com/spring-projects/spring-authorization-server -->
