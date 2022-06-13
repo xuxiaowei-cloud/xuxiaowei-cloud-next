@@ -68,6 +68,41 @@
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <hutool-all.version>5.8.3</hutool-all.version>
 
+        <!-- https://nodejs.org/dist/ -->
+        <!-- http://mirrors.aliyun.com/nodejs-release/ -->
+        <node.version>v16.15.1</node.version>
+        <!-- https://www.npmjs.com/package/npm -->
+        <!-- https://npmmirror.com/package/npm -->
+        <npm.version>8.12.1</npm.version>
+        <!-- https://www.npmjs.com/package/yarn -->
+        <!-- https://npmmirror.com/package/yarn -->
+        <yarn.version>v1.22.19</yarn.version>
+
+        <!--<node-download-root>https://nodejs.org/dist/</node-download-root>-->
+        <node-download-root>https://mirrors.aliyun.com/nodejs-release/</node-download-root>
+
+        <!--<npm-download-root>https://registry.npmjs.org/npm/-/</npm-download-root>-->
+        <!-- http://npm.taobao.org 和 http://registry.npm.taobao.org 将在 2022.06.30 号正式下线和停止 DNS 解析 https://developer.aliyun.com/mirror/NPM -->
+        <!-- 如：https://registry.npmmirror.com/npm/-/npm-8.12.1.tgz -->
+        <npm-download-root>https://registry.npmmirror.com/npm/-/</npm-download-root>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
+        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
+        <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
+        <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
+        <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
+        <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
+        <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
+
         <!-- 打包时跳过单元测试 -->
         <skipTests>true</skipTests>
 
@@ -78,12 +113,14 @@
         <module>admin-server</module>
         <!-- 授权服务 -->
         <module>authorization-server</module>
-        <!-- 登录服务 -->
-        <module>passport</module>
-        <!-- 网关服务 -->
-        <module>gateway</module>
         <!-- 微服务公共组件父模块 -->
         <module>cloud-commons-parent</module>
+        <!-- 网关服务 -->
+        <module>gateway</module>
+        <!-- 登录服务 -->
+        <module>passport</module>
+        <!-- 登录服务UI -->
+        <module>passport-ui</module>
         <!-- 工具类 -->
         <module>utils</module>
     </modules>
@@ -146,6 +183,31 @@
                 <version>${hutool-all.version}</version>
             </dependency>
 
+            <!-- 核心组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- 负载均衡组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-loadbalancer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Redis 组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- Session Redis 组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-session-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- 工具类 -->
             <dependency>
                 <groupId>cloud.xuxiaowei.next</groupId>
@@ -153,13 +215,12 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- 核心组件 -->
+            <!-- 登录服务UI -->
             <dependency>
                 <groupId>cloud.xuxiaowei.next</groupId>
-                <artifactId>cloud-starter-core</artifactId>
+                <artifactId>passport-ui</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -229,7 +290,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>${maven-compiler-plugin.version}</version>
             </plugin>
 
             <!-- mvn clean source:jar deploy -->
@@ -237,7 +298,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>${maven-source-plugin.version}</version>
             </plugin>
 
             <!-- mvn lombok:delombok -->
@@ -245,7 +306,7 @@
             <plugin>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok-maven-plugin</artifactId>
-                <version>1.18.20.0</version>
+                <version>${lombok-maven-plugin.version}</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <sourceDirectory>src/main/java</sourceDirectory>
@@ -268,20 +329,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <sourcepath>target/sources/delombok</sourcepath>
                     <encoding>UTF-8</encoding>
                     <charset>UTF-8</charset>
                     <docencoding>UTF-8</docencoding>
+                    <!--<doclint>none</doclint>-->
                 </configuration>
             </plugin>
 
-            <!-- https://mvnrepository.com/artifact/io.github.git-commit-id/git-commit-id-maven-plugin -->
+            <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
             <plugin>
-                <groupId>io.github.git-commit-id</groupId>
-                <artifactId>git-commit-id-maven-plugin</artifactId>
-                <version>5.0.0</version>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>get-the-git-infos</id>
@@ -329,7 +391,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>3.0.1</version>
+                        <version>${maven-gpg-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>
@@ -343,6 +405,39 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <!-- 使用 -Pexec 激活此构建打包可执行 jar 包 -->
+            <id>exec</id>
+            <build>
+                <finalName>${project.artifactId}-${project.version}-exec</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${spring-boot.version}</version>
+                        <!-- 打包为 Spring Boot jar -->
+                        <executions>
+                            <execution>
+                                <id>repackage</id>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <excludes>
+                                <exclude>
+                                    <groupId>org.projectlombok</groupId>
+                                    <artifactId>lombok</artifactId>
+                                </exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
 
     <repositories>

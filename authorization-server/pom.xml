@@ -23,6 +23,12 @@
     </properties>
     <dependencies>
 
+        <!-- Session Redis 组件 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next.commons</groupId>
+            <artifactId>cloud-starter-session-redis</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -33,12 +39,6 @@
         <dependency>
             <groupId>io.xuxiaowei.security.next</groupId>
             <artifactId>spring-security-oauth2-authorization-server</artifactId>
-        </dependency>
-
-        <!-- 工具类 -->
-        <dependency>
-            <groupId>cloud.xuxiaowei.next</groupId>
-            <artifactId>utils</artifactId>
         </dependency>
 
         <!-- SQL 性能分析 -->
@@ -52,12 +52,6 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-        </dependency>
-
-        <!-- 核心组件 -->
-        <dependency>
-            <groupId>cloud.xuxiaowei.next</groupId>
-            <artifactId>cloud-starter-core</artifactId>
         </dependency>
 
         <dependency>

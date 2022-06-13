@@ -9,7 +9,7 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>cloud.xuxiaowei.next.commons</groupId>
+    <groupId>cloud.xuxiaowei.next</groupId>
     <artifactId>cloud-commons-parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -26,6 +26,12 @@
     <modules>
         <!-- 核心组件 -->
         <module>cloud-starter-core</module>
+        <!-- 负载均衡组件 -->
+        <module>cloud-starter-loadbalancer</module>
+        <!-- Redis 组件 -->
+        <module>cloud-starter-redis</module>
+        <!-- Session Redis 组件 -->
+        <module>cloud-starter-session-redis</module>
     </modules>
 
     <dependencies>

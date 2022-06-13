@@ -24,7 +24,7 @@ spring:
         # 忽略 VirtualBox 虚拟机网卡
         - VirtualBox.*
     consul:
-      host: ${consul_xuxiaowei_cloud_host:consul.example.xuxiaowei.cloud}
+      host: ${consul_xuxiaowei_cloud_host:consul.example.next.xuxiaowei.cloud}
       port: ${consul_xuxiaowei_cloud_port:8500}
 
 ---
@@ -99,9 +99,19 @@ spring:
   datasource:
     # driver-class-name: com.mysql.cj.jdbc.Driver
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.xuxiaowei.cloud:3306}/xuxiaowei_cloud_next?useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/xuxiaowei_cloud_next?useSSL=false&serverTimezone=GMT%2B8
     username: ${mysql_xuxiaowei_cloud_username:root}
     password: ${mysql_xuxiaowei_cloud_password:xuxiaowei.com.cn}
+
+---
+
+# Redis 配置
+spring:
+  redis:
+    database: ${redis_xuxiaowei_cloud_database:1}
+    password: ${redis_xuxiaowei_cloud_password:xuxiaowei.com.cn}
+    host: ${redis_xuxiaowei_cloud_host:redis.example.next.xuxiaowei.cloud}
+    port: ${redis_xuxiaowei_cloud_port:6379}
 
 ---
 

@@ -24,7 +24,7 @@ spring:
         # 忽略 VirtualBox 虚拟机网卡
         - VirtualBox.*
     consul:
-      host: ${consul_xuxiaowei_cloud_host:consul.example.xuxiaowei.cloud}
+      host: ${consul_xuxiaowei_cloud_host:consul.example.next.xuxiaowei.cloud}
       port: ${consul_xuxiaowei_cloud_port:8500}
 
 ---
@@ -107,3 +107,39 @@ management:
     web:
       exposure:
         include: '*'
+
+
+---
+
+# 跨域配置
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        # 跨域配置
+        corsConfigurations:
+          '[/**]':
+            # 携带 Cookie 等信息
+            allow-credentials: true
+            # 允许跨域的来源(协议、域名、ip)，全部：*
+            # 因使用了 Session 共享，请使用 example.next.xuxiaowei.cloud 子域
+            allowedOrigins:
+              - http://gateway.example.next.xuxiaowei.cloud
+              - https://gateway.example.next.xuxiaowei.cloud
+              - http://passport.example.next.xuxiaowei.cloud
+              - https://passport.example.next.xuxiaowei.cloud
+              - http://passport.example.next.xuxiaowei.cloud:1401
+              - http://passport.example.next.xuxiaowei.cloud:1411
+              - http://passport.example.next.xuxiaowei.cloud:1412
+              - http://example.next.xuxiaowei.cloud
+              - https://example.next.xuxiaowei.cloud
+              - http://example.next.xuxiaowei.cloud:1001
+              - http://example.next.xuxiaowei.cloud:1002
+              # tauri 开发域名
+              - http://localhost:1001
+              # tauri 生产域名
+              - https://tauri.localhost
+            # 允许跨域的 HTTP 方法， 默认为 GET 和 OPTIONS，全部：*
+            allowedMethods: "GET,POST"
+            # 允许跨域请求中的请求头字段，全部：*
+            allowedHeaders: "*"

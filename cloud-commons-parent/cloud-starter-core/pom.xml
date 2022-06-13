@@ -3,18 +3,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>cloud.xuxiaowei.next.commons</groupId>
+        <groupId>cloud.xuxiaowei.next</groupId>
         <artifactId>cloud-commons-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cloud.xuxiaowei.next</groupId>
+    <groupId>cloud.xuxiaowei.next.commons</groupId>
     <artifactId>cloud-starter-core</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <name>cloud-starter-core</name>
     <description>核心组件</description>
-    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud</url>
+    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>
 
     <properties>
@@ -22,9 +22,63 @@
     </properties>
     <dependencies>
 
+        <!-- 工具类 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
+            <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 仅为了提供：@RefreshScope -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-context</artifactId>
+            <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 仅为了提供：HttpMethod -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 仅为了提供：HttpServletRequest -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 仅为了提供：DefaultCookieSerializer -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-core</artifactId>
+            <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 仅为了提供：DefaultLoginPageGeneratingFilter -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- 仅为了提供：FormLoginConfigurer -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
             <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
             <scope>provided</scope>
         </dependency>

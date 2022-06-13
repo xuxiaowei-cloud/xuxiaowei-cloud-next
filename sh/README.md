@@ -35,6 +35,21 @@
 ```
 
 - 绑定IP
+
 ```
 -bind=192.168.5.4
 ```
+
+- 开放端口
+    - CentOS
+        ```shell
+        firewall-cmd --zone=public --add-port=8300/tcp --permanent
+        firewall-cmd --zone=public --add-port=8500/tcp --permanent
+        firewall-cmd --reload
+        firewall-cmd --list-all
+        ```
+    - Ubuntu
+        ```shell
+        sudo ufw allow 8300
+        sudo ufw allow 8500
+        ```

@@ -24,7 +24,7 @@ spring:
         # 忽略 VirtualBox 虚拟机网卡
         - VirtualBox.*
     consul:
-      host: ${consul_xuxiaowei_cloud_host:consul.example.xuxiaowei.cloud}
+      host: ${consul_xuxiaowei_cloud_host:consul.example.next.xuxiaowei.cloud}
       port: ${consul_xuxiaowei_cloud_port:8500}
 
 ---

@@ -22,10 +22,28 @@
     </properties>
     <dependencies>
 
-        <!-- 工具类 -->
+        <!-- 登录服务UI -->
         <dependency>
             <groupId>cloud.xuxiaowei.next</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>passport-ui</artifactId>
+        </dependency>
+
+        <!-- Session Redis 组件 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next.commons</groupId>
+            <artifactId>cloud-starter-session-redis</artifactId>
+        </dependency>
+
+        <!-- 负载均衡组件 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next.commons</groupId>
+            <artifactId>cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
 
         <dependency>
@@ -66,7 +84,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -79,10 +97,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
         <dependency>

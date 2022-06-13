@@ -1,5 +1,7 @@
 package cloud.xuxiaowei.next.utils;
 
+import org.junit.jupiter.api.Test;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -14,9 +16,10 @@ import java.io.IOException;
  * @author xuxiaowei
  * @since 0.0.1
  */
-public class DependenciesUtils {
+class DependenciesTests {
 
-    public static void main(String[] args) {
+    @Test
+    void main() {
         File file = new File("D:/tree.txt");
         StringBuilder stringBuilder = new StringBuilder();
         try (// 创建一个新FileReader，给定从中读取文件 。

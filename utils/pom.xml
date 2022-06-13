@@ -23,6 +23,90 @@
 	</properties>
 	<dependencies>
 
+		<!-- 提供：ObjectMapper -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 提供：JavaTimeModule -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 提供：Mono -->
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-core</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 仅为了提供：AuthenticationException -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 仅为了提供：WebAttributes#AUTHENTICATION_EXCEPTION -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 仅为了提供：Jwt -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-jose</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 日志 -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 仅为了提供：HttpServletRequest -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- 仅为了提供：RequestBody、RequestParam -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<licenses>

@@ -1,6 +1,5 @@
 package cloud.xuxiaowei.next.utils;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
  */
 public class Constant implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

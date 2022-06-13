@@ -1,0 +1,15 @@
+# 客户端 配置
+cloud:
+  security:
+    # 启动RSA密码加密
+    enabled-rsa: true
+  client:
+    client-id: xuxiaowei_client_id
+    client-secret: xuxiaowei_client_secret
+    authorize-uri: https://gateway.example.next.xuxiaowei.cloud/authorization-server/oauth2/authorize
+    check-token-uri: https://gateway.example.next.xuxiaowei.cloud/authorization-server/oauth2/check_token?token=
+    redirect-uri: https://gateway.example.next.xuxiaowei.cloud/passport/code
+    access-token-uri: http://authorization-server/oauth2/token
+    scope: snsapi_base
+    state-name: STATE_NAME
+    home-page: http://example.next.xuxiaowei.cloud/#/

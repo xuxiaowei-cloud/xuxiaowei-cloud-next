@@ -111,6 +111,11 @@
 
 ## [脚本](./sh/README.md)
 
+## 参考文档
+
+- [Spring Boot 2.7.0 现已推出](https://spring.io/blog/2022/05/19/spring-boot-2-7-0-available-now)
+- [Spring-Boot-2.7 对自动配置的更改](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.7-Release-Notes#changes-to-auto-configuration)
+
 ## 鸣谢
 
 1. 感谢 [![jetbrains](./static/jetbrains.ico)](https://www.jetbrains.com/)

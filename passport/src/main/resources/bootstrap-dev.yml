@@ -1,0 +1,33 @@
+# 客户端 配置
+cloud:
+  security:
+    # 启动RSA密码加密
+    enabled-rsa: false
+  client:
+    client-id: xuxiaowei_client_id
+    client-secret: xuxiaowei_client_secret
+    authorize-uri: http://gateway.example.next.xuxiaowei.cloud:1101/authorization-server/oauth2/authorize
+    check-token-uri: http://gateway.example.next.xuxiaowei.cloud:1101/authorization-server/oauth2/check_token?token=
+    redirect-uri: http://gateway.example.next.xuxiaowei.cloud:1101/passport/code
+    access-token-uri: http://authorization-server/oauth2/token
+    scope: snsapi_base
+    state-name: STATE_NAME
+    home-page: http://example.next.xuxiaowei.cloud:1001/#/
+
+---
+
+# CSRF 配置
+cloud:
+  security:
+    csrfDisableUrl:
+      # 禁用登录请求验证 CSRF Token
+      # 如果使用登录服务保护登录服务的前端，请删除下面'[/login]'的配置
+      '[/login]':
+        - POST
+        - GET
+        - OPTIONS
+      # 授权码
+      '[/code]':
+        - POST
+        - GET
+        - OPTIONS

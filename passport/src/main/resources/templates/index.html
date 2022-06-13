@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" href="/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>登录-徐晓伟微服务</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <meta name="rsa_public_key_base64" th:content="${RSA_PUBLIC_KEY_BASE64}"/>
+    <meta name="rememberMeParameter" th:content="${rememberMeParameter}"/>
+    <script type="module" crossorigin src="/passport-assets/index.js"></script>
+    <link rel="stylesheet" href="/passport-assets/index.css">
+    <!-- 如果使用 passport 服务将 passport-ui 模块的静态文件放入其中，passport-ui 模块中的文件(index.html)将无效，使用的是 passport 中 templates 文件夹中的 index.html(即：本文件) -->
+</head>
+<body>
+<div id="app"></div>
+</body>
+</html>
