@@ -1,6 +1,7 @@
 package cloud.xuxiaowei.next.authorizationserver.configuration;
 
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -73,7 +74,14 @@ public class AuthorizationServerConfiguration {
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
         // 表单登录处理从授权服务器过滤器链到登录页面的重定向
-        http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated()).formLogin(Customizer.withDefaults());
+        http.authorizeHttpRequests((authorize) -> {
+
+            // 端点放行
+            authorize.antMatchers("/" + Constant.ACTUATOR + "/**").permitAll();
+
+            // 其他路径均需要授权
+            authorize.anyRequest().authenticated();
+        }).formLogin(Customizer.withDefaults());
 
         return http.build();
     }

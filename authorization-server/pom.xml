@@ -35,6 +35,12 @@
             <artifactId>spring-security-oauth2-authorization-server</artifactId>
         </dependency>
 
+        <!-- 工具类 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
+
         <!-- SQL 性能分析 -->
         <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
         <dependency>
