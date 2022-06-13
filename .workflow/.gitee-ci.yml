@@ -31,9 +31,14 @@ stages:
             path:
               - admin-server/target/admin-server-0.0.1-SNAPSHOT.jar
               - authorization-server/target/authorization-server-0.0.1-SNAPSHOT.jar
+              - cloud-commons-parent/pom.xml
               - cloud-commons-parent/cloud-starter-core/target/cloud-starter-core-0.0.1-SNAPSHOT.jar
+              - cloud-commons-parent/cloud-starter-loadbalancer/target/cloud-starter-loadbalancer-0.0.1-SNAPSHOT.jar
+              - cloud-commons-parent/cloud-starter-redis/target/cloud-starter-redis-0.0.1-SNAPSHOT.jar
+              - cloud-commons-parent/cloud-starter-session/target/cloud-starter-session-redis-0.0.1-SNAPSHOT.jar
               - gateway/target/gateway-0.0.1-SNAPSHOT.jar
               - passport/target/passport-0.0.1-SNAPSHOT.jar
+              - passport-ui/target/passport-ui-0.0.1-SNAPSHOT.jar
               - pom.xml
               - utils/target/utils-0.0.1-SNAPSHOT.jar
         settings: [ ]
