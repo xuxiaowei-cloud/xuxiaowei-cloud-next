@@ -22,6 +22,12 @@
     </properties>
     <dependencies>
 
+        <!-- 工具类 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-config</artifactId>

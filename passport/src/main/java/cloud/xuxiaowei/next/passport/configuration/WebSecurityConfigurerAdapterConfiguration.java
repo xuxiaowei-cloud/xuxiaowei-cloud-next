@@ -1,5 +1,6 @@
 package cloud.xuxiaowei.next.passport.configuration;
 
+import cloud.xuxiaowei.next.utils.Constant;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -42,7 +43,14 @@ public class WebSecurityConfigurerAdapterConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated());
+        http.authorizeHttpRequests((authorize) -> {
+
+            // 端点放行
+            authorize.antMatchers("/" + Constant.ACTUATOR + "/**").permitAll();
+
+            // 其他路径均需要授权
+            authorize.anyRequest().authenticated();
+        });
 
         http.oauth2Login(oauth2Login -> oauth2Login.loginPage("/oauth2/authorization/authorization-server-oidc")).oauth2Client(withDefaults());
 
