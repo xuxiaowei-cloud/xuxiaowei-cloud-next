@@ -1,0 +1,28 @@
+[package]
+name = "xuxiaowei-cloud"
+version = "0.0.1"
+description = "徐晓伟微服务"
+authors = ["徐晓伟 <xuxiaowei@xuxiaowei.com.cn>"]
+license = "Apache-2.0"
+repository = "git+https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git"
+default-run = "xuxiaowei-cloud"
+edition = "2021"
+rust-version = "1.57"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.0.0-rc.13", features = [] }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { version = "1.0.0-rc.15", features = ["api-all"] }
+
+[features]
+# by default Tauri runs in production mode
+# when `tauri dev` runs it is executed with `cargo run --no-default-features` if `devPath` is an URL
+default = [ "custom-protocol" ]
+# this feature is used used for production builds where `devPath` points to the filesystem
+# DO NOT remove this
+custom-protocol = [ "tauri/custom-protocol" ]

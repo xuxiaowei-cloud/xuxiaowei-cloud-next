@@ -155,6 +155,8 @@
         <module>passport</module>
         <!-- 登录服务UI -->
         <module>passport-ui</module>
+        <!-- UI -->
+        <module>ui</module>
         <!-- 工具类 -->
         <module>utils</module>
     </modules>

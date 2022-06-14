@@ -1,0 +1,89 @@
+{
+  "name": "ui",
+  "private": true,
+  "version": "0.0.1",
+  "description": "徐晓伟微服务UI",
+  "scripts": {
+    "dev": "vite --host --port 1001",
+    "dev:example": "vite --host example.xuxiaowei.cloud --port 1001",
+    "dev:test": "vite --host --port 1001 --mode test",
+    "dev:test:example": "vite --host example.xuxiaowei.cloud --port 1001 --mode test",
+    "build": "vue-tsc --noEmit && vite build",
+    "lint": "vue-cli-service lint",
+    "preview": "vite preview --host",
+    "tauri": "tauri",
+    "tauri:info": "tauri info",
+    "tauri:build": "tauri build",
+    "tauri:dev": "tauri dev"
+  },
+  "author": "徐晓伟 <xuxiaowei@xuxiaowei.com.cn>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/issues"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "homepage": "https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next#README",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git"
+  },
+  "keywords": [
+    "@tauri-apps/api",
+    "@toast-ui/editor",
+    "@wangeditor/editor-for-vue",
+    "axios",
+    "crypto-js",
+    "echarts",
+    "element-plus",
+    "js-cookie",
+    "jsencrypt",
+    "vue",
+    "vue-echarts",
+    "vue-router",
+    "vuex",
+    "vuex-persistedstate",
+    "typescript",
+    "vite"
+  ],
+  "dependencies": {
+    "@element-plus/icons-vue": "2.0.4",
+    "@tauri-apps/api": "1.0.0-rc.7",
+    "@toast-ui/editor": "3.1.7",
+    "@wangeditor/editor-for-vue": "5.1.11",
+    "axios": "0.27.2",
+    "crypto-js": "4.1.1",
+    "echarts": "5.3.2",
+    "element-plus": "2.2.5",
+    "js-cookie": "3.0.1",
+    "jsencrypt": "3.2.1",
+    "sockjs-client": "1.6.1",
+    "stompjs": "2.3.3",
+    "vue": "3.2.37",
+    "vue-echarts": "6.0.3",
+    "vue-router": "4.0.15",
+    "vuex": "4.0.2",
+    "vuex-persistedstate": "4.1.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "1.0.0-rc.14",
+    "@typescript-eslint/parser": "5.26.0",
+    "@vitejs/plugin-vue": "2.3.3",
+    "@vue/cli-plugin-eslint": "5.0.4",
+    "@vue/cli-plugin-typescript": "5.0.4",
+    "@vue/cli-service": "5.0.4",
+    "@vue/eslint-config-standard": "6.1.0",
+    "eslint": "7.32.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.2.0",
+    "eslint-plugin-vue": "7.20.0",
+    "lint-staged": "13.0.0",
+    "typescript": "4.6.4",
+    "unplugin-auto-import": "0.8.8",
+    "unplugin-vue-components": "0.19.6",
+    "vite": "2.9.12",
+    "vue-tsc": "0.34.16"
+  }
+}
