@@ -7,13 +7,20 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.sql.DataSource;
 
+import java.util.List;
+
 import static cloud.xuxiaowei.next.passport.service.impl.DefaultCsrfRequestMatcherImpl.CSRF_REQUEST_MATCHER_BEAN_NAME;
+import static org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY;
 
 /**
  * 默认 {@link Bean} 配置
@@ -44,7 +51,20 @@ public class DefaultBeanConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public UserDetailsService userDetailsService(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource);
+        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager(dataSource) {
+
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                UserDetails userDetails = super.loadUserByUsername(username);
+                List<GrantedAuthority> grantedAuthorities = loadUserAuthorities(username);
+                return new User(username, userDetails.getPassword(), grantedAuthorities);
+            }
+        };
+
+        userDetailsService.setGroupAuthoritiesByUsernameQuery(DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY.replace(" groups ", " `groups` "));
+        userDetailsService.setEnableGroups(true);
+
+        return userDetailsService;
     }
 
     /**

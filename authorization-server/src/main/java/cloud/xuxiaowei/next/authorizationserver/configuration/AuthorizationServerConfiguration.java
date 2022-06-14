@@ -39,6 +39,8 @@ import javax.sql.DataSource;
 import java.security.interfaces.RSAPublicKey;
 import java.util.List;
 
+import static org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY;
+
 /**
  * 授权服务器配置
  *
@@ -111,7 +113,8 @@ public class AuthorizationServerConfiguration {
      */
     @Bean
     public UserDetailsService userDetailsService(DataSource dataSource) {
-        return new JdbcUserDetailsManager(dataSource) {
+        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager(dataSource) {
+
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 UserDetails userDetails = super.loadUserByUsername(username);
@@ -119,6 +122,11 @@ public class AuthorizationServerConfiguration {
                 return new User(username, userDetails.getPassword(), grantedAuthorities);
             }
         };
+
+        userDetailsService.setGroupAuthoritiesByUsernameQuery(DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY.replace(" groups ", " `groups` "));
+        userDetailsService.setEnableGroups(true);
+
+        return userDetailsService;
     }
 
     /**
