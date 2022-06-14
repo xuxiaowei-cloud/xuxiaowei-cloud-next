@@ -219,7 +219,7 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
     console.log('已完成store中的jti缓存：', store.getters.jti)
 
     // 此次检查Token，不受 settings.state.checkTokenInterval 控制
-    checkToken(store.getters.accessToken).then(response => {
+    checkToken().then(response => {
       console.log('完成store中的Token缓存后检查Token', response)
       store.commit('setCheckTokenTime', new Date().getTime())
       info().then(() => {})
@@ -235,12 +235,12 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
     if (checkTokenInterval === -1) {
       console.log('路由不检查Token')
     } else if (checkTokenInterval === 0) {
-      checkToken(store.getters.accessToken).then(response => {
+      checkToken().then(response => {
         console.log('检查Token', response)
         store.commit('setCheckTokenTime', new Date().getTime())
       })
     } else if (checkTokenInterval > 0 && new Date().getTime() - store.getters.checkTokenTime > checkTokenInterval) {
-      checkToken(store.getters.accessToken).then(response => {
+      checkToken().then(response => {
         console.log('超过检查Token时间间隔后，检查Token结果', response)
         store.commit('setCheckTokenTime', new Date().getTime())
       })

@@ -8,12 +8,11 @@
 
 import { onMounted } from 'vue'
 import { checkToken } from '../api/authorization-server'
-import store from '../store'
 
 onMounted(() => {
   setTimeout(function () {
     // 进入 无权限访问页面 时，进行检查 Token
-    checkToken(store.getters.accessToken).then(response => {
+    checkToken().then(response => {
       console.log('进入 无权限访问页面 时，进行检查 Token', response)
       if (response && response.active === true) {
         // 如果 Token 有效，跳转到首页

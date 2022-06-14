@@ -10,7 +10,7 @@ import store from './store'
 onMounted(() => {
   setTimeout(function () {
     // 首次进入系统/刷新页面 时，进行检查 Token
-    checkToken(store.getters.accessToken).then(response => {
+    checkToken().then(response => {
       console.log('完成store中的Token缓存后检查Token', response)
       store.commit('setCheckTokenTime', new Date().getTime())
       info().then(() => {})
