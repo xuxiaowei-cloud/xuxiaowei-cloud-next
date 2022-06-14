@@ -41,7 +41,7 @@
 
     <scm>
         <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
-        <connection>scm:git:https://git@github.com/xuxiaowei-cloud/xuxiaowei-cloud.git</connection>
+        <connection>scm:git:https://git@github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git</connection>
         <developerConnection>http://xuxiaowei.com.cn</developerConnection>
     </scm>
 

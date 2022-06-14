@@ -21,7 +21,7 @@
   "homepage": "https://github.com/xuxiaowei-cloud/xuxiaowei-cloud#README",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xuxiaowei-cloud/xuxiaowei-cloud.git"
+    "url": "git+https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git"
   },
   "keywords": [
     "axios",
