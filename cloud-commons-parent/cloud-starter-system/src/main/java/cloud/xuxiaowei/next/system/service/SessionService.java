@@ -1,11 +1,8 @@
 package cloud.xuxiaowei.next.system.service;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.lang.NonNull;
-import org.springframework.security.oauth2.common.DefaultExpiringOAuth2RefreshToken;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
-import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,49 +12,6 @@ import java.util.concurrent.TimeUnit;
  * @since 0.0.1
  */
 public interface SessionService {
-
-    /**
-     * 获取 Token
-     *
-     * @return 返回 Token
-     */
-    String getTokenValue();
-
-    /**
-     * 获取 授权Token对象
-     *
-     * @return 返回 授权Token对象
-     */
-    OAuth2AccessToken readAccessToken();
-
-    /**
-     * 获取 默认授权Token对象
-     *
-     * @return 返回 默认授权Token对象
-     */
-    DefaultOAuth2AccessToken defaultOauth2AccessToken();
-
-    /**
-     * 获取 刷新Token对象
-     *
-     * @return 返回 刷新Token对象
-     */
-    DefaultExpiringOAuth2RefreshToken defaultExpiringOauth2RefreshToken();
-
-    /**
-     * 获取 刷新Token
-     *
-     * @return 返回 刷新Token
-     */
-    String getRefreshToken();
-
-    /**
-     * 计算令牌的MD5值
-     *
-     * @param value 令牌
-     * @return 返回 令牌的MD5值
-     */
-    String extractTokenKey(String value);
 
     /**
      * 获取 授权Token ID
