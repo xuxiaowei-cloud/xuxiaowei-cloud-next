@@ -93,6 +93,12 @@
         <!-- https://github.com/p6spy/p6spy -->
         <p6spy.version>3.9.1</p6spy.version>
 
+        <!-- guava -->
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/google/guava/guava -->
+        <!-- https://github.com/google/guava -->
+        <guava.version>31.1-jre</guava.version>
+
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <hutool-all.version>5.8.3</hutool-all.version>
 
@@ -245,6 +251,14 @@
                 <version>${p6spy.version}</version>
             </dependency>
 
+            <!-- guava -->
+            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -292,6 +306,12 @@
             <dependency>
                 <groupId>cloud.xuxiaowei.next.commons</groupId>
                 <artifactId>cloud-starter-session-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- 验证组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-validation</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
