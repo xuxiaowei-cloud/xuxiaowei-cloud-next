@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
-import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -77,7 +76,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         // 在 grantType 为 password 时，对密码进行处理后才能比较，这样更安全
-        String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
+        String grantType = request.getParameter(Constant.GRANT_TYPE);
         // 客户端类型
         String clientType = request.getParameter(Constant.CLIENT_TYPE);
         // 微信小程序appid
