@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.validation.utils;
+package cloud.xuxiaowei.next.validation.utils;
 
 import cloud.xuxiaowei.next.utils.Response;
 import com.fasterxml.jackson.databind.JsonMappingException;

@@ -14,7 +14,7 @@ import cloud.xuxiaowei.next.system.vo.AuthorityVo;
 import cloud.xuxiaowei.next.system.vo.UsersVo;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
-import cloud.xuxiaowei.validation.utils.ValidationUtils;
+import cloud.xuxiaowei.next.validation.utils.ValidationUtils;
 import cn.hutool.crypto.asymmetric.KeyType;
 import cn.hutool.crypto.asymmetric.RSA;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;

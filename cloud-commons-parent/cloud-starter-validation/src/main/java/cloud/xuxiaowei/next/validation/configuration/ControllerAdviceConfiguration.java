@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.validation.configuration;
+package cloud.xuxiaowei.next.validation.configuration;
 
 import cloud.xuxiaowei.next.utils.CodeEnums;
 import cloud.xuxiaowei.next.utils.Constant;
@@ -6,7 +6,7 @@ import cloud.xuxiaowei.next.utils.Response;
 import cloud.xuxiaowei.next.utils.exception.CloudException;
 import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
 import cloud.xuxiaowei.next.utils.map.ResponseMap;
-import cloud.xuxiaowei.validation.utils.FieldErrorUtils;
+import cloud.xuxiaowei.next.validation.utils.FieldErrorUtils;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;

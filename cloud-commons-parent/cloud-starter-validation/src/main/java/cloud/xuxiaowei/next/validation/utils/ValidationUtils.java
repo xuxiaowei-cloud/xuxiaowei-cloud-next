@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.validation.utils;
+package cloud.xuxiaowei.next.validation.utils;
 
 import cloud.xuxiaowei.next.utils.CodeEnums;
 import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
