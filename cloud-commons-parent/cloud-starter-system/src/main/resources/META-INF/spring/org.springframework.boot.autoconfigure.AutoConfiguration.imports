@@ -1,0 +1,9 @@
+cloud.xuxiaowei.next.system.aspect.ControllerLogAspect
+cloud.xuxiaowei.next.system.filter.BearerAfterHttpFilter
+cloud.xuxiaowei.next.system.filter.LogHttpFilter
+cloud.xuxiaowei.next.system.service.impl.AuthoritiesServiceImpl
+cloud.xuxiaowei.next.system.service.impl.AuthorityServiceImpl
+cloud.xuxiaowei.next.system.service.impl.SessionServiceImpl
+cloud.xuxiaowei.next.system.service.impl.UserDetailsServiceImpl
+cloud.xuxiaowei.next.system.service.impl.UsersServiceImpl
+cloud.xuxiaowei.next.system.service.impl.WxMaUsersServiceImpl

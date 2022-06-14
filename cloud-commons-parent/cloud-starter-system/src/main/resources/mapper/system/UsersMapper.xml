@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.xuxiaowei.next.system.mapper.UsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cloud.xuxiaowei.next.system.entity.Users">
+        <id column="users_id" property="usersId" />
+        <result column="username" property="username" />
+        <result column="email" property="email" />
+        <result column="email_valid" property="emailValid" />
+        <result column="nickname" property="nickname" />
+        <result column="password" property="password" />
+        <result column="enabled" property="enabled" />
+        <result column="account_non_expired" property="accountNonExpired" />
+        <result column="credentials_non_expired" property="credentialsNonExpired" />
+        <result column="account_non_locked" property="accountNonLocked" />
+        <result column="update_date" property="updateDate" />
+        <result column="create_date" property="createDate" />
+        <result column="deleted" property="deleted" />
+
+        <!-- 权限 -->
+        <collection property="authoritiesList" ofType="cloud.xuxiaowei.next.system.entity.Authorities">
+            <id column="a_username" property="username" />
+            <id column="a_authority" property="authority" />
+            <result column="a_explain" property="explain" />
+            <result column="a_update_date" property="updateDate" />
+            <result column="a_create_date" property="createDate" />
+        </collection>
+
+    </resultMap>
+
+    <sql id="BaseResultMap_field">
+        u.*,
+        a.username      AS a_username,
+        a.authority     AS a_authority,
+        ay.explain      AS a_explain,
+        a.update_date   AS a_update_date,
+        a.create_date   AS a_create_date
+    </sql>
+
+    <!-- 根据 用户主键 查询 -->
+    <select id="getByUsersId" resultMap="BaseResultMap">
+        SELECT
+            <include refid="BaseResultMap_field"/>
+        FROM
+            users AS u
+            LEFT JOIN authorities AS a ON u.username = a.username
+            LEFT JOIN authority as ay ON ay.authority = a.authority
+        WHERE
+            u.users_id = #{usersId} AND u.deleted = 0
+    </select>
+
+    <!-- 根据 用户名 查询用户信息及权限 -->
+    <select id="getByUsername" resultMap="BaseResultMap">
+        SELECT
+            <include refid="BaseResultMap_field"/>
+        FROM
+            users AS u
+            LEFT JOIN authorities AS a ON u.username = a.username
+            LEFT JOIN authority as ay ON ay.authority = a.authority
+        WHERE
+            u.username = #{username} AND u.deleted = 0
+    </select>
+
+    <!--
+        根据 用户名 查询用户信息
+        条件无逻辑删除的判断
+     -->
+    <select id="getLogicByUsername" resultType="cloud.xuxiaowei.next.system.entity.Users">
+        SELECT
+            u.*
+        FROM
+            users AS u
+        WHERE
+            u.username = #{username}
+    </select>
+
+    <!-- 根据 昵称 查询用户信息 -->
+    <select id="getLogicByNickname" resultType="cloud.xuxiaowei.next.system.entity.Users">
+        SELECT
+            u.*
+        FROM
+            users AS u
+        WHERE
+            u.nickname = #{nickname}
+    </select>
+
+    <!-- 根据 邮箱 查询用户信息 -->
+    <select id="getLogicByEmail" resultType="cloud.xuxiaowei.next.system.entity.Users">
+        SELECT
+            u.*
+        FROM
+            users AS u
+        WHERE
+            u.email = #{email}
+    </select>
+
+</mapper>

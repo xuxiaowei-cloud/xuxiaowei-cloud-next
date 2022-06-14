@@ -308,6 +308,12 @@
                 <artifactId>cloud-starter-session-redis</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- 系统组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-system</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- 验证组件 -->
             <dependency>
                 <groupId>cloud.xuxiaowei.next.commons</groupId>

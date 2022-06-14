@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.xuxiaowei.next.system.mapper.WxMaUsersMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cloud.xuxiaowei.next.system.entity.WxMaUsers">
+        <id column="wx_ma_users_id" property="wxMaUsersId" />
+        <result column="appid" property="appid" />
+        <result column="openid" property="openid" />
+        <result column="unionid" property="unionid" />
+        <result column="remark" property="remark" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="create_username" property="createUsername" />
+        <result column="update_username" property="updateUsername" />
+        <result column="create_ip" property="createIp" />
+        <result column="update_ip" property="updateIp" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.xuxiaowei.next.system.mapper.AuthoritiesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cloud.xuxiaowei.next.system.entity.Authorities">
+        <id column="username" property="username" />
+        <id column="authority" property="authority" />
+        <result column="update_date" property="updateDate" />
+        <result column="create_date" property="createDate" />
+    </resultMap>
+
+</mapper>

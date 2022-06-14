@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.xuxiaowei.next.system.mapper.AuthorityMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cloud.xuxiaowei.next.system.entity.Authority">
+        <id column="authority" property="authority" />
+        <result column="explain" property="explain" />
+    </resultMap>
+
+    <!-- 根据 用户名 查询权限 -->
+    <select id="listByUsername" resultType="cloud.xuxiaowei.next.system.vo.AuthorityVo">
+        SELECT
+            ay.*
+        FROM
+            authorities a
+                LEFT JOIN authority ay ON a.authority = ay.authority
+        WHERE
+            a.username = #{username}
+    </select>
+
+</mapper>

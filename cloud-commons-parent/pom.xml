@@ -38,6 +38,8 @@
         <module>cloud-starter-redis</module>
         <!-- Session Redis 组件 -->
         <module>cloud-starter-session-redis</module>
+        <!-- 系统组件 -->
+        <module>cloud-starter-system</module>
         <!-- 验证组件 -->
         <module>cloud-starter-validation</module>
     </modules>
