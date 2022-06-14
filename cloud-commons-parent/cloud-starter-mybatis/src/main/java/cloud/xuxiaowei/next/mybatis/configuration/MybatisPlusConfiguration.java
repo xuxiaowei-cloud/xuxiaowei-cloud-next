@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan("cloud.xuxiaowei.*.mapper.**")
+@MapperScan("cloud.xuxiaowei.next.*.mapper.**")
 public class MybatisPlusConfiguration {
 
     /**
