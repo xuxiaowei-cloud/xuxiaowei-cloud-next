@@ -18,7 +18,7 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
-  "homepage": "https://github.com/xuxiaowei-cloud/xuxiaowei-cloud#README",
+  "homepage": "https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next#README",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git"
