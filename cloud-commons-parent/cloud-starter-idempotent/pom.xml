@@ -4,71 +4,39 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cloud.xuxiaowei.next</groupId>
-        <artifactId>xuxiaowei-cloud-starter-parent</artifactId>
+        <artifactId>cloud-commons-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-
-    <groupId>cloud.xuxiaowei.next</groupId>
-    <artifactId>cloud-commons-parent</artifactId>
+    <groupId>cloud.xuxiaowei.next.commons</groupId>
+    <artifactId>cloud-starter-idempotent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
-    <name>cloud-commons-parent</name>
-    <description>微服务公共组件父模块</description>
+    <name>cloud-starter-idempotent</name>
+    <description>幂等组件</description>
     <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>
 
     <properties>
-        <java.version>17</java.version>
+        <java.version>1.8</java.version>
     </properties>
-
-    <modules>
-        <!-- 核心组件 -->
-        <module>cloud-starter-core</module>
-        <!-- 幂等组件 -->
-        <module>cloud-starter-idempotent</module>
-        <!-- 负载均衡组件 -->
-        <module>cloud-starter-loadbalancer</module>
-        <!-- 日志组件 -->
-        <module>cloud-starter-log</module>
-        <!-- MyBatis 组件 -->
-        <module>cloud-starter-mybatis</module>
-        <!-- Redis 组件 -->
-        <module>cloud-starter-redis</module>
-        <!-- Session Redis 组件 -->
-        <module>cloud-starter-session-redis</module>
-    </modules>
-
     <dependencies>
 
-        <!-- Spring Cloud Starter 引导程序 -->
+        <!-- Redis 组件 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-
-        <!-- 端点 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <!-- 工具类 -->
-        <dependency>
-            <groupId>cloud.xuxiaowei.next</groupId>
-            <artifactId>utils</artifactId>
+            <groupId>cloud.xuxiaowei.next.commons</groupId>
+            <artifactId>cloud-starter-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

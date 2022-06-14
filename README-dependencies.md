@@ -26,12 +26,13 @@ cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:cloud-commons-parent:pom:0.0.1-SNAPSHOT
-│        └──org.springframework.boot:spring-boot-starter:jar:3.0.0-M2:compile
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
 
 
 cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT
-│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
 │        └──cn.hutool:hutool-all:jar:5.8.3:provided
 │        └──org.springframework.cloud:spring-cloud-context:jar:4.0.0-M2:provided
 │        └──org.springframework:spring-web:jar:6.0.0-M3:provided
@@ -40,7 +41,9 @@ cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.security:spring-security-web:jar:6.0.0-M3:provided
 │        └──org.springframework.security:spring-security-config:jar:6.0.0-M3:provided
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
-│        └──org.springframework.boot:spring-boot-starter:jar:3.0.0-M2:compile
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
 
 
@@ -49,7 +52,9 @@ cloud.xuxiaowei.next.commons:cloud-starter-redis:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-data-redis:jar:3.0.0-M2:compile
 │        └──org.springframework.boot:spring-boot-starter-json:jar:3.0.0-M2:compile
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
-│        └──org.springframework.boot:spring-boot-starter:jar:3.0.0-M2:compile
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
 
 
@@ -59,7 +64,9 @@ cloud.xuxiaowei.next.commons:cloud-starter-session-redis:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.session:spring-session-data-redis:jar:3.0.0-M1:compile
 │        └──org.apache.tomcat.embed:tomcat-embed-core:jar:10.0.18:compile
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
-│        └──org.springframework.boot:spring-boot-starter:jar:3.0.0-M2:compile
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
 
 
@@ -79,12 +86,50 @@ cloud.xuxiaowei.next:authorization-server:jar:0.0.1-SNAPSHOT
 │        └──org.projectlombok:lombok:jar:1.18.22:compile
 
 
+cloud.xuxiaowei.next.commons:cloud-starter-idempotent:jar:0.0.1-SNAPSHOT
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-redis:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
+
+
 cloud.xuxiaowei.next.commons:cloud-starter-loadbalancer:jar:0.0.1-SNAPSHOT
 │        └──org.springframework:spring-web:jar:6.0.0-M3:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.cloud:spring-cloud-starter-loadbalancer:jar:4.0.0-M2:compile
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
-│        └──org.springframework.boot:spring-boot-starter:jar:3.0.0-M2:compile
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
+
+
+cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT
+│        └──org.mybatis.spring.boot:mybatis-spring-boot-starter:jar:2.2.2:compile
+│        └──com.baomidou:mybatis-plus-boot-starter:jar:3.5.1:compile
+│        └──com.baomidou:dynamic-datasource-spring-boot-starter:jar:3.5.1:compile
+│        └──p6spy:p6spy:jar:3.9.1:compile
+│        └──com.baomidou:mybatis-plus-generator:jar:3.5.2:test
+│        └──org.springframework.boot:spring-boot-starter-velocity:jar:1.4.7.RELEASE:test
+│        └──mysql:mysql-connector-java:jar:8.0.28:runtime
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
+│        └──com.baomidou:mybatis-plus-extension:jar:3.5.1:compile
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
+
+
+cloud.xuxiaowei.next.commons:cloud-starter-log:jar:0.0.1-SNAPSHOT
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M2:test
+│        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-M2:compile
+│        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M2:compile
 
 

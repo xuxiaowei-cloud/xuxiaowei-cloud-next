@@ -59,6 +59,34 @@
         <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server -->
         <spring-security-oauth2-authorization-server-next.version>0.3.0-SNAPSHOT</spring-security-oauth2-authorization-server-next.version>
 
+        <!-- MyBatis -->
+        <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
+        <!-- https://github.com/mybatis/spring-boot-starter -->
+        <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
+        <!-- MyBatis Plus -->
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-boot-starter -->
+        <!-- https://github.com/baomidou/mybatis-plus -->
+        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
+        <!-- MyBatis Plus Generator -->
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-generator -->
+        <!-- https://github.com/baomidou/generator -->
+        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
+        <!-- Velocity -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-velocity -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-velocity -->
+        <spring-boot-starter-velocity.version>1.4.7.RELEASE</spring-boot-starter-velocity.version>
+        <!-- 多数据源 -->
+        <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/dynamic-datasource-spring-boot-starter -->
+        <!-- https://github.com/baomidou/dynamic-datasource-spring-boot-starter -->
+        <dynamic-datasource-spring-boot-starter.version>3.5.1</dynamic-datasource-spring-boot-starter.version>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-extension -->
+        <!-- https://github.com/baomidou/mybatis-plus -->
+        <mybatis-plus-extension.version>3.5.1</mybatis-plus-extension.version>
         <!-- SQL 性能分析 -->
         <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
         <!-- https://oss.sonatype.org/content/repositories/public/p6spy/p6spy -->
@@ -168,6 +196,47 @@
                 <version>${spring-security-oauth2-authorization-server-next.version}</version>
             </dependency>
 
+            <!-- MyBatis -->
+            <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+            <!-- MyBatis Plus -->
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+            <!-- MyBatis Plus Generator -->
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+            <!-- Velocity -->
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-velocity -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-velocity</artifactId>
+                <version>${spring-boot-starter-velocity.version}</version>
+            </dependency>
+            <!-- 多数据源 -->
+            <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot-starter.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
+                <version>${mybatis-plus-extension.version}</version>
+            </dependency>
             <!-- SQL 性能分析 -->
             <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
             <dependency>
@@ -189,10 +258,28 @@
                 <artifactId>cloud-starter-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- 幂等组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-idempotent</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- 负载均衡组件 -->
             <dependency>
                 <groupId>cloud.xuxiaowei.next.commons</groupId>
                 <artifactId>cloud-starter-loadbalancer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- 日志组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-log</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <!-- MyBatis 组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Redis 组件 -->
