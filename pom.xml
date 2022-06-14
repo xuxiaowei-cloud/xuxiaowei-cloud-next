@@ -99,6 +99,10 @@
         <!-- https://github.com/google/guava -->
         <guava.version>31.1-jre</guava.version>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/apache/commons/commons-lang3 -->
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <hutool-all.version>5.8.3</hutool-all.version>
 
@@ -155,6 +159,8 @@
         <module>passport</module>
         <!-- 登录服务UI -->
         <module>passport-ui</module>
+        <!-- 资源服务父模块 -->
+        <module>resource-services-parent</module>
         <!-- UI -->
         <module>ui</module>
         <!-- 工具类 -->
@@ -259,6 +265,13 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->

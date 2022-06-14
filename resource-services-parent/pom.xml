@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cloud.xuxiaowei.next</groupId>
+		<artifactId>xuxiaowei-cloud-starter-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>cloud.xuxiaowei.next</groupId>
+	<artifactId>resource-services-parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>resource-services-parent</name>
+	<description>资源服务父模块</description>
+	<url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
+	<inceptionYear>2022</inceptionYear>
+
+	<properties>
+		<java.version>1.8</java.version>
+	</properties>
+
+	<modules>
+		<!-- 用户服务 -->
+		<module>user</module>
+	</modules>
+
+	<dependencies>
+
+		<!-- 系统组件 -->
+		<dependency>
+			<groupId>cloud.xuxiaowei.next.commons</groupId>
+			<artifactId>cloud-starter-system</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+		<license>
+			<name>996.ICU</name>
+			<url>https://github.com/996icu/996.ICU/blob/master/LICENSE</url>
+			<distribution>repo</distribution>
+			<comments>The name 996.ICU refers to "Work by '996', sick in ICU", an ironic saying among Chinese
+				developers, which means that by following the "996" work schedule, you are risking yourself getting into
+				the ICU (Intensive Care Unit).
+			</comments>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
+		<connection>scm:git:https://git@github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git</connection>
+		<developerConnection>http://xuxiaowei.com.cn</developerConnection>
+	</scm>
+
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/issues</url>
+	</issueManagement>
+
+	<organization>
+		<name>徐晓伟工作室</name>
+		<url>http://xuxiaowei.com.cn</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>徐晓伟</name>
+			<email>xuxiaowei@xuxiaowei.com.cn</email>
+			<organization>徐晓伟工作室</organization>
+			<organizationUrl>http://xuxiaowei.com.cn</organizationUrl>
+		</developer>
+	</developers>
+
+</project>
