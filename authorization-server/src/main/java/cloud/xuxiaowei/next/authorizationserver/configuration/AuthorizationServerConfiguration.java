@@ -22,10 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.OAuth2Au
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
@@ -45,7 +42,6 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 
 import javax.sql.DataSource;
 import java.security.interfaces.RSAPublicKey;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -137,15 +133,7 @@ public class AuthorizationServerConfiguration {
      */
     @Bean
     public UserDetailsService userDetailsService(DataSource dataSource) {
-        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager(dataSource) {
-
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                UserDetails userDetails = super.loadUserByUsername(username);
-                List<GrantedAuthority> grantedAuthorities = loadUserAuthorities(username);
-                return new User(username, userDetails.getPassword(), grantedAuthorities);
-            }
-        };
+        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager(dataSource);
 
         userDetailsService.setGroupAuthoritiesByUsernameQuery(DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY.replace(" groups ", " `groups` "));
         userDetailsService.setEnableGroups(true);
