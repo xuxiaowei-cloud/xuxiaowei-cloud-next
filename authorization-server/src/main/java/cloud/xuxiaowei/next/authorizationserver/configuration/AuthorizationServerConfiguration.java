@@ -135,6 +135,7 @@ public class AuthorizationServerConfiguration {
     public UserDetailsService userDetailsService(DataSource dataSource) {
         JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager(dataSource);
 
+        // 启用权限组
         userDetailsService.setGroupAuthoritiesByUsernameQuery(DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY.replace(" groups ", " `groups` "));
         userDetailsService.setEnableGroups(true);
 
