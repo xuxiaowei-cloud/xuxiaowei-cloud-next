@@ -114,7 +114,7 @@ spring:
           driver-class-name: com.p6spy.engine.spy.P6SpyDriver
         log:
           # 数据库 连接串
-          # url: jdbc:mysql://${mysql_xuxiaowei_cloud:mysql.example.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database_log:xuxiaowei_cloud_next_log}?useSSL=false&serverTimezone=GMT%2B8
+          # url: jdbc:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database_log:xuxiaowei_cloud_next_log}?useSSL=false&serverTimezone=GMT%2B8
           # 数据库 连接串 - 测试环境使用
           url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database_log:xuxiaowei_cloud_next_log}?useSSL=false&serverTimezone=GMT%2B8
           # 数据库 用户名
@@ -158,7 +158,7 @@ spring:
   redis:
     database: ${redis_xuxiaowei_cloud_database:1}
     password: ${redis_xuxiaowei_cloud_password:xuxiaowei.com.cn}
-    host: ${redis_xuxiaowei_cloud_host:redis.example.xuxiaowei.cloud}
+    host: ${redis_xuxiaowei_cloud_host:redis.example.next.xuxiaowei.cloud}
     port: ${redis_xuxiaowei_cloud_port:6379}
 
 ---

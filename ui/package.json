@@ -5,9 +5,9 @@
   "description": "徐晓伟微服务UI",
   "scripts": {
     "dev": "vite --host --port 1001",
-    "dev:example": "vite --host example.xuxiaowei.cloud --port 1001",
+    "dev:example": "vite --host example.next.xuxiaowei.cloud --port 1001",
     "dev:test": "vite --host --port 1001 --mode test",
-    "dev:test:example": "vite --host example.xuxiaowei.cloud --port 1001 --mode test",
+    "dev:test:example": "vite --host example.next.xuxiaowei.cloud --port 1001 --mode test",
     "build": "vue-tsc --noEmit && vite build",
     "lint": "vue-cli-service lint",
     "preview": "vite preview --host",
