@@ -177,7 +177,16 @@ public class AuthorizationServerConfiguration {
         return context -> {
             if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType())) {
                 Authentication principal = context.getPrincipal();
+
+                // 用户权限
                 Set<String> authorities = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+
+                // 客户权限
+                Set<String> authorizedScopes = context.getAuthorizedScopes();
+
+                // 合并权限
+                authorities.addAll(authorizedScopes);
+
                 context.getClaims().claim("authorities", authorities);
             }
         };
