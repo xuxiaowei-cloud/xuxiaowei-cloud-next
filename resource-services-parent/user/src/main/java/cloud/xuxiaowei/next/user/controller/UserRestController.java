@@ -62,7 +62,7 @@ public class UserRestController {
      * @return 返回 结果
      */
     @ControllerAnnotation(description = "用户信息")
-    @PreAuthorize("hasAuthority('user_info')")
+    @PreAuthorize("hasAuthority('SCOPE_user_info')")
     @RequestMapping("/info")
     public Response<?> info(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
@@ -83,7 +83,7 @@ public class UserRestController {
      * @return 返回 结果
      */
     @ControllerAnnotation(description = "用户权限")
-    @PreAuthorize("hasAuthority('user_authorities')")
+    @PreAuthorize("hasAuthority('SCOPE_user_authorities')")
     @RequestMapping("/authorities")
     public Response<?> authorities(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
@@ -100,7 +100,7 @@ public class UserRestController {
      * @return 返回 结果
      */
     @ControllerAnnotation(description = "用户详情")
-    @PreAuthorize("hasAuthority('user_details')")
+    @PreAuthorize("hasAuthority('SCOPE_user_details')")
     @RequestMapping("/details")
     public Response<?> details(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
 
@@ -118,7 +118,7 @@ public class UserRestController {
      * @return 返回 分页查询结果
      */
     @ControllerAnnotation(description = "分页查询用户")
-    @PreAuthorize("hasAuthority('manage_user_read')")
+    @PreAuthorize("hasAuthority('SCOPE_manage_user_read')")
     @RequestMapping("/page")
     public Response<?> page(HttpServletRequest request, HttpServletResponse response, @RequestBody ManageUsersPageBo manageUsersPageBo) {
 
@@ -136,7 +136,7 @@ public class UserRestController {
      * @return 返回 删除结果
      */
     @ControllerAnnotation(description = "根据 用户主键 删除 用户")
-    @PreAuthorize("hasAuthority('manage_user_delete')")
+    @PreAuthorize("hasAuthority('SCOPE_manage_user_delete')")
     @RequestMapping("/removeById/{usersId}")
     public Response<?> removeById(HttpServletRequest request, HttpServletResponse response, @PathVariable("usersId") Long usersId) {
 
@@ -154,7 +154,7 @@ public class UserRestController {
      * @return 返回 删除结果
      */
     @ControllerAnnotation(description = "根据 用户主键 批量删除 用户")
-    @PreAuthorize("hasAuthority('manage_user_delete')")
+    @PreAuthorize("hasAuthority('SCOPE_manage_user_delete')")
     @RequestMapping("/removeByIds")
     public Response<?> removeByIds(HttpServletRequest request, HttpServletResponse response, @RequestBody List<Long> usersIds) {
 
@@ -174,7 +174,7 @@ public class UserRestController {
      * @return 返回 查询结果
      */
     @ControllerAnnotation(description = "根据 用户主键 查询用户")
-    @PreAuthorize("hasAuthority('manage_user_read')")
+    @PreAuthorize("hasAuthority('SCOPE_manage_user_read')")
     @RequestMapping("/getById/{usersId}")
     public Response<?> getById(HttpServletRequest request, HttpServletResponse response, @PathVariable("usersId") Long usersId) {
 
@@ -192,7 +192,7 @@ public class UserRestController {
      * @return 返回 保存结果
      */
     @ControllerAnnotation(description = "保存用户")
-    @PreAuthorize("hasAuthority('manage_user_add')")
+    @PreAuthorize("hasAuthority('SCOPE_manage_user_add')")
     @RequestMapping("/save")
     public Response<?> save(HttpServletRequest request, HttpServletResponse response, @Valid @RequestBody UsersSaveBo usersSaveBo) {
 
@@ -210,7 +210,7 @@ public class UserRestController {
      * @return 返回 更新结果
      */
     @ControllerAnnotation(description = "根据 用户主键 更新用户")
-    @PreAuthorize("hasAuthority('manage_user_edit')")
+    @PreAuthorize("hasAuthority('SCOPE_manage_user_edit')")
     @RequestMapping("/updateById")
     public Response<?> updateById(HttpServletRequest request, HttpServletResponse response, @Valid @RequestBody UsersUpdateBo usersUpdateBo) {
 
@@ -232,7 +232,7 @@ public class UserRestController {
      * @return 返回 更新结果
      */
     @ControllerAnnotation(description = "获取用户识别码")
-    @PreAuthorize("hasAuthority('user_info')")
+    @PreAuthorize("hasAuthority('SCOPE_user_info')")
     @RequestMapping("/code/rsa")
     public Response<?> code(HttpServletRequest request, HttpServletResponse response) {
 
