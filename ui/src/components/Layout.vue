@@ -47,7 +47,7 @@
           </el-menu-item-group>
         </el-sub-menu>
 
-        <el-sub-menu index="4">
+        <el-sub-menu index="4" v-if="hasAnyAuthority(['manage_user_read', 'manage_client_read'])">
           <template #title>
             <el-icon>
               <setting/>
