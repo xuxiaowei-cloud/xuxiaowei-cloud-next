@@ -3,13 +3,14 @@ package cloud.xuxiaowei.next.authorizationserver.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * OAuth 2
@@ -34,11 +35,7 @@ public class OAuth2Controller {
     public Map<String, Object> checkToken(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         Map<String, Object> map = new HashMap<>(4);
         if (authentication != null) {
-            Set<String> authorities = new HashSet<>();
-            authentication.getAuthorities().forEach(grantedAuthority -> {
-                String authority = grantedAuthority.getAuthority();
-                authorities.add(authority.replaceFirst("SCOPE_", ""));
-            });
+            Set<String> authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
             map.put("authorities", authorities);
             map.put("active", true);
         }
