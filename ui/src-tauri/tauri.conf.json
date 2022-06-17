@@ -27,7 +27,7 @@
       "copyright": "徐晓伟工作室",
       "category": "DeveloperTool",
       "shortDescription": "徐晓伟微服务",
-      "longDescription": "徐晓伟微服务 https://github.com/xuxiaowei-cloud/xuxiaowei-cloud",
+      "longDescription": "徐晓伟微服务 https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next",
       "deb": {
         "depends": []
       },

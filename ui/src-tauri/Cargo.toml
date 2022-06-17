@@ -1,11 +1,11 @@
 [package]
-name = "xuxiaowei-cloud"
+name = "xuxiaowei-cloud-next"
 version = "0.0.1"
 description = "徐晓伟微服务"
 authors = ["徐晓伟 <xuxiaowei@xuxiaowei.com.cn>"]
 license = "Apache-2.0"
 repository = "git+https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git"
-default-run = "xuxiaowei-cloud"
+default-run = "xuxiaowei-cloud-next"
 edition = "2021"
 rust-version = "1.57"
 
