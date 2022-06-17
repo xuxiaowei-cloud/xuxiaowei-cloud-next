@@ -53,6 +53,10 @@ import static org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.DEF
  * @author xuxiaowei
  * @see <a href="http://127.0.0.1:1301/.well-known/oauth-authorization-server">OAuth 2.0 授权服务器元数据请求的默认端点URI</a>
  * @see <a href="http://127.0.0.1:1301/oauth2/authorize?client_id=xuxiaowei_client_id&redirect_uri=http://127.0.0.1:1401/code&response_type=code&scope=snsapi_base&state=beff3dfc-bad8-40db-b25f-e5459e3d6ad7">/oauth2/authorize</a>
+ * @see <a href="https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction">手动提取权限-6.0.0-M3</a>
+ * @see <a href="https://github.com/spring-projects/spring-authorization-server/issues/181#issuecomment-756913042">将用户权限作为声明传播`Jwt`是一种自定义行为</a>
+ * @see <a href="https://github.com/spring-projects/spring-authorization-server/blob/a30a1692b28915947a001f1e2a6d1e41a550eaa7/oauth2-authorization-server/src/test/java/org/springframework/security/config/annotation/web/configurers/oauth2/server/authorization/OidcTests.java#L264">自定义 Jwt 声明和标头官方示例代码</a>
+ * @see <a href="https://github.com/spring-projects/spring-authorization-server/issues/199">自定义 Jwt 声明和标头需要更灵活 议题</a>
  * @since 0.0.1
  */
 @Slf4j
@@ -118,6 +122,7 @@ public class AuthorizationServerConfiguration {
      * 支持 {@link EnableGlobalMethodSecurity}、{@link PreAuthorize} 的 {@link Bean}
      *
      * @return 支持 {@link EnableGlobalMethodSecurity}、{@link PreAuthorize}
+     * @see <a href="https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction">手动提取权限-6.0.0-M3</a>
      */
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
@@ -181,6 +186,10 @@ public class AuthorizationServerConfiguration {
 
     /**
      * JWK 增加用户权限
+     *
+     * @see <a href="https://github.com/spring-projects/spring-authorization-server/issues/181#issuecomment-756913042">将用户权限作为声明传播`Jwt`是一种自定义行为</a>
+     * @see <a href="https://github.com/spring-projects/spring-authorization-server/blob/a30a1692b28915947a001f1e2a6d1e41a550eaa7/oauth2-authorization-server/src/test/java/org/springframework/security/config/annotation/web/configurers/oauth2/server/authorization/OidcTests.java#L264">自定义 Jwt 声明和标头官方示例代码</a>
+     * @see <a href="https://github.com/spring-projects/spring-authorization-server/issues/199">自定义 Jwt 声明和标头需要更灵活 议题</a>
      */
     @Bean
     public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {

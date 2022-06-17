@@ -23,6 +23,7 @@ import java.security.interfaces.RSAPublicKey;
  *
  * @author xuxiaowei
  * @see <a href="http://127.0.0.1:1701/sns/userinfo?access_token=">访问资源</a>
+ * @see <a href="https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction">手动提取权限-6.0.0-M3</a>
  * @since 0.0.1
  */
 @Configuration
@@ -73,6 +74,7 @@ public class ResourceServerConfiguration {
      * 支持 {@link EnableGlobalMethodSecurity}、{@link PreAuthorize} 的 {@link Bean}
      *
      * @return 支持 {@link EnableGlobalMethodSecurity}、{@link PreAuthorize}
+     * @see <a href="https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction">手动提取权限-6.0.0-M3</a>
      */
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
