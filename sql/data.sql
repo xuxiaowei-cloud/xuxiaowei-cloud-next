@@ -86,6 +86,6 @@ INSERT INTO `oauth2_registered_client` (`id`, `client_id`, `client_id_issued_at`
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` (`users_id`, `username`, `nickname`, `password`, `enabled`, `account_non_expired`, `credentials_non_expired`, `account_non_locked`, `create_date`, `update_date`, `deleted`) VALUES (1, 'xuxiaowei', '徐晓伟', '{bcrypt}$2a$10$UEX4P9awppGO0DACKpGbpOmcViKZqbG5ObTOr8viJJvAh1AFOGHkK', 1, 1, 1, 1, '2022-04-06 17:32:43', '2022-05-07 07:47:22', 0);
+INSERT INTO `users` (`users_id`, `username`, `email`, `email_valid`, `nickname`, `password`, `enabled`, `account_non_expired`, `credentials_non_expired`, `account_non_locked`, `create_date`, `update_date`, `deleted`) VALUES (1, 'xuxiaowei', 'xuxiaowei@xuxiaowei.com.cn', 1, '徐晓伟', '{bcrypt}$2a$10$UEX4P9awppGO0DACKpGbpOmcViKZqbG5ObTOr8viJJvAh1AFOGHkK', 1, 1, 1, 1, '2022-04-06 09:32:43', '2022-06-18 10:47:00', 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
