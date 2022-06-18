@@ -63,7 +63,7 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
         String clientId = oauth2RegisteredClientPageBo.getClientId();
         String clientName = oauth2RegisteredClientPageBo.getClientName();
 
-        if (id != null) {
+        if (StringUtils.hasText(id)) {
             queryWrapper.eq("id", id);
         }
         if (StringUtils.hasText(clientId)) {
