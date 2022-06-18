@@ -25,8 +25,8 @@
         <!-- Spring Boot 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies -->
-        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-parent -->
-        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-dependencies -->
+        <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-starter-parent -->
+        <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-dependencies -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-starter-parent -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-dependencies -->
         <!-- https://github.com/spring-projects/spring-boot -->
@@ -34,7 +34,7 @@
 
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
-        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/cloud/spring-cloud-dependencies -->
+        <!-- https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/cloud/spring-cloud-dependencies -->
         <!-- https://github.com/spring-cloud -->
         <!-- https://github.com/spring-cloud/spring-cloud-gateway -->
@@ -45,65 +45,68 @@
 
         <!-- 监控（管理）依赖 -->
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
-        <!-- https://oss.sonatype.org/content/repositories/public/de/codecentric/spring-boot-admin-dependencies -->
+        <!-- https://repo1.maven.org/maven2/de/codecentric/spring-boot-admin-dependencies -->
         <!-- https://github.com/codecentric/spring-boot-admin -->
         <spring-boot-admin.version>3.0.0-M1</spring-boot-admin.version>
 
         <!-- OAuth 2.1 依赖 -->
-        <!-- https://github.com/spring-projects/spring-authorization-server -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
+        <!-- https://repo1.maven.org/maven2/org/springframework/security/spring-security-oauth2-authorization-server -->
+        <!-- https://github.com/spring-projects/spring-authorization-server -->
         <spring-security-oauth2-authorization-server.version>0.3.1</spring-security-oauth2-authorization-server.version>
 
         <!-- OAuth 2.1 依赖，支持 spring-boot 3.0.0 -->
-        <!-- https://github.com/xuxiaowei-io/spring-security-oauth2-authorization-server -->
         <!-- https://mvnrepository.com/artifact/io.xuxiaowei.security.next/spring-security-oauth2-authorization-server -->
+        <!-- https://repo1.maven.org/maven2/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server/ -->
+        <!-- https://github.com/xuxiaowei-io/spring-security-oauth2-authorization-server -->
         <spring-security-oauth2-authorization-server-next.version>0.3.1</spring-security-oauth2-authorization-server-next.version>
 
         <!-- MyBatis -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
-        <!-- https://oss.sonatype.org/content/repositories/public/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
+        <!-- https://repo1.maven.org/maven2/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
         <!-- https://github.com/mybatis/spring-boot-starter -->
         <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
         <!-- MyBatis Plus -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
-        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-boot-starter -->
+        <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-boot-starter -->
         <!-- https://github.com/baomidou/mybatis-plus -->
         <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
         <!-- MyBatis Plus Generator -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
-        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-generator -->
+        <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-generator -->
         <!-- https://github.com/baomidou/generator -->
         <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
         <!-- Velocity -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-velocity -->
-        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-velocity -->
+        <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-starter-velocity -->
         <spring-boot-starter-velocity.version>1.4.7.RELEASE</spring-boot-starter-velocity.version>
         <!-- 多数据源 -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
-        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/dynamic-datasource-spring-boot-starter -->
+        <!-- https://repo1.maven.org/maven2/com/baomidou/dynamic-datasource-spring-boot-starter -->
         <!-- https://github.com/baomidou/dynamic-datasource-spring-boot-starter -->
         <dynamic-datasource-spring-boot-starter.version>3.5.1</dynamic-datasource-spring-boot-starter.version>
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
-        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-extension -->
+        <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-extension -->
         <!-- https://github.com/baomidou/mybatis-plus -->
         <mybatis-plus-extension.version>3.5.1</mybatis-plus-extension.version>
         <!-- SQL 性能分析 -->
         <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
-        <!-- https://oss.sonatype.org/content/repositories/public/p6spy/p6spy -->
+        <!-- https://repo1.maven.org/maven2/p6spy/p6spy -->
         <!-- https://github.com/p6spy/p6spy -->
         <p6spy.version>3.9.1</p6spy.version>
 
         <!-- guava -->
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
-        <!-- https://oss.sonatype.org/content/repositories/public/com/google/guava/guava -->
+        <!-- https://repo1.maven.org/maven2/com/google/guava/guava -->
         <!-- https://github.com/google/guava -->
         <guava.version>31.1-jre</guava.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
-        <!-- https://oss.sonatype.org/content/repositories/public/org/apache/commons/commons-lang3 -->
+        <!-- https://repo1.maven.org/maven2/org/apache/commons/commons-lang3 -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+        <!-- https://repo1.maven.org/maven2/cn/hutool/hutool-all -->
         <hutool-all.version>5.8.3</hutool-all.version>
 
         <!-- https://nodejs.org/dist/ -->
@@ -573,6 +576,11 @@
     </profiles>
 
     <repositories>
+
+        <repository>
+            <id>repo1</id>
+            <url>https://repo1.maven.org/maven2/</url>
+        </repository>
 
         <repository>
             <id>spring-milestones</id>
