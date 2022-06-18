@@ -1,6 +1,9 @@
 package cloud.xuxiaowei.next.authorizationserver.service;
 
+import cloud.xuxiaowei.next.authorizationserver.bo.Oauth2AuthorizationPageBo;
 import cloud.xuxiaowei.next.authorizationserver.entity.Oauth2Authorization;
+import cloud.xuxiaowei.next.authorizationserver.vo.Oauth2AuthorizationVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,5 +15,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-06-18
  */
 public interface IOauth2AuthorizationService extends IService<Oauth2Authorization> {
+
+    /**
+     * 分页查询
+     *
+     * @param oauth2AuthorizationPageBo 授权表 分页参数
+     * @return 返回 分页结果
+     */
+    IPage<Oauth2AuthorizationVo> pageByOauth2AuthorizationPageBo(Oauth2AuthorizationPageBo oauth2AuthorizationPageBo);
 
 }
