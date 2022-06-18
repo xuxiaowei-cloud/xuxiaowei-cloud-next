@@ -575,11 +575,6 @@
     <repositories>
 
         <repository>
-            <id>oss</id>
-            <url>https://oss.sonatype.org/content/repositories/releases/</url>
-        </repository>
-
-        <repository>
             <id>oss-s01-snapshots</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
