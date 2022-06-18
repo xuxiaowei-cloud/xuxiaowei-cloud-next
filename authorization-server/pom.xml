@@ -23,16 +23,22 @@
     </properties>
     <dependencies>
 
+        <!-- OAuth2 组件 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next.commons</groupId>
+            <artifactId>cloud-starter-oauth2</artifactId>
+        </dependency>
+
         <!-- Session Redis 组件 -->
         <dependency>
             <groupId>cloud.xuxiaowei.next.commons</groupId>
             <artifactId>cloud-starter-session-redis</artifactId>
         </dependency>
 
-        <!-- OAuth2 组件 -->
+        <!-- 系统组件 -->
         <dependency>
             <groupId>cloud.xuxiaowei.next.commons</groupId>
-            <artifactId>cloud-starter-oauth2</artifactId>
+            <artifactId>cloud-starter-system</artifactId>
         </dependency>
 
         <dependency>

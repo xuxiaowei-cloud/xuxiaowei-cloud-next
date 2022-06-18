@@ -1,6 +1,11 @@
 package cloud.xuxiaowei.next.authorizationserver.service;
 
+import cloud.xuxiaowei.next.authorizationserver.bo.Oauth2RegisteredClientPageBo;
+import cloud.xuxiaowei.next.authorizationserver.bo.Oauth2RegisteredClientSaveBo;
+import cloud.xuxiaowei.next.authorizationserver.bo.Oauth2RegisteredClientUpdateBo;
 import cloud.xuxiaowei.next.authorizationserver.entity.Oauth2RegisteredClient;
+import cloud.xuxiaowei.next.authorizationserver.vo.Oauth2RegisteredClientVo;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -12,5 +17,37 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-06-18
  */
 public interface IOauth2RegisteredClientService extends IService<Oauth2RegisteredClient> {
+
+    /**
+     * 分页查询
+     *
+     * @param oauth2RegisteredClientPageBo 客户表 分页参数
+     * @return 返回 分页结果
+     */
+    IPage<Oauth2RegisteredClientVo> pageByOauth2RegisteredClientPageBo(Oauth2RegisteredClientPageBo oauth2RegisteredClientPageBo);
+
+    /**
+     * 根据 主键 查询
+     *
+     * @param id 主键
+     * @return 返回 查询结果
+     */
+    Oauth2RegisteredClientVo getVoById(String id);
+
+    /**
+     * 保存 客户
+     *
+     * @param oauth2RegisteredClientSaveBo 客户表 保存参数
+     * @return 返回 保存结果
+     */
+    boolean saveOauth2RegisteredClientSaveBo(Oauth2RegisteredClientSaveBo oauth2RegisteredClientSaveBo);
+
+    /**
+     * 根据主键更新客户表
+     *
+     * @param oauth2RegisteredClientUpdateBo 客户表 更新参数
+     * @return 返回 更新结果
+     */
+    boolean updateByOauth2RegisteredClientUpdateBo(Oauth2RegisteredClientUpdateBo oauth2RegisteredClientUpdateBo);
 
 }

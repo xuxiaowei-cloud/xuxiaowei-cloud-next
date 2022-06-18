@@ -1,45 +1,45 @@
 <template>
   <el-container>
-    <el-form :model="param" label-position="left" label-width="160px" id="cloud-el-form">
-      <el-form-item label="oauthClientDetailsId" v-if="props.edit">
-        <el-input v-model="param.oauthClientDetailsId" disabled/>
+    <el-form :model="param" label-position="left" label-width="190px" id="cloud-el-form">
+      <el-form-item label="id" v-if="props.edit">
+        <el-input v-model="param.id" disabled/>
       </el-form-item>
       <el-form-item label="clientId">
         <el-input v-if="props.edit" v-model="param.clientId" disabled/>
         <el-input v-else v-model="param.clientId"/>
       </el-form-item>
+      <el-form-item label="clientName">
+        <el-input v-model="param.clientName"/>
+      </el-form-item>
       <el-form-item label="clientSecret">
         <el-input class="cloud-el-password" v-model="param.clientSecret"/>
         <el-button class="cloud-el-password-generate" @click="passwordGenerate">生成随机凭证</el-button>
       </el-form-item>
-      <el-form-item label="grantTypes">
-        <el-select v-model="grantTypes" multiple placeholder="Select grantTypes" style="width: 100%">
+      <el-form-item label="clientIdIssuedAt">
+        <el-date-picker v-model="param.clientIdIssuedAt" type="datetime" placeholder="Pick a day" value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
+      </el-form-item>
+      <el-form-item label="clientSecretExpiresAt">
+        <el-date-picker v-model="param.clientSecretExpiresAt" type="datetime" placeholder="Pick a day" value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
+      </el-form-item>
+      <el-form-item label="clientAuthenticationMethods">
+        <el-input v-model="param.clientAuthenticationMethods"/>
+      </el-form-item>
+      <el-form-item label="authorizationGrantTypes">
+        <el-select v-model="authorizationGrantTypes" multiple placeholder="Select authorizationGrantTypes" style="width: 100%">
           <el-option v-for="item in grantTypeOptions" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="accessTokenValidity">
-        <el-input-number v-model="param.accessTokenValidity" :min="1"/>
+      <el-form-item label="redirectUris">
+        <el-input v-model="param.redirectUris"/>
       </el-form-item>
-      <el-form-item label="refreshTokenValidity">
-        <el-input-number v-model="param.refreshTokenValidity" :min="1"/>
+      <el-form-item label="scopes">
+        <el-input v-model="param.scopes"/>
       </el-form-item>
-      <el-form-item label="scope">
-        <el-input v-model="param.scope"/>
+      <el-form-item label="clientSettings">
+        <el-input v-model="param.clientSettings"/>
       </el-form-item>
-      <el-form-item label="autoapprove">
-        <el-input v-model="param.autoapprove"/>
-      </el-form-item>
-      <el-form-item label="redirectUri">
-        <el-input v-model="param.webServerRedirectUri"/>
-      </el-form-item>
-      <el-form-item label="resourceIds">
-        <el-input v-model="param.resourceIds"/>
-      </el-form-item>
-      <el-form-item label="authorities">
-        <el-input v-model="param.authorities"/>
-      </el-form-item>
-      <el-form-item label="additionalInformation">
-        <el-input v-model="param.additionalInformation"/>
+      <el-form-item label="tokenSettings">
+        <el-input v-model="param.tokenSettings"/>
       </el-form-item>
       <el-form-item>
         <el-button class="cloud-el-button" v-if="props.edit" @click="cloudUpdate">更新</el-button>
@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, reactive, ref } from 'vue'
-import { getById, save, updateById } from '../../../api/authorization-server'
+import { getById, save, updateById } from '../../../api/authorization-server/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
@@ -70,13 +70,13 @@ const props = defineProps({
   edit: { // 是否编辑
     type: Boolean
   },
-  oauthClientDetailsId: { // 编辑客户主键
-    type: Number
+  id: { // 编辑客户主键
+    type: String
   }
 })
 
 // 授权类型
-const grantTypes = ref([])
+const authorizationGrantTypes = ref([])
 
 // 授权类型：可选内容
 const grantTypeOptions = [
@@ -104,18 +104,18 @@ const grantTypeOptions = [
 
 // 参数
 const param = reactive({
-  oauthClientDetailsId: null,
+  id: null,
   clientId: null,
+  clientName: null,
   clientSecret: null,
-  authorizedGrantTypes: null,
-  accessTokenValidity: null,
-  refreshTokenValidity: null,
-  scope: null,
-  autoapprove: null,
-  webServerRedirectUri: null,
-  resourceIds: null,
-  authorities: null,
-  additionalInformation: null,
+  clientIdIssuedAt: null,
+  clientSecretExpiresAt: null,
+  clientAuthenticationMethods: null,
+  authorizationGrantTypes: null,
+  redirectUris: null,
+  scopes: null,
+  clientSettings: null,
+  tokenSettings: null,
   // 识别码
   code: null
 })
@@ -140,28 +140,27 @@ codeRsa().then(response => {
 
 // 初始化数据
 const initData = () => {
-  if (props.edit && props.oauthClientDetailsId) {
-    getById(props.oauthClientDetailsId).then(response => {
+  if (props.edit && props.id) {
+    getById(props.id).then(response => {
       if (response.code === store.state.settings.okCode) {
         const data = response.data
         if (data) {
-          param.oauthClientDetailsId = data.oauthClientDetailsId
+          param.id = data.id
           param.clientId = data.clientId
-          const authorizedGrantTypes = data.authorizedGrantTypes
-          if (authorizedGrantTypes) {
-            authorizedGrantTypes.split(',').forEach(function (e: String) {
+          param.clientName = data.clientName
+          param.clientIdIssuedAt = data.clientIdIssuedAt
+          param.clientSecretExpiresAt = data.clientSecretExpiresAt
+          param.clientAuthenticationMethods = data.clientAuthenticationMethods
+          if (data.authorizationGrantTypes) {
+            data.authorizationGrantTypes.split(',').forEach(function (e: String) {
               // @ts-ignore
-              grantTypes.value.push(e)
+              authorizationGrantTypes.value.push(e)
             })
           }
-          param.accessTokenValidity = data.accessTokenValidity
-          param.refreshTokenValidity = data.refreshTokenValidity
-          param.scope = data.scope
-          param.autoapprove = data.autoapprove
-          param.webServerRedirectUri = data.webServerRedirectUri
-          param.resourceIds = data.resourceIds
-          param.authorities = data.authorities
-          param.additionalInformation = data.additionalInformation
+          param.redirectUris = data.redirectUris
+          param.scopes = data.scopes
+          param.clientSettings = data.clientSettings
+          param.tokenSettings = data.tokenSettings
         }
       } else {
         ElMessage.error(response.msg)
@@ -185,7 +184,7 @@ const encryption = () => {
   const paramEncryption = JSON.parse(JSON.stringify(param))
   JsEncrypt.prototype.setPublicKey(publicKey.value)
   paramEncryption.clientSecret = JsEncrypt.prototype.encrypt(param.clientSecret)
-  paramEncryption.authorizedGrantTypes = grantTypes.value.toString()
+  paramEncryption.authorizationGrantTypes = authorizationGrantTypes.value.toString()
   return paramEncryption
 }
 

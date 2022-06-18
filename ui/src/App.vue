@@ -3,7 +3,7 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import Layout from '@/components/Layout.vue'
 import { onMounted } from 'vue'
-import { checkToken } from './api/authorization-server'
+import { checkToken } from './api/authorization-server/oauth2'
 import { info } from './api/user'
 import store from './store'
 

@@ -4,7 +4,7 @@ import { LocationQuery, Router } from 'vue-router'
 
 import settings from '../settings'
 
-import { checkToken } from '../api/authorization-server'
+import { checkToken } from '../api/authorization-server/oauth2'
 import { info } from '../api/user'
 
 const store = createStore({
