@@ -14,6 +14,21 @@ import java.util.concurrent.TimeUnit;
 public interface SessionService {
 
     /**
+     * 获取 Token
+     *
+     * @return 返回 Token
+     */
+    String getTokenValue();
+
+    /**
+     * 计算令牌的MD5值
+     *
+     * @param value 令牌
+     * @return 返回 令牌的MD5值
+     */
+    String extractTokenKey(String value);
+
+    /**
      * 获取 授权Token ID
      * <p>
      * 身份验证未成功时（或：未进行身份验证），将返回 {@link HttpSession#getId()}

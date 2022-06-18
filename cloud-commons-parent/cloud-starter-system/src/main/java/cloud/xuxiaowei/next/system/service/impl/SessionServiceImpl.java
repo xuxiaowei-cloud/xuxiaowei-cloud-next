@@ -7,8 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -49,6 +57,44 @@ public class SessionServiceImpl implements SessionService {
     }
 
     /**
+     * 获取 Token
+     *
+     * @return 返回 Token
+     */
+    @Override
+    public String getTokenValue() {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof Jwt jwt) {
+            return jwt.getTokenValue();
+        }
+        return null;
+    }
+
+    /**
+     * 计算令牌的MD5值
+     *
+     * @param value 令牌
+     * @return 返回 令牌的MD5值
+     */
+    @Override
+    public String extractTokenKey(String value) {
+        if (value == null) {
+            return null;
+        }
+        MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException("MD5 算法不可用。致命的（应该在 JDK 中）。");
+        }
+
+        byte[] bytes = digest.digest(value.getBytes(StandardCharsets.UTF_8));
+        return String.format("%032x", new BigInteger(1, bytes));
+    }
+
+    /**
      * 获取 授权Token ID
      * <p>
      * 身份验证未成功时（或：未进行身份验证），将返回 {@link HttpSession#getId()}
@@ -57,7 +103,11 @@ public class SessionServiceImpl implements SessionService {
      */
     @Override
     public String tokenId() {
-        return session.getId();
+        String tokenValue = getTokenValue();
+        if (tokenValue == null) {
+            return session.getId();
+        }
+        return extractTokenKey(tokenValue);
     }
 
     /**
