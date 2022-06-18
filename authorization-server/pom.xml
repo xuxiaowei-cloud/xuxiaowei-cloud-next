@@ -35,7 +35,7 @@
         </dependency>
 
         <!-- OAuth 2.1 依赖 -->
-        <!-- https://s01.oss.sonatype.org/service/local/repositories/snapshots/content/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server -->
+        <!-- https://mvnrepository.com/artifact/io.xuxiaowei.security.next/spring-security-oauth2-authorization-server -->
         <dependency>
             <groupId>io.xuxiaowei.security.next</groupId>
             <artifactId>spring-security-oauth2-authorization-server</artifactId>

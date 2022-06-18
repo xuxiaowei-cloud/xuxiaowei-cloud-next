@@ -56,8 +56,8 @@
 
         <!-- OAuth 2.1 依赖，支持 spring-boot 3.0.0 -->
         <!-- https://github.com/xuxiaowei-io/spring-security-oauth2-authorization-server -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server -->
-        <spring-security-oauth2-authorization-server-next.version>0.3.1-SNAPSHOT</spring-security-oauth2-authorization-server-next.version>
+        <!-- https://mvnrepository.com/artifact/io.xuxiaowei.security.next/spring-security-oauth2-authorization-server -->
+        <spring-security-oauth2-authorization-server-next.version>0.3.1</spring-security-oauth2-authorization-server-next.version>
 
         <!-- MyBatis -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
@@ -203,7 +203,7 @@
             </dependency>
 
             <!-- OAuth 2.1 依赖 -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server -->
+            <!-- https://mvnrepository.com/artifact/io.xuxiaowei.security.next/spring-security-oauth2-authorization-server -->
             <dependency>
                 <groupId>io.xuxiaowei.security.next</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
@@ -573,11 +573,6 @@
     </profiles>
 
     <repositories>
-
-        <repository>
-            <id>oss-s01-snapshots</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
 
         <repository>
             <id>spring-milestones</id>
