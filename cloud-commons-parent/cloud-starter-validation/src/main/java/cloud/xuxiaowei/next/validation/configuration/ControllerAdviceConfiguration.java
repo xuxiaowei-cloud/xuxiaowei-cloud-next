@@ -37,7 +37,7 @@ import java.util.List;
  * @since 0.0.1
  */
 @Slf4j
-@ControllerAdvice(basePackages = {"cloud.xuxiaowei.cloud", "org.springframework.security.oauth2.provider.endpoint", "org.springframework.security.oauth2.provider.request"})
+@ControllerAdvice(basePackages = {"cloud.xuxiaowei.next", "org.springframework.security.oauth2.provider.endpoint", "org.springframework.security.oauth2.provider.request"})
 public class ControllerAdviceConfiguration {
 
     /**
