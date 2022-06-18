@@ -44,6 +44,11 @@ public class Constant implements Serializable {
             "'", "\"", ",", "<", ".", ">", "/", "?");
 
     /**
+     * Token 中传递权限的名称
+     */
+    public static final String AUTHORITIES = "authorities";
+
+    /**
      * 端点
      */
     public static final String ACTUATOR = "actuator";

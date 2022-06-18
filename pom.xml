@@ -314,6 +314,12 @@
                 <artifactId>cloud-starter-mybatis</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <!-- OAuth2 组件 -->
+            <dependency>
+                <groupId>cloud.xuxiaowei.next.commons</groupId>
+                <artifactId>cloud-starter-oauth2</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- Redis 组件 -->
             <dependency>
                 <groupId>cloud.xuxiaowei.next.commons</groupId>

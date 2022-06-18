@@ -6,14 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
-import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.security.interfaces.RSAPublicKey;
@@ -27,7 +23,6 @@ import java.security.interfaces.RSAPublicKey;
  * @since 0.0.1
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfiguration {
 
     private JwkKeyProperties jwkKeyProperties;
@@ -68,24 +63,6 @@ public class ResourceServerConfiguration {
         });
 
         return http.build();
-    }
-
-    /**
-     * 支持 {@link EnableGlobalMethodSecurity}、{@link PreAuthorize} 的 {@link Bean}
-     *
-     * @return 支持 {@link EnableGlobalMethodSecurity}、{@link PreAuthorize}
-     * @see <a href="https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction">手动提取权限-6.0.0-M3</a>
-     */
-    @Bean
-    public JwtAuthenticationConverter jwtAuthenticationConverter() {
-        JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
-        // 设置Token中获取权限数据的声明名称
-        grantedAuthoritiesConverter.setAuthoritiesClaimName("authorities");
-        // 设置成无前缀
-        grantedAuthoritiesConverter.setAuthorityPrefix("");
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(grantedAuthoritiesConverter);
-        return jwtAuthenticationConverter;
     }
 
 }

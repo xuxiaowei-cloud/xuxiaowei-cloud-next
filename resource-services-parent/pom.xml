@@ -35,14 +35,15 @@
 			<artifactId>cloud-starter-system</artifactId>
 		</dependency>
 
+		<!-- OAuth2 组件 -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>cloud.xuxiaowei.next.commons</groupId>
+			<artifactId>cloud-starter-oauth2</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
