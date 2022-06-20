@@ -179,6 +179,7 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-loadbalancer:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M2:compile
+│        └──org.springframework.boot:spring-boot-starter-thymeleaf:jar:3.0.0-M2:compile
 │        └──io.xuxiaowei.security.next:spring-security-oauth2-authorization-server:jar:0.3.1:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
 │        └──cn.hutool:hutool-all:jar:5.8.3:compile
