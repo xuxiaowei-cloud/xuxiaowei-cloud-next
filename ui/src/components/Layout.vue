@@ -72,6 +72,9 @@
             <el-menu-item v-if="hasAuthority('audit_authorization_read')" index="/audit/authorization" @click="menuItem">
               授权记录
             </el-menu-item>
+            <el-menu-item v-if="hasAuthority('audit_authorization_delete')" index="/audit/authorization-consent" @click="menuItem">
+              授权同意书
+            </el-menu-item>
             <el-menu-item v-if="hasAuthority('audit_code_read')" index="/audit/code" @click="menuItem">
               授权Code
             </el-menu-item>

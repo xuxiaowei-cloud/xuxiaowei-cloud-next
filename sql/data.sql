@@ -44,12 +44,16 @@ INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_da
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (22, 'xuxiaowei', 'username_token_delete', '2022-06-14 23:01:27', NULL);
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (23, 'xuxiaowei', 'audit_authorization_read', '2022-06-18 15:14:09', NULL);
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (24, 'xuxiaowei', 'audit_authorization_delete', '2022-06-18 15:25:36', NULL);
+INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (25, 'xuxiaowei', 'audit_authorization_consent_delete', '2022-06-18 15:59:06', NULL);
+INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (26, 'xuxiaowei', 'audit_authorization_consent_read', '2022-06-18 15:59:16', NULL);
 
 -- ----------------------------
 -- Records of authority
 -- ----------------------------
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_accessToken_delete', '删除授权Token');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_accessToken_read', '查看授权Token');
+INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_consent_delete', '删除授权同意书');
+INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_consent_read', '查看授权同意书');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_delete', '删除授权记录');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_read', '查看授权记录');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_code_delete', '删除授权码Code');

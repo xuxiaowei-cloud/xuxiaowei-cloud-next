@@ -1,7 +1,12 @@
 package cloud.xuxiaowei.next.authorizationserver.service;
 
+import cloud.xuxiaowei.next.authorizationserver.bo.Oauth2AuthorizationConsentPageBo;
+import cloud.xuxiaowei.next.authorizationserver.bo.Oauth2AuthorizationConsentPrimaryKey;
 import cloud.xuxiaowei.next.authorizationserver.entity.Oauth2AuthorizationConsent;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +17,29 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-06-18
  */
 public interface IOauth2AuthorizationConsentService extends IService<Oauth2AuthorizationConsent> {
+
+    /**
+     * 分页查询 授权同意书表
+     *
+     * @param oauth2AuthorizationConsentPageBo 授权同意书表 分页参数
+     * @return 返回 分页结果
+     */
+    IPage<Oauth2AuthorizationConsent> pageByOauth2AuthorizationConsentPageBo(Oauth2AuthorizationConsentPageBo oauth2AuthorizationConsentPageBo);
+
+    /**
+     * 根据联合主键删除授权同意书表
+     *
+     * @param oauth2AuthorizationConsentPrimaryKey 联合主键
+     * @return 返回 删除结果
+     */
+    boolean removeByPrimaryKey(Oauth2AuthorizationConsentPrimaryKey oauth2AuthorizationConsentPrimaryKey);
+
+    /**
+     * 根据联合主键批量删除授权同意书表
+     *
+     * @param oauth2AuthorizationConsentPrimaryKeys 联合主键
+     * @return 返回 删除结果
+     */
+    boolean removeByPrimaryKeys(List<Oauth2AuthorizationConsentPrimaryKey> oauth2AuthorizationConsentPrimaryKeys);
 
 }
