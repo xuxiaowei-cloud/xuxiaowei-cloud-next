@@ -7,7 +7,7 @@
 <script setup lang="ts">
 
 import { onMounted } from 'vue'
-import { checkToken } from '../api/authorization-server/oauth2'
+import { checkToken } from '../api/passport/oauth2'
 
 onMounted(() => {
   setTimeout(function () {

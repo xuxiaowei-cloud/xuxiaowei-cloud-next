@@ -162,8 +162,6 @@
     <modules>
         <!-- 监控（管理）服务 -->
         <module>admin-server</module>
-        <!-- 授权服务 -->
-        <module>authorization-server</module>
         <!-- 微服务公共组件父模块 -->
         <module>cloud-commons-parent</module>
         <!-- 网关服务 -->

@@ -109,7 +109,6 @@ class MyBatisPlusGeneratorTests {
         String userDir = System.getProperty("user.dir");
         String fileSeparator = System.getProperty("file.separator");
         List<Module> moduleList = Arrays.asList(
-                new Module("authorization-server", "cloud.xuxiaowei.next.authorizationserver"),
                 new Module("gateway", "cloud.xuxiaowei.next.gateway"),
                 new Module("cloud-commons-parent" + fileSeparator + "cloud-starter-core", "cloud.xuxiaowei.next.core"),
                 new Module("cloud-commons-parent" + fileSeparator + "cloud-starter-log", "cloud.xuxiaowei.next.log"),

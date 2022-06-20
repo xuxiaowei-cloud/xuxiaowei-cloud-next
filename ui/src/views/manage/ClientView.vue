@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { page, removeByIds, removeById } from '../../api/authorization-server/oauth2-registered-client'
+import { page, removeByIds, removeById } from '../../api/passport/oauth2-registered-client'
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'

@@ -45,14 +45,11 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
             error = Response.error(CodeEnums.A30003.code, CodeEnums.A30003.msg);
         } else if (exception instanceof LockedException) {
             error = Response.error(CodeEnums.A30004.code, CodeEnums.A30004.msg);
-        } else if (exception instanceof LoginParamPasswordValidException) {
-            LoginParamPasswordValidException passwordValidException = (LoginParamPasswordValidException) exception;
+        } else if (exception instanceof LoginParamPasswordValidException passwordValidException) {
             error = Response.error(passwordValidException.getCode(), passwordValidException.getMsg());
-        } else if (exception instanceof InternalAuthenticationServiceException) {
-            InternalAuthenticationServiceException internalAuthenticationServiceException = (InternalAuthenticationServiceException) exception;
+        } else if (exception instanceof InternalAuthenticationServiceException internalAuthenticationServiceException) {
             Throwable cause = internalAuthenticationServiceException.getCause();
-            if (cause instanceof LoginException) {
-                LoginException loginException = (LoginException) cause;
+            if (cause instanceof LoginException loginException) {
                 error = Response.error(loginException.getCode(), loginException.getMsg());
             } else {
                 error = Response.error(CodeEnums.A10000.code, "内部认证服务异常");

@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { page, removeById, removeByIds, Oauth2AuthorizationConsentPrimaryKey } from '../../api/authorization-server/oauth2-authorization-consent'
+import { page, removeById, removeByIds, Oauth2AuthorizationConsentPrimaryKey } from '../../api/passport/oauth2-authorization-consent'
 import { hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'

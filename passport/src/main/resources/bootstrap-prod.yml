@@ -6,10 +6,29 @@ cloud:
   client:
     client-id: xuxiaowei_client_id
     client-secret: xuxiaowei_client_secret
-    authorize-uri: https://gateway.example.next.xuxiaowei.cloud/authorization-server/oauth2/authorize
-    check-token-uri: https://gateway.example.next.xuxiaowei.cloud/authorization-server/oauth2/check_token?token=
+    authorize-uri: https://gateway.example.next.xuxiaowei.cloud/passport/oauth2/authorize
+    check-token-uri: https://gateway.example.next.xuxiaowei.cloud/passport/oauth2/check_token?token=
     redirect-uri: https://gateway.example.next.xuxiaowei.cloud/passport/code
-    access-token-uri: http://authorization-server/oauth2/token
+    access-token-uri: http://passport/oauth2/token
     scope: snsapi_base
     state-name: STATE_NAME
-    home-page: http://example.next.xuxiaowei.cloud/#/
+    home-page: http://example.next.xuxiaowei.cloud:1001/#/
+
+---
+
+# CSRF 配置
+cloud:
+  security:
+    csrfDisableUrl:
+      '[/oauth2/check_token]':
+        - POST
+        - GET
+        - OPTIONS
+      '[/oauth2-authorization/**]':
+        - POST
+        - GET
+        - OPTIONS
+      '[/oauth2-authorization-consent/**]':
+        - POST
+        - GET
+        - OPTIONS

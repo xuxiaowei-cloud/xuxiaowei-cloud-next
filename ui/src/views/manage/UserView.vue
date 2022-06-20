@@ -83,7 +83,7 @@
 
 <script setup lang="ts">
 import { page, removeById, removeByIds } from '../../api/user'
-import { removeByUsernames } from '../../api/authorization-server/authorization-server'
+import { removeByUsernames } from '../../api/passport/passport'
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'

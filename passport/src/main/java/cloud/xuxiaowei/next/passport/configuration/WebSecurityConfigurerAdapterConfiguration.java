@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -83,12 +84,20 @@ public class WebSecurityConfigurerAdapterConfiguration {
         };
     }
 
+    /**
+     * @see AuthorizationServerConfiguration#authorizationServerSecurityFilterChain(HttpSecurity) 优先级要比此方法高
+     */
     @Bean
+    @Order(0)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        http.userDetailsService(userDetailsService);
+
         http.authorizeHttpRequests((authorize) -> authorize
-                // 端点放行
+                // 放行端点
                 .antMatchers("/" + Constant.ACTUATOR + "/**").permitAll()
+                // 放行授权路径
+                .antMatchers("/oauth2/authorize").permitAll()
                 // 其他路径均需要授权
                 .anyRequest().authenticated());
 

@@ -109,7 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import { page, removeById, removeByIds } from '../../api/authorization-server/oauth2-authorization'
+import { page, removeById, removeByIds } from '../../api/passport/oauth2-authorization'
 import { hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
