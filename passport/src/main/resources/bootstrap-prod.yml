@@ -22,17 +22,13 @@ cloud:
     csrfDisableUrl:
       '[/oauth2/check_token]':
         - POST
-        - GET
         - OPTIONS
       '[/oauth2-authorization/**]':
         - POST
-        - GET
         - OPTIONS
       '[/oauth2-authorization-consent/**]':
         - POST
-        - GET
         - OPTIONS
       '[/oauth2-registered-client/**]':
         - POST
-        - GET
         - OPTIONS

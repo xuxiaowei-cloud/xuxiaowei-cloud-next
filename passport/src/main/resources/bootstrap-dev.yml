@@ -24,26 +24,20 @@ cloud:
       # 如果使用登录服务保护登录服务的前端，请删除下面'[/login]'的配置
       '[/login]':
         - POST
-        - GET
         - OPTIONS
       # 授权码
       '[/code]':
         - POST
-        - GET
         - OPTIONS
       '[/oauth2/check_token]':
         - POST
-        - GET
         - OPTIONS
       '[/oauth2-authorization/**]':
         - POST
-        - GET
         - OPTIONS
       '[/oauth2-authorization-consent/**]':
         - POST
-        - GET
         - OPTIONS
       '[/oauth2-registered-client/**]':
         - POST
-        - GET
         - OPTIONS
