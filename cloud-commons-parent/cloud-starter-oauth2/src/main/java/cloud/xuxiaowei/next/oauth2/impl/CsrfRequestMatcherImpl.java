@@ -1,34 +1,45 @@
-package cloud.xuxiaowei.next.passport.service.impl;
+package cloud.xuxiaowei.next.oauth2.impl;
 
 import cloud.xuxiaowei.next.core.properties.CloudSecurityProperties;
-import cloud.xuxiaowei.next.passport.configuration.WebSecurityConfigurerAdapterConfiguration;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import static cloud.xuxiaowei.next.oauth2.impl.CsrfRequestMatcherImpl.CSRF_REQUEST_MATCHER_BEAN_NAME;
+
 /**
- * 默认 CSRF 服务接口实现类
+ * CSRF 服务接口实现类
  *
  * @author xuxiaowei
- * @see WebSecurityConfigurerAdapterConfiguration#setCsrfRequestMatcher(RequestMatcher)
  * @see CsrfFilter#DEFAULT_CSRF_MATCHER
  * @since 0.0.1
  */
-public class DefaultCsrfRequestMatcherImpl implements RequestMatcher {
+@Component(CSRF_REQUEST_MATCHER_BEAN_NAME)
+public class CsrfRequestMatcherImpl implements RequestMatcher {
 
     public static final String CSRF_REQUEST_MATCHER_BEAN_NAME = "csrfRequestMatcher";
 
-    private final String contextPath;
+    private String contextPath;
 
-    private final CloudSecurityProperties cloudSecurityProperties;
+    private CloudSecurityProperties cloudSecurityProperties;
 
-    public DefaultCsrfRequestMatcherImpl(String contextPath, CloudSecurityProperties cloudSecurityProperties) {
+    @Autowired
+    public void setContextPath(ServerProperties serverProperties) {
+        ServerProperties.Servlet servlet = serverProperties.getServlet();
+        String contextPath = servlet.getContextPath();
         this.contextPath = contextPath == null ? "" : contextPath;
+    }
+
+    @Autowired
+    public void setCloudSecurityProperties(CloudSecurityProperties cloudSecurityProperties) {
         this.cloudSecurityProperties = cloudSecurityProperties;
     }
 
