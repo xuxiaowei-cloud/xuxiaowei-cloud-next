@@ -7,7 +7,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.security.interfaces.RSAPublicKey;
 
@@ -22,7 +24,21 @@ import java.security.interfaces.RSAPublicKey;
 @Configuration
 public class ResourceServerConfiguration {
 
+    private AccessDeniedHandler accessDeniedHandler;
+
+    private AuthenticationEntryPoint authenticationEntryPoint;
+
     private JwkKeyProperties jwkKeyProperties;
+
+    @Autowired
+    public void setAccessDeniedHandler(AccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
+
+    @Autowired
+    public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
+    }
 
     @Autowired
     public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
@@ -60,6 +76,15 @@ public class ResourceServerConfiguration {
             NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder.withPublicKey(rsaPublicKey);
             NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
             oauth2ResourceServer.decoder(nimbusJwtDecoder);
+        });
+
+        // 异常处理
+        http.exceptionHandling(exceptionHandlingCustomizer -> {
+            exceptionHandlingCustomizer
+                    // 访问被拒绝处理程序
+                    .accessDeniedHandler(accessDeniedHandler)
+                    // 身份验证入口点
+                    .authenticationEntryPoint(authenticationEntryPoint);
         });
 
         return http.build();

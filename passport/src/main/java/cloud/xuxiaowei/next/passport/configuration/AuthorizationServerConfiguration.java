@@ -29,7 +29,9 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 import java.security.interfaces.RSAPublicKey;
 import java.util.Set;
@@ -53,9 +55,23 @@ public class AuthorizationServerConfiguration {
 
     private JwkKeyProperties jwkKeyProperties;
 
+    private AccessDeniedHandler accessDeniedHandler;
+
+    private AuthenticationEntryPoint authenticationEntryPoint;
+
     @Autowired
     public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
         this.jwkKeyProperties = jwkKeyProperties;
+    }
+
+    @Autowired
+    public void setAccessDeniedHandler(AccessDeniedHandler accessDeniedHandler) {
+        this.accessDeniedHandler = accessDeniedHandler;
+    }
+
+    @Autowired
+    public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     /**
@@ -94,6 +110,15 @@ public class AuthorizationServerConfiguration {
             NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder.withPublicKey(rsaPublicKey);
             NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
             oauth2ResourceServer.decoder(nimbusJwtDecoder);
+        });
+
+        // 异常处理
+        http.exceptionHandling(exceptionHandlingCustomizer -> {
+            exceptionHandlingCustomizer
+                    // 访问被拒绝处理程序
+                    .accessDeniedHandler(accessDeniedHandler)
+                    // 身份验证入口点
+                    .authenticationEntryPoint(authenticationEntryPoint);
         });
 
         return http.build();
