@@ -43,3 +43,7 @@ cloud:
         - POST
         - GET
         - OPTIONS
+      '[/oauth2-registered-client/**]':
+        - POST
+        - GET
+        - OPTIONS
