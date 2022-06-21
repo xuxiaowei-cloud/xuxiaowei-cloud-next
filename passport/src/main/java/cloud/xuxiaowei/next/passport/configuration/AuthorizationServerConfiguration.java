@@ -88,6 +88,7 @@ public class AuthorizationServerConfiguration {
                     .anyRequest().authenticated();
         });
 
+        // 资源服务配置秘钥
         http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
             RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
             NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder.withPublicKey(rsaPublicKey);

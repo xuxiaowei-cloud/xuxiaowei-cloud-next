@@ -54,6 +54,7 @@ public class ResourceServerConfiguration {
         // 禁用 form 登录
         http.formLogin().disable();
 
+        // 资源服务配置秘钥
         http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
             RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
             NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder.withPublicKey(rsaPublicKey);
