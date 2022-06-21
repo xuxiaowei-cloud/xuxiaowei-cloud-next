@@ -20,12 +20,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Records of authorities
 -- ----------------------------
-INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (1, 'xuxiaowei', 'audit_accessToken_delete', '2022-06-14 23:01:27', NULL);
-INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (2, 'xuxiaowei', 'audit_accessToken_read', '2022-06-14 23:01:27', NULL);
-INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (3, 'xuxiaowei', 'audit_code_delete', '2022-06-14 23:01:27', NULL);
-INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (4, 'xuxiaowei', 'audit_code_read', '2022-06-14 23:01:27', NULL);
-INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (5, 'xuxiaowei', 'audit_refreshToken_delete', '2022-06-14 23:01:27', NULL);
-INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (6, 'xuxiaowei', 'audit_refreshToken_read', '2022-06-14 23:01:27', NULL);
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (7, 'xuxiaowei', 'user_authorities', '2022-06-14 23:01:27', NULL);
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (8, 'xuxiaowei', 'user_details', '2022-06-14 23:01:27', NULL);
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (9, 'xuxiaowei', 'user_info', '2022-06-14 23:01:27', NULL);
@@ -50,16 +44,10 @@ INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_da
 -- ----------------------------
 -- Records of authority
 -- ----------------------------
-INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_accessToken_delete', '删除授权Token');
-INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_accessToken_read', '查看授权Token');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_consent_delete', '删除授权同意书');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_consent_read', '查看授权同意书');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_delete', '删除授权记录');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_read', '查看授权记录');
-INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_code_delete', '删除授权码Code');
-INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_code_read', '查看授权码Code');
-INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_refreshToken_delete', '删除刷新Token');
-INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_refreshToken_read', '查看刷新Token');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('clientId_token_delete', '客户Token 删除权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_client_add', '管理客户 添加权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_client_delete', '管理客户 删除权限');
