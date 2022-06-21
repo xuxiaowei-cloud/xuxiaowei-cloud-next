@@ -75,15 +75,6 @@
             <el-menu-item v-if="hasAuthority('audit_authorization_delete')" index="/audit/authorization-consent" @click="menuItem">
               授权同意书
             </el-menu-item>
-            <el-menu-item v-if="hasAuthority('audit_code_read')" index="/audit/code" @click="menuItem">
-              授权Code
-            </el-menu-item>
-            <el-menu-item v-if="hasAuthority('audit_accessToken_read')" index="/audit/access-token" @click="menuItem">
-              授权Token
-            </el-menu-item>
-            <el-menu-item v-if="hasAuthority('audit_refreshToken_read')" index="/audit/refresh-token" @click="menuItem">
-              刷新Token
-            </el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
 
