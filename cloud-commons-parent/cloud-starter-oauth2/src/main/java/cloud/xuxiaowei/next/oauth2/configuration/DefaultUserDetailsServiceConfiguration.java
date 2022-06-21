@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.passport.configuration;
+package cloud.xuxiaowei.next.oauth2.configuration;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +17,7 @@ import static org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.DEF
  * @since 0.0.1
  */
 @Configuration
-public class DefaultBeanConfiguration {
+public class DefaultUserDetailsServiceConfiguration {
 
     /**
      * @see UserDetailsService 用于检索用户进行身份验证的实例。
