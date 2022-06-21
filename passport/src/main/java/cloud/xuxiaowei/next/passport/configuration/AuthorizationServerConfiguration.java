@@ -82,11 +82,11 @@ public class AuthorizationServerConfiguration {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        // 表单登录处理从授权服务器过滤器链到登录页面的重定向
+        // 路径权限控制
         http.authorizeHttpRequests((authorize) -> {
             authorize
-                    // 端点放行
-                    .antMatchers("/" + Constant.ACTUATOR + "/**").permitAll()
+                    // 放行端点
+                    .antMatchers("/actuator/**").permitAll()
                     // 放行检查Token
                     .antMatchers("/oauth2/check_token").permitAll()
                     // 其他路径均需要授权
