@@ -16,7 +16,6 @@ const store = createStore({
     accessToken: null, // Token
     checkTokenTime: null, // 检查Token时间
     refreshToken: null, // 刷新Token
-    jti: null, // 票据
     defaultActive: '/', // 获取默认激活菜单
     isCollapse: false // 是否折叠菜单
   },
@@ -69,13 +68,6 @@ const store = createStore({
      */
     refreshToken (state) {
       return state.refreshToken
-    },
-    /**
-     * 获取 票据
-     * @param state 单一状态树
-     */
-    jti (state) {
-      return state.jti
     },
     /**
      * 获取默认激活菜单
@@ -150,14 +142,6 @@ const store = createStore({
       state.refreshToken = refreshToken
     },
     /**
-     * 设置 票据
-     * @param state 单一状态树
-     * @param jti 票据
-     */
-    setJti (state, jti) {
-      state.jti = jti
-    },
-    /**
      * 设置默认激活菜单
      * @param state 单一状态树
      * @param defaultActive 默认激活
@@ -198,25 +182,20 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
   if (query.store === 'true') {
     const accessToken = query.accessToken
     const refreshToken = query.refreshToken
-    const jti = query.jti
 
     delete query.store
 
     delete query.accessToken
     delete query.refreshToken
-    delete query.jti
 
     console.log('获取到URL中的accessToken', accessToken)
     console.log('获取到URL中的refreshToken', refreshToken)
-    console.log('获取到URL中的jti', jti)
 
     store.commit('setAccessToken', accessToken)
     store.commit('setRefreshToken', refreshToken)
-    store.commit('setJti', jti)
 
     console.log('已完成store中的accessToken缓存：', store.getters.accessToken)
     console.log('已完成store中的refreshToken缓存：', store.getters.refreshToken)
-    console.log('已完成store中的jti缓存：', store.getters.jti)
 
     // 此次检查Token，不受 settings.state.checkTokenInterval 控制
     checkToken().then(response => {
