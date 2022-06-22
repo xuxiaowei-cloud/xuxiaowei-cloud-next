@@ -36,10 +36,6 @@ stages:
         settings: []
         caches:
           - ~/.m2
-          - passport-ui/node/
-          - passport-ui/node_modules/
-          - ui/node/
-          - ui/node_modules/
         strategy:
           retry: '0'
 strategy:
