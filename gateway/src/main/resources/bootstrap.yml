@@ -108,6 +108,45 @@ management:
       exposure:
         include: '*'
 
+---
+
+#
+# 数据库配置
+#
+spring:
+  datasource:
+    dynamic:
+      # 设置默认的数据源或者数据源组，默认值即为 master
+      primary: master
+      # 严格匹配数据源，默认false。true未匹配到指定数据源时抛异常，false使用默认数据源
+      strict: true
+      datasource:
+        master:
+          # 数据库 连接串
+          # url: jdbc:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database:xuxiaowei_cloud_next}?useSSL=false&serverTimezone=GMT%2B8
+          # 数据库 连接串 - 测试环境使用
+          url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database:xuxiaowei_cloud_next}?useSSL=false&serverTimezone=GMT%2B8
+          # 数据库 用户名
+          username: ${mysql_xuxiaowei_cloud_username:root}
+          # 数据库 密码
+          password: ${mysql_xuxiaowei_cloud_password:xuxiaowei.com.cn}
+          # 数据库 驱动名称
+          # driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+          # 数据库 驱动名称 - 测试环境使用
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+        log:
+          # 数据库 连接串
+          # url: jdbc:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database_log:xuxiaowei_cloud_next_log}?useSSL=false&serverTimezone=GMT%2B8
+          # 数据库 连接串 - 测试环境使用
+          url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database_log:xuxiaowei_cloud_next_log}?useSSL=false&serverTimezone=GMT%2B8
+          # 数据库 用户名
+          username: ${mysql_xuxiaowei_cloud_username:root}
+          # 数据库 密码
+          password: ${mysql_xuxiaowei_cloud_password:xuxiaowei.com.cn}
+          # 数据库 驱动名称
+          # driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
+          # 数据库 驱动名称 - 测试环境使用
+          driver-class-name: com.p6spy.engine.spy.P6SpyDriver
 
 ---
 
@@ -143,3 +182,91 @@ spring:
             allowedMethods: "GET,POST"
             # 允许跨域请求中的请求头字段，全部：*
             allowedHeaders: "*"
+
+
+---
+
+#
+# JWK 配置
+#
+jwk:
+  #
+  rsa:
+    # 公钥
+    public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvUEZbnpoYCSVveN8/h3ouADkX1l5/qpS/vaVuWMOMpVbWqiVysrL7x8NV0i0NKBf+Ufa0aJBMYtsRGTsKOGv4ulwoUCMDizZ47xCUVMR6JCbm3qVejeK5GWPatrRFPWXwIL5G4nk4ZkpEhFUn0qeJwEPG70QNxZDNJVIqbDK0CROZifd/7REy9SQjIsQbVjUmC2J09IXE4FK3YDIltUOJLf7ASnkIb5al/IelKLIkoYaiI4Jjw6/zK2QXwNaO74FSOIbxDM/yixrkuArtsrqLbxjw/BMlW5pLguTfbeXobbmS+t1MgIfCmWye5GXCsuuS+K/RElLmvBtT+o1xZNBowIDAQAB
+
+
+---
+
+cloud:
+  cors:
+    allow-orgin-null-list:
+      # 授权操作使用 form action post，无 Origin
+      - /passport/oauth2/authorize
+
+---
+
+#
+# 网关白名单，不进行权限验证
+cloud:
+  white-list:
+    ignores:
+      # passport登录请求
+      - login
+      # 网关图标
+      - /favicon.ico
+    services:
+      - name: passport
+        path-list:
+          # 登录主页
+          - /
+          # passport图标
+          - /favicon.ico
+          # 固定名称的CSS
+          - /passport-assets/index.css
+          # 固定名称的JS
+          - /passport-assets/index.js
+          # 登录请求
+          - /login
+          # 登录失败
+          - /login/failure
+          # 获取Token
+          - /code
+          # 授权地址
+          - /oauth2/authorize
+          # 检查Token
+          - /oauth2/check_token
+      - name: webservice
+        path-list:
+          - /cxf/**
+      - name: wechat-applet
+        path-list:
+          # 登录接口
+          - /onLogin
+    actuator-ip-list:
+      - 192.168.5.3
+      - 192.168.5.4
+      - 10.0.4.13
+      - 127.0.0.1
+      - 192.168.1.147
+
+---
+
+# 黑名单
+cloud:
+  black-list:
+    ip-list:
+      - 192.168.9.100
+    services:
+      - ip: 192.168.9.200
+        name: passport
+        pathList:
+          - /test
+
+---
+
+# WebSocket 配置
+cloud:
+  web-socket:
+    endpoint-paths:
+      - /broadcast
