@@ -17,7 +17,7 @@ stages:
     displayName: 打包
     strategy: naturally
     trigger: auto
-    executor: [ ]
+    executor: []
     steps:
       - step: build@maven
         name: build_maven
@@ -30,23 +30,20 @@ stages:
           - name: BUILD_ARTIFACT
             path:
               - admin-server/target/admin-server-0.0.1-SNAPSHOT.jar
-              - cloud-commons-parent/pom.xml
-              - cloud-commons-parent/cloud-starter-core/target/cloud-starter-core-0.0.1-SNAPSHOT.jar
-              - cloud-commons-parent/cloud-starter-loadbalancer/target/cloud-starter-loadbalancer-0.0.1-SNAPSHOT.jar
-              - cloud-commons-parent/cloud-starter-redis/target/cloud-starter-redis-0.0.1-SNAPSHOT.jar
-              - cloud-commons-parent/cloud-starter-session-redis/target/cloud-starter-session-redis-0.0.1-SNAPSHOT.jar
               - gateway/target/gateway-0.0.1-SNAPSHOT.jar
               - passport/target/passport-0.0.1-SNAPSHOT.jar
               - passport-ui/target/passport-ui-0.0.1-SNAPSHOT.jar
-              - pom.xml
-              - utils/target/utils-0.0.1-SNAPSHOT.jar
-        settings: [ ]
+        settings: []
         caches:
           - ~/.m2
+          - passport-ui/node/
+          - passport-ui/node_modules/
+          - ui/node/
+          - ui/node_modules/
         strategy:
           retry: '0'
 strategy:
   blocking: false
 permissions:
   - role: admin
-    members: [ ]
+    members: []
