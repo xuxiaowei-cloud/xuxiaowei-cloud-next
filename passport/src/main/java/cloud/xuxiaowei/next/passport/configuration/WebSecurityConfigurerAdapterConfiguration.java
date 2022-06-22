@@ -2,6 +2,7 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudRememberMeProperties;
 import cloud.xuxiaowei.next.core.properties.CloudSecurityProperties;
+import cloud.xuxiaowei.next.oauth2.filter.AfterBearerTokenAuthenticationFilter;
 import cloud.xuxiaowei.next.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -44,6 +46,8 @@ public class WebSecurityConfigurerAdapterConfiguration {
 
 	private AuthenticationFailureHandler authenticationFailureHandler;
 
+	private AfterBearerTokenAuthenticationFilter afterBearerTokenAuthenticationFilter;
+
 	@Autowired
 	public void setUserDetailsService(UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
@@ -73,6 +77,12 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	@Autowired
 	public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
 		this.authenticationFailureHandler = authenticationFailureHandler;
+	}
+
+	@Autowired
+	public void setAfterBearerTokenAuthenticationFilter(
+			AfterBearerTokenAuthenticationFilter afterBearerTokenAuthenticationFilter) {
+		this.afterBearerTokenAuthenticationFilter = afterBearerTokenAuthenticationFilter;
 	}
 
 	@Bean
@@ -133,6 +143,9 @@ public class WebSecurityConfigurerAdapterConfiguration {
 
 		// CSRF 配置
 		http.csrf().requireCsrfProtectionMatcher(csrfRequestMatcher);
+
+		// 在解密 授权 Token 后，检查数据库中是否存在
+		http.addFilterAfter(afterBearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class);
 
 		return http.build();
 	}

@@ -1,6 +1,7 @@
 package cloud.xuxiaowei.next.user.configuration;
 
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.oauth2.filter.AfterBearerTokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -37,6 +39,8 @@ public class ResourceServerConfiguration {
 
 	private RequestMatcher csrfRequestMatcher;
 
+	private AfterBearerTokenAuthenticationFilter afterBearerTokenAuthenticationFilter;
+
 	@Autowired
 	public void setAccessDeniedHandler(AccessDeniedHandler accessDeniedHandler) {
 		this.accessDeniedHandler = accessDeniedHandler;
@@ -56,6 +60,12 @@ public class ResourceServerConfiguration {
 	@Qualifier(CSRF_REQUEST_MATCHER_BEAN_NAME)
 	public void setCsrfRequestMatcher(RequestMatcher csrfRequestMatcher) {
 		this.csrfRequestMatcher = csrfRequestMatcher;
+	}
+
+	@Autowired
+	public void setAfterBearerTokenAuthenticationFilter(
+			AfterBearerTokenAuthenticationFilter afterBearerTokenAuthenticationFilter) {
+		this.afterBearerTokenAuthenticationFilter = afterBearerTokenAuthenticationFilter;
 	}
 
 	@Bean
@@ -103,6 +113,9 @@ public class ResourceServerConfiguration {
 
 		// CSRF 配置
 		http.csrf().requireCsrfProtectionMatcher(csrfRequestMatcher);
+
+		// 在解密 授权 Token 后，检查数据库中是否存在
+		http.addFilterAfter(afterBearerTokenAuthenticationFilter, BearerTokenAuthenticationFilter.class);
 
 		return http.build();
 	}
