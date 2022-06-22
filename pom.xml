@@ -111,6 +111,11 @@
         <!-- https://github.com/google/guava -->
         <guava.version>31.1-jre</guava.version>
 
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <!-- https://oss.sonatype.org/content/repositories/public/commons-io/commons-io -->
+        <!-- https://github.com/apache/commons-io -->
+        <commons-io.version>2.11.0</commons-io.version>
+
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <!-- https://repo1.maven.org/maven2/org/apache/commons/commons-lang3 -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
@@ -279,6 +284,13 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->

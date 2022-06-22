@@ -1,6 +1,11 @@
 package cloud.xuxiaowei.next.passport.handler;
 
+import cloud.xuxiaowei.next.passport.entity.UsersLogin;
+import cloud.xuxiaowei.next.passport.service.IUsersLoginService;
+import cloud.xuxiaowei.next.passport.utils.HandlerUtils;
+import cloud.xuxiaowei.next.system.service.IUsersService;
 import cloud.xuxiaowei.next.utils.CodeEnums;
+import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.Response;
 import cloud.xuxiaowei.next.utils.ResponseUtils;
 import cloud.xuxiaowei.next.utils.exception.login.LoginException;
@@ -9,6 +14,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.*;
 import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
 import org.springframework.security.core.AuthenticationException;
@@ -32,9 +40,46 @@ import java.io.IOException;
 @Component
 public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHandler {
 
+	private JavaMailSender javaMailSender;
+
+	private MailProperties mailProperties;
+
+	private IUsersService usersService;
+
+	private IUsersLoginService usersLoginService;
+
+	@Autowired
+	public void setUsersService(IUsersService usersService) {
+		this.usersService = usersService;
+	}
+
+	/**
+	 * 注意： 当未成功配置邮箱时，{@link Autowired} 直接注入将会失败，导致程序无法启动
+	 * <p>
+	 * 故将 {@link Autowired} 的 required 设置为 false，避免程序启动失败。使用时请判断该值是否为 null
+	 */
+	@Autowired(required = false)
+	public void setJavaMailSender(JavaMailSender javaMailSender) {
+		this.javaMailSender = javaMailSender;
+	}
+
+	@Autowired
+	public void setMailProperties(MailProperties mailProperties) {
+		this.mailProperties = mailProperties;
+	}
+
+	@Autowired
+	public void setUsersLoginService(IUsersLoginService usersLoginService) {
+		this.usersLoginService = usersLoginService;
+	}
+
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
+
+		String username = request.getParameter(Constant.USERNAME);
+		UsersLogin usersLogin = HandlerUtils.usersLogin(username, false, request, exception);
+		usersLoginService.save(usersLogin);
 
 		Response<?> error;
 
@@ -71,6 +116,10 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 		log.error(error.getMsg(), exception);
 
 		ResponseUtils.response(response, error);
+
+		String subject = "登录系统失败";
+		String result = "失败";
+		HandlerUtils.send(usersService, javaMailSender, mailProperties, request, username, subject, result);
 	}
 
 }

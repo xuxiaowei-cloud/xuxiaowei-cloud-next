@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.xuxiaowei.next.passport.mapper.UsersLoginMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cloud.xuxiaowei.next.passport.entity.UsersLogin">
+        <id column="users_login_id" property="usersLoginId" />
+        <result column="username" property="username" />
+        <result column="success" property="success" />
+        <result column="method" property="method" />
+        <result column="query_string" property="queryString" />
+        <result column="headers_map" property="headersMap" />
+        <result column="user_agent" property="userAgent" />
+        <result column="request_id" property="requestId" />
+        <result column="session_id" property="sessionId" />
+        <result column="ip" property="ip" />
+        <result column="exception" property="exception" />
+        <result column="browscap" property="browscap" />
+        <result column="browser" property="browser" />
+        <result column="browser_type" property="browserType" />
+        <result column="browser_major_version" property="browserMajorVersion" />
+        <result column="platform" property="platform" />
+        <result column="platform_version" property="platformVersion" />
+        <result column="device_type" property="deviceType" />
+        <result column="remark" property="remark" />
+        <result column="create_date" property="createDate" />
+        <result column="update_date" property="updateDate" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+</mapper>
