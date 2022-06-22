@@ -83,7 +83,6 @@
 
 <script setup lang="ts">
 import { page, removeById, removeByIds } from '../../api/user'
-import { removeByUsernames } from '../../api/passport/passport'
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
@@ -305,29 +304,11 @@ const cloudTokenDelete = () => {
       type: 'error'
     })
   } else {
-    removeByUsernames(usernames.value).then(response => {
-      if (response.code === store.state.settings.okCode) {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'success',
-          onClose: () => {
-            // 重新搜索
-            cloudSearch()
-          }
-        })
-      } else {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'error',
-          onClose: () => {
-
-          }
-        })
-      }
+    ElMessage({
+      message: '该功能未开发',
+      // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+      duration: 1500,
+      type: 'error'
     })
   }
 }
