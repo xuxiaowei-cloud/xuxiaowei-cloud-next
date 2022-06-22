@@ -41,6 +41,8 @@ stages:
               - pom.xml
               - utils/target/utils-0.0.1-SNAPSHOT.jar
         settings: [ ]
+        caches:
+          - ~/.m2
         strategy:
           retry: '0'
 strategy:
