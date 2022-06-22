@@ -92,6 +92,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	@Order(0)
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+		// 用于检索用户进行身份验证的实例
 		http.userDetailsService(userDetailsService);
 
 		http.authorizeHttpRequests((authorize) -> authorize
