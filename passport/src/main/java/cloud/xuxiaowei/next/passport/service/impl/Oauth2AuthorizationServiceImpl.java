@@ -75,4 +75,16 @@ public class Oauth2AuthorizationServiceImpl extends ServiceImpl<Oauth2Authorizat
 		return oauth2AuthorizationVoPage;
 	}
 
+	/**
+	 * 根据 授权 Token 删除 授权表中的数据
+	 * @param accessToken 授权 Token
+	 * @return 返回 删除结果
+	 */
+	@Override
+	public boolean removeByAccessTokenValue(String accessToken) {
+		QueryWrapper<Oauth2Authorization> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("access_token_value", accessToken);
+		return remove(queryWrapper);
+	}
+
 }

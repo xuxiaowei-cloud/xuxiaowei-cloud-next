@@ -76,8 +76,6 @@ public class ResourceServerConfiguration {
 			authorize
 					// 放行端点
 					.antMatchers("/actuator/**").permitAll()
-					// 注销登录放行
-					.antMatchers("/signout").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});

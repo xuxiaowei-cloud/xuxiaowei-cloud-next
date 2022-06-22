@@ -100,6 +100,8 @@ public class WebSecurityConfigurerAdapterConfiguration {
 				.antMatchers("/" + Constant.ACTUATOR + "/**").permitAll()
 				// 放行授权路径
 				.antMatchers("/oauth2/authorize").permitAll()
+				// 注销登录放行
+				.antMatchers("/signout").permitAll()
 				// 其他路径均需要授权
 				.anyRequest().authenticated());
 

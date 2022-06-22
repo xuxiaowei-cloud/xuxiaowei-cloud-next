@@ -139,7 +139,7 @@ import { House, Expand, Fold, Refresh, ArrowDown, Aim, Notebook, User, Setting }
 import { onMounted, ref } from 'vue'
 import store from '../store'
 import { hasAuthority, hasAnyAuthority } from '../utils/authority'
-import { signout } from '../api/user'
+import { signout } from '../api/passport'
 
 // 默认激活菜单
 // 当缓存中的默认菜单与路径中不同时，使用路径中对应的菜单

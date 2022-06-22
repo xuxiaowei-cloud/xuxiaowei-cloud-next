@@ -236,6 +236,8 @@ cloud:
           - /oauth2/authorize
           # 检查Token
           - /oauth2/check_token
+          # 退出登录
+          - /signout
       - name: webservice
         path-list:
           - /cxf/**

@@ -28,4 +28,11 @@ public interface IOauth2AuthorizationService extends IService<Oauth2Authorizatio
 	 */
 	IPage<Oauth2AuthorizationVo> pageByOauth2AuthorizationPageBo(Oauth2AuthorizationPageBo oauth2AuthorizationPageBo);
 
+	/**
+	 * 根据 授权 Token 删除 授权表中的数据
+	 * @param accessToken 授权 Token
+	 * @return 返回 删除结果
+	 */
+	boolean removeByAccessTokenValue(String accessToken);
+
 }
