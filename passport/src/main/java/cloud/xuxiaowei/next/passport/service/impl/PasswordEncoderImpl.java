@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 /**
- * 默认密码编辑器
+ * 密码编辑器
  *
  * @author xuxiaowei
  * @see PasswordEncoderFactories#createDelegatingPasswordEncoder()
@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
  */
 @Slf4j
 @Component
-public class DefaultPasswordEncoderImpl implements PasswordEncoder {
+public class PasswordEncoderImpl implements PasswordEncoder {
 
 	private HttpServletRequest request;
 
