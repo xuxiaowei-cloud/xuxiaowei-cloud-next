@@ -13,6 +13,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.reactive.ReactiveUserDetailsServiceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
@@ -178,8 +179,14 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 	private boolean whiteList(ServerWebExchange exchange) {
 
 		ServerHttpRequest request = exchange.getRequest();
+		HttpMethod method = request.getMethod();
 		URI uri = request.getURI();
 		String path = uri.getPath();
+
+		if (method.matches(HttpMethod.OPTIONS.name())) {
+			log.debug("放行：{}：{}", method, path);
+			return true;
+		}
 
 		AntPathMatcher antPathMatcher = new AntPathMatcher();
 
