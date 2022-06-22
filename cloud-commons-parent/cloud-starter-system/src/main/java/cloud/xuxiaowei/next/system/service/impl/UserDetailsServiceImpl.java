@@ -37,91 +37,93 @@ import java.util.UUID;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private HttpServletRequest request;
+	private HttpServletRequest request;
 
-    private IUsersService usersService;
+	private IUsersService usersService;
 
-    private IWxMaUsersService wxMaUsersService;
+	private IWxMaUsersService wxMaUsersService;
 
-    private CloudSecurityProperties cloudSecurityProperties;
+	private CloudSecurityProperties cloudSecurityProperties;
 
-    @Autowired
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
-    }
+	@Autowired
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
 
-    @Autowired
-    public void setUsersService(IUsersService usersService) {
-        this.usersService = usersService;
-    }
+	@Autowired
+	public void setUsersService(IUsersService usersService) {
+		this.usersService = usersService;
+	}
 
-    @Autowired
-    public void setWxMaUsersService(IWxMaUsersService wxMaUsersService) {
-        this.wxMaUsersService = wxMaUsersService;
-    }
+	@Autowired
+	public void setWxMaUsersService(IWxMaUsersService wxMaUsersService) {
+		this.wxMaUsersService = wxMaUsersService;
+	}
 
-    @Autowired
-    public void setCloudSecurityProperties(CloudSecurityProperties cloudSecurityProperties) {
-        this.cloudSecurityProperties = cloudSecurityProperties;
-    }
+	@Autowired
+	public void setCloudSecurityProperties(CloudSecurityProperties cloudSecurityProperties) {
+		this.cloudSecurityProperties = cloudSecurityProperties;
+	}
 
-    /**
-     * 根据 用户 查询用户信息与权限
-     *
-     * @param username 用户名
-     * @return 返回 用户信息与权限
-     * @throws UsernameNotFoundException 用户名没有找到异常
-     */
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	/**
+	 * 根据 用户 查询用户信息与权限
+	 * @param username 用户名
+	 * @return 返回 用户信息与权限
+	 * @throws UsernameNotFoundException 用户名没有找到异常
+	 */
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        // 在 grantType 为 password 时，对密码进行处理后才能比较，这样更安全
-        String grantType = request.getParameter(Constant.GRANT_TYPE);
-        // 客户端类型
-        String clientType = request.getParameter(Constant.CLIENT_TYPE);
-        // 微信小程序appid
-        String appid = request.getParameter(Constant.APPID);
+		// 在 grantType 为 password 时，对密码进行处理后才能比较，这样更安全
+		String grantType = request.getParameter(Constant.GRANT_TYPE);
+		// 客户端类型
+		String clientType = request.getParameter(Constant.CLIENT_TYPE);
+		// 微信小程序appid
+		String appid = request.getParameter(Constant.APPID);
 
-        // 微信客户端
-        if (ClientType.WECHAT_APPLET.grantType.equals(grantType) && ClientType.WECHAT_APPLET.clientType.equals(clientType)) {
-            WxMaUsers wxMaUsers = wxMaUsersService.getByAppidAndOpenid(appid, username);
-            if (wxMaUsers == null) {
-                throw new LoginWechatUsernameNotFoundException("用户名不存在");
-            }
+		// 微信客户端
+		if (ClientType.WECHAT_APPLET.grantType.equals(grantType)
+				&& ClientType.WECHAT_APPLET.clientType.equals(clientType)) {
+			WxMaUsers wxMaUsers = wxMaUsersService.getByAppidAndOpenid(appid, username);
+			if (wxMaUsers == null) {
+				throw new LoginWechatUsernameNotFoundException("用户名不存在");
+			}
 
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            // 暂时仅授权微信权限
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority("wechat");
-            authorities.add(authority);
+			List<GrantedAuthority> authorities = new ArrayList<>();
+			// 暂时仅授权微信权限
+			SimpleGrantedAuthority authority = new SimpleGrantedAuthority("wechat");
+			authorities.add(authority);
 
-            return new User(username, UUID.randomUUID().toString(), authorities);
-        }
+			return new User(username, UUID.randomUUID().toString(), authorities);
+		}
 
-        Users users = usersService.getByUsername(username);
-        if (users == null) {
-            throw new LoginUsernameNotFoundException("用户名不存在");
-        }
+		Users users = usersService.getByUsername(username);
+		if (users == null) {
+			throw new LoginUsernameNotFoundException("用户名不存在");
+		}
 
-        String password = users.getPassword();
-        Boolean enabled = users.getEnabled();
-        Boolean accountNonExpired = users.getAccountNonExpired();
-        Boolean credentialsNonExpired = users.getCredentialsNonExpired();
-        Boolean accountNonLocked = users.getAccountNonLocked();
-        List<GrantedAuthority> authorities = new ArrayList<>();
+		String password = users.getPassword();
+		Boolean enabled = users.getEnabled();
+		Boolean accountNonExpired = users.getAccountNonExpired();
+		Boolean credentialsNonExpired = users.getCredentialsNonExpired();
+		Boolean accountNonLocked = users.getAccountNonLocked();
+		List<GrantedAuthority> authorities = new ArrayList<>();
 
-        List<Authorities> authoritiesList = users.getAuthoritiesList();
+		List<Authorities> authoritiesList = users.getAuthoritiesList();
 
-        boolean allowEmptyAuthorities = cloudSecurityProperties.isAllowEmptyAuthorities();
-        if (!allowEmptyAuthorities && authoritiesList.size() == 0) {
-            throw new LoginException(CodeEnums.A10011.code, CodeEnums.A10011.msg);
-        }
+		boolean allowEmptyAuthorities = cloudSecurityProperties.isAllowEmptyAuthorities();
+		if (!allowEmptyAuthorities && authoritiesList.size() == 0) {
+			throw new LoginException(CodeEnums.A10011.code, CodeEnums.A10011.msg);
+		}
 
-        for (Authorities auth : authoritiesList) {
-            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(auth.getAuthority());
-            authorities.add(authority);
-        }
+		for (Authorities auth : authoritiesList) {
+			SimpleGrantedAuthority authority = new SimpleGrantedAuthority(auth.getAuthority());
+			authorities.add(authority);
+		}
 
-        return new User(username, password, enabled != null && enabled, accountNonExpired != null && accountNonExpired, credentialsNonExpired != null && credentialsNonExpired, accountNonLocked != null && accountNonLocked, authorities);
-    }
+		return new User(username, password, enabled != null && enabled, accountNonExpired != null && accountNonExpired,
+				credentialsNonExpired != null && credentialsNonExpired, accountNonLocked != null && accountNonLocked,
+				authorities);
+	}
 
 }

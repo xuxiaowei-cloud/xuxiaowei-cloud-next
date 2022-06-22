@@ -13,15 +13,15 @@ import java.lang.annotation.*;
  * @since 0.0.1
  */
 @Documented
-@Constraint(validatedBy = {LowerCaseValidation.class})
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Constraint(validatedBy = { LowerCaseValidation.class })
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LowerCaseAnnotation {
 
-    String message() default "内容必须包含小写字母";
+	String message() default "内容必须包含小写字母";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
 }

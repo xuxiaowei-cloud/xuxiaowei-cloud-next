@@ -18,39 +18,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class WxMaUsersServiceImpl extends ServiceImpl<WxMaUsersMapper, WxMaUsers> implements IWxMaUsersService {
 
-    /**
-     * 保存 openid
-     *
-     * @param appid   小程序标识
-     * @param openid  用户标识（针对于某个小程序）
-     * @param unionid 用户标识（针对于同一开放平台）
-     */
-    @Override
-    public boolean saveOpenid(String appid, String openid, String unionid) {
-        WxMaUsers getOne = getByAppidAndOpenid(appid, openid);
-        if (getOne == null) {
-            WxMaUsers wxMaUsers = new WxMaUsers();
-            wxMaUsers.setAppid(appid);
-            wxMaUsers.setOpenid(openid);
-            wxMaUsers.setUnionid(unionid);
-            return save(wxMaUsers);
-        }
+	/**
+	 * 保存 openid
+	 * @param appid 小程序标识
+	 * @param openid 用户标识（针对于某个小程序）
+	 * @param unionid 用户标识（针对于同一开放平台）
+	 */
+	@Override
+	public boolean saveOpenid(String appid, String openid, String unionid) {
+		WxMaUsers getOne = getByAppidAndOpenid(appid, openid);
+		if (getOne == null) {
+			WxMaUsers wxMaUsers = new WxMaUsers();
+			wxMaUsers.setAppid(appid);
+			wxMaUsers.setOpenid(openid);
+			wxMaUsers.setUnionid(unionid);
+			return save(wxMaUsers);
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    /**
-     * 根据 appid、openid 查询微信小程序用户
-     *
-     * @param appid  小程序标识
-     * @param openid 用户标识（针对于某个小程序）
-     * @return 返回 微信小程序用户
-     */
-    public WxMaUsers getByAppidAndOpenid(String appid, String openid) {
-        QueryWrapper<WxMaUsers> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("appid", appid);
-        queryWrapper.eq("openid", openid);
-        return getOne(queryWrapper);
-    }
+	/**
+	 * 根据 appid、openid 查询微信小程序用户
+	 * @param appid 小程序标识
+	 * @param openid 用户标识（针对于某个小程序）
+	 * @return 返回 微信小程序用户
+	 */
+	public WxMaUsers getByAppidAndOpenid(String appid, String openid) {
+		QueryWrapper<WxMaUsers> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("appid", appid);
+		queryWrapper.eq("openid", openid);
+		return getOne(queryWrapper);
+	}
 
 }

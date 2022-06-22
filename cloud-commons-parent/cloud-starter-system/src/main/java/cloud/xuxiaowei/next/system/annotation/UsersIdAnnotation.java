@@ -15,15 +15,15 @@ import java.lang.annotation.*;
  * @since 0.0.1
  */
 @Documented
-@Constraint(validatedBy = {UsersIdValidation.class})
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Constraint(validatedBy = { UsersIdValidation.class })
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UsersIdAnnotation {
 
-    String message() default "用户主键 不合法";
+	String message() default "用户主键 不合法";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
 }

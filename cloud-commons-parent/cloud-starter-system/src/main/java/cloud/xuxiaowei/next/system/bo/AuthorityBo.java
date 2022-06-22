@@ -13,10 +13,10 @@ import java.io.Serializable;
 @Data
 public class AuthorityBo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String authority;
+	private String authority;
 
-    private String explain;
+	private String explain;
 
 }

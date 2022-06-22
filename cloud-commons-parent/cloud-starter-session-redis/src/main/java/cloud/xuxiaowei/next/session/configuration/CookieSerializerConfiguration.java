@@ -16,38 +16,38 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 @Configuration
 public class CookieSerializerConfiguration {
 
-    private CloudCookieProperties cloudCookieProperties;
+	private CloudCookieProperties cloudCookieProperties;
 
-    @Autowired
-    public void setCloudCookieProperties(CloudCookieProperties cloudCookieProperties) {
-        this.cloudCookieProperties = cloudCookieProperties;
-    }
+	@Autowired
+	public void setCloudCookieProperties(CloudCookieProperties cloudCookieProperties) {
+		this.cloudCookieProperties = cloudCookieProperties;
+	}
 
-    /**
-     * 在主域中储存Cookie，子域中共享Cookie
-     */
-    @Bean
-    public CookieSerializer cookieSerializer() {
+	/**
+	 * 在主域中储存Cookie，子域中共享Cookie
+	 */
+	@Bean
+	public CookieSerializer cookieSerializer() {
 
-        // 默认 Cookie 序列化
-        DefaultCookieSerializer defaultCookieSerializer = new DefaultCookieSerializer();
+		// 默认 Cookie 序列化
+		DefaultCookieSerializer defaultCookieSerializer = new DefaultCookieSerializer();
 
-        // Cookie名字，默认为 SESSION
-        defaultCookieSerializer.setCookieName(cloudCookieProperties.getCookieName());
+		// Cookie名字，默认为 SESSION
+		defaultCookieSerializer.setCookieName(cloudCookieProperties.getCookieName());
 
-        // 域，这允许跨子域共享cookie，默认设置是使用当前域。
-        defaultCookieSerializer.setDomainName(cloudCookieProperties.getCookieDomain());
+		// 域，这允许跨子域共享cookie，默认设置是使用当前域。
+		defaultCookieSerializer.setDomainName(cloudCookieProperties.getCookieDomain());
 
-        // Session Cookie 是否使用 Base64
-        defaultCookieSerializer.setUseBase64Encoding(cloudCookieProperties.isUseBase64Encoding());
+		// Session Cookie 是否使用 Base64
+		defaultCookieSerializer.setUseBase64Encoding(cloudCookieProperties.isUseBase64Encoding());
 
-        // Cookie 过期时间
-        defaultCookieSerializer.setCookieMaxAge(cloudCookieProperties.getCookieMaxAge());
+		// Cookie 过期时间
+		defaultCookieSerializer.setCookieMaxAge(cloudCookieProperties.getCookieMaxAge());
 
-        // Cookie的路径。
-        defaultCookieSerializer.setCookiePath(cloudCookieProperties.getCookiePath());
+		// Cookie的路径。
+		defaultCookieSerializer.setCookiePath(cloudCookieProperties.getCookiePath());
 
-        return defaultCookieSerializer;
-    }
+		return defaultCookieSerializer;
+	}
 
 }

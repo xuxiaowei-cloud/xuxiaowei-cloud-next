@@ -29,25 +29,26 @@ import java.io.IOException;
 @Component
 public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
 
-    private CloudSecurityProperties cloudSecurityProperties;
+	private CloudSecurityProperties cloudSecurityProperties;
 
-    @Autowired
-    public void setCloudSecurityProperties(CloudSecurityProperties cloudSecurityProperties) {
-        this.cloudSecurityProperties = cloudSecurityProperties;
-    }
+	@Autowired
+	public void setCloudSecurityProperties(CloudSecurityProperties cloudSecurityProperties) {
+		this.cloudSecurityProperties = cloudSecurityProperties;
+	}
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
 
-        String userName = SecurityUtils.getUserName(authentication);
+		String userName = SecurityUtils.getUserName(authentication);
 
-        MDC.put(Constant.NAME, userName);
+		MDC.put(Constant.NAME, userName);
 
-        String successForwardUrl = cloudSecurityProperties.getSuccessForwardUrl();
-        Assert.isTrue(UrlUtils.isValidRedirectUrl(successForwardUrl), () -> "'" + successForwardUrl + "' 不是有效的转发URL");
+		String successForwardUrl = cloudSecurityProperties.getSuccessForwardUrl();
+		Assert.isTrue(UrlUtils.isValidRedirectUrl(successForwardUrl), () -> "'" + successForwardUrl + "' 不是有效的转发URL");
 
-        request.getRequestDispatcher(successForwardUrl).forward(request, response);
+		request.getRequestDispatcher(successForwardUrl).forward(request, response);
 
-    }
+	}
 
 }

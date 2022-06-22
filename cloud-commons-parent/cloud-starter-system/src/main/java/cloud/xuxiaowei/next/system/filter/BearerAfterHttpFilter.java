@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter 执行之后 过滤器
+ * org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter
+ * 执行之后 过滤器
  * <p>
  * 在日志中添加用户标识
  * <p>
@@ -27,14 +28,15 @@ import java.io.IOException;
 @Component
 public class BearerAfterHttpFilter extends HttpFilter {
 
-    @Override
-    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+	@Override
+	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
 
-        String userName = SecurityUtils.getUserName();
+		String userName = SecurityUtils.getUserName();
 
-        MDC.put(Constant.NAME, userName);
+		MDC.put(Constant.NAME, userName);
 
-        super.doFilter(req, res, chain);
-    }
+		super.doFilter(req, res, chain);
+	}
 
 }

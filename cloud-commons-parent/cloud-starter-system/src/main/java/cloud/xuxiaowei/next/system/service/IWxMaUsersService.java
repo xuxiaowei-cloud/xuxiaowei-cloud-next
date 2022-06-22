@@ -13,23 +13,21 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IWxMaUsersService extends IService<WxMaUsers> {
 
-    /**
-     * 保存 openid
-     *
-     * @param appid   小程序标识
-     * @param openid  用户标识（针对于某个小程序）
-     * @param unionid 用户标识（针对于同一开放平台）
-     * @return 返回 保存结果
-     */
-    boolean saveOpenid(String appid, String openid, String unionid);
+	/**
+	 * 保存 openid
+	 * @param appid 小程序标识
+	 * @param openid 用户标识（针对于某个小程序）
+	 * @param unionid 用户标识（针对于同一开放平台）
+	 * @return 返回 保存结果
+	 */
+	boolean saveOpenid(String appid, String openid, String unionid);
 
-    /**
-     * 根据 appid、openid 查询微信小程序用户
-     *
-     * @param appid  小程序标识
-     * @param openid 用户标识（针对于某个小程序）
-     * @return 返回 微信小程序用户
-     */
-    WxMaUsers getByAppidAndOpenid(String appid, String openid);
+	/**
+	 * 根据 appid、openid 查询微信小程序用户
+	 * @param appid 小程序标识
+	 * @param openid 用户标识（针对于某个小程序）
+	 * @return 返回 微信小程序用户
+	 */
+	WxMaUsers getByAppidAndOpenid(String appid, String openid);
 
 }

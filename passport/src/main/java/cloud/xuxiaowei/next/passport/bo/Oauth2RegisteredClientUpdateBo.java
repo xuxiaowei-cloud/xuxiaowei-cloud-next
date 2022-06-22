@@ -19,39 +19,38 @@ import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @Data
 public class Oauth2RegisteredClientUpdateBo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String id;
+	private String id;
 
-    private String clientId;
+	private String clientId;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime clientIdIssuedAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime clientIdIssuedAt;
 
-    private String clientSecret;
+	private String clientSecret;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime clientSecretExpiresAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime clientSecretExpiresAt;
 
-    /**
-     * 用户识别码
-     */
-    @NotEmpty(message = "用户识别码 不能为空")
-    private String code;
+	/**
+	 * 用户识别码
+	 */
+	@NotEmpty(message = "用户识别码 不能为空")
+	private String code;
 
-    private String clientName;
+	private String clientName;
 
-    private String clientAuthenticationMethods;
+	private String clientAuthenticationMethods;
 
-    private String authorizationGrantTypes;
+	private String authorizationGrantTypes;
 
-    private String redirectUris;
+	private String redirectUris;
 
-    private String scopes;
+	private String scopes;
 
-    private String clientSettings;
+	private String clientSettings;
 
-    private String tokenSettings;
-
+	private String tokenSettings;
 
 }

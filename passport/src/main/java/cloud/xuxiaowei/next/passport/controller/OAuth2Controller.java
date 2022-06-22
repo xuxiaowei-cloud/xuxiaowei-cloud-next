@@ -23,23 +23,24 @@ import java.util.stream.Collectors;
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2Controller {
 
-    /**
-     * 检查 Token
-     *
-     * @param request        请求
-     * @param response       响应
-     * @param authentication 授权信息
-     * @return 返回 检查 Token 结果
-     */
-    @RequestMapping("/check_token")
-    public Map<String, Object> checkToken(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Map<String, Object> map = new HashMap<>(4);
-        if (authentication != null) {
-            Set<String> authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
-            map.put("authorities", authorities);
-            map.put("active", true);
-        }
-        return map;
-    }
+	/**
+	 * 检查 Token
+	 * @param request 请求
+	 * @param response 响应
+	 * @param authentication 授权信息
+	 * @return 返回 检查 Token 结果
+	 */
+	@RequestMapping("/check_token")
+	public Map<String, Object> checkToken(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) {
+		Map<String, Object> map = new HashMap<>(4);
+		if (authentication != null) {
+			Set<String> authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
+					.collect(Collectors.toSet());
+			map.put("authorities", authorities);
+			map.put("active", true);
+		}
+		return map;
+	}
 
 }

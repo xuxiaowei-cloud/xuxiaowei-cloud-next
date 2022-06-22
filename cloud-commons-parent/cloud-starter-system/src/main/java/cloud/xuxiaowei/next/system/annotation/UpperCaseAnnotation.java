@@ -13,15 +13,15 @@ import java.lang.annotation.*;
  * @since 0.0.1
  */
 @Documented
-@Constraint(validatedBy = {UpperCaseValidation.class})
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Constraint(validatedBy = { UpperCaseValidation.class })
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UpperCaseAnnotation {
 
-    String message() default "内容必须包含大写字母";
+	String message() default "内容必须包含大写字母";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
 }

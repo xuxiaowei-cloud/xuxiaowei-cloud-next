@@ -15,17 +15,16 @@ import java.io.Serializable;
 @Data
 public class AuthorityVo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 权限
-     */
-    private String authority;
+	/**
+	 * 权限
+	 */
+	private String authority;
 
-    /**
-     * 权限说明
-     */
-    private String explain;
-
+	/**
+	 * 权限说明
+	 */
+	private String explain;
 
 }

@@ -15,15 +15,15 @@ import java.lang.annotation.*;
  * @since 0.0.1
  */
 @Documented
-@Constraint(validatedBy = {UsernameLogicValidation.class})
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Constraint(validatedBy = { UsernameLogicValidation.class })
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UsernameLogicAnnotation {
 
-    String message() default "用户名 已被逻辑删除";
+	String message() default "用户名 已被逻辑删除";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
 }

@@ -111,6 +111,18 @@
 
 ## [脚本](./sh/README.md)
 
+## [代码格式规范 spring-javaformat](https://github.com/spring-io/spring-javaformat)
+
+```shell
+./mvnw spring-javaformat:apply
+```
+
+或
+
+```shell
+mvn spring-javaformat:apply
+```
+
 ## 参考文档
 
 - [Spring Boot 2.7.0 现已推出](https://spring.io/blog/2022/05/19/spring-boot-2-7-0-available-now)

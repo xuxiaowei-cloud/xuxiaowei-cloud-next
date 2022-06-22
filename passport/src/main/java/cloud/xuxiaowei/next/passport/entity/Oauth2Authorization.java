@@ -8,7 +8,11 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 授权表。	原表结构：oauth2-authorization-server-*.*.*.jar!/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql	原表结构：https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql	GitCode 镜像仓库：https://gitcode.net/mirrors/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql
+ * 授权表。
+ * 原表结构：oauth2-authorization-server-*.*.*.jar!/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql
+ * 原表结构：https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql
+ * GitCode
+ * 镜像仓库：https://gitcode.net/mirrors/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql
  * </p>
  *
  * @author xuxiaowei
@@ -18,55 +22,54 @@ import java.time.LocalDateTime;
 @TableName("oauth2_authorization")
 public class Oauth2Authorization implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String id;
+	private String id;
 
-    private String registeredClientId;
+	private String registeredClientId;
 
-    private String principalName;
+	private String principalName;
 
-    private String authorizationGrantType;
+	private String authorizationGrantType;
 
-    private String attributes;
+	private String attributes;
 
-    private String state;
+	private String state;
 
-    private String authorizationCodeValue;
+	private String authorizationCodeValue;
 
-    private LocalDateTime authorizationCodeIssuedAt;
+	private LocalDateTime authorizationCodeIssuedAt;
 
-    private LocalDateTime authorizationCodeExpiresAt;
+	private LocalDateTime authorizationCodeExpiresAt;
 
-    private String authorizationCodeMetadata;
+	private String authorizationCodeMetadata;
 
-    private String accessTokenValue;
+	private String accessTokenValue;
 
-    private LocalDateTime accessTokenIssuedAt;
+	private LocalDateTime accessTokenIssuedAt;
 
-    private LocalDateTime accessTokenExpiresAt;
+	private LocalDateTime accessTokenExpiresAt;
 
-    private String accessTokenMetadata;
+	private String accessTokenMetadata;
 
-    private String accessTokenType;
+	private String accessTokenType;
 
-    private String accessTokenScopes;
+	private String accessTokenScopes;
 
-    private String oidcIdTokenValue;
+	private String oidcIdTokenValue;
 
-    private LocalDateTime oidcIdTokenIssuedAt;
+	private LocalDateTime oidcIdTokenIssuedAt;
 
-    private LocalDateTime oidcIdTokenExpiresAt;
+	private LocalDateTime oidcIdTokenExpiresAt;
 
-    private String oidcIdTokenMetadata;
+	private String oidcIdTokenMetadata;
 
-    private String refreshTokenValue;
+	private String refreshTokenValue;
 
-    private LocalDateTime refreshTokenIssuedAt;
+	private LocalDateTime refreshTokenIssuedAt;
 
-    private LocalDateTime refreshTokenExpiresAt;
+	private LocalDateTime refreshTokenExpiresAt;
 
-    private String refreshTokenMetadata;
-
+	private String refreshTokenMetadata;
 
 }

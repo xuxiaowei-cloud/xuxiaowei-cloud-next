@@ -17,18 +17,18 @@ import java.security.KeyPair;
 @Slf4j
 class JwkKeyPropertiesTests {
 
-    /**
-     * 生成 RSA 密钥对
-     */
-    @Test
-    void rsa() {
-        KeyPair keyPair = SecureUtil.generateKeyPair(AsymmetricAlgorithm.RSA_ECB_PKCS1.getValue(), 2048);
-        RSA rsa = new RSA(keyPair.getPrivate(), keyPair.getPublic());
+	/**
+	 * 生成 RSA 密钥对
+	 */
+	@Test
+	void rsa() {
+		KeyPair keyPair = SecureUtil.generateKeyPair(AsymmetricAlgorithm.RSA_ECB_PKCS1.getValue(), 2048);
+		RSA rsa = new RSA(keyPair.getPrivate(), keyPair.getPublic());
 
-        String privateKeyBase64 = rsa.getPrivateKeyBase64();
-        String publicKeyBase64 = rsa.getPublicKeyBase64();
-        log.info("privateKeyBase64：{}", publicKeyBase64);
-        log.info("privateKeyBase64：{}", privateKeyBase64);
-    }
+		String privateKeyBase64 = rsa.getPrivateKeyBase64();
+		String publicKeyBase64 = rsa.getPublicKeyBase64();
+		log.info("privateKeyBase64：{}", publicKeyBase64);
+		log.info("privateKeyBase64：{}", privateKeyBase64);
+	}
 
 }

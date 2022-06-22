@@ -21,25 +21,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class UsernameExistValidation implements ConstraintValidator<UsernameExistAnnotation, String> {
 
-    private IUsersService usersService;
+	private IUsersService usersService;
 
-    @Autowired
-    public void setUsersService(IUsersService usersService) {
-        this.usersService = usersService;
-    }
+	@Autowired
+	public void setUsersService(IUsersService usersService) {
+		this.usersService = usersService;
+	}
 
-    @Override
-    public void initialize(UsernameExistAnnotation constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
+	@Override
+	public void initialize(UsernameExistAnnotation constraintAnnotation) {
+		ConstraintValidator.super.initialize(constraintAnnotation);
+	}
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value != null) {
-            Users users = usersService.getByUsername(value);
-            return users == null;
-        }
-        return true;
-    }
+	@Override
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		if (value != null) {
+			Users users = usersService.getByUsername(value);
+			return users == null;
+		}
+		return true;
+	}
 
 }

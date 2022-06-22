@@ -24,24 +24,25 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("cloud.xuxiaowei.next.*.mapper.**")
 public class MybatisPlusConfiguration {
 
-    /**
-     * 新的分页插件、攻击 SQL 阻断解析器，防止全表更新与删除
-     * <p>
-     * 一缓和二缓遵循mybatis的规则
-     * <p>
-     * 需要设置 {@link MybatisConfiguration#setConfigurationFactory(Class)} = false 避免缓存出现问题(该属性会在旧插件移除后一同移除)
-     */
-    @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+	/**
+	 * 新的分页插件、攻击 SQL 阻断解析器，防止全表更新与删除
+	 * <p>
+	 * 一缓和二缓遵循mybatis的规则
+	 * <p>
+	 * 需要设置 {@link MybatisConfiguration#setConfigurationFactory(Class)} = false
+	 * 避免缓存出现问题(该属性会在旧插件移除后一同移除)
+	 */
+	@Bean
+	public MybatisPlusInterceptor mybatisPlusInterceptor() {
+		MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
 
-        // 分页拦截器
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+		// 分页拦截器
+		interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
 
-        // 攻击 SQL 阻断解析器,防止全表更新与删除
-        interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
+		// 攻击 SQL 阻断解析器,防止全表更新与删除
+		interceptor.addInnerInterceptor(new BlockAttackInnerInterceptor());
 
-        return interceptor;
-    }
+		return interceptor;
+	}
 
 }

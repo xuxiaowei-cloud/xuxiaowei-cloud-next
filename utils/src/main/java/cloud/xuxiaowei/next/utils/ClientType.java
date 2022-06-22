@@ -8,24 +8,24 @@ package cloud.xuxiaowei.next.utils;
  */
 public enum ClientType {
 
-    /**
-     * 微信客户端
-     */
-    WECHAT_APPLET("wechat_applet", "password");
+	/**
+	 * 微信客户端
+	 */
+	WECHAT_APPLET("wechat_applet", "password");
 
-    /**
-     * 客户端类型
-     */
-    public final String clientType;
+	/**
+	 * 客户端类型
+	 */
+	public final String clientType;
 
-    /**
-     * 授权类型
-     */
-    public final String grantType;
+	/**
+	 * 授权类型
+	 */
+	public final String grantType;
 
-    ClientType(String clientType, String grantType) {
-        this.clientType = clientType;
-        this.grantType = grantType;
-    }
+	ClientType(String clientType, String grantType) {
+		this.clientType = clientType;
+		this.grantType = grantType;
+	}
 
 }

@@ -153,6 +153,9 @@
         <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
         <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
+        <!-- https://mvnrepository.com/artifact/io.spring.javaformat/spring-javaformat-maven-plugin -->
+        <!-- https://github.com/spring-io/spring-javaformat/ -->
+        <spring-javaformat-maven-plugin.version>0.0.33</spring-javaformat-maven-plugin.version>
 
         <!-- 打包时跳过单元测试 -->
         <skipTests>true</skipTests>
@@ -514,6 +517,26 @@
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.json
                     </generateGitPropertiesFilename>
                 </configuration>
+            </plugin>
+
+            <!--
+                ./mvnw spring-javaformat:apply
+                mvn spring-javaformat:apply
+             -->
+            <!-- https://mvnrepository.com/artifact/io.spring.javaformat/spring-javaformat-maven-plugin -->
+            <plugin>
+                <groupId>io.spring.javaformat</groupId>
+                <artifactId>spring-javaformat-maven-plugin</artifactId>
+                <version>${spring-javaformat-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <inherited>true</inherited>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>

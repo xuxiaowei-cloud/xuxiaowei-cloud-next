@@ -17,62 +17,62 @@ import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 @Data
 public class Oauth2AuthorizationVo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private String id;
+	private String id;
 
-    private String registeredClientId;
+	private String registeredClientId;
 
-    private String principalName;
+	private String principalName;
 
-    private String authorizationGrantType;
+	private String authorizationGrantType;
 
-    private String attributes;
+	private String attributes;
 
-    private String state;
+	private String state;
 
-    private String authorizationCodeValue;
+	private String authorizationCodeValue;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime authorizationCodeIssuedAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime authorizationCodeIssuedAt;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime authorizationCodeExpiresAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime authorizationCodeExpiresAt;
 
-    private String authorizationCodeMetadata;
+	private String authorizationCodeMetadata;
 
-    private String accessTokenValue;
+	private String accessTokenValue;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime accessTokenIssuedAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime accessTokenIssuedAt;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime accessTokenExpiresAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime accessTokenExpiresAt;
 
-    private String accessTokenMetadata;
+	private String accessTokenMetadata;
 
-    private String accessTokenType;
+	private String accessTokenType;
 
-    private String accessTokenScopes;
+	private String accessTokenScopes;
 
-    private String oidcIdTokenValue;
+	private String oidcIdTokenValue;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime oidcIdTokenIssuedAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime oidcIdTokenIssuedAt;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime oidcIdTokenExpiresAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime oidcIdTokenExpiresAt;
 
-    private String oidcIdTokenMetadata;
+	private String oidcIdTokenMetadata;
 
-    private String refreshTokenValue;
+	private String refreshTokenValue;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime refreshTokenIssuedAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime refreshTokenIssuedAt;
 
-    @JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
-    private LocalDateTime refreshTokenExpiresAt;
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
+	private LocalDateTime refreshTokenExpiresAt;
 
-    private String refreshTokenMetadata;
+	private String refreshTokenMetadata;
 
 }

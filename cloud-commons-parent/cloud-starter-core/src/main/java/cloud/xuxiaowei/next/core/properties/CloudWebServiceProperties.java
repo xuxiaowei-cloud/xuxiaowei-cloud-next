@@ -22,11 +22,11 @@ import java.util.List;
 @ConfigurationProperties("cloud.web-service")
 public class CloudWebServiceProperties {
 
-    /**
-     * 命名空间
-     * <p>
-     * 用于无权限时返回数据格式
-     */
-    private List<String> namespaceUriList = Collections.emptyList();
+	/**
+	 * 命名空间
+	 * <p>
+	 * 用于无权限时返回数据格式
+	 */
+	private List<String> namespaceUriList = Collections.emptyList();
 
 }

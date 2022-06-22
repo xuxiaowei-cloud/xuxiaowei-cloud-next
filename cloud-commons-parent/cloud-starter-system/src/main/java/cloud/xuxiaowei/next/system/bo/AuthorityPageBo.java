@@ -13,10 +13,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class AuthorityPageBo extends AuthorityBo {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Long current;
+	private Long current;
 
-    private Long size;
+	private Long size;
 
 }

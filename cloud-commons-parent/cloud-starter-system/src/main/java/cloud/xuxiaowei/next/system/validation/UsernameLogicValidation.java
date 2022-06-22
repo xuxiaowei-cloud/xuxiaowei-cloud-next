@@ -21,30 +21,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Slf4j
 public class UsernameLogicValidation implements ConstraintValidator<UsernameLogicAnnotation, String> {
 
-    private IUsersService usersService;
+	private IUsersService usersService;
 
-    @Autowired
-    public void setUsersService(IUsersService usersService) {
-        this.usersService = usersService;
-    }
+	@Autowired
+	public void setUsersService(IUsersService usersService) {
+		this.usersService = usersService;
+	}
 
-    @Override
-    public void initialize(UsernameLogicAnnotation constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
+	@Override
+	public void initialize(UsernameLogicAnnotation constraintAnnotation) {
+		ConstraintValidator.super.initialize(constraintAnnotation);
+	}
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value != null) {
-            Users users = usersService.getLogicByUsername(value);
-            if (users == null) {
-                return true;
-            } else {
-                Boolean deleted = users.getDeleted();
-                return deleted != null && !deleted;
-            }
-        }
-        return true;
-    }
+	@Override
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		if (value != null) {
+			Users users = usersService.getLogicByUsername(value);
+			if (users == null) {
+				return true;
+			}
+			else {
+				Boolean deleted = users.getDeleted();
+				return deleted != null && !deleted;
+			}
+		}
+		return true;
+	}
 
 }

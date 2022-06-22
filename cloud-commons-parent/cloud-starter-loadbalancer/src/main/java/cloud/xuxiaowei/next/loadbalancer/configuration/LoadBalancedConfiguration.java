@@ -14,15 +14,14 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class LoadBalancedConfiguration {
 
-    /**
-     * 支持负载均衡的 {@link RestTemplate}
-     *
-     * @return 返回 支持负载均衡的 {@link RestTemplate}
-     */
-    @Bean
-    @LoadBalanced
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
+	/**
+	 * 支持负载均衡的 {@link RestTemplate}
+	 * @return 返回 支持负载均衡的 {@link RestTemplate}
+	 */
+	@Bean
+	@LoadBalanced
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
+	}
 
 }

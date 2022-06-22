@@ -15,15 +15,15 @@ import java.lang.annotation.*;
  * @since 0.0.1
  */
 @Documented
-@Constraint(validatedBy = {NicknameExistValidation.class})
-@Target({ElementType.METHOD, ElementType.FIELD})
+@Constraint(validatedBy = { NicknameExistValidation.class })
+@Target({ ElementType.METHOD, ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NicknameExistAnnotation {
 
-    String message() default "昵称 已存在";
+	String message() default "昵称 已存在";
 
-    Class<?>[] groups() default {};
+	Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+	Class<? extends Payload>[] payload() default {};
 
 }

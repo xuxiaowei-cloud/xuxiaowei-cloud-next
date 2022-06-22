@@ -18,30 +18,29 @@ import java.util.Set;
  */
 public class ValidationUtils {
 
-    /**
-     * 验证异常
-     *
-     * @param object 数据
-     */
-    public static void validate(Object object) {
+	/**
+	 * 验证异常
+	 * @param object 数据
+	 */
+	public static void validate(Object object) {
 
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
-        Set<ConstraintViolation<Object>> validate = validator.validate(object);
+		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+		Set<ConstraintViolation<Object>> validate = validator.validate(object);
 
-        // 验证结果异常
-        if (validate.size() > 0) {
-            List<String> fieldList = new LinkedList<>();
-            List<String> msgList = new LinkedList<>();
-            for (ConstraintViolation<Object> next : validate) {
-                fieldList.add(next.getPropertyPath().toString());
-                msgList.add(next.getMessage());
-            }
+		// 验证结果异常
+		if (validate.size() > 0) {
+			List<String> fieldList = new LinkedList<>();
+			List<String> msgList = new LinkedList<>();
+			for (ConstraintViolation<Object> next : validate) {
+				fieldList.add(next.getPropertyPath().toString());
+				msgList.add(next.getMessage());
+			}
 
-            String field = Joiner.on(",").join(fieldList);
-            String msg = Joiner.on(",").join(msgList);
+			String field = Joiner.on(",").join(fieldList);
+			String msg = Joiner.on(",").join(msgList);
 
-            throw new CloudRuntimeException(CodeEnums.B10003.code, msg, field);
-        }
-    }
+			throw new CloudRuntimeException(CodeEnums.B10003.code, msg, field);
+		}
+	}
 
 }

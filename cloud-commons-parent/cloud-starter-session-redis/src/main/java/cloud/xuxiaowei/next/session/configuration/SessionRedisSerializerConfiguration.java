@@ -18,18 +18,19 @@ import org.springframework.session.data.redis.config.annotation.web.http.RedisHt
 @EnableRedisHttpSession
 public class SessionRedisSerializerConfiguration {
 
-    /**
-     * Spring {@link HttpSession} 默认 Redis 序列化程序
-     * <p>
-     * 名称必须为：springSessionDefaultRedisSerializer
-     *
-     * @param redisTemplate Redis 模板
-     * @return 返回 Spring {@link HttpSession} 默认 Redis 序列化程序
-     * @see RedisHttpSessionConfiguration#setDefaultRedisSerializer(RedisSerializer) 自定义 Spring {@link HttpSession} 默认 Redis 序列化程序
-     */
-//    @Bean
-//    public RedisSerializer<?> springSessionDefaultRedisSerializer(RedisTemplate<?, ?> redisTemplate) {
-//        return redisTemplate.getValueSerializer();
-//    }
+	/**
+	 * Spring {@link HttpSession} 默认 Redis 序列化程序
+	 * <p>
+	 * 名称必须为：springSessionDefaultRedisSerializer
+	 * @param redisTemplate Redis 模板
+	 * @return 返回 Spring {@link HttpSession} 默认 Redis 序列化程序
+	 * @see RedisHttpSessionConfiguration#setDefaultRedisSerializer(RedisSerializer) 自定义
+	 * Spring {@link HttpSession} 默认 Redis 序列化程序
+	 */
+	// @Bean
+	// public RedisSerializer<?> springSessionDefaultRedisSerializer(RedisTemplate<?, ?>
+	// redisTemplate) {
+	// return redisTemplate.getValueSerializer();
+	// }
 
 }

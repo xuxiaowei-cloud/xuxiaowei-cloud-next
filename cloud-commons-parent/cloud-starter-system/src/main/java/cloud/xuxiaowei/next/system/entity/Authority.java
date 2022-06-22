@@ -18,19 +18,18 @@ import java.io.Serializable;
 @Data
 public class Authority implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 权限
-     */
-    @TableId(type = IdType.INPUT)
-    private String authority;
+	/**
+	 * 权限
+	 */
+	@TableId(type = IdType.INPUT)
+	private String authority;
 
-    /**
-     * 权限说明
-     */
-    @TableField("`explain`")
-    private String explain;
-
+	/**
+	 * 权限说明
+	 */
+	@TableField("`explain`")
+	private String explain;
 
 }

@@ -22,59 +22,56 @@ import java.security.interfaces.RSAPublicKey;
 @ConfigurationProperties("jwk")
 public class JwkKeyProperties {
 
-    /**
-     * RSA 秘钥对
-     */
-    private Rsa rsa;
+	/**
+	 * RSA 秘钥对
+	 */
+	private Rsa rsa;
 
-    /**
-     * RSA 秘钥对
-     * <p>
-     * RSA 非对称性加密，必须为 2048 位
-     *
-     * @author xuxiaowei
-     * @since 0.0.1
-     */
-    @Data
-    public static class Rsa {
+	/**
+	 * RSA 秘钥对
+	 * <p>
+	 * RSA 非对称性加密，必须为 2048 位
+	 *
+	 * @author xuxiaowei
+	 * @since 0.0.1
+	 */
+	@Data
+	public static class Rsa {
 
-        /**
-         * RSA 公钥
-         */
-        private String publicKey;
+		/**
+		 * RSA 公钥
+		 */
+		private String publicKey;
 
-        /**
-         * RSA 私钥
-         */
-        private String privateKey;
+		/**
+		 * RSA 私钥
+		 */
+		private String privateKey;
 
-    }
+	}
 
-    /**
-     * 获取 RSA 公钥 对象
-     *
-     * @return 返回 RSA 公钥
-     */
-    public PublicKey publicKey() {
-        return new RSA(null, rsa.publicKey).getPublicKey();
-    }
+	/**
+	 * 获取 RSA 公钥 对象
+	 * @return 返回 RSA 公钥
+	 */
+	public PublicKey publicKey() {
+		return new RSA(null, rsa.publicKey).getPublicKey();
+	}
 
-    /**
-     * 获取 RSA 公钥 对象
-     *
-     * @return 返回 RSA 公钥
-     */
-    public RSAPublicKey rsaPublicKey() {
-        return (RSAPublicKey) publicKey();
-    }
+	/**
+	 * 获取 RSA 公钥 对象
+	 * @return 返回 RSA 公钥
+	 */
+	public RSAPublicKey rsaPublicKey() {
+		return (RSAPublicKey) publicKey();
+	}
 
-    /**
-     * 获取 RSA 私钥 对象
-     *
-     * @return 返回 RSA 私钥
-     */
-    public PrivateKey privateKey() {
-        return new RSA(rsa.privateKey, null).getPrivateKey();
-    }
+	/**
+	 * 获取 RSA 私钥 对象
+	 * @return 返回 RSA 私钥
+	 */
+	public PrivateKey privateKey() {
+		return new RSA(rsa.privateKey, null).getPrivateKey();
+	}
 
 }

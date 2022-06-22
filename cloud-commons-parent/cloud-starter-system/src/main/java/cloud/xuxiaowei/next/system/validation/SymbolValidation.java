@@ -17,26 +17,26 @@ import org.hibernate.validator.internal.constraintvalidators.bv.size.SizeValidat
 @Slf4j
 public class SymbolValidation implements ConstraintValidator<SymbolAnnotation, String> {
 
-    @Override
-    public void initialize(SymbolAnnotation constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
-    }
+	@Override
+	public void initialize(SymbolAnnotation constraintAnnotation) {
+		ConstraintValidator.super.initialize(constraintAnnotation);
+	}
 
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value != null) {
+	@Override
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		if (value != null) {
 
-            String[] split = value.split("");
+			String[] split = value.split("");
 
-            for (String s : split) {
-                if (Constant.SYMBOL.contains(s)) {
-                    return true;
-                }
-            }
+			for (String s : split) {
+				if (Constant.SYMBOL.contains(s)) {
+					return true;
+				}
+			}
 
-            return false;
-        }
-        return true;
-    }
+			return false;
+		}
+		return true;
+	}
 
 }

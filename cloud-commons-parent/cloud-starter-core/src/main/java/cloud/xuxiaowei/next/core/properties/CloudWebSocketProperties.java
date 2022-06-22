@@ -19,14 +19,14 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("cloud.web-socket")
 public class CloudWebSocketProperties {
 
-    /**
-     * STOMP over WebSocket 端点
-     */
-    private String[] endpointPaths;
+	/**
+	 * STOMP over WebSocket 端点
+	 */
+	private String[] endpointPaths;
 
-    /**
-     * 允许域
-     */
-    private String[] allowedOrigins = new String[]{};
+	/**
+	 * 允许域
+	 */
+	private String[] allowedOrigins = new String[] {};
 
 }

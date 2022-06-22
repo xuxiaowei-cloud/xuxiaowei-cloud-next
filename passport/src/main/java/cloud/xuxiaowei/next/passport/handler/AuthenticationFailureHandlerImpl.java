@@ -32,37 +32,45 @@ import java.io.IOException;
 @Component
 public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHandler {
 
-    @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+	@Override
+	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException exception) throws IOException, ServletException {
 
-        Response<?> error;
+		Response<?> error;
 
-        if (exception instanceof DisabledException) {
-            error = Response.error(CodeEnums.A30001.code, CodeEnums.A30001.msg);
-        } else if (exception instanceof AccountExpiredException) {
-            error = Response.error(CodeEnums.A30002.code, CodeEnums.A30002.msg);
-        } else if (exception instanceof CredentialsExpiredException) {
-            error = Response.error(CodeEnums.A30003.code, CodeEnums.A30003.msg);
-        } else if (exception instanceof LockedException) {
-            error = Response.error(CodeEnums.A30004.code, CodeEnums.A30004.msg);
-        } else if (exception instanceof LoginParamPasswordValidException passwordValidException) {
-            error = Response.error(passwordValidException.getCode(), passwordValidException.getMsg());
-        } else if (exception instanceof InternalAuthenticationServiceException internalAuthenticationServiceException) {
-            Throwable cause = internalAuthenticationServiceException.getCause();
-            if (cause instanceof LoginException loginException) {
-                error = Response.error(loginException.getCode(), loginException.getMsg());
-            } else {
-                error = Response.error(CodeEnums.A10000.code, "内部认证服务异常");
-                error.setExplain("异常代码待划分");
-            }
-        } else {
-            // 此处可增加其他异常的判断
-            error = Response.error(CodeEnums.A10000.code, CodeEnums.A10000.msg);
-        }
+		if (exception instanceof DisabledException) {
+			error = Response.error(CodeEnums.A30001.code, CodeEnums.A30001.msg);
+		}
+		else if (exception instanceof AccountExpiredException) {
+			error = Response.error(CodeEnums.A30002.code, CodeEnums.A30002.msg);
+		}
+		else if (exception instanceof CredentialsExpiredException) {
+			error = Response.error(CodeEnums.A30003.code, CodeEnums.A30003.msg);
+		}
+		else if (exception instanceof LockedException) {
+			error = Response.error(CodeEnums.A30004.code, CodeEnums.A30004.msg);
+		}
+		else if (exception instanceof LoginParamPasswordValidException passwordValidException) {
+			error = Response.error(passwordValidException.getCode(), passwordValidException.getMsg());
+		}
+		else if (exception instanceof InternalAuthenticationServiceException internalAuthenticationServiceException) {
+			Throwable cause = internalAuthenticationServiceException.getCause();
+			if (cause instanceof LoginException loginException) {
+				error = Response.error(loginException.getCode(), loginException.getMsg());
+			}
+			else {
+				error = Response.error(CodeEnums.A10000.code, "内部认证服务异常");
+				error.setExplain("异常代码待划分");
+			}
+		}
+		else {
+			// 此处可增加其他异常的判断
+			error = Response.error(CodeEnums.A10000.code, CodeEnums.A10000.msg);
+		}
 
-        log.error(error.getMsg(), exception);
+		log.error(error.getMsg(), exception);
 
-        ResponseUtils.response(response, error);
-    }
+		ResponseUtils.response(response, error);
+	}
 
 }

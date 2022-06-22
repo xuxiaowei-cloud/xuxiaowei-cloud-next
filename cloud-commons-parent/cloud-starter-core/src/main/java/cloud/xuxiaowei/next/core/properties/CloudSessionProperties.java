@@ -23,14 +23,14 @@ import java.util.concurrent.TimeUnit;
 @ConfigurationProperties("cloud.session")
 public class CloudSessionProperties {
 
-    /**
-     * 过期时间
-     */
-    private long timeout = 12;
+	/**
+	 * 过期时间
+	 */
+	private long timeout = 12;
 
-    /**
-     * 过期时间单位
-     */
-    private TimeUnit unit = TimeUnit.HOURS;
+	/**
+	 * 过期时间单位
+	 */
+	private TimeUnit unit = TimeUnit.HOURS;
 
 }

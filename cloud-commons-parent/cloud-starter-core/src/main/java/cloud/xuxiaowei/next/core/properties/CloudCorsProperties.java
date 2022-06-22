@@ -22,9 +22,9 @@ import java.util.List;
 @ConfigurationProperties("cloud.cors")
 public class CloudCorsProperties {
 
-    /**
-     * 允许来源为空
-     */
-    private List<String> allowOrginNullList = Collections.emptyList();
+	/**
+	 * 允许来源为空
+	 */
+	private List<String> allowOrginNullList = Collections.emptyList();
 
 }

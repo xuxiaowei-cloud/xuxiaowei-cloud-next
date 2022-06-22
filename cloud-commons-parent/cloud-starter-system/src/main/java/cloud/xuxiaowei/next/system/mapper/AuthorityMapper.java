@@ -17,12 +17,11 @@ import java.util.Set;
  */
 public interface AuthorityMapper extends BaseMapper<Authority> {
 
-    /**
-     * 根据 用户名 查询权限
-     *
-     * @param username 用户名
-     * @return 返回 权限
-     */
-    Set<AuthorityVo> listByUsername(@Param("username") String username);
+	/**
+	 * 根据 用户名 查询权限
+	 * @param username 用户名
+	 * @return 返回 权限
+	 */
+	Set<AuthorityVo> listByUsername(@Param("username") String username);
 
 }

@@ -29,20 +29,22 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @Component
 public class LogHttpFilter extends HttpFilter {
 
-    @Override
-    protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+	@Override
+	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
 
-        String remoteHost = req.getRemoteHost();
-        MDC.put(Constant.IP, remoteHost);
+		String remoteHost = req.getRemoteHost();
+		MDC.put(Constant.IP, remoteHost);
 
-        String requestId = req.getHeader(Constant.REQUEST_ID);
-        if (requestId == null) {
-            MDC.put(Constant.REQUEST_ID, UUID.randomUUID().toString());
-        } else {
-            MDC.put(Constant.REQUEST_ID, requestId);
-        }
+		String requestId = req.getHeader(Constant.REQUEST_ID);
+		if (requestId == null) {
+			MDC.put(Constant.REQUEST_ID, UUID.randomUUID().toString());
+		}
+		else {
+			MDC.put(Constant.REQUEST_ID, requestId);
+		}
 
-        super.doFilter(req, res, chain);
-    }
+		super.doFilter(req, res, chain);
+	}
 
 }

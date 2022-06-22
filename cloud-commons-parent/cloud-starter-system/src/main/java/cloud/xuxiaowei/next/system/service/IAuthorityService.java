@@ -20,28 +20,25 @@ import java.util.Set;
  */
 public interface IAuthorityService extends IService<Authority> {
 
-    /**
-     * 查询 权限与权限说明表
-     *
-     * @param authorityBo 权限与权限说明参数
-     * @return 返回 查询结果
-     */
-    List<Authority> listByAuthorityBo(AuthorityBo authorityBo);
+	/**
+	 * 查询 权限与权限说明表
+	 * @param authorityBo 权限与权限说明参数
+	 * @return 返回 查询结果
+	 */
+	List<Authority> listByAuthorityBo(AuthorityBo authorityBo);
 
-    /**
-     * 分页查询 权限与权限说明表
-     *
-     * @param authorityPageBo 权限与权限说明分页参数
-     * @return 返回 查询结果
-     */
-    IPage<Authority> pageByAuthorityPageBo(AuthorityPageBo authorityPageBo);
+	/**
+	 * 分页查询 权限与权限说明表
+	 * @param authorityPageBo 权限与权限说明分页参数
+	 * @return 返回 查询结果
+	 */
+	IPage<Authority> pageByAuthorityPageBo(AuthorityPageBo authorityPageBo);
 
-    /**
-     * 根据 用户名 查询权限
-     *
-     * @param username 用户名
-     * @return 返回 权限
-     */
-    Set<AuthorityVo> listByUsername(String username);
+	/**
+	 * 根据 用户名 查询权限
+	 * @param username 用户名
+	 * @return 返回 权限
+	 */
+	Set<AuthorityVo> listByUsername(String username);
 
 }

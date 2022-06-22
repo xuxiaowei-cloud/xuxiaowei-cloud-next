@@ -18,20 +18,20 @@ import java.util.Map;
 @Slf4j
 class ClientSettingsTests {
 
-    @Test
-    void settings() throws JsonProcessingException {
-        ClientSettings.Builder clientSettingsBuilder = ClientSettings.builder();
+	@Test
+	void settings() throws JsonProcessingException {
+		ClientSettings.Builder clientSettingsBuilder = ClientSettings.builder();
 
-        // 如果客户端请求访问时需要授权同意，则设置为true 。这适用于所有交互流程（例如authorization_code和device_code ）。
-        clientSettingsBuilder.requireAuthorizationConsent(true);
+		// 如果客户端请求访问时需要授权同意，则设置为true 。这适用于所有交互流程（例如authorization_code和device_code ）。
+		clientSettingsBuilder.requireAuthorizationConsent(true);
 
-        ClientSettings clientSettings = clientSettingsBuilder.build();
-        Map<String, Object> settings = clientSettings.getSettings();
+		ClientSettings clientSettings = clientSettingsBuilder.build();
+		Map<String, Object> settings = clientSettings.getSettings();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        String s = objectWriter.writeValueAsString(settings);
-        log.info("\n{}", s);
-    }
+		ObjectMapper objectMapper = new ObjectMapper();
+		ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
+		String s = objectWriter.writeValueAsString(settings);
+		log.info("\n{}", s);
+	}
 
 }

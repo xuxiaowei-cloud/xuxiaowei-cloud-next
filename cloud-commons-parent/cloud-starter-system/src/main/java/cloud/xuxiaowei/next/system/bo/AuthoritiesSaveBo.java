@@ -15,17 +15,17 @@ import java.util.Set;
 @Data
 public class AuthoritiesSaveBo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * 用户名
-     */
-    @NotEmpty(message = "用户名 不能为空")
-    private String username;
+	/**
+	 * 用户名
+	 */
+	@NotEmpty(message = "用户名 不能为空")
+	private String username;
 
-    /**
-     * 权限
-     */
-    private Set<String> authorityList;
+	/**
+	 * 权限
+	 */
+	private Set<String> authorityList;
 
 }

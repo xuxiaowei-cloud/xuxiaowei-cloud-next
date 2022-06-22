@@ -20,13 +20,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class ClientSecretBo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @NumberAnnotation(message = "客户凭证必须包含数字")
-    @LowerCaseAnnotation(message = "客户凭证必须包含小写字母")
-    @UpperCaseAnnotation(message = "客户凭证必须包含大写字母")
-    @SymbolAnnotation(message = "客户凭证必须包含特殊符号")
-    @Length(min = 6, max = 16, message = "客户凭证 长度限制：6-16")
-    private String clientSecret;
+	@NumberAnnotation(message = "客户凭证必须包含数字")
+	@LowerCaseAnnotation(message = "客户凭证必须包含小写字母")
+	@UpperCaseAnnotation(message = "客户凭证必须包含大写字母")
+	@SymbolAnnotation(message = "客户凭证必须包含特殊符号")
+	@Length(min = 6, max = 16, message = "客户凭证 长度限制：6-16")
+	private String clientSecret;
 
 }

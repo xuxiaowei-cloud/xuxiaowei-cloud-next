@@ -13,16 +13,16 @@ import java.io.Serializable;
 @Data
 public class Oauth2RegisteredClientPageBo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Long current;
+	private Long current;
 
-    private Long size;
+	private Long size;
 
-    private String id;
+	private String id;
 
-    private String clientId;
+	private String clientId;
 
-    private String clientName;
+	private String clientName;
 
 }

@@ -10,7 +10,11 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 客户表。	原表结构：oauth2-authorization-server-*.*.*.jar!/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql	原表结构：https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql	GitCode 镜像仓库：https://gitcode.net/mirrors/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql
+ * 客户表。
+ * 原表结构：oauth2-authorization-server-*.*.*.jar!/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql
+ * 原表结构：https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql
+ * GitCode
+ * 镜像仓库：https://gitcode.net/mirrors/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/client/oauth2-registered-client-schema.sql
  * </p>
  *
  * @author xuxiaowei
@@ -20,32 +24,31 @@ import java.time.LocalDateTime;
 @TableName("oauth2_registered_client")
 public class Oauth2RegisteredClient implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.ASSIGN_UUID)
-    private String id;
+	@TableId(type = IdType.ASSIGN_UUID)
+	private String id;
 
-    private String clientId;
+	private String clientId;
 
-    private LocalDateTime clientIdIssuedAt;
+	private LocalDateTime clientIdIssuedAt;
 
-    private String clientSecret;
+	private String clientSecret;
 
-    private LocalDateTime clientSecretExpiresAt;
+	private LocalDateTime clientSecretExpiresAt;
 
-    private String clientName;
+	private String clientName;
 
-    private String clientAuthenticationMethods;
+	private String clientAuthenticationMethods;
 
-    private String authorizationGrantTypes;
+	private String authorizationGrantTypes;
 
-    private String redirectUris;
+	private String redirectUris;
 
-    private String scopes;
+	private String scopes;
 
-    private String clientSettings;
+	private String clientSettings;
 
-    private String tokenSettings;
-
+	private String tokenSettings;
 
 }

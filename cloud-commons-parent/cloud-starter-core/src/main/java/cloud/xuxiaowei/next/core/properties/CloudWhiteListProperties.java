@@ -24,42 +24,42 @@ import java.util.List;
 @ConfigurationProperties("cloud.white-list")
 public class CloudWhiteListProperties {
 
-    /**
-     * 允许端点的IP
-     */
-    private List<String> actuatorIpList = Collections.emptyList();
+	/**
+	 * 允许端点的IP
+	 */
+	private List<String> actuatorIpList = Collections.emptyList();
 
-    /**
-     * 忽略
-     */
-    private List<String> ignores = Collections.emptyList();
+	/**
+	 * 忽略
+	 */
+	private List<String> ignores = Collections.emptyList();
 
-    /**
-     * 服务列表
-     */
-    private List<Service> services = Collections.emptyList();
+	/**
+	 * 服务列表
+	 */
+	private List<Service> services = Collections.emptyList();
 
-    /**
-     * 服务
-     *
-     * @author xuxiaowei
-     * @since 0.0.1
-     */
-    @Data
-    public static class Service {
+	/**
+	 * 服务
+	 *
+	 * @author xuxiaowei
+	 * @since 0.0.1
+	 */
+	@Data
+	public static class Service {
 
-        /**
-         * 服务名
-         */
-        private String name;
+		/**
+		 * 服务名
+		 */
+		private String name;
 
-        /**
-         * 路径
-         * <p>
-         * 放行所有：/**
-         */
-        private List<String> pathList = Collections.emptyList();
+		/**
+		 * 路径
+		 * <p>
+		 * 放行所有：/**
+		 */
+		private List<String> pathList = Collections.emptyList();
 
-    }
+	}
 
 }

@@ -21,26 +21,27 @@ import javax.sql.DataSource;
 @SpringBootTest
 public class UserDetailsServiceTests {
 
-    private DataSource dataSource;
+	private DataSource dataSource;
 
-    private UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
 
-    private JdbcUserDetailsManager jdbcUserDetailsManager;
+	private JdbcUserDetailsManager jdbcUserDetailsManager;
 
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-        this.userDetailsService = new JdbcUserDetailsManager(dataSource);
-        this.jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
-    }
+	@Autowired
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.userDetailsService = new JdbcUserDetailsManager(dataSource);
+		this.jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
+	}
 
-    /**
-     * 创建用户
-     */
-    @Test
-    void createUser() {
-        UserDetails userDetails = User.withDefaultPasswordEncoder().username("user").password("password").authorities("user_info").build();
-        jdbcUserDetailsManager.createUser(userDetails);
-    }
+	/**
+	 * 创建用户
+	 */
+	@Test
+	void createUser() {
+		UserDetails userDetails = User.withDefaultPasswordEncoder().username("user").password("password")
+				.authorities("user_info").build();
+		jdbcUserDetailsManager.createUser(userDetails);
+	}
 
 }

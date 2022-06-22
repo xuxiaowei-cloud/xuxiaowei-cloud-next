@@ -23,14 +23,15 @@ import java.io.IOException;
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
-    @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+	@Override
+	public void handle(HttpServletRequest request, HttpServletResponse response,
+			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-        log.error("访问被拒绝异常：", accessDeniedException);
+		log.error("访问被拒绝异常：", accessDeniedException);
 
-        Response<?> error = Response.error(CodeEnums.T00002.code, CodeEnums.T00002.msg);
+		Response<?> error = Response.error(CodeEnums.T00002.code, CodeEnums.T00002.msg);
 
-        ResponseUtils.response(response, error);
-    }
+		ResponseUtils.response(response, error);
+	}
 
 }

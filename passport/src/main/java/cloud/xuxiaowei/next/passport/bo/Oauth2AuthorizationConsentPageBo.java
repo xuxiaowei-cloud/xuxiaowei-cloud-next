@@ -13,14 +13,14 @@ import java.io.Serializable;
 @Data
 public class Oauth2AuthorizationConsentPageBo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private Long current;
+	private Long current;
 
-    private Long size;
+	private Long size;
 
-    private String registeredClientId;
+	private String registeredClientId;
 
-    private String principalName;
+	private String principalName;
 
 }

@@ -19,19 +19,20 @@ import static org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl.DEF
 @Configuration
 public class DefaultUserDetailsServiceConfiguration {
 
-    /**
-     * @see UserDetailsService 用于检索用户进行身份验证的实例。
-     */
-    @Bean
-    @ConditionalOnMissingBean
-    public UserDetailsService userDetailsService(DataSource dataSource) {
-        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager(dataSource);
+	/**
+	 * @see UserDetailsService 用于检索用户进行身份验证的实例。
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public UserDetailsService userDetailsService(DataSource dataSource) {
+		JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager(dataSource);
 
-        // 启用权限组
-        userDetailsService.setGroupAuthoritiesByUsernameQuery(DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY.replace(" groups ", " `groups` "));
-        userDetailsService.setEnableGroups(true);
+		// 启用权限组
+		userDetailsService.setGroupAuthoritiesByUsernameQuery(
+				DEF_GROUP_AUTHORITIES_BY_USERNAME_QUERY.replace(" groups ", " `groups` "));
+		userDetailsService.setEnableGroups(true);
 
-        return userDetailsService;
-    }
+		return userDetailsService;
+	}
 
 }

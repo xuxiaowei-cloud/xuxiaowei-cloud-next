@@ -10,40 +10,40 @@ import cloud.xuxiaowei.next.utils.CodeEnums;
  */
 public class LoginParamValidException extends LoginException {
 
-    public LoginParamValidException() {
-        super(CodeEnums.A20001.code, CodeEnums.A20001.msg);
-    }
+	public LoginParamValidException() {
+		super(CodeEnums.A20001.code, CodeEnums.A20001.msg);
+	}
 
-    public LoginParamValidException(String msg) {
-        super(CodeEnums.A20001.code, msg);
-    }
+	public LoginParamValidException(String msg) {
+		super(CodeEnums.A20001.code, msg);
+	}
 
-    public LoginParamValidException(String code, String msg) {
-        super(code, msg);
-    }
+	public LoginParamValidException(String code, String msg) {
+		super(code, msg);
+	}
 
-    public LoginParamValidException(String code, String msg, Throwable cause) {
-        super(code, msg, cause);
-    }
+	public LoginParamValidException(String code, String msg, Throwable cause) {
+		super(code, msg, cause);
+	}
 
-    public LoginParamValidException(String code, String msg, String field, Throwable cause) {
-        super(code, msg, field, cause);
-    }
+	public LoginParamValidException(String code, String msg, String field, Throwable cause) {
+		super(code, msg, field, cause);
+	}
 
-    public LoginParamValidException(String code, String msg, String field, String explain, Throwable cause) {
-        super(code, msg, field, explain, cause);
-    }
+	public LoginParamValidException(String code, String msg, String field, String explain, Throwable cause) {
+		super(code, msg, field, explain, cause);
+	}
 
-    public LoginParamValidException(Throwable cause) {
-        super(CodeEnums.A20001.msg, cause);
-        this.code = CodeEnums.A20001.code;
-        this.msg = CodeEnums.A20001.msg;
-    }
+	public LoginParamValidException(Throwable cause) {
+		super(CodeEnums.A20001.msg, cause);
+		this.code = CodeEnums.A20001.code;
+		this.msg = CodeEnums.A20001.msg;
+	}
 
-    public LoginParamValidException(String msg, Throwable cause) {
-        super(msg, cause);
-        this.code = CodeEnums.A20001.code;
-        this.msg = msg;
-    }
+	public LoginParamValidException(String msg, Throwable cause) {
+		super(msg, cause);
+		this.code = CodeEnums.A20001.code;
+		this.msg = msg;
+	}
 
 }

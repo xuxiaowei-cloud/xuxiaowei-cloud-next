@@ -22,42 +22,42 @@ import java.util.List;
 @ConfigurationProperties("cloud.black-list")
 public class CloudBlackListProperties {
 
-    /**
-     * 黑名单IP
-     */
-    private List<String> ipList = Collections.emptyList();
+	/**
+	 * 黑名单IP
+	 */
+	private List<String> ipList = Collections.emptyList();
 
-    /**
-     * 黑名单IP与服务
-     */
-    private List<BlackList> services = Collections.emptyList();
+	/**
+	 * 黑名单IP与服务
+	 */
+	private List<BlackList> services = Collections.emptyList();
 
-    /**
-     * 黑名单
-     *
-     * @author xuxiaowei
-     * @since 0.0.1
-     */
-    @Data
-    public static class BlackList {
+	/**
+	 * 黑名单
+	 *
+	 * @author xuxiaowei
+	 * @since 0.0.1
+	 */
+	@Data
+	public static class BlackList {
 
-        /**
-         * IP
-         */
-        private String ip;
+		/**
+		 * IP
+		 */
+		private String ip;
 
-        /**
-         * 服务名
-         */
-        private String name;
+		/**
+		 * 服务名
+		 */
+		private String name;
 
-        /**
-         * 路径
-         * <p>
-         * 拦截所有：/**
-         */
-        private List<String> pathList = Collections.singletonList("/**");
+		/**
+		 * 路径
+		 * <p>
+		 * 拦截所有：/**
+		 */
+		private List<String> pathList = Collections.singletonList("/**");
 
-    }
+	}
 
 }

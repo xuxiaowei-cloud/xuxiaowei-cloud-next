@@ -23,15 +23,16 @@ import java.io.IOException;
 @Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
-    @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.error("身份验证入口点", authException);
+	@Override
+	public void commence(HttpServletRequest request, HttpServletResponse response,
+			AuthenticationException authException) throws IOException, ServletException {
+		log.error("身份验证入口点", authException);
 
-        Response<?> error = Response.error(CodeEnums.T00000.code, CodeEnums.T00000.msg);
+		Response<?> error = Response.error(CodeEnums.T00000.code, CodeEnums.T00000.msg);
 
-        error.setExplain(authException.getMessage());
+		error.setExplain(authException.getMessage());
 
-        ResponseUtils.response(response, error);
-    }
+		ResponseUtils.response(response, error);
+	}
 
 }
