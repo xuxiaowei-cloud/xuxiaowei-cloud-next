@@ -2,6 +2,7 @@ package cloud.xuxiaowei.next.user.configuration;
 
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,8 +11,11 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPublicKey;
+
+import static cloud.xuxiaowei.next.oauth2.impl.CsrfRequestMatcherImpl.CSRF_REQUEST_MATCHER_BEAN_NAME;
 
 /**
  * 资源服务配置
@@ -30,6 +34,8 @@ public class ResourceServerConfiguration {
 
     private JwkKeyProperties jwkKeyProperties;
 
+    private RequestMatcher csrfRequestMatcher;
+
     @Autowired
     public void setAccessDeniedHandler(AccessDeniedHandler accessDeniedHandler) {
         this.accessDeniedHandler = accessDeniedHandler;
@@ -43,6 +49,12 @@ public class ResourceServerConfiguration {
     @Autowired
     public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
         this.jwkKeyProperties = jwkKeyProperties;
+    }
+
+    @Autowired
+    @Qualifier(CSRF_REQUEST_MATCHER_BEAN_NAME)
+    public void setCsrfRequestMatcher(RequestMatcher csrfRequestMatcher) {
+        this.csrfRequestMatcher = csrfRequestMatcher;
     }
 
     @Bean
@@ -86,6 +98,9 @@ public class ResourceServerConfiguration {
                     // 身份验证入口点
                     .authenticationEntryPoint(authenticationEntryPoint);
         });
+
+        // CSRF 配置
+        http.csrf().requireCsrfProtectionMatcher(csrfRequestMatcher);
 
         return http.build();
     }

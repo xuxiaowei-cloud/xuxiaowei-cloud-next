@@ -41,3 +41,5 @@ cloud:
       '[/oauth2-registered-client/**]':
         - POST
         - OPTIONS
+      '[/actuator/**]':
+        - POST
