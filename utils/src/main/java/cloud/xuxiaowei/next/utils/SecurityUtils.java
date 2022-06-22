@@ -16,6 +16,36 @@ import java.util.Map;
 public class SecurityUtils {
 
 	/**
+	 * 获取 Token
+	 * @return 返回 Token
+	 */
+	public static String getTokenValue() {
+		SecurityContext context = SecurityContextHolder.getContext();
+		Authentication authentication = context.getAuthentication();
+		if (authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof Jwt jwt) {
+				return jwt.getTokenValue();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 获取 Token
+	 * @return 返回 Token
+	 */
+	public static String getTokenValue(Authentication authentication) {
+		if (authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof Jwt jwt) {
+				return jwt.getTokenValue();
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * 获取 用户名
 	 * @return 返回 用户名
 	 */
@@ -38,8 +68,7 @@ public class SecurityUtils {
 			}
 
 			Object principal = authentication.getPrincipal();
-			if (principal instanceof Jwt) {
-				Jwt jwt = (Jwt) principal;
+			if (principal instanceof Jwt jwt) {
 				Map<String, Object> claims = jwt.getClaims();
 				Object userName = claims.get("user_name");
 				if (userName == null) {

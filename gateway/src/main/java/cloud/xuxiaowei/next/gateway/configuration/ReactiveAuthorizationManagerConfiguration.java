@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -31,6 +32,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import javax.sql.DataSource;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.URI;
@@ -54,6 +56,8 @@ import java.util.UUID;
 @EnableWebFluxSecurity
 public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthorizationManager<AuthorizationContext> {
 
+	private DataSource dataSource;
+
 	private ServerAuthenticationEntryPoint serverAuthenticationEntryPoint;
 
 	private ServerAccessDeniedHandler serverAccessDeniedHandler;
@@ -63,6 +67,11 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 	private CloudWhiteListProperties cloudWhiteListProperties;
 
 	private JwkKeyProperties jwkKeyProperties;
+
+	@Autowired
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 
 	@Autowired
 	public void setServerAuthenticationEntryPoint(ServerAuthenticationEntryPoint serverAuthenticationEntryPoint) {
@@ -157,8 +166,16 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 
 			// 已通过认证授权
 			if (requestAuthentication.isAuthenticated()) {
-				// 放行
-				return new AuthorizationDecision(true);
+
+				// 查看数据库中是否存在此 授权 Token
+				String tokenValue = SecurityUtils.getTokenValue(requestAuthentication);
+				Integer integer = new JdbcTemplate(dataSource).queryForObject(
+						"SELECT count( 1 ) FROM oauth2_authorization WHERE access_token_value = ?", Integer.class,
+						tokenValue);
+				int result = integer == null ? 0 : integer;
+
+				// 根据数据库中是否存在此 授权 Token 来决定是否放行
+				return new AuthorizationDecision(result > 0);
 			}
 			else {
 				// 未通过认证授权
