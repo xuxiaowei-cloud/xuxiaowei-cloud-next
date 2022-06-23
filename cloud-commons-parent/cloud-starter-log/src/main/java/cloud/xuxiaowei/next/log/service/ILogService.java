@@ -28,4 +28,11 @@ public interface ILogService extends IService<Log> {
 	void saveLog(String hostAddress, String requestId, String sessionId, String method, String requestUri,
 			String queryString, String headersMap, String userAgent, Throwable ex);
 
+	/**
+	 * 根据 主键 设置 创建用户
+	 * @param createUsername 创建用户
+	 * @param logId 主键
+	 */
+	void setCreateUsernameById(String createUsername, String logId);
+
 }

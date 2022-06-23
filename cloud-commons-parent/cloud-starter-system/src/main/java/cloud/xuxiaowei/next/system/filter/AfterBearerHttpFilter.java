@@ -1,5 +1,6 @@
 package cloud.xuxiaowei.next.system.filter;
 
+import cloud.xuxiaowei.next.log.service.ILogService;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.SecurityUtils;
 import jakarta.servlet.FilterChain;
@@ -8,6 +9,7 @@ import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,13 @@ import java.io.IOException;
 @Component
 public class AfterBearerHttpFilter extends HttpFilter {
 
+	private ILogService logService;
+
+	@Autowired
+	public void setLogService(ILogService logService) {
+		this.logService = logService;
+	}
+
 	@Override
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -35,6 +44,8 @@ public class AfterBearerHttpFilter extends HttpFilter {
 		String userName = SecurityUtils.getUserName();
 
 		MDC.put(Constant.NAME, userName);
+
+		logService.setCreateUsernameById(userName, MDC.get(Constant.LOG_ID));
 
 		super.doFilter(req, res, chain);
 	}

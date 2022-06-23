@@ -6,6 +6,7 @@ import cloud.xuxiaowei.next.log.service.ILogService;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.exception.ExceptionUtils;
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +96,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 		log.setRequestId(requestId);
 		log.setSessionId(sessionId);
 		log.setException(ex == null ? null : ExceptionUtils.getStackTrace(ex));
-		log.setCreateUsername("");
+		log.setCreateUsername(null);
 		log.setCreateIp(hostAddress);
 		log.setHostname(hostname);
 		log.setIpAddress(ipAddress);
@@ -106,6 +107,19 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 
 		Long logId = log.getLogId();
 		MDC.put(Constant.LOG_ID, logId + "");
+	}
+
+	/**
+	 * 根据 主键 设置 创建用户
+	 * @param createUsername 创建用户
+	 * @param logId 主键
+	 */
+	@Override
+	public void setCreateUsernameById(String createUsername, String logId) {
+		UpdateWrapper<Log> updateWrapper = new UpdateWrapper<>();
+		updateWrapper.eq("log_id", logId);
+		updateWrapper.set("create_username", createUsername);
+		update(updateWrapper);
 	}
 
 }
