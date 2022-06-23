@@ -119,7 +119,8 @@
 
 - IntelliJ IDEA
   -
-  可安装插件自动格式化插件（无需运行下列命令）：[spring-javaformat-intellij-idea-plugin](https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin)
+  项目添加 [io.spring.javaformat:spring-javaformat-maven-plugin](https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-maven-plugin)
+  依赖之后，可安装自动格式化插件（无需运行下列命令）：[spring-javaformat-intellij-idea-plugin](https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin)
 
 ```shell
 ./mvnw spring-javaformat:apply
