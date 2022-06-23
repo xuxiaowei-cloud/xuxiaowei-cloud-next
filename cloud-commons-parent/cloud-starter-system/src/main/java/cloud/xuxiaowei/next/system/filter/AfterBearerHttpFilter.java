@@ -45,7 +45,9 @@ public class AfterBearerHttpFilter extends HttpFilter {
 
 		MDC.put(Constant.NAME, userName);
 
-		logService.setCreateUsernameById(userName, MDC.get(Constant.LOG_ID));
+		if (userName != null) {
+			logService.setCreateUsernameById(userName, MDC.get(Constant.LOG_ID));
+		}
 
 		super.doFilter(req, res, chain);
 	}
