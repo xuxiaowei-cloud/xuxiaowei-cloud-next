@@ -168,22 +168,30 @@ public class Log implements Serializable {
 	/**
 	 * 创建者IP，不为空
 	 */
+	@TableField(fill = FieldFill.INSERT)
 	private String createIp;
-
-	/**
-	 * 主机
-	 */
-	private String createHostName;
 
 	/**
 	 * 更新者IP，未更新时为空
 	 */
+	@TableField(fill = FieldFill.UPDATE)
 	private String updateIp;
 
 	/**
-	 * 主机
+	 * 主机名
 	 */
-	private String updateHostName;
+	private String hostname;
+
+	/**
+	 * 主机IP
+	 */
+	private String ipAddress;
+
+	/**
+	 * 服务端口
+	 */
+	@TableField("`port`")
+	private Integer port;
 
 	/**
 	 * 逻辑删除，0 未删除，1 删除，MySQL 默认值 0，不为 NULL，注解@TableLogic。

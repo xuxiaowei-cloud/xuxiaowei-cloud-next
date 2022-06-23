@@ -13,4 +13,19 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ILogService extends IService<Log> {
 
+	/**
+	 * 根据请求保存数据
+	 * @param hostAddress IP
+	 * @param requestId 请求ID
+	 * @param sessionId SessionID
+	 * @param method 请求方法
+	 * @param requestUri 请求地址
+	 * @param queryString 请求参数
+	 * @param headersMap 请求头
+	 * @param userAgent 浏览器标识
+	 * @param ex 异常
+	 */
+	void saveLog(String hostAddress, String requestId, String sessionId, String method, String requestUri,
+			String queryString, String headersMap, String userAgent, Throwable ex);
+
 }

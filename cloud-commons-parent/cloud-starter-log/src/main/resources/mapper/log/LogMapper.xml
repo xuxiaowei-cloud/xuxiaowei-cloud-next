@@ -32,9 +32,10 @@
         <result column="create_username" property="createUsername" />
         <result column="update_username" property="updateUsername" />
         <result column="create_ip" property="createIp" />
-        <result column="create_host_name" property="createHostName" />
         <result column="update_ip" property="updateIp" />
-        <result column="update_host_name" property="updateHostName" />
+        <result column="hostname" property="hostname" />
+        <result column="ip_address" property="ipAddress" />
+        <result column="port" property="port" />
         <result column="deleted" property="deleted" />
     </resultMap>
 

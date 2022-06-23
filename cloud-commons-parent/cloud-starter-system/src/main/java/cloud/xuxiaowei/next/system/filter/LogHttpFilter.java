@@ -1,12 +1,16 @@
 package cloud.xuxiaowei.next.system.filter;
 
+import cloud.xuxiaowei.next.log.service.ILogService;
 import cloud.xuxiaowei.next.utils.Constant;
+import cloud.xuxiaowei.next.utils.RequestUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +33,13 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 @Component
 public class LogHttpFilter extends HttpFilter {
 
+	private ILogService logService;
+
+	@Autowired
+	public void setLogService(ILogService logService) {
+		this.logService = logService;
+	}
+
 	@Override
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
@@ -38,11 +49,24 @@ public class LogHttpFilter extends HttpFilter {
 
 		String requestId = req.getHeader(Constant.REQUEST_ID);
 		if (requestId == null) {
-			MDC.put(Constant.REQUEST_ID, UUID.randomUUID().toString());
+			requestId = UUID.randomUUID().toString();
+			MDC.put(Constant.REQUEST_ID, requestId);
 		}
 		else {
 			MDC.put(Constant.REQUEST_ID, requestId);
 		}
+
+		HttpSession session = req.getSession();
+		String sessionId = session.getId();
+
+		String method = req.getMethod();
+		String requestUri = req.getRequestURI();
+		String queryString = req.getQueryString();
+		String headersMap = RequestUtils.getHeadersJson(req);
+		String userAgent = RequestUtils.getUserAgent(req);
+
+		logService.saveLog(remoteHost, requestId, sessionId, method, requestUri, queryString, headersMap, userAgent,
+				null);
 
 		super.doFilter(req, res, chain);
 	}

@@ -122,4 +122,9 @@ public class Constant implements Serializable {
 	 */
 	public static final String PRIVATE_KEY = "privateKey";
 
+	/**
+	 * 日志主键
+	 */
+	public static final String LOG_ID = "logId";
+
 }

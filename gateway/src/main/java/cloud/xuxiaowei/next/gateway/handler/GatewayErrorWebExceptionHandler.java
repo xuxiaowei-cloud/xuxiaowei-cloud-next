@@ -24,7 +24,6 @@ import org.springframework.web.server.WebExceptionHandler;
 import reactor.core.publisher.Mono;
 
 import java.net.ConnectException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.URI;
 
@@ -177,12 +176,9 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
 			Response<?> error = Response.error(CodeEnums.X10003.code, CodeEnums.X10003.msg);
 			return ResponseUtils.writeWith(response, error);
 		}
-		InetAddress address = remoteAddress.getAddress();
-		String hostName = address.getHostName();
-		String hostAddress = address.getHostAddress();
-		MDC.put(Constant.IP, hostAddress);
 
-		LogGlobalFilter.save(logService, request, hostAddress, hostName, ex);
+		// 保存日志
+		LogGlobalFilter.log(logService, remoteAddress, request, requestId, ex);
 
 		MediaType contentType = request.getHeaders().getContentType();
 
