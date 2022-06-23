@@ -1,0 +1,71 @@
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>需要同意</title>
+    <script>
+        function cancelConsent() {
+            document.consent_form.reset();
+            document.consent_form.submit();
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="py-5">
+        <h1 class="text-center">需要同意</h1>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <p>
+                <span class="font-weight-bold text-primary" th:text="${clientId}"></span>
+                想要访问您的帐户
+                <span class="font-weight-bold" th:text="${principal.name}"></span>
+            </p>
+        </div>
+    </div>
+    <div class="row pb-3">
+        <div class="col text-center">
+            <p>
+                上述应用请求以下权限。<br>
+                如果您同意，请查看这些内容并同意。
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <form name="consent_form" method="post" th:action="${requestUri}">
+                <input type="hidden" name="client_id" th:value="${clientId}">
+                <input type="hidden" name="state" th:value="${state}">
+
+                <div class="form-group form-check py-1" th:each="scope:${convertScope}">
+                    <input class="form-check-input" type="checkbox" name="scope" th:value="${scope}" th:id="${scope}">
+                    <label class="form-check-label" th:for="${scope}" th:text="${scope}"></label>
+                </div>
+
+                <div class="form-group pt-3">
+                    <button class="btn btn-primary btn-lg" type="submit" id="submit-consent">Submit Consent</button>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-link regular" type="button" onclick="cancelConsent();" id="cancel-consent">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col text-center">
+            <p>
+                <small>
+                    需要您同意提供访问权限。<br>
+                    如果您不同意，请单击取消，在这种情况下，不会与应用程序共享任何信息。
+                </small>
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

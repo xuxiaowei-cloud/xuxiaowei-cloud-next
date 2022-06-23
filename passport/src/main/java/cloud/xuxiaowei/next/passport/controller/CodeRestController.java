@@ -135,50 +135,23 @@ public class CodeRestController {
 	}
 
 	/**
-	 * 授权错误
+	 * 授权失败
 	 * @param request 请求
 	 * @param response 响应
 	 * @param session Session，不存在时自动创建
 	 * @param error 错误类型
 	 * @param errorDescription 错误描述
+	 * @param errorUri 错误描述的URI
 	 * @param state 状态码
-	 * @return 返回 错误原因
+	 * @return 返回 授权失败
 	 */
-	@RequestMapping(params = { "error", "error_description", "state" })
+	@RequestMapping(params = { "error", "error_description", "state", "error_uri" })
 	public Response<?> errorState(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-			String error, @RequestParam("error_description") String errorDescription, String code, String msg,
-			String data, String explain, String field, String requestId, String scope, String state) {
+			@RequestParam("error") String error, @RequestParam("error_description") String errorDescription,
+			@RequestParam("error_uri") String errorUri, @RequestParam("state") String state) {
 
-		ResponseMap responseMap = ResponseMap.error().put("error", error).put("error_description", errorDescription)
-				.put("data", data).put("explain", explain).put("field", field).put("requestId", requestId)
-				.put("scope", scope).put("state", state);
-
-		if (StringUtils.hasText(code)) {
-			responseMap.setCode(code);
-		}
-		if (StringUtils.hasText(msg)) {
-			responseMap.setMsg(msg);
-		}
-
-		return responseMap;
-	}
-
-	/**
-	 * 授权错误
-	 * @param request 请求
-	 * @param response 响应
-	 * @param session Session，不存在时自动创建
-	 * @param error 错误类型
-	 * @param errorDescription 错误描述
-	 * @return 返回 错误原因
-	 */
-	@RequestMapping(params = { "error", "error_description" })
-	public Response<?> error(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-			String error, @RequestParam("error_description") String errorDescription, String code, String msg,
-			String data, String explain, String field, String requestId, String scope) {
-
-		return errorState(request, response, session, error, errorDescription, code, msg, data, explain, field,
-				requestId, scope, null);
+		return ResponseMap.error().put("error", error).put("error_description", errorDescription)
+				.put("error_uri", errorUri).put("state", state);
 	}
 
 }

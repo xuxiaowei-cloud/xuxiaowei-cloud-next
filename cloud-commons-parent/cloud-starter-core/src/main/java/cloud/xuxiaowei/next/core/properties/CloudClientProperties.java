@@ -48,6 +48,11 @@ public class CloudClientProperties {
 	private String redirectUri;
 
 	/**
+	 * 同意页面
+	 */
+	private String consentPage;
+
+	/**
 	 * 授权码 URI
 	 */
 	private String authorizeUri;

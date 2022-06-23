@@ -9,6 +9,7 @@ cloud:
     authorize-uri: http://gateway.example.next.xuxiaowei.cloud:1101/passport/oauth2/authorize
     check-token-uri: http://gateway.example.next.xuxiaowei.cloud:1101/passport/oauth2/check_token?token=
     redirect-uri: http://gateway.example.next.xuxiaowei.cloud:1101/passport/code
+    consent-page: http://passport.example.next.xuxiaowei.cloud:1101/passport/oauth2.1/authorize
     access-token-uri: http://passport/oauth2/token
     scope: snsapi_base
     state-name: STATE_NAME

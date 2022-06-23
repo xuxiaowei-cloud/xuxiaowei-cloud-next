@@ -1,5 +1,6 @@
 package cloud.xuxiaowei.next.passport.configuration;
 
+import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -16,6 +17,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
@@ -29,9 +31,11 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPublicKey;
 import java.util.Set;
@@ -67,6 +71,8 @@ public class AuthorizationServerConfiguration {
 
 	private AuthenticationEntryPoint authenticationEntryPoint;
 
+	private CloudClientProperties cloudClientProperties;
+
 	@Autowired
 	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
 		this.jwkKeyProperties = jwkKeyProperties;
@@ -82,18 +88,36 @@ public class AuthorizationServerConfiguration {
 		this.authenticationEntryPoint = authenticationEntryPoint;
 	}
 
+	@Autowired
+	public void setCloudClientProperties(CloudClientProperties cloudClientProperties) {
+		this.cloudClientProperties = cloudClientProperties;
+	}
+
 	/**
 	 * @see <a href=
 	 * "https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html">协议端点的</a>
 	 * Spring Security 过滤器链。
 	 * @see WebSecurityConfigurerAdapterConfiguration#securityFilterChain(HttpSecurity)
 	 * 优先级要比此方法低
+	 * @see OAuth2AuthorizationServerConfiguration#applyDefaultSecurity(HttpSecurity) 默认
+	 * OAuth 2.1 授权配置
+	 * @see OAuth2AuthorizationEndpointFilter 默认 OAuth 2.1 授权页面
 	 */
 	@Bean
 	@Order(-1)
 	public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http) throws Exception {
 
-		OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+		OAuth2AuthorizationServerConfigurer<HttpSecurity> authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer<>();
+
+		authorizationServerConfigurer
+				.authorizationEndpoint(authorizationEndpointCustomizer -> authorizationEndpointCustomizer
+						.consentPage(cloudClientProperties.getConsentPage()));
+
+		RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
+
+		http.requestMatcher(endpointsMatcher)
+				.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
+				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher)).apply(authorizationServerConfigurer);
 
 		return http.build();
 	}
