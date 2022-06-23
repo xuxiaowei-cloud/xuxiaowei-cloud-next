@@ -14,7 +14,7 @@
 
     <name>ui</name>
     <description>UI</description>
-    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud</url>
+    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>
 
     <properties>
@@ -40,8 +40,8 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud</url>
-        <connection>scm:git:https://git@github.com/xuxiaowei-cloud/xuxiaowei-cloud.git</connection>
+        <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
+        <connection>scm:git:https://git@github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git</connection>
         <developerConnection>http://xuxiaowei.com.cn</developerConnection>
     </scm>
 
