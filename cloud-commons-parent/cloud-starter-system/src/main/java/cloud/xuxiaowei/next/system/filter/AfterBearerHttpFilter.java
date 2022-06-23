@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 @Order(-100)
 @Component
-public class BearerAfterHttpFilter extends HttpFilter {
+public class AfterBearerHttpFilter extends HttpFilter {
 
 	@Override
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
