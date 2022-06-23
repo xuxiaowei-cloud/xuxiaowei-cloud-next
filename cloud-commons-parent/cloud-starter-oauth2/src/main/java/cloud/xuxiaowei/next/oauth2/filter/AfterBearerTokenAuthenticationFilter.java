@@ -42,8 +42,14 @@ public class AfterBearerTokenAuthenticationFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
 			@NonNull FilterChain filterChain) throws ServletException, IOException {
 
-		// 查看数据库中是否存在此 授权 Token
+		// 获取当前用户授权成功后的 授权 Token
 		String tokenValue = SecurityUtils.getTokenValue();
+		if (tokenValue == null) {
+			filterChain.doFilter(request, response);
+			return;
+		}
+
+		// 查看数据库中是否存在此 授权 Token
 		Integer integer = new JdbcTemplate(dataSource).queryForObject(
 				"SELECT count( 1 ) FROM oauth2_authorization WHERE access_token_value = ?", Integer.class, tokenValue);
 		int result = integer == null ? 0 : integer;
