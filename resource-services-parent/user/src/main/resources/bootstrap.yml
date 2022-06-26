@@ -137,9 +137,6 @@ mybatis-plus:
   # MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，
   # 而不用使用全限定的类名（即 XML 中调用的时候不用包含包名）。
   type-aliases-package: cloud.xuxiaowei.next.*.entity
-  # 枚举类 扫描路径，如果配置了该属性，会将路径下的枚举类进行注入，让实体类字段能够简单快捷的使用枚举属性，
-  # 具体使用请结合 枚举注入（https://mp.baomidou.com/guide/enum.html） 查看。
-  type-enums-package: cloud.xuxiaowei.next.*.enums
   global-config:
     db-config:
       # 逻辑已删除值,(逻辑删除下有效，默认值：1)
