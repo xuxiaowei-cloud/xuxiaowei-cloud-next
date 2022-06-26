@@ -2,8 +2,8 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
-import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAuthenticationConverter;
-import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAuthenticationProvider;
+import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAppletAuthenticationConverter;
+import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAppletAuthenticationProvider;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -154,7 +154,7 @@ public class AuthorizationServerConfiguration {
 		authorizationServerConfigurer.tokenEndpoint(tokenEndpointCustomizer -> tokenEndpointCustomizer
 				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(Arrays.asList(
 						// 新增：微信 OAuth2 用于验证授权授予的 {@link OAuth2WeChatAuthenticationToken}
-						new OAuth2WeChatAuthenticationConverter(),
+						new OAuth2WeChatAppletAuthenticationConverter(),
 						// 默认值：OAuth2 授权码认证转换器
 						new OAuth2AuthorizationCodeAuthenticationConverter(),
 						// 默认值：OAuth2 刷新令牌认证转换器
@@ -162,15 +162,11 @@ public class AuthorizationServerConfiguration {
 						// 默认值：OAuth2 客户端凭据身份验证转换器
 						new OAuth2ClientCredentialsAuthenticationConverter()))));
 
-		RegisteredClientRepository registeredClientRepository = OAuth2Utils.getRegisteredClientRepository(http);
 		OAuth2AuthorizationService authorizationService = OAuth2Utils.getAuthorizationService(http);
-		OAuth2AuthorizationConsentService authorizationConsentService = OAuth2Utils
-				.getAuthorizationConsentService(http);
 		OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator = OAuth2Utils.getTokenGenerator(http);
-		OAuth2WeChatAuthenticationProvider authenticationProvider = new OAuth2WeChatAuthenticationProvider();
-		authenticationProvider.setRegisteredClientRepository(registeredClientRepository);
+		OAuth2WeChatAppletAuthenticationProvider authenticationProvider = new OAuth2WeChatAppletAuthenticationProvider();
+		authenticationProvider.setWeChatApplet(appid -> "需要根据appid查找secret");
 		authenticationProvider.setAuthorizationService(authorizationService);
-		authenticationProvider.setAuthorizationConsentService(authorizationConsentService);
 		authenticationProvider.setTokenGenerator(tokenGenerator);
 		http.authenticationProvider(authenticationProvider);
 
@@ -191,7 +187,7 @@ public class AuthorizationServerConfiguration {
 					// 放行端点
 					.antMatchers("/actuator/**").permitAll()
 					// 放行检查Token
-					.antMatchers("/oauth2/check_token").permitAll()
+					.antMatchers("/oauth2/check_token").permitAll().antMatchers("/oauth2/token").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});

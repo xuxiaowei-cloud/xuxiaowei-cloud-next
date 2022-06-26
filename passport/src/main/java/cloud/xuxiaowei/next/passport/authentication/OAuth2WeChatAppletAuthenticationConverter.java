@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 微信 OAuth2 用于验证授权授予的 {@link OAuth2WeChatAuthenticationToken}。
+ * 微信 OAuth2 用于验证授权授予的 {@link OAuth2WeChatAppletAuthenticationToken}。
  *
  * @author xuxiaowei
  * @since 0.0.1
@@ -35,25 +35,24 @@ import java.util.Map;
  * {@link OAuth2ClientCredentialsAuthenticationToken} 。
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
-public class OAuth2WeChatAuthenticationConverter implements AuthenticationConverter {
+public class OAuth2WeChatAppletAuthenticationConverter implements AuthenticationConverter {
 
 	@Override
 	public Authentication convert(HttpServletRequest request) {
 		// grant_type (REQUIRED)
 		String grantType = request.getParameter(OAuth2ParameterNames.GRANT_TYPE);
-		if (!OAuth2WeChatAuthenticationToken.WECHAT.getValue().equals(grantType)) {
+		if (!OAuth2WeChatAppletAuthenticationToken.WECHAT_APPLET.getValue().equals(grantType)) {
 			return null;
+		}
+
+		String appid = request.getParameter("appid");
+		if (!StringUtils.hasText(appid)) {
+			throwError(OAuth2ErrorCodes.INVALID_REQUEST, "appid", null);
 		}
 
 		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
 
 		MultiValueMap<String, String> parameters = getParameters(request);
-
-		// openid (REQUIRED)
-		String openid = parameters.getFirst(Constant.OPENID);
-		if (!StringUtils.hasText(openid) || parameters.get(Constant.OPENID).size() != 1) {
-			throwError(OAuth2ErrorCodes.INVALID_REQUEST, Constant.OPENID, null);
-		}
 
 		// code (REQUIRED)
 		String code = parameters.getFirst(OAuth2ParameterNames.CODE);
@@ -69,7 +68,7 @@ public class OAuth2WeChatAuthenticationConverter implements AuthenticationConver
 			}
 		});
 
-		return new OAuth2WeChatAuthenticationToken(openid, clientPrincipal, additionalParameters);
+		return new OAuth2WeChatAppletAuthenticationToken(appid, code, clientPrincipal, additionalParameters);
 	}
 
 	private static MultiValueMap<String, String> getParameters(HttpServletRequest request) {

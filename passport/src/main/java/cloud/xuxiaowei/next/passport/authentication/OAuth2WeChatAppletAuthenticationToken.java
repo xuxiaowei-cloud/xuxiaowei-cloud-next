@@ -24,23 +24,28 @@ import java.util.Map;
  * {@link Authentication} 实现。
  */
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
-public class OAuth2WeChatAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
+public class OAuth2WeChatAppletAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 
-	public static final AuthorizationGrantType WECHAT = new AuthorizationGrantType("wechat");
+	public static final AuthorizationGrantType WECHAT_APPLET = new AuthorizationGrantType("wechat_applet");
 
 	@Getter
-	private final String openid;
+	private final String appid;
+
+	@Getter
+	private final String code;
 
 	/**
 	 * 子类构造函数
 	 * @param clientPrincipal 经过身份验证的客户端主体
 	 * @param additionalParameters 附加参数
 	 */
-	public OAuth2WeChatAuthenticationToken(String openid, Authentication clientPrincipal,
-			Map<String, Object> additionalParameters) {
-		super(WECHAT, clientPrincipal, additionalParameters);
-		Assert.hasText(openid, "openid 不能为空");
-		this.openid = openid;
+	public OAuth2WeChatAppletAuthenticationToken(String appid, String code, Authentication clientPrincipal,
+												 Map<String, Object> additionalParameters) {
+		super(WECHAT_APPLET, clientPrincipal, additionalParameters);
+		Assert.hasText(code, "appid cannot be empty");
+		Assert.hasText(code, "code cannot be empty");
+		this.appid = appid;
+		this.code = code;
 	}
 
 }

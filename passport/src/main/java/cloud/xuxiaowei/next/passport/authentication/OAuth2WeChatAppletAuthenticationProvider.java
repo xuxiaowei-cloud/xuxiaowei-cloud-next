@@ -1,5 +1,7 @@
 package cloud.xuxiaowei.next.passport.authentication;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -11,21 +13,20 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
-import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.authentication.*;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
-import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.context.ProviderContextHolder;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
+import org.springframework.web.client.RestTemplate;
 
 import java.security.Principal;
 import java.util.*;
 
-import static cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAuthenticationToken.WECHAT;
+import static cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAppletAuthenticationToken.WECHAT_APPLET;
 
 /**
  * 微信 OAuth2 身份验证提供程序
@@ -46,28 +47,22 @@ import static cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAuthentic
  */
 @Slf4j
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
-public class OAuth2WeChatAuthenticationProvider implements AuthenticationProvider {
+public class OAuth2WeChatAppletAuthenticationProvider implements AuthenticationProvider {
 
 	private static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-	private RegisteredClientRepository registeredClientRepository;
+	private WeChatApplet weChatApplet;
 
 	private OAuth2AuthorizationService authorizationService;
 
-	private OAuth2AuthorizationConsentService authorizationConsentService;
-
 	private OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
-
-	public void setRegisteredClientRepository(RegisteredClientRepository registeredClientRepository) {
-		this.registeredClientRepository = registeredClientRepository;
-	}
 
 	public void setAuthorizationService(OAuth2AuthorizationService authorizationService) {
 		this.authorizationService = authorizationService;
 	}
 
-	public void setAuthorizationConsentService(OAuth2AuthorizationConsentService authorizationConsentService) {
-		this.authorizationConsentService = authorizationConsentService;
+	public void setWeChatApplet(WeChatApplet weChatApplet) {
+		this.weChatApplet = weChatApplet;
 	}
 
 	public void setTokenGenerator(OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
@@ -76,22 +71,54 @@ public class OAuth2WeChatAuthenticationProvider implements AuthenticationProvide
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		OAuth2WeChatAuthenticationToken oauth2WeChatAuthenticationToken = (OAuth2WeChatAuthenticationToken) authentication;
+		OAuth2WeChatAppletAuthenticationToken oauth2WeChatAppletAuthenticationToken = (OAuth2WeChatAppletAuthenticationToken) authentication;
 
 		OAuth2ClientAuthenticationToken clientPrincipal = OAuth2ProviderUtils
-				.getAuthenticatedClientElseThrowInvalidClient(oauth2WeChatAuthenticationToken);
+				.getAuthenticatedClientElseThrowInvalidClient(oauth2WeChatAppletAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 
+		String appid = oauth2WeChatAppletAuthenticationToken.getAppid();
+		String code = oauth2WeChatAppletAuthenticationToken.getCode();
+
+		RestTemplate restTemplate = new RestTemplate();
+		Map<String, String> uriVariables = new HashMap<>(8);
+		uriVariables.put("appid", appid);
+
+		String secret = weChatApplet.getSecretByAppid(appid);
+
+		uriVariables.put("secret", secret);
+		// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html
+		// Map map = restTemplate.getForObject(
+		// "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={appid}&secret={secret}",
+		// Map.class, uriVariables);
+		// String o = map.get("access_token") + "";
+
+		// https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/login/auth.code2Session.html
+		uriVariables.put("js_code", code);
+		String forObject = restTemplate.getForObject(
+				"https://api.weixin.qq.com/sns/jscode2session?appid={appid}&secret={secret}&js_code={js_code}&grant_type=authorization_code",
+				String.class, uriVariables);
+
+		Map map;
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			map = objectMapper.readValue(forObject, Map.class);
+		}
+		catch (JsonProcessingException e) {
+			throw new RuntimeException(e);
+		}
+
+		String openid = map.get("openid") + "";
+
 		OAuth2Authorization.Builder builder = OAuth2Authorization.withRegisteredClient(registeredClient);
-		builder.principalName(oauth2WeChatAuthenticationToken.getOpenid());
-		builder.authorizationGrantType(WECHAT);
+		builder.principalName(openid);
+		builder.authorizationGrantType(WECHAT_APPLET);
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("wechat");
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("wechat_applet");
 		authorities.add(authority);
-		User user = new User(oauth2WeChatAuthenticationToken.getOpenid(),
-				oauth2WeChatAuthenticationToken.getAdditionalParameters().get("code") + "", authorities);
-		Object details = oauth2WeChatAuthenticationToken.getDetails();
+		User user = new User(openid, code, authorities);
+		Object details = oauth2WeChatAppletAuthenticationToken.getDetails();
 		UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 				user, details);
 
@@ -109,8 +136,8 @@ public class OAuth2WeChatAuthenticationProvider implements AuthenticationProvide
 				.providerContext(ProviderContextHolder.getProviderContext())
 				.authorization(authorization)
 				.authorizedScopes(authorization.getAttribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME))
-				.authorizationGrantType(WECHAT)
-				.authorizationGrant(oauth2WeChatAuthenticationToken);
+				.authorizationGrantType(WECHAT_APPLET)
+				.authorizationGrant(oauth2WeChatAppletAuthenticationToken);
 		// @formatter:on
 
 		OAuth2Authorization.Builder authorizationBuilder = OAuth2Authorization.from(authorization);
@@ -164,7 +191,7 @@ public class OAuth2WeChatAuthenticationProvider implements AuthenticationProvide
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		return OAuth2WeChatAuthenticationToken.class.isAssignableFrom(authentication);
+		return OAuth2WeChatAppletAuthenticationToken.class.isAssignableFrom(authentication);
 	}
 
 }
