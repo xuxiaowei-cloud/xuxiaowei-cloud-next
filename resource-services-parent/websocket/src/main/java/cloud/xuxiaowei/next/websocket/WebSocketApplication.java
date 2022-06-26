@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.websocket;
+package cloud.xuxiaowei.next.websocket;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

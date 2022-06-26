@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.websocket.configuration;
+package cloud.xuxiaowei.next.websocket.configuration;
 
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
 import cloud.xuxiaowei.next.oauth2.filter.AfterBearerTokenAuthenticationFilter;

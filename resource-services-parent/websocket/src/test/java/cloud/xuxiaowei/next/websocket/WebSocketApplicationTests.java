@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.websocket;
+package cloud.xuxiaowei.next.websocket;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

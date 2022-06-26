@@ -1,7 +1,7 @@
-package cloud.xuxiaowei.websocket.configuration;
+package cloud.xuxiaowei.next.websocket.configuration;
 
 import cloud.xuxiaowei.next.utils.SecurityUtils;
-import cloud.xuxiaowei.websocket.message.OnlineMessage;
+import cloud.xuxiaowei.next.websocket.message.OnlineMessage;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;

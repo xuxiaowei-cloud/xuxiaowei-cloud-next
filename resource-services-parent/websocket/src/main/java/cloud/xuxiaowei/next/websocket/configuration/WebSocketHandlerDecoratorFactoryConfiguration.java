@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.websocket.configuration;
+package cloud.xuxiaowei.next.websocket.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

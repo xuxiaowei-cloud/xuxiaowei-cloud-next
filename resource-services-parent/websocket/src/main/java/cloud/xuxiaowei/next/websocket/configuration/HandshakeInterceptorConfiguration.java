@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.websocket.configuration;
+package cloud.xuxiaowei.next.websocket.configuration;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

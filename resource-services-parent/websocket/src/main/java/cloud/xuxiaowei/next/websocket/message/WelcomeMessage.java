@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.websocket.message;
+package cloud.xuxiaowei.next.websocket.message;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

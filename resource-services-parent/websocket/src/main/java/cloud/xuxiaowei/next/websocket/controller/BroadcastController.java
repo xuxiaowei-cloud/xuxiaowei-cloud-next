@@ -1,6 +1,6 @@
-package cloud.xuxiaowei.websocket.controller;
+package cloud.xuxiaowei.next.websocket.controller;
 
-import cloud.xuxiaowei.websocket.message.WelcomeMessage;
+import cloud.xuxiaowei.next.websocket.message.WelcomeMessage;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
