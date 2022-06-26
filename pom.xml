@@ -57,7 +57,7 @@
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
         <!-- https://repo1.maven.org/maven2/de/codecentric/spring-boot-admin-dependencies -->
         <!-- https://github.com/codecentric/spring-boot-admin -->
-        <spring-boot-admin.version>3.0.0-M2</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.0-M3</spring-boot-admin.version>
 
         <!-- OAuth 2.1 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
@@ -80,7 +80,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-boot-starter -->
         <!-- https://github.com/baomidou/mybatis-plus -->
-        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
         <!-- MyBatis Plus Generator -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-generator -->
@@ -98,7 +98,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
         <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-extension -->
         <!-- https://github.com/baomidou/mybatis-plus -->
-        <mybatis-plus-extension.version>3.5.1</mybatis-plus-extension.version>
+        <mybatis-plus-extension.version>3.5.2</mybatis-plus-extension.version>
         <!-- SQL 性能分析 -->
         <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
         <!-- https://repo1.maven.org/maven2/p6spy/p6spy -->
@@ -112,7 +112,7 @@
         <guava.version>31.1-jre</guava.version>
 
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-        <!-- https://oss.sonatype.org/content/repositories/public/commons-io/commons-io -->
+        <!-- https://repo1.maven.org/maven2/commons-io/commons-io -->
         <!-- https://github.com/apache/commons-io -->
         <commons-io.version>2.11.0</commons-io.version>
 
@@ -160,7 +160,7 @@
         <frontend-maven-plugin.version>1.12.1</frontend-maven-plugin.version>
         <!-- https://mvnrepository.com/artifact/io.spring.javaformat/spring-javaformat-maven-plugin -->
         <!-- https://github.com/spring-io/spring-javaformat/ -->
-        <spring-javaformat-maven-plugin.version>0.0.33</spring-javaformat-maven-plugin.version>
+        <spring-javaformat-maven-plugin.version>0.0.34</spring-javaformat-maven-plugin.version>
 
         <!-- 打包时跳过单元测试 -->
         <skipTests>true</skipTests>
