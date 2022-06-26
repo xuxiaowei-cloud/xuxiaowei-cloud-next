@@ -120,6 +120,11 @@
         <!-- https://repo1.maven.org/maven2/org/apache/commons/commons-lang3 -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
 
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <!-- https://repo1.maven.org/maven2/com/alibaba/fastjson -->
+        <!-- https://github.com/alibaba/fastjson -->
+        <fastjson.version>2.0.8</fastjson.version>
+
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://repo1.maven.org/maven2/cn/hutool/hutool-all -->
         <hutool-all.version>5.8.3</hutool-all.version>
@@ -298,6 +303,13 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->

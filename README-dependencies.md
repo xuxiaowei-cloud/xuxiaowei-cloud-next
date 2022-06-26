@@ -224,5 +224,19 @@ cloud.xuxiaowei.next:user:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M3:test
 
 
+cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
+│        └──org.springframework.boot:spring-boot-starter-websocket:jar:3.0.0-M3:compile
+│        └──com.alibaba:fastjson:jar:2.0.8:compile
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M3:compile
+│        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M3:compile
+│        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M3:compile
+│        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.0.0-M3:compile
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M3:compile
+│        └──org.projectlombok:lombok:jar:1.18.24:compile
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M3:test
+
+
 cloud.xuxiaowei.next:ui:jar:0.0.1-SNAPSHOT
 ```
