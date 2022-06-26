@@ -5,9 +5,6 @@ server:
 #
 # Spring 配置
 spring:
-  main:
-    # 覆盖Bean
-    allow-bean-definition-overriding: true
   application:
     name: websocket
   # 配置环境
