@@ -19,12 +19,14 @@
 	<inceptionYear>2022</inceptionYear>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<modules>
 		<!-- 用户服务 -->
 		<module>user</module>
+		<!-- WebSocket 服务 -->
+		<module>websocket</module>
 	</modules>
 
 	<dependencies>

@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 
+import java.security.Principal;
 import java.util.Map;
 
 /**
@@ -53,6 +54,18 @@ public class SecurityUtils {
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication authentication = context.getAuthentication();
 		return getUserName(authentication);
+	}
+
+	/**
+	 * 获取 用户名
+	 * @param principal 主体
+	 * @return 返回 用户名
+	 */
+	public static String getUserName(Principal principal) {
+		if (principal == null) {
+			return null;
+		}
+		return principal.getName();
 	}
 
 	/**

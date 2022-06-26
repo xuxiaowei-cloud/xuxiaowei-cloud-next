@@ -4,51 +4,35 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cloud.xuxiaowei.next</groupId>
-        <artifactId>cloud-commons-parent</artifactId>
+        <artifactId>resource-services-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
-    <groupId>cloud.xuxiaowei.next.commons</groupId>
-    <artifactId>cloud-starter-oauth2</artifactId>
+    <groupId>cloud.xuxiaowei.next</groupId>
+    <artifactId>websocket</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>cloud-starter-oauth2</name>
-    <description>OAuth2 组件</description>
+    <name>websocket</name>
+    <description>WebSocket 服务</description>
     <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>
 
     <properties>
         <java.version>17</java.version>
     </properties>
+
     <dependencies>
-
-        <!-- 核心组件 -->
-        <dependency>
-            <groupId>cloud.xuxiaowei.next.commons</groupId>
-            <artifactId>cloud-starter-core</artifactId>
-        </dependency>
-
-        <!-- MyBatis 组件 -->
-        <dependency>
-            <groupId>cloud.xuxiaowei.next.commons</groupId>
-            <artifactId>cloud-starter-mybatis</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <licenses>
@@ -93,5 +77,32 @@
             <organizationUrl>http://xuxiaowei.com.cn</organizationUrl>
         </developer>
     </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <!-- 打包为 Spring Boot jar -->
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
