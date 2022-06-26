@@ -1,12 +1,12 @@
 # 服务器
 server:
   # 端口
-  port: ${gateway_port:1101}
+  port: ${wechat_applet_port:2001}
 #
 # Spring 配置
 spring:
   application:
-    name: gateway
+    name: wechat-applet
   # 配置环境
   profiles:
     # 激活
@@ -26,27 +26,6 @@ spring:
     consul:
       host: ${consul_xuxiaowei_cloud_host:consul.example.next.xuxiaowei.cloud}
       port: ${consul_xuxiaowei_cloud_port:8500}
-
----
-# 以下配置可放入 nacos 中
-
-
-#
-# Spring 配置
-spring:
-  # 微服务 配置
-  cloud:
-    # 网关 配置
-    gateway:
-      # 发现 配置
-      discovery:
-        # 定位器
-        locator:
-          # 服务名小写
-          lowerCaseServiceId: true
-          # 启用 DiscoveryClient 网关集成的标志。
-          # 服务自动映射
-          enabled: true
 
 #
 # 日志 配置
@@ -110,10 +89,9 @@ management:
 
 ---
 
-#
 # 数据库配置
-#
 spring:
+  # 数据库
   datasource:
     dynamic:
       # 设置默认的数据源或者数据源组，默认值即为 master
@@ -147,42 +125,38 @@ spring:
           # driver-class-name: com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
           # 数据库 驱动名称 - 测试环境使用
           driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#
+# MyBatis Plus 配置
+#
+mybatis-plus:
+  # MyBatis Mapper 所对应的 XML 文件位置，如果您在 Mapper 中有自定义方法（XML 中有自定义实现），需要进行该配置，告诉 Mapper 所对应的 XML 文件位置。
+  # 必须配置（否则出现：org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)）
+  # 父子项目中都有 xml 文件时，文件夹不能使用 *，xml文件名可使用 *
+  mapper-locations:
+    - classpath*:mapper/*/*.xml
+  # MyBaits 别名包扫描路径，通过该属性可以给包中的类注册别名，注册后在 Mapper 对应的 XML 文件中可以直接使用类名，
+  # 而不用使用全限定的类名（即 XML 中调用的时候不用包含包名）。
+  type-aliases-package: cloud.xuxiaowei.next.*.entity
+  global-config:
+    db-config:
+      # 逻辑已删除值,(逻辑删除下有效，默认值：1)
+      logic-delete-value: 1
+      # 逻辑未删除值,(逻辑删除下有效，默认值：0)
+      logic-not-delete-value: 0
+    # MyBatis 配置
+  configuration:
+    # 缓存
+    cache-enabled: true
 
 ---
 
-# 跨域配置
+# Redis 配置
 spring:
-  cloud:
-    gateway:
-      globalcors:
-        # 跨域配置
-        corsConfigurations:
-          '[/**]':
-            # 携带 Cookie 等信息
-            allow-credentials: true
-            # 允许跨域的来源(协议、域名、ip)，全部：*
-            # 因使用了 Session 共享，请使用 example.next.xuxiaowei.cloud 子域
-            allowedOrigins:
-              - http://gateway.example.next.xuxiaowei.cloud
-              - https://gateway.example.next.xuxiaowei.cloud
-              - http://passport.example.next.xuxiaowei.cloud
-              - https://passport.example.next.xuxiaowei.cloud
-              - http://passport.example.next.xuxiaowei.cloud:1401
-              - http://passport.example.next.xuxiaowei.cloud:1411
-              - http://passport.example.next.xuxiaowei.cloud:1412
-              - http://example.next.xuxiaowei.cloud
-              - https://example.next.xuxiaowei.cloud
-              - http://example.next.xuxiaowei.cloud:1001
-              - http://example.next.xuxiaowei.cloud:1002
-              # tauri 开发域名
-              - http://localhost:1001
-              # tauri 生产域名
-              - https://tauri.localhost
-            # 允许跨域的 HTTP 方法， 默认为 GET 和 OPTIONS，全部：*
-            allowedMethods: "GET,POST"
-            # 允许跨域请求中的请求头字段，全部：*
-            allowedHeaders: "*"
-
+  redis:
+    database: ${redis_xuxiaowei_cloud_database:1}
+    password: ${redis_xuxiaowei_cloud_password:xuxiaowei.com.cn}
+    host: ${redis_xuxiaowei_cloud_host:redis.example.next.xuxiaowei.cloud}
+    port: ${redis_xuxiaowei_cloud_port:6379}
 
 ---
 
@@ -198,82 +172,20 @@ jwk:
 
 ---
 
-cloud:
-  cors:
-    allow-orgin-null-list:
-      # 授权操作使用 form action post，无 Origin
-      - /passport/oauth2/authorize
+# 微信小程序配置(必填)
+wx:
+  miniapp:
+    appid: ${wx_miniapp_appid:}
+    secret: ${wx_miniapp_secret:}
+    token: JSON
+    aesKey:
+    msgDataFormat:
 
 ---
 
-#
-# 网关白名单，不进行权限验证
-cloud:
-  white-list:
-    ignores:
-      # passport登录请求
-      - login
-      # 网关图标
-      - /favicon.ico
-    services:
-      - name: passport
-        path-list:
-          # 登录主页
-          - /
-          # passport图标
-          - /favicon.ico
-          # 固定名称的CSS
-          - /passport-assets/index.css
-          # 固定名称的JS
-          - /passport-assets/index.js
-          # 登录请求
-          - /login
-          # 登录失败
-          - /login/failure
-          # 获取Token
-          - /code
-          # 授权地址
-          - /oauth2/authorize
-          # 授权地址
-          - /oauth2.1/authorize
-          # 检查Token
-          - /oauth2/check_token
-          # Token
-          - /oauth2/token
-          # 退出登录
-          - /signout
-      - name: webservice
-        path-list:
-          - /cxf/**
-      - name: wechat-applet
-        path-list:
-          # 登录接口
-          - /onLogin
-    actuator-ip-list:
-      - fe80::f90d:6ec3:1e0c:46a1%16
-      - 192.168.5.3
-      - 192.168.5.4
-      - 10.0.4.13
-      - 127.0.0.1
-      - 192.168.1.147
-
----
-
-# 黑名单
-cloud:
-  black-list:
-    ip-list:
-      - 192.168.9.100
-    services:
-      - ip: 192.168.9.200
-        name: passport
-        pathList:
-          - /test
-
----
-
-# WebSocket 配置
-cloud:
-  web-socket:
-    endpoint-paths:
-      - /broadcast
+# 微信小程序配置：存储配置redis(可选)
+wx:
+  miniapp:
+    config-storage:
+      type: RedisTemplate
+      key-prefix: wa

@@ -2,6 +2,8 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAuthenticationConverter;
+import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAuthenticationProvider;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -15,9 +17,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2TokenEndpointConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
@@ -26,18 +30,27 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.authentication.*;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
+import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2ClientCredentialsAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2RefreshTokenAuthenticationConverter;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -73,6 +86,8 @@ public class AuthorizationServerConfiguration {
 
 	private CloudClientProperties cloudClientProperties;
 
+	private OAuth2WeChatAuthenticationProvider oauth2WeChatAuthenticationProvider;
+
 	@Autowired
 	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
 		this.jwkKeyProperties = jwkKeyProperties;
@@ -93,6 +108,12 @@ public class AuthorizationServerConfiguration {
 		this.cloudClientProperties = cloudClientProperties;
 	}
 
+	@Autowired
+	public void setOauth2WeChatAuthenticationProvider(
+			OAuth2WeChatAuthenticationProvider oauth2WeChatAuthenticationProvider) {
+		this.oauth2WeChatAuthenticationProvider = oauth2WeChatAuthenticationProvider;
+	}
+
 	/**
 	 * @see <a href=
 	 * "https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html">协议端点的</a>
@@ -102,6 +123,21 @@ public class AuthorizationServerConfiguration {
 	 * @see OAuth2AuthorizationServerConfiguration#applyDefaultSecurity(HttpSecurity) 默认
 	 * OAuth 2.1 授权配置
 	 * @see OAuth2AuthorizationEndpointFilter 默认 OAuth 2.1 授权页面
+	 *
+	 * @see OAuth2TokenEndpointFilter#setAuthenticationConverter(AuthenticationConverter)
+	 * @see OAuth2TokenEndpointConfigurer#accessTokenRequestConverter(AuthenticationConverter)
+	 *
+	 * @see AnonymousAuthenticationProvider
+	 * @see JwtClientAssertionAuthenticationProvider
+	 * @see ClientSecretAuthenticationProvider
+	 * @see PublicClientAuthenticationProvider
+	 * @see OAuth2AuthorizationCodeRequestAuthenticationProvider
+	 * @see OAuth2AuthorizationCodeAuthenticationProvider
+	 * @see OAuth2RefreshTokenAuthenticationProvider
+	 * @see OAuth2ClientCredentialsAuthenticationProvider
+	 * @see OAuth2TokenIntrospectionAuthenticationProvider
+	 * @see OAuth2TokenRevocationAuthenticationProvider
+	 * @see OidcUserInfoAuthenticationProvider
 	 */
 	@Bean
 	@Order(-1)
@@ -118,6 +154,19 @@ public class AuthorizationServerConfiguration {
 		http.requestMatcher(endpointsMatcher)
 				.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
 				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher)).apply(authorizationServerConfigurer);
+
+		// 自定义客户授权
+		authorizationServerConfigurer.tokenEndpoint(tokenEndpointCustomizer -> tokenEndpointCustomizer
+				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(Arrays.asList(
+						// 新增：微信 OAuth2 用于验证授权授予的 {@link OAuth2WeChatAuthenticationToken}
+						new OAuth2WeChatAuthenticationConverter(),
+						// 默认值：OAuth2 授权码认证转换器
+						new OAuth2AuthorizationCodeAuthenticationConverter(),
+						// 默认值：OAuth2 刷新令牌认证转换器
+						new OAuth2RefreshTokenAuthenticationConverter(),
+						// 默认值：OAuth2 客户端凭据身份验证转换器
+						new OAuth2ClientCredentialsAuthenticationConverter()))));
+		http.authenticationProvider(oauth2WeChatAuthenticationProvider);
 
 		return http.build();
 	}

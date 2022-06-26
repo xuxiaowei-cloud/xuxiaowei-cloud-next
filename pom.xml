@@ -129,6 +129,11 @@
         <!-- https://repo1.maven.org/maven2/cn/hutool/hutool-all -->
         <hutool-all.version>5.8.3</hutool-all.version>
 
+        <!-- https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-miniapp -->
+        <!-- https://repo1.maven.org/maven2/com/github/binarywang/weixin-java-miniapp -->
+        <!-- https://github.com/Wechat-Group/WxJava -->
+        <weixin-java.version>4.3.0</weixin-java.version>
+
         <!-- https://nodejs.org/dist/ -->
         <!-- http://mirrors.aliyun.com/nodejs-release/ -->
         <node.version>v16.15.1</node.version>
@@ -317,6 +322,13 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-all.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-miniapp-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
             </dependency>
 
             <!-- 核心组件 -->
