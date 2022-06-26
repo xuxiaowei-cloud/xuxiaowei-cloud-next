@@ -22,8 +22,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2TokenEndpointConfigurer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2Utils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
@@ -37,6 +39,7 @@ import org.springframework.security.oauth2.server.authorization.config.ProviderS
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
@@ -86,8 +89,6 @@ public class AuthorizationServerConfiguration {
 
 	private CloudClientProperties cloudClientProperties;
 
-	private OAuth2WeChatAuthenticationProvider oauth2WeChatAuthenticationProvider;
-
 	@Autowired
 	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
 		this.jwkKeyProperties = jwkKeyProperties;
@@ -106,12 +107,6 @@ public class AuthorizationServerConfiguration {
 	@Autowired
 	public void setCloudClientProperties(CloudClientProperties cloudClientProperties) {
 		this.cloudClientProperties = cloudClientProperties;
-	}
-
-	@Autowired
-	public void setOauth2WeChatAuthenticationProvider(
-			OAuth2WeChatAuthenticationProvider oauth2WeChatAuthenticationProvider) {
-		this.oauth2WeChatAuthenticationProvider = oauth2WeChatAuthenticationProvider;
 	}
 
 	/**
@@ -166,7 +161,18 @@ public class AuthorizationServerConfiguration {
 						new OAuth2RefreshTokenAuthenticationConverter(),
 						// 默认值：OAuth2 客户端凭据身份验证转换器
 						new OAuth2ClientCredentialsAuthenticationConverter()))));
-		http.authenticationProvider(oauth2WeChatAuthenticationProvider);
+
+		RegisteredClientRepository registeredClientRepository = OAuth2Utils.getRegisteredClientRepository(http);
+		OAuth2AuthorizationService authorizationService = OAuth2Utils.getAuthorizationService(http);
+		OAuth2AuthorizationConsentService authorizationConsentService = OAuth2Utils
+				.getAuthorizationConsentService(http);
+		OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator = OAuth2Utils.getTokenGenerator(http);
+		OAuth2WeChatAuthenticationProvider authenticationProvider = new OAuth2WeChatAuthenticationProvider();
+		authenticationProvider.setRegisteredClientRepository(registeredClientRepository);
+		authenticationProvider.setAuthorizationService(authorizationService);
+		authenticationProvider.setAuthorizationConsentService(authorizationConsentService);
+		authenticationProvider.setTokenGenerator(tokenGenerator);
+		http.authenticationProvider(authenticationProvider);
 
 		return http.build();
 	}

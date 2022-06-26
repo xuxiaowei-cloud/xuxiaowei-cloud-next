@@ -1,21 +1,17 @@
 package cloud.xuxiaowei.next.passport.authentication;
 
-import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.proc.SecurityContext;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.core.OAuth2Token;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.authentication.*;
+import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
-import org.springframework.security.oauth2.server.authorization.token.JwtGenerator;
-import org.springframework.stereotype.Component;
+import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 
 /**
  * 微信 OAuth2 身份验证提供程序
@@ -35,27 +31,33 @@ import org.springframework.stereotype.Component;
  * @see OidcUserInfoAuthenticationProvider
  */
 @Slf4j
-@Component
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2WeChatAuthenticationProvider implements AuthenticationProvider {
 
 	private static final String ERROR_URI = "https://datatracker.ietf.org/doc/html/rfc6749#section-5.2";
 
-	private JwtGenerator jwtGenerator;
+	private RegisteredClientRepository registeredClientRepository;
 
 	private OAuth2AuthorizationService authorizationService;
 
-	@Lazy
-	@Autowired
-	public void setJwtGenerator(JWKSource<SecurityContext> jwkSource) {
-		JwtEncoder jwtEncoder = new NimbusJwtEncoder(jwkSource);
-		this.jwtGenerator = new JwtGenerator(jwtEncoder);
+	private OAuth2AuthorizationConsentService authorizationConsentService;
+
+	private OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator;
+
+	public void setRegisteredClientRepository(RegisteredClientRepository registeredClientRepository) {
+		this.registeredClientRepository = registeredClientRepository;
 	}
 
-	@Lazy
-	@Autowired
 	public void setAuthorizationService(OAuth2AuthorizationService authorizationService) {
 		this.authorizationService = authorizationService;
+	}
+
+	public void setAuthorizationConsentService(OAuth2AuthorizationConsentService authorizationConsentService) {
+		this.authorizationConsentService = authorizationConsentService;
+	}
+
+	public void setTokenGenerator(OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator) {
+		this.tokenGenerator = tokenGenerator;
 	}
 
 	@Override
