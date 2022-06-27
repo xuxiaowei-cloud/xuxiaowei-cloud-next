@@ -23,7 +23,10 @@ public class OAuth2WeChatAuthorizationServerConfiguration {
 
 		WeChatAppletService weChatAppletService = http.getSharedObject(WeChatAppletService.class);
 		if (weChatAppletService == null) {
-			weChatAppletService = new InMemoryWeChatAppletService();
+			weChatAppletService = OAuth2ConfigurerUtils.getOptionalBean(http, WeChatAppletService.class);
+			if (weChatAppletService == null) {
+				weChatAppletService = new InMemoryWeChatAppletService();
+			}
 		}
 
 		authenticationProvider.setWeChatAppletService(weChatAppletService);
