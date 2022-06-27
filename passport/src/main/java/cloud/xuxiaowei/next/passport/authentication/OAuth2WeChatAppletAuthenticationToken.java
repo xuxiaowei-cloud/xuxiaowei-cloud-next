@@ -34,18 +34,25 @@ public class OAuth2WeChatAppletAuthenticationToken extends OAuth2AuthorizationGr
 	@Getter
 	private final String code;
 
+	@Getter
+	private final String scope;
+
 	/**
 	 * 子类构造函数
+	 * @param appid 微信小程序的账户ID
+	 * @param code 微信小程序授权码
+	 * @param scope 授权范围
 	 * @param clientPrincipal 经过身份验证的客户端主体
 	 * @param additionalParameters 附加参数
 	 */
-	public OAuth2WeChatAppletAuthenticationToken(String appid, String code, Authentication clientPrincipal,
-												 Map<String, Object> additionalParameters) {
+	public OAuth2WeChatAppletAuthenticationToken(String appid, String code, String scope,
+			Authentication clientPrincipal, Map<String, Object> additionalParameters) {
 		super(WECHAT_APPLET, clientPrincipal, additionalParameters);
 		Assert.hasText(code, "appid cannot be empty");
 		Assert.hasText(code, "code cannot be empty");
 		this.appid = appid;
 		this.code = code;
+		this.scope = scope;
 	}
 
 }

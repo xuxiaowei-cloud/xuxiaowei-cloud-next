@@ -45,9 +45,9 @@ public class OAuth2WeChatAppletAuthenticationConverter implements Authentication
 			return null;
 		}
 
-		String appid = request.getParameter("appid");
+		String appid = request.getParameter(OAuth2WeChatParameterNames.APPID);
 		if (!StringUtils.hasText(appid)) {
-			throwError(OAuth2ErrorCodes.INVALID_REQUEST, "appid", null);
+			throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2WeChatParameterNames.APPID, null);
 		}
 
 		Authentication clientPrincipal = SecurityContextHolder.getContext().getAuthentication();
@@ -60,6 +60,8 @@ public class OAuth2WeChatAppletAuthenticationConverter implements Authentication
 			throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.CODE, null);
 		}
 
+		String scope = parameters.getFirst(OAuth2WeChatParameterNames.SCOPE);
+
 		Map<String, Object> additionalParameters = new HashMap<>(4);
 		parameters.forEach((key, value) -> {
 			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)
@@ -68,7 +70,7 @@ public class OAuth2WeChatAppletAuthenticationConverter implements Authentication
 			}
 		});
 
-		return new OAuth2WeChatAppletAuthenticationToken(appid, code, clientPrincipal, additionalParameters);
+		return new OAuth2WeChatAppletAuthenticationToken(appid, code, scope, clientPrincipal, additionalParameters);
 	}
 
 	private static MultiValueMap<String, String> getParameters(HttpServletRequest request) {
