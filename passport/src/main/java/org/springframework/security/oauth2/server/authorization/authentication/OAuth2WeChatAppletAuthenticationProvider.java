@@ -7,14 +7,15 @@ import lombok.Data;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatParameterNames;
-import org.springframework.security.oauth2.server.authorization.client.WeChatAppletService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.*;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatParameterNames;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.client.WeChatAppletService;
 import org.springframework.security.oauth2.server.authorization.context.ProviderContextHolder;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.DefaultOAuth2TokenContext;
@@ -94,18 +95,23 @@ public class OAuth2WeChatAppletAuthenticationProvider implements AuthenticationP
 			OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.SERVER_ERROR, "客户信息不能为空", null);
 			throw new OAuth2AuthenticationException(error);
 		}
-		Set<String> registeredClientScopes = registeredClient.getScopes();
+		Set<String> allowedScopes = registeredClient.getScopes();
 
 		String appid = oauth2WeChatAppletAuthenticationToken.getAppid();
 		String code = oauth2WeChatAppletAuthenticationToken.getCode();
 		Object details = oauth2WeChatAppletAuthenticationToken.getDetails();
 		String scope = oauth2WeChatAppletAuthenticationToken.getScope();
-		Set<String> authorizedScopes = StringUtils.commaDelimitedListToSet(scope);
+		Set<String> requestedScopes = StringUtils.commaDelimitedListToSet(scope);
 
-		// 可能需要比较 scope 是否合法
-		// 比如：URL中比数据库多
-		// 比如：URL中为空时
-		// 比如：URL比数据库少时
+		if (requestedScopes.isEmpty()) {
+			// 请求中的 scope 为空，允许全部
+			requestedScopes = allowedScopes;
+		}
+		else if (!allowedScopes.containsAll(requestedScopes)) {
+			OAuth2Error error = new OAuth2Error(OAuth2ErrorCodes.INVALID_SCOPE,
+					"OAuth 2.0 Parameter: " + OAuth2ParameterNames.SCOPE, null);
+			throw new OAuth2AuthenticationException(error);
+		}
 
 		Map<String, String> uriVariables = new HashMap<>(8);
 		uriVariables.put(OAuth2WeChatParameterNames.APPID, appid);
@@ -141,7 +147,7 @@ public class OAuth2WeChatAppletAuthenticationProvider implements AuthenticationP
 				unionid, sessionKey, details);
 
 		builder.attribute(Principal.class.getName(), abstractAuthenticationToken);
-		builder.attribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME, authorizedScopes);
+		builder.attribute(OAuth2Authorization.AUTHORIZED_SCOPE_ATTRIBUTE_NAME, requestedScopes);
 
 		OAuth2Authorization authorization = builder.build();
 
