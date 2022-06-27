@@ -8,7 +8,6 @@ import org.springframework.security.authentication.AbstractAuthenticationToken;
  * @author xuxiaowei
  * @since 0.0.1
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public interface WeChatAppletService {
 
 	/**

@@ -6,7 +6,6 @@ package org.springframework.security.config.annotation.web.configurers.oauth2.se
  * @author xuxiaowei
  * @since 0.0.1
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public interface OAuth2WeChatParameterNames {
 
 	/**

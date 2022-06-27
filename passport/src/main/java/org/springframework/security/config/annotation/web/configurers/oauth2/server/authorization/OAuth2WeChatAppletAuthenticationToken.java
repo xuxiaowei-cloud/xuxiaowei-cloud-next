@@ -23,7 +23,6 @@ import java.util.Map;
  * @see OAuth2ClientCredentialsAuthenticationToken 用于 OAuth 2.0 客户端凭据授予的
  * {@link Authentication} 实现。
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2WeChatAppletAuthenticationToken extends OAuth2AuthorizationGrantAuthenticationToken {
 
 	public static final AuthorizationGrantType WECHAT_APPLET = new AuthorizationGrantType("wechat_applet");

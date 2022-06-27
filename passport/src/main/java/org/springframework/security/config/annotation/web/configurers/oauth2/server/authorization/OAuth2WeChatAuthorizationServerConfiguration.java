@@ -12,7 +12,6 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
  * @author xuxiaowei
  * @since 0.0.1
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2WeChatAuthorizationServerConfiguration {
 
 	public static void applyDefaultSecurity(HttpSecurity http) {

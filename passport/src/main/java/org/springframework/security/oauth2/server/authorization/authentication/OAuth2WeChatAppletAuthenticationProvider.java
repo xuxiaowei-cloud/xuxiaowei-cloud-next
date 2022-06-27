@@ -1,16 +1,15 @@
 package org.springframework.security.oauth2.server.authorization.authentication;
 
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAppletAuthenticationToken;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatParameterNames;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.WeChatAppletService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAppletAuthenticationToken;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatParameterNames;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.WeChatAppletService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.*;
@@ -50,8 +49,6 @@ import static org.springframework.security.config.annotation.web.configurers.oau
  * @see OAuth2TokenRevocationAuthenticationProvider
  * @see OidcUserInfoAuthenticationProvider
  */
-@Slf4j
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2WeChatAppletAuthenticationProvider implements AuthenticationProvider {
 
 	/**

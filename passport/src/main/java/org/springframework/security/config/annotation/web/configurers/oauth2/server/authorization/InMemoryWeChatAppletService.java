@@ -1,6 +1,5 @@
 package org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization;
 
-import lombok.Data;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +16,6 @@ import java.util.List;
  * @author xuxiaowei
  * @since 0.0.1
  */
-@SuppressWarnings("AlibabaServiceOrDaoClassShouldEndWithImpl")
 public class InMemoryWeChatAppletService implements WeChatAppletService {
 
 	private List<WeChatApplet> weChatAppletList = new ArrayList<>();
@@ -68,7 +66,6 @@ public class InMemoryWeChatAppletService implements WeChatAppletService {
 	 * @author xuxiaowei
 	 * @since 0.0.1
 	 */
-	@Data
 	public static class WeChatApplet {
 
 		/**
@@ -80,6 +77,35 @@ public class InMemoryWeChatAppletService implements WeChatAppletService {
 		 * 微信小程序秘钥
 		 */
 		private String secret;
+
+		public WeChatApplet() {
+		}
+
+		public WeChatApplet(String appid, String secret) {
+			this.appid = appid;
+			this.secret = secret;
+		}
+
+		public String getAppid() {
+			return appid;
+		}
+
+		public void setAppid(String appid) {
+			this.appid = appid;
+		}
+
+		public String getSecret() {
+			return secret;
+		}
+
+		public void setSecret(String secret) {
+			this.secret = secret;
+		}
+
+		@Override
+		public String toString() {
+			return "WeChatApplet{" + "appid='" + appid + '\'' + ", secret='" + secret + '\'' + '}';
+		}
 
 	}
 

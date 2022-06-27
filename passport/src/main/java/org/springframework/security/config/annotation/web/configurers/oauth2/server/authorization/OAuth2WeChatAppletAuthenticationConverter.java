@@ -34,7 +34,6 @@ import java.util.Map;
  * OAuth 2.0 客户端凭据授予的访问令牌请求，然后将其转换为用于验证授权授予的
  * {@link OAuth2ClientCredentialsAuthenticationToken} 。
  */
-@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2WeChatAppletAuthenticationConverter implements AuthenticationConverter {
 
 	@Override
