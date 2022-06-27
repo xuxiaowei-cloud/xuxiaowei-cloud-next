@@ -1,17 +1,16 @@
 package org.springframework.security.oauth2.server.authorization.web.authentication;
 
-import cloud.xuxiaowei.next.utils.Constant;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.security.oauth2.server.authorization.authentication.OAuth2WeChatAppletAuthenticationToken;
-import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatParameterNames;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
+import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatParameterNames;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2AuthorizationCodeAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.authentication.OAuth2ClientCredentialsAuthenticationToken;
+import org.springframework.security.oauth2.server.authorization.authentication.OAuth2WeChatAppletAuthenticationToken;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -63,7 +62,7 @@ public class OAuth2WeChatAppletAuthenticationConverter implements Authentication
 		Map<String, Object> additionalParameters = new HashMap<>(4);
 		parameters.forEach((key, value) -> {
 			if (!key.equals(OAuth2ParameterNames.GRANT_TYPE) && !key.equals(OAuth2ParameterNames.CLIENT_ID)
-					&& !key.equals(Constant.OPENID)) {
+					&& !key.equals(OAuth2WeChatParameterNames.OPENID)) {
 				additionalParameters.put(key, value.get(0));
 			}
 		});
