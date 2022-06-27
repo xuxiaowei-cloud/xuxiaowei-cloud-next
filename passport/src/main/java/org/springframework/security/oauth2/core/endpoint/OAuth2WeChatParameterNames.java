@@ -1,4 +1,4 @@
-package org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization;
+package org.springframework.security.oauth2.core.endpoint;
 
 /**
  * 微信小程序 参数名

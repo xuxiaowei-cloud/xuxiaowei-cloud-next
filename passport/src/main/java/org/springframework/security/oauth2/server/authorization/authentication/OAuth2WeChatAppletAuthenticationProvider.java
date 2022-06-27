@@ -7,9 +7,8 @@ import lombok.Data;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AnonymousAuthenticationProvider;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAppletAuthenticationToken;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatParameterNames;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.WeChatAppletService;
+import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatParameterNames;
+import org.springframework.security.oauth2.server.authorization.client.WeChatAppletService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.*;
@@ -30,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAppletAuthenticationToken.WECHAT_APPLET;
+import static org.springframework.security.oauth2.server.authorization.authentication.OAuth2WeChatAppletAuthenticationToken.WECHAT_APPLET;
 
 /**
  * 微信 OAuth2 身份验证提供程序
