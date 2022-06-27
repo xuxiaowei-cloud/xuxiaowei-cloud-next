@@ -2,6 +2,7 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.passport.properties.WxMaProperties;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -20,7 +21,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2TokenEndpointConfigurer;
-import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2WeChatAppletAuthenticationConverter;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAuthorizationServerConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,18 +31,17 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.authentication.*;
+import org.springframework.security.oauth2.server.authorization.client.InMemoryWeChatAppletService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.WeChatAppletService;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2AuthorizationCodeAuthenticationConverter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2ClientCredentialsAuthenticationConverter;
-import org.springframework.security.oauth2.server.authorization.web.authentication.OAuth2RefreshTokenAuthenticationConverter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.*;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -51,6 +50,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -86,6 +86,8 @@ public class AuthorizationServerConfiguration {
 
 	private CloudClientProperties cloudClientProperties;
 
+	private WxMaProperties wxMaProperties;
+
 	@Autowired
 	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
 		this.jwkKeyProperties = jwkKeyProperties;
@@ -104,6 +106,11 @@ public class AuthorizationServerConfiguration {
 	@Autowired
 	public void setCloudClientProperties(CloudClientProperties cloudClientProperties) {
 		this.cloudClientProperties = cloudClientProperties;
+	}
+
+	@Autowired
+	public void setWxMaProperties(WxMaProperties wxMaProperties) {
+		this.wxMaProperties = wxMaProperties;
 	}
 
 	/**
@@ -280,6 +287,18 @@ public class AuthorizationServerConfiguration {
 	@Bean
 	public ProviderSettings providerSettings() {
 		return ProviderSettings.builder().build();
+	}
+
+	/**
+	 * 微信小程序服务类
+	 */
+	@Bean
+	public WeChatAppletService weChatAppletService() {
+		InMemoryWeChatAppletService weChatAppletService = new InMemoryWeChatAppletService();
+		String appid = wxMaProperties.getAppid();
+		String secret = wxMaProperties.getSecret();
+		weChatAppletService.setWeChatAppletList(List.of(new InMemoryWeChatAppletService.WeChatApplet(appid, secret)));
+		return weChatAppletService;
 	}
 
 }
