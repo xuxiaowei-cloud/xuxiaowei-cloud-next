@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.passport.authentication;
+package org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization;
 
 /**
  * 微信小程序 参数名

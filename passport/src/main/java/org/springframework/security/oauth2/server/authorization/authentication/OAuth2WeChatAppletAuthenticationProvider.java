@@ -1,5 +1,8 @@
-package cloud.xuxiaowei.next.passport.authentication;
+package org.springframework.security.oauth2.server.authorization.authentication;
 
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAppletAuthenticationToken;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatParameterNames;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.WeChatAppletService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.core.*;
 import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.authentication.*;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.context.ProviderContextHolder;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
@@ -29,7 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import static cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAppletAuthenticationToken.WECHAT_APPLET;
+import static org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAppletAuthenticationToken.WECHAT_APPLET;
 
 /**
  * 微信 OAuth2 身份验证提供程序
@@ -88,7 +90,7 @@ public class OAuth2WeChatAppletAuthenticationProvider implements AuthenticationP
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		OAuth2WeChatAppletAuthenticationToken oauth2WeChatAppletAuthenticationToken = (OAuth2WeChatAppletAuthenticationToken) authentication;
 
-		OAuth2ClientAuthenticationToken clientPrincipal = OAuth2ProviderUtils
+		OAuth2ClientAuthenticationToken clientPrincipal = OAuth2AuthenticationProviderUtils
 				.getAuthenticatedClientElseThrowInvalidClient(oauth2WeChatAppletAuthenticationToken);
 		RegisteredClient registeredClient = clientPrincipal.getRegisteredClient();
 

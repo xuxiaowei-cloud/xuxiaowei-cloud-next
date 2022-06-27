@@ -2,9 +2,6 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
-import cloud.xuxiaowei.next.passport.authentication.InMemoryWeChatAppletService;
-import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAppletAuthenticationConverter;
-import cloud.xuxiaowei.next.passport.authentication.OAuth2WeChatAppletAuthenticationProvider;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -23,10 +20,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2TokenEndpointConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2Utils;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAppletAuthenticationConverter;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAuthorizationServerConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.core.OAuth2Token;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
@@ -40,7 +37,6 @@ import org.springframework.security.oauth2.server.authorization.config.ProviderS
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
-import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenGenerator;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.DelegatingAuthenticationConverter;
@@ -54,9 +50,7 @@ import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPublicKey;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -165,15 +159,7 @@ public class AuthorizationServerConfiguration {
 						// 默认值：OAuth2 客户端凭据身份验证转换器
 						new OAuth2ClientCredentialsAuthenticationConverter()))));
 
-		OAuth2AuthorizationService authorizationService = OAuth2Utils.getAuthorizationService(http);
-		OAuth2TokenGenerator<? extends OAuth2Token> tokenGenerator = OAuth2Utils.getTokenGenerator(http);
-		OAuth2WeChatAppletAuthenticationProvider authenticationProvider = new OAuth2WeChatAppletAuthenticationProvider();
-		List<InMemoryWeChatAppletService.WeChatApplet> weChatAppletList = new ArrayList<>();
-		InMemoryWeChatAppletService inMemoryWeChatAppletService = new InMemoryWeChatAppletService(weChatAppletList);
-		authenticationProvider.setWeChatAppletService(inMemoryWeChatAppletService);
-		authenticationProvider.setAuthorizationService(authorizationService);
-		authenticationProvider.setTokenGenerator(tokenGenerator);
-		http.authenticationProvider(authenticationProvider);
+		OAuth2WeChatAuthorizationServerConfiguration.applyDefaultSecurity(http);
 
 		return http.build();
 	}

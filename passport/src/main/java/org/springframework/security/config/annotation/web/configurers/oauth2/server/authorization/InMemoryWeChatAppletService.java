@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.passport.authentication;
+package org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization;
 
 import lombok.Data;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -17,12 +17,12 @@ import java.util.List;
  * @author xuxiaowei
  * @since 0.0.1
  */
+@SuppressWarnings("AlibabaServiceOrDaoClassShouldEndWithImpl")
 public class InMemoryWeChatAppletService implements WeChatAppletService {
 
-	private final List<WeChatApplet> weChatAppletList;
+	private List<WeChatApplet> weChatAppletList = new ArrayList<>();
 
-	public InMemoryWeChatAppletService(List<WeChatApplet> weChatAppletList) {
-		Assert.notNull(weChatAppletList, "weChatAppletList 不能为 null");
+	public void setWeChatAppletList(List<WeChatApplet> weChatAppletList) {
 		this.weChatAppletList = weChatAppletList;
 	}
 
