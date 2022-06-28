@@ -17,6 +17,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AnonymousAuthenticationProvider;
+import org.springframework.security.authentication.WeChatAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
@@ -25,6 +26,8 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
+import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatParameterNames;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
@@ -264,7 +267,15 @@ public class AuthorizationServerConfiguration {
 	public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
 		return context -> {
 			if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType())) {
+
+				// JWT 构建器
+				JwtClaimsSet.Builder claims = context.getClaims();
+
+				// 用户认证
 				Authentication principal = context.getPrincipal();
+
+				// 放入用户名
+				claims.claim(Constant.USERNAME, principal.getName());
 
 				// 用户权限
 				Set<String> authorities = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority)
@@ -276,7 +287,27 @@ public class AuthorizationServerConfiguration {
 				// 合并权限
 				authorities.addAll(authorizedScopes);
 
-				context.getClaims().claim(Constant.AUTHORITIES, authorities);
+				// 将合并权限放入 JWT 中
+				claims.claim(Constant.AUTHORITIES, authorities);
+
+				/// 微信用户的权限特殊处理
+				// 增加微信特有数据
+				if (principal instanceof WeChatAuthenticationToken authenticationToken) {
+					// 微信小程序的appid，不能为空
+					String appid = authenticationToken.getAppid();
+					// 用户唯一标识，不能为空
+					String openid = authenticationToken.getOpenid();
+					// 用户在开放平台的唯一标识符，若当前小程序已绑定到微信开放平台帐号下会返回，详见 <a
+					// href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/union-id.html">UnionID
+					// 机制说明</a>。
+					String unionid = authenticationToken.getUnionid();
+					// 会话密钥
+					String sessionKey = authenticationToken.getSessionKey();
+					claims.claim(OAuth2WeChatParameterNames.APPID, appid);
+					claims.claim(OAuth2WeChatParameterNames.OPENID, openid);
+					claims.claim(OAuth2WeChatParameterNames.UNIONID, unionid);
+					claims.claim(OAuth2WeChatParameterNames.SESSION_KEY, sessionKey);
+				}
 			}
 		};
 	}

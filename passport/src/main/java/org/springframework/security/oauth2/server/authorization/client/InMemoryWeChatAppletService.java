@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.WeChatAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.oauth2.server.authorization.client.WeChatAppletService;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
@@ -61,7 +60,10 @@ public class InMemoryWeChatAppletService implements WeChatAppletService {
 		SimpleGrantedAuthority authority = new SimpleGrantedAuthority("wechat_applet");
 		authorities.add(authority);
 		User user = new User(openid, sessionKey, authorities);
-		return new UsernamePasswordAuthenticationToken(user, details);
+		WeChatAuthenticationToken authenticationToken = new WeChatAuthenticationToken(user, null, authorities, appid,
+				openid, unionid, sessionKey);
+		authenticationToken.setDetails(details);
+		return authenticationToken;
 	}
 
 	/**

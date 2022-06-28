@@ -40,4 +40,9 @@ public interface OAuth2WeChatParameterNames {
 	 */
 	String SCOPE = "scope";
 
+	/**
+	 * 会话密钥
+	 */
+	String SESSION_KEY = "sessionKey";
+
 }
