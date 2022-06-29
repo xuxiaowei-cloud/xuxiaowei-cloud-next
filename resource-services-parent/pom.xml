@@ -28,7 +28,7 @@
 		<!-- WebSocket 服务 -->
 		<module>websocket</module>
 		<!-- 微信小程序 -->
-		<module>wechat-applet</module>
+		<module>webchat-miniprogram</module>
 	</modules>
 
 	<dependencies>

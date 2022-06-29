@@ -245,7 +245,7 @@ cloud:
       - name: webservice
         path-list:
           - /cxf/**
-      - name: wechat-applet
+      - name: webchat-miniprogram
         path-list:
           # 登录接口
           - /onLogin

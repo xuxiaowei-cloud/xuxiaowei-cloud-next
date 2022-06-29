@@ -1,12 +1,12 @@
 # 服务器
 server:
   # 端口
-  port: ${wechat_applet_port:2001}
+  port: ${webchat_miniprogram_port:2001}
 #
 # Spring 配置
 spring:
   application:
-    name: wechat-applet
+    name: webchat-miniprogram
   # 配置环境
   profiles:
     # 激活

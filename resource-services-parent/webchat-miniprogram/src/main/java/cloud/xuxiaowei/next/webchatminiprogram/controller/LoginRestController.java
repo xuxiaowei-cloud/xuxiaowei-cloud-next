@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.wechatapplet.controller;
+package cloud.xuxiaowei.next.webchatminiprogram.controller;
 
 import cloud.xuxiaowei.next.system.annotation.ControllerAnnotation;
 import cloud.xuxiaowei.next.system.service.IWxMaUsersService;
