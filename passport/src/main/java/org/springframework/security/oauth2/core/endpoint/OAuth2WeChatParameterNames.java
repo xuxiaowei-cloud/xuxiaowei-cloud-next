@@ -36,11 +36,6 @@ public interface OAuth2WeChatParameterNames {
 	String UNIONID = "unionid";
 
 	/**
-	 * 范围
-	 */
-	String SCOPE = "scope";
-
-	/**
 	 * 会话密钥
 	 */
 	String SESSION_KEY = "sessionKey";

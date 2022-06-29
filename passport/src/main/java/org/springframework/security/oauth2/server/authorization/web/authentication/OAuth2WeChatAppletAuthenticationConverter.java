@@ -57,7 +57,7 @@ public class OAuth2WeChatAppletAuthenticationConverter implements Authentication
 			throwError(OAuth2ErrorCodes.INVALID_REQUEST, OAuth2ParameterNames.CODE, null);
 		}
 
-		String scope = parameters.getFirst(OAuth2WeChatParameterNames.SCOPE);
+		String scope = parameters.getFirst(OAuth2ParameterNames.CODE);
 
 		Map<String, Object> additionalParameters = new HashMap<>(4);
 		parameters.forEach((key, value) -> {
