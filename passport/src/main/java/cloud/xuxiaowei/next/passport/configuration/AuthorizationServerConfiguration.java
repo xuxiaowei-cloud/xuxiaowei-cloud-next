@@ -2,7 +2,6 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
-import cloud.xuxiaowei.next.passport.properties.WxMaProperties;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -17,16 +16,16 @@ import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authentication.AnonymousAuthenticationProvider;
-import org.springframework.security.authentication.WeChatAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.WeChatMiniProgramAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2TokenEndpointConfigurer;
-import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2WeChatAuthorizationServerConfiguration;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
-import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatParameterNames;
+import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatMiniProgramParameterNames;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
@@ -34,10 +33,8 @@ import org.springframework.security.oauth2.server.authorization.JdbcOAuth2Author
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.authentication.*;
-import org.springframework.security.oauth2.server.authorization.client.InMemoryWeChatAppletService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.client.WeChatAppletService;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
@@ -53,7 +50,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -89,8 +85,6 @@ public class AuthorizationServerConfiguration {
 
 	private CloudClientProperties cloudClientProperties;
 
-	private WxMaProperties wxMaProperties;
-
 	@Autowired
 	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
 		this.jwkKeyProperties = jwkKeyProperties;
@@ -109,11 +103,6 @@ public class AuthorizationServerConfiguration {
 	@Autowired
 	public void setCloudClientProperties(CloudClientProperties cloudClientProperties) {
 		this.cloudClientProperties = cloudClientProperties;
-	}
-
-	@Autowired
-	public void setWxMaProperties(WxMaProperties wxMaProperties) {
-		this.wxMaProperties = wxMaProperties;
 	}
 
 	/**
@@ -140,6 +129,7 @@ public class AuthorizationServerConfiguration {
 	 * @see OAuth2TokenIntrospectionAuthenticationProvider
 	 * @see OAuth2TokenRevocationAuthenticationProvider
 	 * @see OidcUserInfoAuthenticationProvider
+	 * @see HttpSecurity#authenticationProvider(AuthenticationProvider)
 	 */
 	@Bean
 	@Order(-1)
@@ -160,8 +150,9 @@ public class AuthorizationServerConfiguration {
 		// 自定义客户授权
 		authorizationServerConfigurer.tokenEndpoint(tokenEndpointCustomizer -> tokenEndpointCustomizer
 				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(Arrays.asList(
-						// 新增：微信 OAuth2 用于验证授权授予的 {@link OAuth2WeChatAuthenticationToken}
-						new OAuth2WeChatAppletAuthenticationConverter(),
+						// 新增：微信 OAuth2 用于验证授权授予的 {@link
+						// OAuth2WeChatMiniProgramAuthenticationToken}
+						new OAuth2WeChatMiniProgramAuthenticationConverter(),
 						// 默认值：OAuth2 授权码认证转换器
 						new OAuth2AuthorizationCodeAuthenticationConverter(),
 						// 默认值：OAuth2 刷新令牌认证转换器
@@ -169,7 +160,8 @@ public class AuthorizationServerConfiguration {
 						// 默认值：OAuth2 客户端凭据身份验证转换器
 						new OAuth2ClientCredentialsAuthenticationConverter()))));
 
-		OAuth2WeChatAuthorizationServerConfiguration.applyDefaultSecurity(http);
+		// 微信小程序 OAuth2 身份验证提供程序
+		new OAuth2WeChatMiniProgramAuthenticationProvider(http);
 
 		return http.build();
 	}
@@ -292,7 +284,7 @@ public class AuthorizationServerConfiguration {
 
 				/// 微信用户的权限特殊处理
 				// 增加微信特有数据
-				if (principal instanceof WeChatAuthenticationToken authenticationToken) {
+				if (principal instanceof WeChatMiniProgramAuthenticationToken authenticationToken) {
 					// 微信小程序的appid，不能为空
 					String appid = authenticationToken.getAppid();
 					// 用户唯一标识，不能为空
@@ -303,10 +295,10 @@ public class AuthorizationServerConfiguration {
 					String unionid = authenticationToken.getUnionid();
 					// 会话密钥
 					String sessionKey = authenticationToken.getSessionKey();
-					claims.claim(OAuth2WeChatParameterNames.APPID, appid);
-					claims.claim(OAuth2WeChatParameterNames.OPENID, openid);
-					claims.claim(OAuth2WeChatParameterNames.UNIONID, unionid);
-					claims.claim(OAuth2WeChatParameterNames.SESSION_KEY, sessionKey);
+					claims.claim(OAuth2WeChatMiniProgramParameterNames.APPID, appid);
+					claims.claim(OAuth2WeChatMiniProgramParameterNames.OPENID, openid);
+					claims.claim(OAuth2WeChatMiniProgramParameterNames.UNIONID, unionid);
+					claims.claim(OAuth2WeChatMiniProgramParameterNames.SESSION_KEY, sessionKey);
 				}
 			}
 		};
@@ -318,18 +310,6 @@ public class AuthorizationServerConfiguration {
 	@Bean
 	public ProviderSettings providerSettings() {
 		return ProviderSettings.builder().build();
-	}
-
-	/**
-	 * 微信小程序服务类
-	 */
-	@Bean
-	public WeChatAppletService weChatAppletService() {
-		InMemoryWeChatAppletService weChatAppletService = new InMemoryWeChatAppletService();
-		String appid = wxMaProperties.getAppid();
-		String secret = wxMaProperties.getSecret();
-		weChatAppletService.setWeChatAppletList(List.of(new InMemoryWeChatAppletService.WeChatApplet(appid, secret)));
-		return weChatAppletService;
 	}
 
 }

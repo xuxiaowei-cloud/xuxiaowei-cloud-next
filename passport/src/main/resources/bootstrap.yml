@@ -191,8 +191,11 @@ spring:
 
 ---
 
-# 微信小程序配置(必填)
-wx:
-  miniapp:
-    appid: ${wx_miniapp_appid:}
-    secret: ${wx_miniapp_secret:}
+# 微信小程序配置
+wechat:
+  mini:
+    program:
+      default-role: wechat_miniprogram
+      list:
+        - appid: ${wx_miniapp_appid:}
+          secret: ${wx_miniapp_secret:}

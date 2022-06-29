@@ -19,24 +19,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 微信 授权 测试类
+ * 微信小程序 授权 测试类
  *
  * @author xuxiaowei
  * @see 0.0.1
  */
 @Slf4j
-class WechatTests {
+class OAuth2WeChatMiniProgramTests {
 
 	@Test
 	void token() {
 
 		String appid = "wxcf4f3a217a8bc728";
-		String code = "093EQXkl21tZq94dm9ml2BaAsd2EQXku";
+		String code = "073sz5ll2RUyr94GOJml2aGU2u1sz5lR";
 		String clientId = "xuxiaowei_client_wechat_applet_id";
 		String clientSecret = "xuxiaowei_client_wechat_applet_secret";
 
 		Map<String, String> map = new HashMap<>();
-		map.put("grant_type", "wechat_applet");
+		map.put("grant_type", "wechat_miniprogram");
 		map.put("client_id", clientId);
 		map.put("client_secret", clientSecret);
 		map.put("appid", appid);
@@ -57,31 +57,31 @@ class WechatTests {
 	/**
 	 * // @formatter:off
 	 * {
-	 *   "tokenValue" : "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJzZXNzaW9uS2V5IjoiUUhGMXdBcGtRd3FlZUI4elFaWDFLQT09Iiwib3BlbmlkIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCIsImlzcyI6Imh0dHA6XC9cLzEyNy4wLjAuMToxNDAxIiwiYXV0aG9yaXRpZXMiOlsid2VjaGF0X2FwcGxldCIsInNuc2FwaV9iYXNlIiwiYWFhYWEiXSwiYXVkIjoieHV4aWFvd2VpX2NsaWVudF93ZWNoYXRfYXBwbGV0X2lkIiwibmJmIjoxNjU2MzkzNTI3LCJzY29wZSI6WyJzbnNhcGlfYmFzZSIsImFhYWFhIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU2NDM2NzI3LCJpYXQiOjE2NTYzOTM1MjcsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.rjXAA-wuDC1HWYkT-Zh5bmZxPGhJb8t-jYhudlovDG7B2neRhnbCszHLR23vyB_hN8QCPtzi3vC1mH8b9F9tIoj9xxJoG_CYzEvsJ8uug4kRFGuQUHfen9csvqgbEzMXh__0xgd1CUkbqMBQEcQfOFiEJDf_QITQF2KDB_Iwis1qe-I2jpKIyZQgav-tz9sLjnx93oaE4hH-WQc27FOmxmr3Be1jODZ1gAubDd0RkI23RzKXM27EiNtNqzwLasc8cOxCyA8goH9kK991qVbiYkREgefQJeeuUEHmDKG_3RUskO0FHlgCrgGzEI_DQHiNWz8kS1n2cnlr4jpQinYnSA",
-	 *   "issuedAt" : 1656393527.000000000,
-	 *   "expiresAt" : 1656436727.000000000,
+	 *   "tokenValue" : "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJzZXNzaW9uS2V5IjoiQ3pFMFllQm1oVWZOOG8yaFVcL1pHVlE9PSIsIm9wZW5pZCI6Im81R0JPNWZaUDQzN0poSjc0bDQwWFNaZDVFYjgiLCJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6MTQwMSIsImF1dGhvcml0aWVzIjpbIndlY2hhdF9taW5pcHJvZ3JhbSIsInNuc2FwaV9iYXNlIiwic25zYXBpX2luZm8iXSwiYXVkIjoieHV4aWFvd2VpX2NsaWVudF93ZWNoYXRfYXBwbGV0X2lkIiwibmJmIjoxNjU2NTE1NTExLCJzY29wZSI6WyJzbnNhcGlfYmFzZSIsInNuc2FwaV9pbmZvIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU2NTU4NzExLCJpYXQiOjE2NTY1MTU1MTEsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.t3oFElLzn0HljDYQhTv--U7mvdGudbsU88IoN4pVUn3wTQ8M29kIuaBlBo6RN4blofLbWPyj5mXHZBRuHMO-KE2QrCtckmsQbIPKHRO-dAy6i6BZhJnJ8OVJfi0HlIBDi0jijLubWutjLVF3pr6GmVhkOzGWfDi9nNjlnRxd6Qx1ecgznuUGFGcSv8Ty3Zu4JeVfdZ-3_JW8zqk6UyL0oxdhgXF7wQkErqn5VaYZZm1S421yOBZpsXQ68N1ur5i4bi93HDw_9SiawPGd7ozbVhTqwekGMIOsjU42pPH38TWzenmTjpmJqC6nuXlr4vcRKGYPa-6IyWfHhReYD98eIg",
+	 *   "issuedAt" : 1656515511.000000000,
+	 *   "expiresAt" : 1656558711.000000000,
 	 *   "headers" : {
 	 *     "alg" : "RS256"
 	 *   },
 	 *   "claims" : {
 	 *     "sub" : "o5GBO5fZP437JhJ74l40XSZd5Eb8",
 	 *     "unionid" : "oTfUJxOyHtaWx1V_a7vrEpv6d9CU",
-	 *     "sessionKey" : "QHF1wApkQwqeeB8zQZX1KA==",
+	 *     "sessionKey" : "CzE0YeBmhUfN8o2hU/ZGVQ==",
 	 *     "openid" : "o5GBO5fZP437JhJ74l40XSZd5Eb8",
 	 *     "iss" : "http://127.0.0.1:1401",
-	 *     "authorities" : [ "wechat_applet", "snsapi_base", "aaaaa" ],
+	 *     "authorities" : [ "wechat_miniprogram", "snsapi_base", "snsapi_info" ],
 	 *     "aud" : [ "xuxiaowei_client_wechat_applet_id" ],
-	 *     "nbf" : 1656393527.000000000,
-	 *     "scope" : [ "snsapi_base", "aaaaa" ],
+	 *     "nbf" : 1656515511.000000000,
+	 *     "scope" : [ "snsapi_base", "snsapi_info" ],
 	 *     "appid" : "wxcf4f3a217a8bc728",
-	 *     "exp" : 1656436727.000000000,
-	 *     "iat" : 1656393527.000000000,
+	 *     "exp" : 1656558711.000000000,
+	 *     "iat" : 1656515511.000000000,
 	 *     "username" : "o5GBO5fZP437JhJ74l40XSZd5Eb8"
 	 *   },
 	 *   "id" : null,
-	 *   "subject" : "o5GBO5fZP437JhJ74l40XSZd5Eb8",
-	 *   "notBefore" : 1656393527.000000000,
+	 *   "notBefore" : 1656515511.000000000,
 	 *   "issuer" : "http://127.0.0.1:1401",
+	 *   "subject" : "o5GBO5fZP437JhJ74l40XSZd5Eb8",
 	 *   "audience" : [ "xuxiaowei_client_wechat_applet_id" ]
 	 * }
 	 * // @formatter:on
@@ -96,7 +96,7 @@ class WechatTests {
 		NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
 
 		Jwt jwt = nimbusJwtDecoder.decode(
-				"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJzZXNzaW9uS2V5IjoiUUhGMXdBcGtRd3FlZUI4elFaWDFLQT09Iiwib3BlbmlkIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCIsImlzcyI6Imh0dHA6XC9cLzEyNy4wLjAuMToxNDAxIiwiYXV0aG9yaXRpZXMiOlsid2VjaGF0X2FwcGxldCIsInNuc2FwaV9iYXNlIiwiYWFhYWEiXSwiYXVkIjoieHV4aWFvd2VpX2NsaWVudF93ZWNoYXRfYXBwbGV0X2lkIiwibmJmIjoxNjU2MzkzNTI3LCJzY29wZSI6WyJzbnNhcGlfYmFzZSIsImFhYWFhIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU2NDM2NzI3LCJpYXQiOjE2NTYzOTM1MjcsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.rjXAA-wuDC1HWYkT-Zh5bmZxPGhJb8t-jYhudlovDG7B2neRhnbCszHLR23vyB_hN8QCPtzi3vC1mH8b9F9tIoj9xxJoG_CYzEvsJ8uug4kRFGuQUHfen9csvqgbEzMXh__0xgd1CUkbqMBQEcQfOFiEJDf_QITQF2KDB_Iwis1qe-I2jpKIyZQgav-tz9sLjnx93oaE4hH-WQc27FOmxmr3Be1jODZ1gAubDd0RkI23RzKXM27EiNtNqzwLasc8cOxCyA8goH9kK991qVbiYkREgefQJeeuUEHmDKG_3RUskO0FHlgCrgGzEI_DQHiNWz8kS1n2cnlr4jpQinYnSA");
+				"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJzZXNzaW9uS2V5IjoiQ3pFMFllQm1oVWZOOG8yaFVcL1pHVlE9PSIsIm9wZW5pZCI6Im81R0JPNWZaUDQzN0poSjc0bDQwWFNaZDVFYjgiLCJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6MTQwMSIsImF1dGhvcml0aWVzIjpbIndlY2hhdF9taW5pcHJvZ3JhbSIsInNuc2FwaV9iYXNlIiwic25zYXBpX2luZm8iXSwiYXVkIjoieHV4aWFvd2VpX2NsaWVudF93ZWNoYXRfYXBwbGV0X2lkIiwibmJmIjoxNjU2NTE1NTExLCJzY29wZSI6WyJzbnNhcGlfYmFzZSIsInNuc2FwaV9pbmZvIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU2NTU4NzExLCJpYXQiOjE2NTY1MTU1MTEsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.t3oFElLzn0HljDYQhTv--U7mvdGudbsU88IoN4pVUn3wTQ8M29kIuaBlBo6RN4blofLbWPyj5mXHZBRuHMO-KE2QrCtckmsQbIPKHRO-dAy6i6BZhJnJ8OVJfi0HlIBDi0jijLubWutjLVF3pr6GmVhkOzGWfDi9nNjlnRxd6Qx1ecgznuUGFGcSv8Ty3Zu4JeVfdZ-3_JW8zqk6UyL0oxdhgXF7wQkErqn5VaYZZm1S421yOBZpsXQ68N1ur5i4bi93HDw_9SiawPGd7ozbVhTqwekGMIOsjU42pPH38TWzenmTjpmJqC6nuXlr4vcRKGYPa-6IyWfHhReYD98eIg");
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
