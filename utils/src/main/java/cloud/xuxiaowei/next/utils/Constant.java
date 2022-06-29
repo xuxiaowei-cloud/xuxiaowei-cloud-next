@@ -108,11 +108,6 @@ public class Constant implements Serializable {
 	public static final String UNIONID = "unionid";
 
 	/**
-	 * 客户端类型
-	 */
-	public static final String CLIENT_TYPE = "client_type";
-
-	/**
 	 * 授权类型
 	 */
 	public static final String GRANT_TYPE = "grant_type";
