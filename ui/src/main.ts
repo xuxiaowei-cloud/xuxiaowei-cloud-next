@@ -9,11 +9,9 @@ import 'element-plus/theme-chalk/el-message.css'
 
 const app = createApp(App)
 
-// @ts-ignore
 app.use(store)
 
 // 需要放在 mount 之前
-// @ts-ignore
 app.use(router)
 
 app.mount('#app')
