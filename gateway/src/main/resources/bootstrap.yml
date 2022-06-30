@@ -245,10 +245,6 @@ cloud:
       - name: webservice
         path-list:
           - /cxf/**
-      - name: webchat-miniprogram
-        path-list:
-          # 登录接口
-          - /onLogin
     actuator-ip-list:
       - fe80::f90d:6ec3:1e0c:46a1%16
       - 192.168.5.3
