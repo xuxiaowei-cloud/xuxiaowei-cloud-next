@@ -293,12 +293,9 @@ public class AuthorizationServerConfiguration {
 					// href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/union-id.html">UnionID
 					// 机制说明</a>。
 					String unionid = authenticationToken.getUnionid();
-					// 会话密钥
-					String sessionKey = authenticationToken.getSessionKey();
 					claims.claim(OAuth2WeChatMiniProgramParameterNames.APPID, appid);
 					claims.claim(OAuth2WeChatMiniProgramParameterNames.OPENID, openid);
 					claims.claim(OAuth2WeChatMiniProgramParameterNames.UNIONID, unionid);
-					claims.claim(OAuth2WeChatMiniProgramParameterNames.SESSION_KEY, sessionKey);
 				}
 			}
 		};
