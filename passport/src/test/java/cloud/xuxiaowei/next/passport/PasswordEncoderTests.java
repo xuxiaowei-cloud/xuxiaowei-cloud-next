@@ -14,25 +14,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Slf4j
 class PasswordEncoderTests {
 
-    /**
-     * 密码加密
-     */
-    @Test
-    void encode() {
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        String encode = passwordEncoder.encode("xuxiaowei_client_secret");
-        log.info(encode);
-    }
+	/**
+	 * 密码加密
+	 */
+	@Test
+	void encode() {
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String encode = passwordEncoder.encode("xuxiaowei_client_secret");
+		log.info(encode);
+	}
 
-    /**
-     * 密码比较
-     */
-    @Test
-    void matches() {
-        PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
-        String encodedPassword = "{bcrypt}$2a$10$s/3CEiHunH9wo2qr7JfeD.SRa8kK2Y8lOriHWrWhidQX3hyhuORlO";
-        boolean matches = passwordEncoder.matches("xuxiaowei_client_secret", encodedPassword);
-        log.info(String.valueOf(matches));
-    }
+	/**
+	 * 密码比较
+	 */
+	@Test
+	void matches() {
+		PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+		String encodedPassword = "{bcrypt}$2a$10$s/3CEiHunH9wo2qr7JfeD.SRa8kK2Y8lOriHWrWhidQX3hyhuORlO";
+		boolean matches = passwordEncoder.matches("xuxiaowei_client_secret", encodedPassword);
+		log.info(String.valueOf(matches));
+	}
 
 }
