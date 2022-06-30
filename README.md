@@ -7,9 +7,9 @@
     <a target="_blank" href="https://996.icu/#/zh_CN">
         <img alt="Link-996" src="https://img.shields.io/badge/Link-996.icu-red.svg">
     </a>
-    <div>
+    <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=ZieC6s1WB4njfVbrDHYgoNS8YpT26VtF&jump_from=webapi">
         <img alt="QQ群" src="https://img.shields.io/badge/QQ群-696503132-blue.svg"/>
-    </div>
+    </a>
 </div>
 
 <p></p>
