@@ -144,9 +144,12 @@ public class AuthorizationServerConfiguration {
 
 		RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
+		// @formatter:off
 		http.requestMatcher(endpointsMatcher)
 				.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher)).apply(authorizationServerConfigurer);
+				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
+				.apply(authorizationServerConfigurer);
+		// @formatter:on
 
 		// 自定义客户授权
 		authorizationServerConfigurer.tokenEndpoint(tokenEndpointCustomizer -> tokenEndpointCustomizer
