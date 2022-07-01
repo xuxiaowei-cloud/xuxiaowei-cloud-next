@@ -89,7 +89,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-generator -->
         <!-- https://github.com/baomidou/generator -->
-        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
         <!-- Velocity -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-velocity -->
         <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-starter-velocity -->
