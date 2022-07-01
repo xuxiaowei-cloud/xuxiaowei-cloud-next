@@ -111,6 +111,7 @@ public class AuthorizationServerConfiguration {
 	 * Spring Security 过滤器链。
 	 * @see WebSecurityConfigurerAdapterConfiguration#securityFilterChain(HttpSecurity)
 	 * 优先级要比此方法低
+	 * @see #authorizationServerSecurityFilterChain(HttpSecurity) 优先级要比此方法高
 	 * @see OAuth2AuthorizationServerConfiguration#applyDefaultSecurity(HttpSecurity) 默认
 	 * OAuth 2.1 授权配置
 	 * @see OAuth2AuthorizationEndpointFilter 默认 OAuth 2.1 授权页面
@@ -167,11 +168,13 @@ public class AuthorizationServerConfiguration {
 	}
 
 	/**
+	 * @see #authorizationServerSecurityFilterChain(HttpSecurity) 优先级要比此方法低
 	 * @see <a href=
 	 * "https://docs.spring.io/spring-security/reference/servlet/authentication/index.html">用于身份验证</a>
 	 * 的 Spring Security 过滤器链。
 	 */
 	@Bean
+	@Order(-2)
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
 		// 路径权限控制
