@@ -1,5 +1,6 @@
 package cloud.xuxiaowei.next.passport.controller;
 
+import cloud.xuxiaowei.next.system.annotation.ControllerAnnotation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
@@ -30,6 +31,7 @@ public class OAuth2Controller {
 	 * @param authentication 授权信息
 	 * @return 返回 检查 Token 结果
 	 */
+	@ControllerAnnotation(description = "检查 Token")
 	@RequestMapping("/check_token")
 	public Map<String, Object> checkToken(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) {
