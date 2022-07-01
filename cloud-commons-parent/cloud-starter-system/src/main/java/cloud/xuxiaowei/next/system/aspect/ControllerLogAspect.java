@@ -1,7 +1,6 @@
 package cloud.xuxiaowei.next.system.aspect;
 
 import cloud.xuxiaowei.next.system.annotation.ControllerAnnotation;
-import cloud.xuxiaowei.next.utils.AssertUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -49,18 +48,21 @@ public class ControllerLogAspect {
 		long startTime = System.currentTimeMillis();
 
 		RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-		AssertUtils.notNull(requestAttributes,
-				"RequestContextHolder.getRequestAttributes() 为空，请配置：`hystrix.command.default.execution.isolation.strategy=SEMAPHORE`");
+		String requestUri;
+		if (requestAttributes == null) {
+			requestUri = null;
+		}
+		else {
+			ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
 
-		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+			// 获取 Http 请求
+			HttpServletRequest request = servletRequestAttributes.getRequest();
+			// 获取 Http 响应
+			HttpServletResponse response = servletRequestAttributes.getResponse();
 
-		// 获取 Http 请求
-		HttpServletRequest request = servletRequestAttributes.getRequest();
-		// 获取 Http 响应
-		HttpServletResponse response = servletRequestAttributes.getResponse();
-
-		// URI
-		String requestUri = request.getRequestURI();
+			// URI
+			requestUri = request.getRequestURI();
+		}
 
 		ControllerAnnotation controllerAnnotation = ControllerAnnotation.Annotation.get(joinPoint);
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();

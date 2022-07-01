@@ -42,6 +42,7 @@ public class Oauth2AuthorizationServiceImpl extends ServiceImpl<Oauth2Authorizat
 	public IPage<Oauth2AuthorizationVo> pageByOauth2AuthorizationPageBo(
 			Oauth2AuthorizationPageBo oauth2AuthorizationPageBo) {
 		QueryWrapper<Oauth2Authorization> queryWrapper = new QueryWrapper<>();
+		queryWrapper.orderByDesc("access_token_issued_at");
 		Long current = oauth2AuthorizationPageBo.getCurrent();
 		Long size = oauth2AuthorizationPageBo.getSize();
 

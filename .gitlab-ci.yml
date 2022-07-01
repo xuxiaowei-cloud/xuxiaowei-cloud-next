@@ -4,6 +4,10 @@ stages:
 cache:
   paths:
     - .m2/repository
+    - passport-ui/node
+    - passport-ui/node_modules
+    - ui/node
+    - ui/node_modules
 
 #
 # package

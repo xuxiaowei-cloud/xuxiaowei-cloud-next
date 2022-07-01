@@ -87,7 +87,7 @@
       <el-table-column type="selection" width="55"/>
       <el-table-column prop="id" label="id" width="100" :show-overflow-tooltip="true"/>
       <el-table-column prop="registeredClientId" label="registeredClientId" width="150" :show-overflow-tooltip="true"/>
-      <el-table-column prop="principalName" label="principalName" width="130"/>
+      <el-table-column prop="principalName" label="principalName" width="130" :show-overflow-tooltip="true"/>
       <el-table-column prop="accessTokenIssuedAt" label="accessTokenIssuedAt" width="180"/>
       <el-table-column prop="accessTokenExpiresAt" label="accessTokenExpiresAt" width="180"/>
       <el-table-column prop="accessTokenScopes" label="accessTokenScopes" width="170" :show-overflow-tooltip="true"/>
