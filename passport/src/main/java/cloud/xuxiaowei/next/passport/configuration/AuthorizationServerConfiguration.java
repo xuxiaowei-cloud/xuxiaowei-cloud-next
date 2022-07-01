@@ -178,15 +178,19 @@ public class AuthorizationServerConfiguration {
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
 		// 路径权限控制
+		// @formatter:off
 		http.authorizeHttpRequests((authorize) -> {
 			authorize
 					// 放行端点
 					.antMatchers("/actuator/**").permitAll()
 					// 放行检查Token
-					.antMatchers("/oauth2/check_token").permitAll().antMatchers("/oauth2/token").permitAll()
+					.antMatchers("/oauth2/check_token").permitAll()
+					// 放行Token
+					.antMatchers("/oauth2/token").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});
+		// @formatter:on
 
 		// 资源服务配置秘钥
 		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
