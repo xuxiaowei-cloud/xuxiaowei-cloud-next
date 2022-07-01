@@ -2,6 +2,7 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.passport.handler.AccessTokenAuthenticationFailureHandlerImpl;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -141,7 +142,9 @@ public class AuthorizationServerConfiguration {
 						// 默认值：OAuth2 刷新令牌认证转换器
 						new OAuth2RefreshTokenAuthenticationConverter(),
 						// 默认值：OAuth2 客户端凭据身份验证转换器
-						new OAuth2ClientCredentialsAuthenticationConverter()))));
+						new OAuth2ClientCredentialsAuthenticationConverter())))
+				// 用于处理失败的身份验证尝试的策略。
+				.errorResponseHandler(new AccessTokenAuthenticationFailureHandlerImpl()));
 
 		// 微信小程序 OAuth2 身份验证提供程序
 		new OAuth2WeChatMiniProgramAuthenticationProvider(http);
