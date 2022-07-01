@@ -33,12 +33,12 @@
     "vuex"
   ],
   "dependencies": {
-    "@element-plus/icons-vue": "2.0.4",
+    "@element-plus/icons-vue": "2.0.6",
     "axios": "0.27.2",
-    "element-plus": "2.2.5",
+    "element-plus": "2.2.6",
     "jsencrypt": "3.2.1",
     "vue": "3.2.37",
-    "vue-router": "4.0.15",
+    "vue-router": "4.0.16",
     "vuex": "4.0.2",
     "vuex-persistedstate": "4.1.0"
   },
@@ -52,9 +52,9 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "5.2.0",
     "eslint-plugin-vue": "7.20.0",
-    "lint-staged": "13.0.0",
-    "unplugin-auto-import": "0.8.8",
-    "unplugin-vue-components": "0.19.6",
-    "vite": "2.9.12"
+    "lint-staged": "13.0.3",
+    "unplugin-auto-import": "0.9.2",
+    "unplugin-vue-components": "0.20.1",
+    "vite": "2.9.13"
   }
 }

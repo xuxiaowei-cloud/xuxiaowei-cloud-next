@@ -115,8 +115,8 @@ class MyBatisPlusGeneratorTests {
 				new Module("cloud-commons-parent" + fileSeparator + "cloud-starter-system",
 						"cloud.xuxiaowei.next.system"),
 				new Module("passport", "cloud.xuxiaowei.next.passport"),
-				new Module("resource-services-parent" + fileSeparator + "wechat-applet",
-						"cloud.xuxiaowei.next.wechatapplet"));
+				new Module("resource-services-parent" + fileSeparator + "webchat-miniprogram",
+						"cloud.xuxiaowei.next.webchatminiprogram"));
 
 		System.out.println("项目文件夹：" + userDir);
 

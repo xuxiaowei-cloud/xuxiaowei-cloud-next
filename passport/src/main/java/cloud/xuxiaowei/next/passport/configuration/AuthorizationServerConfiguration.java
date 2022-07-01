@@ -15,29 +15,41 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.authentication.AnonymousAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.WeChatMiniProgramAuthenticationToken;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.authorization.OAuth2TokenEndpointConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
+import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatMiniProgramParameterNames;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.authentication.*;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
+import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationProvider;
 import org.springframework.security.oauth2.server.authorization.token.JwtEncodingContext;
 import org.springframework.security.oauth2.server.authorization.token.OAuth2TokenCustomizer;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter;
+import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
+import org.springframework.security.oauth2.server.authorization.web.authentication.*;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import java.security.interfaces.RSAPublicKey;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -99,9 +111,26 @@ public class AuthorizationServerConfiguration {
 	 * Spring Security 过滤器链。
 	 * @see WebSecurityConfigurerAdapterConfiguration#securityFilterChain(HttpSecurity)
 	 * 优先级要比此方法低
+	 * @see #authorizationServerSecurityFilterChain(HttpSecurity) 优先级要比此方法高
 	 * @see OAuth2AuthorizationServerConfiguration#applyDefaultSecurity(HttpSecurity) 默认
 	 * OAuth 2.1 授权配置
 	 * @see OAuth2AuthorizationEndpointFilter 默认 OAuth 2.1 授权页面
+	 *
+	 * @see OAuth2TokenEndpointFilter#setAuthenticationConverter(AuthenticationConverter)
+	 * @see OAuth2TokenEndpointConfigurer#accessTokenRequestConverter(AuthenticationConverter)
+	 *
+	 * @see AnonymousAuthenticationProvider
+	 * @see JwtClientAssertionAuthenticationProvider
+	 * @see ClientSecretAuthenticationProvider
+	 * @see PublicClientAuthenticationProvider
+	 * @see OAuth2AuthorizationCodeRequestAuthenticationProvider
+	 * @see OAuth2AuthorizationCodeAuthenticationProvider
+	 * @see OAuth2RefreshTokenAuthenticationProvider
+	 * @see OAuth2ClientCredentialsAuthenticationProvider
+	 * @see OAuth2TokenIntrospectionAuthenticationProvider
+	 * @see OAuth2TokenRevocationAuthenticationProvider
+	 * @see OidcUserInfoAuthenticationProvider
+	 * @see HttpSecurity#authenticationProvider(AuthenticationProvider)
 	 */
 	@Bean
 	@Order(-1)
@@ -119,27 +148,49 @@ public class AuthorizationServerConfiguration {
 				.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
 				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher)).apply(authorizationServerConfigurer);
 
+		// 自定义客户授权
+		authorizationServerConfigurer.tokenEndpoint(tokenEndpointCustomizer -> tokenEndpointCustomizer
+				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(Arrays.asList(
+						// 新增：微信 OAuth2 用于验证授权授予的 {@link
+						// OAuth2WeChatMiniProgramAuthenticationToken}
+						new OAuth2WeChatMiniProgramAuthenticationConverter(),
+						// 默认值：OAuth2 授权码认证转换器
+						new OAuth2AuthorizationCodeAuthenticationConverter(),
+						// 默认值：OAuth2 刷新令牌认证转换器
+						new OAuth2RefreshTokenAuthenticationConverter(),
+						// 默认值：OAuth2 客户端凭据身份验证转换器
+						new OAuth2ClientCredentialsAuthenticationConverter()))));
+
+		// 微信小程序 OAuth2 身份验证提供程序
+		new OAuth2WeChatMiniProgramAuthenticationProvider(http);
+
 		return http.build();
 	}
 
 	/**
+	 * @see #authorizationServerSecurityFilterChain(HttpSecurity) 优先级要比此方法低
 	 * @see <a href=
 	 * "https://docs.spring.io/spring-security/reference/servlet/authentication/index.html">用于身份验证</a>
 	 * 的 Spring Security 过滤器链。
 	 */
 	@Bean
+	@Order(-2)
 	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
 		// 路径权限控制
+		// @formatter:off
 		http.authorizeHttpRequests((authorize) -> {
 			authorize
 					// 放行端点
 					.antMatchers("/actuator/**").permitAll()
 					// 放行检查Token
 					.antMatchers("/oauth2/check_token").permitAll()
+					// 放行Token
+					.antMatchers("/oauth2/token").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});
+		// @formatter:on
 
 		// 资源服务配置秘钥
 		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
@@ -215,7 +266,15 @@ public class AuthorizationServerConfiguration {
 	public OAuth2TokenCustomizer<JwtEncodingContext> jwtCustomizer() {
 		return context -> {
 			if (OAuth2TokenType.ACCESS_TOKEN.equals(context.getTokenType())) {
+
+				// JWT 构建器
+				JwtClaimsSet.Builder claims = context.getClaims();
+
+				// 用户认证
 				Authentication principal = context.getPrincipal();
+
+				// 放入用户名
+				claims.claim(Constant.USERNAME, principal.getName());
 
 				// 用户权限
 				Set<String> authorities = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority)
@@ -227,7 +286,24 @@ public class AuthorizationServerConfiguration {
 				// 合并权限
 				authorities.addAll(authorizedScopes);
 
-				context.getClaims().claim(Constant.AUTHORITIES, authorities);
+				// 将合并权限放入 JWT 中
+				claims.claim(Constant.AUTHORITIES, authorities);
+
+				/// 微信用户的权限特殊处理
+				// 增加微信特有数据
+				if (principal instanceof WeChatMiniProgramAuthenticationToken authenticationToken) {
+					// 微信小程序的appid，不能为空
+					String appid = authenticationToken.getAppid();
+					// 用户唯一标识，不能为空
+					String openid = authenticationToken.getOpenid();
+					// 用户在开放平台的唯一标识符，若当前小程序已绑定到微信开放平台帐号下会返回，详见 <a
+					// href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/union-id.html">UnionID
+					// 机制说明</a>。
+					String unionid = authenticationToken.getUnionid();
+					claims.claim(OAuth2WeChatMiniProgramParameterNames.APPID, appid);
+					claims.claim(OAuth2WeChatMiniProgramParameterNames.OPENID, openid);
+					claims.claim(OAuth2WeChatMiniProgramParameterNames.UNIONID, unionid);
+				}
 			}
 		};
 	}

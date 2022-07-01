@@ -188,3 +188,14 @@ spring:
     properties:
       "[mail.smtp.socketFactoryClass]": javax.net.ssl.SSLSocketFactory
       "[mail.debug]": ${qq_mail_debug:true}
+
+---
+
+# 微信小程序配置
+wechat:
+  mini:
+    program:
+      default-role: wechat_miniprogram
+      list:
+        - appid: ${wx_miniapp_appid:}
+          secret: ${wx_miniapp_secret:}

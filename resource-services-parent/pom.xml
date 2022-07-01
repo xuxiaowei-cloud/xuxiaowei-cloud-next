@@ -27,6 +27,8 @@
 		<module>user</module>
 		<!-- WebSocket 服务 -->
 		<module>websocket</module>
+		<!-- 微信小程序 -->
+		<module>webchat-miniprogram</module>
 	</modules>
 
 	<dependencies>

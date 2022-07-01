@@ -71,6 +71,10 @@
         <!-- https://github.com/xuxiaowei-io/spring-security-oauth2-authorization-server -->
         <spring-security-oauth2-authorization-server-next.version>0.3.1</spring-security-oauth2-authorization-server-next.version>
 
+        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-webchat-miniprogram -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-webchat-miniprogram/ -->
+        <spring-boot-starter-webchat-miniprogram.version>0.0.1-SNAPSHOT</spring-boot-starter-webchat-miniprogram.version>
+
         <!-- MyBatis -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
         <!-- https://repo1.maven.org/maven2/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
@@ -85,7 +89,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-generator -->
         <!-- https://github.com/baomidou/generator -->
-        <mybatis-plus-generator.version>3.5.2</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
         <!-- Velocity -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-velocity -->
         <!-- https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-starter-velocity -->
@@ -128,6 +132,11 @@
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://repo1.maven.org/maven2/cn/hutool/hutool-all -->
         <hutool-all.version>5.8.3</hutool-all.version>
+
+        <!-- https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-miniapp -->
+        <!-- https://repo1.maven.org/maven2/com/github/binarywang/weixin-java-miniapp -->
+        <!-- https://github.com/Wechat-Group/WxJava -->
+        <weixin-java.version>4.3.0</weixin-java.version>
 
         <!-- https://nodejs.org/dist/ -->
         <!-- http://mirrors.aliyun.com/nodejs-release/ -->
@@ -234,6 +243,14 @@
                 <version>${spring-security-oauth2-authorization-server-next.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-webchat-miniprogram -->
+            <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-webchat-miniprogram/ -->
+            <dependency>
+                <groupId>cn.com.xuxiaowei.boot.next</groupId>
+                <artifactId>spring-boot-starter-webchat-miniprogram</artifactId>
+                <version>${spring-boot-starter-webchat-miniprogram.version}</version>
+            </dependency>
+
             <!-- MyBatis -->
             <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
             <dependency>
@@ -317,6 +334,13 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-all.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-miniapp-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>
+                <version>${weixin-java.version}</version>
             </dependency>
 
             <!-- 核心组件 -->
@@ -641,6 +665,11 @@
         <repository>
             <id>repo1</id>
             <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+
+        <repository>
+            <id>oss-s01-snapshots</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
 
         <repository>
