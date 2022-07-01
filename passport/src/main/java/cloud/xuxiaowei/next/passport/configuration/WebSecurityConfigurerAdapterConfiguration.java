@@ -75,6 +75,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	}
 
 	@Autowired
+	@Qualifier("authenticationFailureHandlerImpl")
 	public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
 		this.authenticationFailureHandler = authenticationFailureHandler;
 	}
