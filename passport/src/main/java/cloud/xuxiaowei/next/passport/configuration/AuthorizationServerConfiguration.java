@@ -27,7 +27,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.OAuth2TokenType;
 import org.springframework.security.oauth2.core.endpoint.OAuth2WeChatMiniProgramParameterNames;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
@@ -42,13 +41,10 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.oauth2.server.authorization.web.OAuth2AuthorizationEndpointFilter;
 import org.springframework.security.oauth2.server.authorization.web.OAuth2TokenEndpointFilter;
 import org.springframework.security.oauth2.server.authorization.web.authentication.*;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationConverter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
-import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -74,30 +70,16 @@ import java.util.stream.Collectors;
  * @since 0.0.1
  */
 @Slf4j
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class AuthorizationServerConfiguration {
 
 	private JwkKeyProperties jwkKeyProperties;
-
-	private AccessDeniedHandler accessDeniedHandler;
-
-	private AuthenticationEntryPoint authenticationEntryPoint;
 
 	private CloudClientProperties cloudClientProperties;
 
 	@Autowired
 	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
 		this.jwkKeyProperties = jwkKeyProperties;
-	}
-
-	@Autowired
-	public void setAccessDeniedHandler(AccessDeniedHandler accessDeniedHandler) {
-		this.accessDeniedHandler = accessDeniedHandler;
-	}
-
-	@Autowired
-	public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
-		this.authenticationEntryPoint = authenticationEntryPoint;
 	}
 
 	@Autowired
@@ -109,9 +91,6 @@ public class AuthorizationServerConfiguration {
 	 * @see <a href=
 	 * "https://docs.spring.io/spring-authorization-server/docs/current/reference/html/protocol-endpoints.html">协议端点的</a>
 	 * Spring Security 过滤器链。
-	 * @see WebSecurityConfigurerAdapterConfiguration#securityFilterChain(HttpSecurity)
-	 * 优先级要比此方法低
-	 * @see #authorizationServerSecurityFilterChain(HttpSecurity) 优先级要比此方法高
 	 * @see OAuth2AuthorizationServerConfiguration#applyDefaultSecurity(HttpSecurity) 默认
 	 * OAuth 2.1 授权配置
 	 * @see OAuth2AuthorizationEndpointFilter 默认 OAuth 2.1 授权页面
@@ -144,9 +123,12 @@ public class AuthorizationServerConfiguration {
 
 		RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
+		// @formatter:off
 		http.requestMatcher(endpointsMatcher)
 				.authorizeRequests(authorizeRequests -> authorizeRequests.anyRequest().authenticated())
-				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher)).apply(authorizationServerConfigurer);
+				.csrf(csrf -> csrf.ignoringRequestMatchers(endpointsMatcher))
+				.apply(authorizationServerConfigurer);
+		// @formatter:on
 
 		// 自定义客户授权
 		authorizationServerConfigurer.tokenEndpoint(tokenEndpointCustomizer -> tokenEndpointCustomizer
@@ -163,52 +145,6 @@ public class AuthorizationServerConfiguration {
 
 		// 微信小程序 OAuth2 身份验证提供程序
 		new OAuth2WeChatMiniProgramAuthenticationProvider(http);
-
-		return http.build();
-	}
-
-	/**
-	 * @see #authorizationServerSecurityFilterChain(HttpSecurity) 优先级要比此方法低
-	 * @see <a href=
-	 * "https://docs.spring.io/spring-security/reference/servlet/authentication/index.html">用于身份验证</a>
-	 * 的 Spring Security 过滤器链。
-	 */
-	@Bean
-	@Order(-2)
-	public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-
-		// 路径权限控制
-		// @formatter:off
-		http.authorizeHttpRequests((authorize) -> {
-			authorize
-					// 放行端点
-					.antMatchers("/actuator/**").permitAll()
-					// 放行检查Token
-					.antMatchers("/oauth2/check_token").permitAll()
-					// 放行Token
-					.antMatchers("/oauth2/token").permitAll()
-					// 其他路径均需要授权
-					.anyRequest().authenticated();
-		});
-		// @formatter:on
-
-		// 资源服务配置秘钥
-		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
-			RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
-			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
-					.withPublicKey(rsaPublicKey);
-			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
-			oauth2ResourceServer.decoder(nimbusJwtDecoder);
-		});
-
-		// 异常处理
-		http.exceptionHandling(exceptionHandlingCustomizer -> {
-			exceptionHandlingCustomizer
-					// 访问被拒绝处理程序
-					.accessDeniedHandler(accessDeniedHandler)
-					// 身份验证入口点
-					.authenticationEntryPoint(authenticationEntryPoint);
-		});
 
 		return http.build();
 	}

@@ -2,8 +2,8 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudRememberMeProperties;
 import cloud.xuxiaowei.next.core.properties.CloudSecurityProperties;
+import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
 import cloud.xuxiaowei.next.oauth2.filter.AfterBearerTokenAuthenticationFilter;
-import cloud.xuxiaowei.next.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -12,13 +12,18 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationFilter;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import java.security.interfaces.RSAPublicKey;
 
 import static cloud.xuxiaowei.next.oauth2.impl.CsrfRequestMatcherImpl.CSRF_REQUEST_MATCHER_BEAN_NAME;
 
@@ -34,6 +39,12 @@ import static cloud.xuxiaowei.next.oauth2.impl.CsrfRequestMatcherImpl.CSRF_REQUE
 @Configuration
 public class WebSecurityConfigurerAdapterConfiguration {
 
+	private JwkKeyProperties jwkKeyProperties;
+
+	private AccessDeniedHandler accessDeniedHandler;
+
+	private AuthenticationEntryPoint authenticationEntryPoint;
+
 	private UserDetailsService userDetailsService;
 
 	private CloudSecurityProperties cloudSecurityProperties;
@@ -47,6 +58,21 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	private AuthenticationFailureHandler authenticationFailureHandler;
 
 	private AfterBearerTokenAuthenticationFilter afterBearerTokenAuthenticationFilter;
+
+	@Autowired
+	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
+		this.jwkKeyProperties = jwkKeyProperties;
+	}
+
+	@Autowired
+	public void setAccessDeniedHandler(AccessDeniedHandler accessDeniedHandler) {
+		this.accessDeniedHandler = accessDeniedHandler;
+	}
+
+	@Autowired
+	public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
+		this.authenticationEntryPoint = authenticationEntryPoint;
+	}
 
 	@Autowired
 	public void setUserDetailsService(UserDetailsService userDetailsService) {
@@ -75,6 +101,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	}
 
 	@Autowired
+	@Qualifier("authenticationFailureHandlerImpl")
 	public void setAuthenticationFailureHandler(AuthenticationFailureHandler authenticationFailureHandler) {
 		this.authenticationFailureHandler = authenticationFailureHandler;
 	}
@@ -95,25 +122,51 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	}
 
 	/**
-	 * @see AuthorizationServerConfiguration#authorizationServerSecurityFilterChain(HttpSecurity)
-	 * 优先级要比此方法高
+	 * @see <a href=
+	 * "https://docs.spring.io/spring-security/reference/servlet/authentication/index.html">用于身份验证</a>
+	 * 的 Spring Security 过滤器链。
 	 */
 	@Bean
 	@Order(0)
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+		// 资源服务配置秘钥
+		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
+			RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
+			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
+					.withPublicKey(rsaPublicKey);
+			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
+			oauth2ResourceServer.decoder(nimbusJwtDecoder);
+		});
+
+		// 异常处理
+		http.exceptionHandling(exceptionHandlingCustomizer -> {
+			exceptionHandlingCustomizer
+					// 访问被拒绝处理程序
+					.accessDeniedHandler(accessDeniedHandler)
+					// 身份验证入口点
+					.authenticationEntryPoint(authenticationEntryPoint);
+		});
+
 		// 用于检索用户进行身份验证的实例
 		http.userDetailsService(userDetailsService);
 
-		http.authorizeHttpRequests((authorize) -> authorize
-				// 放行端点
-				.antMatchers("/" + Constant.ACTUATOR + "/**").permitAll()
-				// 放行授权路径
-				.antMatchers("/oauth2/authorize").permitAll()
-				// 注销登录放行
-				.antMatchers("/signout").permitAll()
-				// 其他路径均需要授权
-				.anyRequest().authenticated());
+		// 路径权限控制
+		http.authorizeHttpRequests((authorize) -> {
+			authorize
+					// 放行端点
+					.antMatchers("/actuator/**").permitAll()
+					// 放行授权路径
+					.antMatchers("/oauth2/authorize").permitAll()
+					// 放行检查Token
+					.antMatchers("/oauth2/check_token").permitAll()
+					// 放行Token
+					.antMatchers("/oauth2/token").permitAll()
+					// 注销登录放行
+					.antMatchers("/signout").permitAll()
+					// 其他路径均需要授权
+					.anyRequest().authenticated();
+		});
 
 		http.formLogin(formLogin -> formLogin
 				// 登录页面地址
