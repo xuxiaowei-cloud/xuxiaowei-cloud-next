@@ -4,6 +4,7 @@ import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientPageBo;
 import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientSaveBo;
 import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientUpdateBo;
 import cloud.xuxiaowei.next.passport.service.IOauth2RegisteredClientService;
+import cloud.xuxiaowei.next.passport.vo.GrantTypeOption;
 import cloud.xuxiaowei.next.passport.vo.Oauth2RegisteredClientVo;
 import cloud.xuxiaowei.next.system.annotation.ControllerAnnotation;
 import cloud.xuxiaowei.next.utils.AssertUtils;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +45,23 @@ public class Oauth2RegisteredClientController {
 	@Autowired
 	public void setOauth2RegisteredClientService(IOauth2RegisteredClientService oauth2RegisteredClientService) {
 		this.oauth2RegisteredClientService = oauth2RegisteredClientService;
+	}
+
+	/**
+	 * 授权类型选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 授权类型选项
+	 */
+	@RequestMapping("/grantTypeOptions")
+	@ControllerAnnotation(description = "授权类型选项")
+	public Response<?> grantTypeOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<GrantTypeOption> list = new ArrayList<>();
+		list.add(new GrantTypeOption("authorization_code", "authorization_code"));
+		list.add(new GrantTypeOption("refresh_token", "refresh_token"));
+		list.add(new GrantTypeOption("client_credentials", "client_credentials"));
+		list.add(new GrantTypeOption("password", "password"));
+		return Response.ok(list);
 	}
 
 	/**

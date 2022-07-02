@@ -15,7 +15,7 @@
 <p></p>
 
 <div align="center" style="text-align: center;">
-  基于 JDK 17、基于 Spring Boot 3.0.0、OAuth 2.1 的微服务
+  基于 JDK 17、Spring Boot 3.0.0、OAuth 2.1、Vite、Vue 3、Element Plus 的微服务
 </div>
 
 <p></p>
@@ -122,15 +122,13 @@
   项目添加 [io.spring.javaformat:spring-javaformat-maven-plugin](https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-maven-plugin)
   依赖之后，可安装自动格式化插件（无需运行下列命令）：[spring-javaformat-intellij-idea-plugin](https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-intellij-idea-plugin)
 
-```shell
-./mvnw spring-javaformat:apply
-```
-
-或
-
-```shell
-mvn spring-javaformat:apply
-```
+  ```shell
+  ./mvnw spring-javaformat:apply
+  ```
+  或
+  ```shell
+  mvn spring-javaformat:apply
+  ```
 
 ## 参考文档
 

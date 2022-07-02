@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { authorityList, getById, saveAuthorities } from '../../../api/user'
 
-import { defineEmits, defineProps, ref } from 'vue'
+import { defineEmits, defineProps, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useStore } from 'vuex'
 
@@ -39,51 +39,42 @@ const props = defineProps({
   }
 })
 
-// 数据接口
-interface Option {
-  key: string
-  label: string
-  disabled: boolean
-}
-
 // 权限数据
-const authorityData: Option[] = []
+const authorityData = reactive([])
 
 // 初始化权限数据
-const initAuthorityData = async () => {
-  await authorityList().then(response => {
-    if (response.code === store.state.settings.okCode) {
-      const data = response.data
-      if (data) {
-        for (const i in data) {
-          const team = data[i]
-          authorityData.push({
-            key: team.authority,
-            label: team.explain,
-            disabled: false
-          })
-        }
+authorityList().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    if (data) {
+      for (const i in data) {
+        const team = data[i]
+        authorityData.push({
+          // @ts-ignore
+          key: team.authority,
+          // @ts-ignore
+          label: team.explain,
+          // @ts-ignore
+          disabled: false
+        })
       }
-    } else {
-      ElMessage.error(response.msg)
     }
-  })
-}
-
-// 初始化权限数据
-await initAuthorityData()
+  } else {
+    ElMessage.error(response.msg)
+  }
+})
 
 // 左侧显示数据
 const data = ref(authorityData)
 
 // 用户数据
-const userData: String[] = []
+const userData = reactive([])
 
 const username = ref(null)
 
 // 初始化用户数据
 if (props.usersId) {
-  await getById(props.usersId).then(response => {
+  getById(props.usersId).then(response => {
     if (response.code === store.state.settings.okCode) {
       const data = response.data
       if (data) {
@@ -91,6 +82,7 @@ if (props.usersId) {
         const authorityList = data.authorityList
         for (const i in authorityList) {
           const team = authorityList[i]
+          // @ts-ignore
           userData.push(team.authority)
         }
       }

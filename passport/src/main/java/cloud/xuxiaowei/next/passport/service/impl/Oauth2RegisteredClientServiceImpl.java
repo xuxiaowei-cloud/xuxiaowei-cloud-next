@@ -18,15 +18,27 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.jackson2.SecurityJackson2Modules;
+import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
+import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -120,6 +132,7 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 	 * @param oauth2RegisteredClientSaveBo 客户表 保存参数
 	 * @return 返回 保存结果
 	 */
+	@SneakyThrows
 	@Override
 	public boolean saveOauth2RegisteredClientSaveBo(Oauth2RegisteredClientSaveBo oauth2RegisteredClientSaveBo) {
 		String clientSecretDecrypt = clientSecretDecrypt(oauth2RegisteredClientSaveBo.getCode(),
@@ -132,6 +145,14 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		Oauth2RegisteredClient oauthClientDetails = new Oauth2RegisteredClient();
 		BeanUtils.copyProperties(oauth2RegisteredClientSaveBo, oauthClientDetails);
 
+		Boolean requireProofKey = oauth2RegisteredClientSaveBo.getRequireProofKey();
+		Boolean requireAuthorizationConsent = oauth2RegisteredClientSaveBo.getRequireAuthorizationConsent();
+		oauthClientDetails.setClientSettings(clientSettings(requireProofKey, requireAuthorizationConsent));
+
+		Long accessTokenTimeToLive = oauth2RegisteredClientSaveBo.getAccessTokenTimeToLive();
+		Long refreshTokenTimeToLive = oauth2RegisteredClientSaveBo.getRefreshTokenTimeToLive();
+		oauthClientDetails.setTokenSettings(tokenSettings(accessTokenTimeToLive, refreshTokenTimeToLive));
+
 		oauthClientDetails.setClientSecret(clientSecretDecrypt);
 
 		// 客户凭证加密
@@ -140,19 +161,92 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		return save(oauthClientDetails);
 	}
 
+	private ObjectMapper objectMapper() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		ClassLoader classLoader = JdbcRegisteredClientRepository.class.getClassLoader();
+		List<Module> securityModules = SecurityJackson2Modules.getModules(classLoader);
+		objectMapper.registerModules(securityModules);
+		objectMapper.registerModule(new OAuth2AuthorizationServerJackson2Module());
+		return objectMapper;
+	}
+
+	private String clientSettings(boolean requireProofKey, boolean requireAuthorizationConsent)
+			throws JsonProcessingException {
+		ClientSettings.Builder clientSettingsBuilder = ClientSettings.builder();
+		clientSettingsBuilder.requireProofKey(requireProofKey);
+		clientSettingsBuilder.requireAuthorizationConsent(requireAuthorizationConsent);
+		ClientSettings clientSettings = clientSettingsBuilder.build();
+		Map<String, Object> settings = clientSettings.getSettings();
+		return objectMapper().writeValueAsString(settings);
+	}
+
+	private String clientSettings(boolean requireProofKey, boolean requireAuthorizationConsent, String clientSettings)
+			throws JsonProcessingException {
+		ObjectMapper objectMapper = objectMapper();
+		Map<String, Object> map = objectMapper.readValue(clientSettings, new TypeReference<>() {
+		});
+		ClientSettings.Builder builder = ClientSettings.withSettings(map);
+		builder.requireAuthorizationConsent(requireAuthorizationConsent);
+		builder.requireProofKey(requireProofKey);
+		ClientSettings build = builder.build();
+		Map<String, Object> settings = build.getSettings();
+		return objectMapper.writeValueAsString(settings);
+	}
+
+	private String tokenSettings(long accessTokenTimeToLive, long refreshTokenTimeToLive)
+			throws JsonProcessingException {
+		TokenSettings.Builder tokenSettingsBuilder = TokenSettings.builder();
+		tokenSettingsBuilder.accessTokenTimeToLive(Duration.ofSeconds(accessTokenTimeToLive));
+		tokenSettingsBuilder.refreshTokenTimeToLive(Duration.ofSeconds(refreshTokenTimeToLive));
+		TokenSettings tokenSettings = tokenSettingsBuilder.build();
+		Map<String, Object> settings = tokenSettings.getSettings();
+		return objectMapper().writeValueAsString(settings);
+	}
+
+	private String tokenSettings(long accessTokenTimeToLive, long refreshTokenTimeToLive, String tokenSettings)
+			throws JsonProcessingException {
+		ObjectMapper objectMapper = objectMapper();
+		Map<String, Object> map = objectMapper.readValue(tokenSettings, new TypeReference<>() {
+		});
+		TokenSettings.Builder builder = TokenSettings.withSettings(map);
+		builder.accessTokenTimeToLive(Duration.ofSeconds(accessTokenTimeToLive));
+		builder.refreshTokenTimeToLive(Duration.ofSeconds(refreshTokenTimeToLive));
+		TokenSettings build = builder.build();
+		Map<String, Object> settings = build.getSettings();
+		return objectMapper.writeValueAsString(settings);
+	}
+
 	/**
 	 * 根据主键更新客户表
 	 * @param oauth2RegisteredClientUpdateBo 客户表 更新参数
 	 * @return 返回 更新结果
 	 */
+	@SneakyThrows
 	@Override
 	public boolean updateByOauth2RegisteredClientUpdateBo(
 			Oauth2RegisteredClientUpdateBo oauth2RegisteredClientUpdateBo) {
+
+		String id = oauth2RegisteredClientUpdateBo.getId();
+		Oauth2RegisteredClient byId = getById(id);
+		if (byId == null) {
+			throw new CloudRuntimeException("修改失败，该记录不存在");
+		}
+
 		String clientSecretDecrypt = clientSecretDecrypt(oauth2RegisteredClientUpdateBo.getCode(),
 				oauth2RegisteredClientUpdateBo.getClientSecret());
 
 		Oauth2RegisteredClient oauthClientDetails = new Oauth2RegisteredClient();
 		BeanUtils.copyProperties(oauth2RegisteredClientUpdateBo, oauthClientDetails);
+
+		Boolean requireProofKey = oauth2RegisteredClientUpdateBo.getRequireProofKey();
+		Boolean requireAuthorizationConsent = oauth2RegisteredClientUpdateBo.getRequireAuthorizationConsent();
+		String clientSettings = clientSettings(requireProofKey, requireAuthorizationConsent, byId.getClientSettings());
+		oauthClientDetails.setClientSettings(clientSettings);
+
+		Long accessTokenTimeToLive = oauth2RegisteredClientUpdateBo.getAccessTokenTimeToLive();
+		Long refreshTokenTimeToLive = oauth2RegisteredClientUpdateBo.getRefreshTokenTimeToLive();
+		String tokenSettings = tokenSettings(accessTokenTimeToLive, refreshTokenTimeToLive, byId.getTokenSettings());
+		oauthClientDetails.setTokenSettings(tokenSettings);
 
 		oauthClientDetails.setClientSecret(clientSecretDecrypt);
 

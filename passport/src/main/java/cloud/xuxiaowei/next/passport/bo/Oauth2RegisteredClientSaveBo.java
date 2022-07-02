@@ -2,6 +2,7 @@ package cloud.xuxiaowei.next.passport.bo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -50,10 +51,16 @@ public class Oauth2RegisteredClientSaveBo implements Serializable {
 	@NotEmpty(message = "scopes 不能为空")
 	private String scopes;
 
-	@NotEmpty(message = "clientSettings 不能为空")
-	private String clientSettings;
+	@NotNull(message = "requireProofKey 不能为空")
+	private Boolean requireProofKey;
 
-	@NotEmpty(message = "tokenSettings 不能为空")
-	private String tokenSettings;
+	@NotNull(message = "requireAuthorizationConsent 不能为空")
+	private Boolean requireAuthorizationConsent;
+
+	@NotNull(message = "accessTokenTimeToLive 不能为空")
+	private Long accessTokenTimeToLive;
+
+	@NotNull(message = "refreshTokenTimeToLive 不能为空")
+	private Long refreshTokenTimeToLive;
 
 }

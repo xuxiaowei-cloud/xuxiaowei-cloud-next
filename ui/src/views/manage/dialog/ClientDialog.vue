@@ -1,14 +1,14 @@
 <template>
   <el-container>
-    <el-form :model="param" label-position="left" label-width="190px" id="cloud-el-form">
+    <el-form :model="param" ref="cloudFormRef" label-position="left" label-width="200px" id="cloud-el-form">
       <el-form-item label="id" v-if="props.edit">
         <el-input v-model="param.id" disabled/>
       </el-form-item>
-      <el-form-item label="clientId">
+      <el-form-item label="clientId" prop="clientId" :rules="[{ required: true, message: 'clientId is required' }]">
         <el-input v-if="props.edit" v-model="param.clientId" disabled/>
         <el-input v-else v-model="param.clientId"/>
       </el-form-item>
-      <el-form-item label="clientName">
+      <el-form-item label="clientName" prop="clientName" :rules="[{ required: true, message: 'clientName is required' }]">
         <el-input v-model="param.clientName"/>
       </el-form-item>
       <el-form-item label="clientSecret">
@@ -16,30 +16,42 @@
         <el-button class="cloud-el-password-generate" @click="passwordGenerate">生成随机凭证</el-button>
       </el-form-item>
       <el-form-item label="clientIdIssuedAt">
-        <el-date-picker v-model="param.clientIdIssuedAt" type="datetime" placeholder="Pick a day" value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
+        <el-date-picker v-model="param.clientIdIssuedAt" type="datetime" placeholder="Pick a day"
+                        value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
       </el-form-item>
       <el-form-item label="clientSecretExpiresAt">
-        <el-date-picker v-model="param.clientSecretExpiresAt" type="datetime" placeholder="Pick a day" value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
+        <el-date-picker v-model="param.clientSecretExpiresAt" type="datetime" placeholder="Pick a day"
+                        value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
       </el-form-item>
-      <el-form-item label="clientAuthenticationMethods">
+      <el-form-item label="clientAuthenticationMethods" prop="clientAuthenticationMethods"
+                    :rules="[{ required: true, message: 'clientAuthenticationMethods is required' }]">
         <el-input v-model="param.clientAuthenticationMethods"/>
       </el-form-item>
-      <el-form-item label="authorizationGrantTypes">
-        <el-select v-model="authorizationGrantTypes" multiple placeholder="Select authorizationGrantTypes" style="width: 100%">
-          <el-option v-for="item in grantTypeOptions" :key="item.value" :label="item.label" :value="item.value"/>
+      <el-form-item label="authorizationGrantTypes" prop="authorizationGrantTypes"
+                    :rules="[{ required: true, message: 'authorizationGrantTypes is required' }]">
+        <el-select v-model="param.grantTypes" multiple placeholder="Select authorizationGrantTypes" style="width: 100%">
+          <el-option v-for="item in grantTypeList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="redirectUris">
         <el-input v-model="param.redirectUris"/>
       </el-form-item>
-      <el-form-item label="scopes">
+      <el-form-item label="scopes" prop="scopes" :rules="[{ required: true, message: 'scopes is required' }]">
         <el-input v-model="param.scopes"/>
       </el-form-item>
-      <el-form-item label="clientSettings">
-        <el-input v-model="param.clientSettings"/>
+      <el-form-item label="requireProofKey">
+        <el-switch v-model="param.requireProofKey"/>
       </el-form-item>
-      <el-form-item label="tokenSettings">
-        <el-input v-model="param.tokenSettings"/>
+      <el-form-item label="requireAuthorizationConsent">
+        <el-switch v-model="param.requireAuthorizationConsent"/>
+      </el-form-item>
+      <el-form-item label="accessTokenTimeToLive" prop="accessTokenTimeToLive"
+                    :rules="[{ required: true, message: 'accessTokenTimeToLive is required' }]">
+        <el-input v-model="param.accessTokenTimeToLive" type="number"/>
+      </el-form-item>
+      <el-form-item label="refreshTokenTimeToLive" prop="accessTokenTimeToLive"
+                    :rules="[{ required: true, message: 'refreshTokenTimeToLive is required' }]">
+        <el-input v-model="param.refreshTokenTimeToLive" type="number"/>
       </el-form-item>
       <el-form-item>
         <el-button class="cloud-el-button" v-if="props.edit" @click="cloudUpdate">更新</el-button>
@@ -51,7 +63,7 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, reactive, ref } from 'vue'
-import { getById, save, updateById } from '../../../api/passport/oauth2-registered-client'
+import { getById, save, updateById, grantTypeOptions } from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
@@ -75,32 +87,21 @@ const props = defineProps({
   }
 })
 
-// 授权类型
-const authorizationGrantTypes = ref([])
-
 // 授权类型：可选内容
-const grantTypeOptions = [
-  {
-    value: 'authorization_code',
-    label: 'authorization_code'
-  },
-  {
-    value: 'refresh_token',
-    label: 'refresh_token'
-  },
-  {
-    value: 'client_credentials',
-    label: 'client_credentials'
-  },
-  {
-    value: 'password',
-    label: 'password'
-  },
-  {
-    value: 'implicit',
-    label: 'implicit'
+const grantTypeList = reactive([])
+grantTypeOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      grantTypeList.push({
+        // @ts-ignore
+        label: data[i].label,
+        // @ts-ignore
+        value: data[i].value
+      })
+    }
   }
-]
+})
 
 // 参数
 const param = reactive({
@@ -112,10 +113,15 @@ const param = reactive({
   clientSecretExpiresAt: null,
   clientAuthenticationMethods: null,
   authorizationGrantTypes: null,
+  grantTypes: [],
   redirectUris: null,
   scopes: null,
   clientSettings: null,
   tokenSettings: null,
+  requireProofKey: null,
+  requireAuthorizationConsent: null,
+  accessTokenTimeToLive: null,
+  refreshTokenTimeToLive: null,
   // 识别码
   code: null
 })
@@ -126,15 +132,13 @@ const publicKey = ref(null)
 // 获取识别码与公钥
 codeRsa().then(response => {
   if (response.code === store.state.settings.okCode) {
-    if (response.code === store.state.settings.okCode) {
-      const data = response.data
-      if (data) {
-        param.code = data.code
-        publicKey.value = data.publicKey
-      }
-    } else {
-      ElMessage.error(response.msg)
+    const data = response.data
+    if (data) {
+      param.code = data.code
+      publicKey.value = data.publicKey
     }
+  } else {
+    ElMessage.error(response.msg)
   }
 })
 
@@ -145,22 +149,10 @@ const initData = () => {
       if (response.code === store.state.settings.okCode) {
         const data = response.data
         if (data) {
-          param.id = data.id
-          param.clientId = data.clientId
-          param.clientName = data.clientName
-          param.clientIdIssuedAt = data.clientIdIssuedAt
-          param.clientSecretExpiresAt = data.clientSecretExpiresAt
-          param.clientAuthenticationMethods = data.clientAuthenticationMethods
-          if (data.authorizationGrantTypes) {
-            data.authorizationGrantTypes.split(',').forEach(function (e: String) {
-              // @ts-ignore
-              authorizationGrantTypes.value.push(e)
-            })
+          for (const name in data) {
+            // @ts-ignore
+            param[name] = data[name]
           }
-          param.redirectUris = data.redirectUris
-          param.scopes = data.scopes
-          param.clientSettings = data.clientSettings
-          param.tokenSettings = data.tokenSettings
         }
       } else {
         ElMessage.error(response.msg)
@@ -184,26 +176,34 @@ const encryption = () => {
   const paramEncryption = JSON.parse(JSON.stringify(param))
   JsEncrypt.prototype.setPublicKey(publicKey.value)
   paramEncryption.clientSecret = JsEncrypt.prototype.encrypt(param.clientSecret)
-  paramEncryption.authorizationGrantTypes = authorizationGrantTypes.value.toString()
+  paramEncryption.authorizationGrantTypes = param.grantTypes.toString()
   return paramEncryption
 }
 
+// 表单验证
+const cloudFormRef = ref(null)
+
 // 保存
 const cloudSave = () => {
-  save(encryption()).then(response => {
-    console.log(response)
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          emit('dialogVisibleClose')
+  // @ts-ignore
+  cloudFormRef.value.validate((valid: boolean) => {
+    if (valid) {
+      save(encryption()).then(response => {
+        console.log(response)
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              emit('dialogVisibleClose')
+            }
+          })
+        } else {
+          ElMessage.error(response.msg)
         }
       })
-    } else {
-      ElMessage.error(response.msg)
     }
   })
 }
