@@ -132,15 +132,13 @@ const publicKey = ref(null)
 // 获取识别码与公钥
 codeRsa().then(response => {
   if (response.code === store.state.settings.okCode) {
-    if (response.code === store.state.settings.okCode) {
-      const data = response.data
-      if (data) {
-        param.code = data.code
-        publicKey.value = data.publicKey
-      }
-    } else {
-      ElMessage.error(response.msg)
+    const data = response.data
+    if (data) {
+      param.code = data.code
+      publicKey.value = data.publicKey
     }
+  } else {
+    ElMessage.error(response.msg)
   }
 })
 
