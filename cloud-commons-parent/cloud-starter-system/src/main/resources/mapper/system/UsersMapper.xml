@@ -95,4 +95,38 @@
             u.email = #{email}
     </select>
 
+    <!-- 获取不是某个用户是否存在指定邮箱的用户 -->
+    <select id="listByIdNotUsersIdAndEmail" resultType="cloud.xuxiaowei.next.system.entity.Users">
+        SELECT
+            *
+        FROM
+            users
+        WHERE
+            users_id != #{usersId}
+	        AND email = #{email}
+            <if test="deleted == true">
+                AND deleted = 1
+            </if>
+            <if test="deleted == false">
+                AND deleted = 0
+            </if>
+    </select>
+
+    <!-- 获取不是某个用户是否存在指定昵称的用户 -->
+    <select id="listByIdNotUsersIdAndNickname" resultType="cloud.xuxiaowei.next.system.entity.Users">
+        SELECT
+            *
+        FROM
+            users
+        WHERE
+            users_id != #{usersId}
+            AND nickname = #{nickname}
+            <if test="deleted == true">
+                AND deleted = 1
+            </if>
+            <if test="deleted == false">
+                AND deleted = 0
+            </if>
+    </select>
+
 </mapper>
