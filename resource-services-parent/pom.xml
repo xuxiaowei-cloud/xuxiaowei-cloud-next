@@ -25,10 +25,12 @@
 	<modules>
 		<!-- 用户服务 -->
 		<module>user</module>
-		<!-- WebSocket 服务 -->
-		<module>websocket</module>
 		<!-- 微信小程序 -->
 		<module>webchat-miniprogram</module>
+		<!-- WebSocket 服务 -->
+		<module>websocket</module>
+		<!-- WebService 服务 -->
+		<module>webservice</module>
 	</modules>
 
 	<dependencies>
