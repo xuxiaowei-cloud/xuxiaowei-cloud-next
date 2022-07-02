@@ -23,13 +23,11 @@
   </el-dialog>
 
   <!-- 用户权限弹窗 -->
-  <suspense>
-    <el-dialog v-if="userAuthorityDialogVisible" v-model="userAuthorityDialogVisible" title="用户权限" width="60%"
-               :before-close="userAuthorityDialogHandleClose">
-      <UserAuthorityDialog :dialogVisible="userAuthorityDialogVisible" :usersId="dialogVisibleUsersId"
-                           @dialogVisibleClose="userAuthorityDialogVisibleClose"/>
-    </el-dialog>
-  </suspense>
+  <el-dialog v-if="userAuthorityDialogVisible" v-model="userAuthorityDialogVisible" title="用户权限" width="60%"
+             :before-close="userAuthorityDialogHandleClose">
+    <UserAuthorityDialog :dialogVisible="userAuthorityDialogVisible" :usersId="dialogVisibleUsersId"
+                         @dialogVisibleClose="userAuthorityDialogVisibleClose"/>
+  </el-dialog>
 
   <el-container>
     <el-table stripe :data="tableData" v-loading="loading" height="460" @selection-change="handleSelectionChange">
