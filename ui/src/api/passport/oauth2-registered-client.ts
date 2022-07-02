@@ -1,6 +1,15 @@
 import request from '../../utils/request'
 
 /**
+ * 授权类型选项
+ */
+export const grantTypeOptions = function () {
+  return request.post('/passport/oauth2-registered-client/grantTypeOptions').then(response => {
+    return response.data
+  })
+}
+
+/**
  * 分页查询客户
  * @param data
  */

@@ -30,7 +30,7 @@
       <el-form-item label="authorizationGrantTypes" prop="authorizationGrantTypes"
                     :rules="[{ required: true, message: 'authorizationGrantTypes is required' }]">
         <el-select v-model="param.grantTypes" multiple placeholder="Select authorizationGrantTypes" style="width: 100%">
-          <el-option v-for="item in grantTypeOptions" :key="item.value" :label="item.label" :value="item.value"/>
+          <el-option v-for="item in grantTypeList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="redirectUris">
@@ -63,7 +63,7 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, reactive, ref } from 'vue'
-import { getById, save, updateById } from '../../../api/passport/oauth2-registered-client'
+import { getById, save, updateById, grantTypeOptions } from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
@@ -88,28 +88,20 @@ const props = defineProps({
 })
 
 // 授权类型：可选内容
-const grantTypeOptions = [
-  {
-    value: 'authorization_code',
-    label: 'authorization_code'
-  },
-  {
-    value: 'refresh_token',
-    label: 'refresh_token'
-  },
-  {
-    value: 'client_credentials',
-    label: 'client_credentials'
-  },
-  {
-    value: 'password',
-    label: 'password'
-  },
-  {
-    value: 'implicit',
-    label: 'implicit'
+const grantTypeList = reactive([])
+grantTypeOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      grantTypeList.push({
+        // @ts-ignore
+        label: data[i].label,
+        // @ts-ignore
+        value: data[i].value
+      })
+    }
   }
-]
+})
 
 // 参数
 const param = reactive({
