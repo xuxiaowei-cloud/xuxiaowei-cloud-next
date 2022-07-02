@@ -88,15 +88,18 @@ const props = defineProps({
 })
 
 // 授权类型：可选内容
-const grantTypeList = reactive([])
+interface Option {
+  label: string
+  value: string
+}
+const grantTypeData: Option[] = []
+const grantTypeList = reactive(grantTypeData)
 grantTypeOptions().then(response => {
   if (response.code === store.state.settings.okCode) {
     const data = response.data
     for (const i in data) {
       grantTypeList.push({
-        // @ts-ignore
         label: data[i].label,
-        // @ts-ignore
         value: data[i].value
       })
     }
