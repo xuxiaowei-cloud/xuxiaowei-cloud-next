@@ -40,21 +40,22 @@ const props = defineProps({
 })
 
 // 权限数据
-const authorityData = reactive([])
-
-// 初始化权限数据
+interface Option {
+  key: string
+  label: string
+  disabled: boolean
+}
+const authorityData: Option[] = []
+const grantTypes = reactive(authorityData)
 authorityList().then(response => {
   if (response.code === store.state.settings.okCode) {
     const data = response.data
     if (data) {
       for (const i in data) {
         const team = data[i]
-        authorityData.push({
-          // @ts-ignore
+        grantTypes.push({
           key: team.authority,
-          // @ts-ignore
           label: team.explain,
-          // @ts-ignore
           disabled: false
         })
       }
