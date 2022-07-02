@@ -267,12 +267,51 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
 		Users users = new Users();
 		BeanUtils.copyProperties(usersUpdateBo, users);
 
+		Long usersId = usersUpdateBo.getUsersId();
+
+		String email = usersUpdateBo.getEmail();
+		// 邮箱，唯一键：uk__users__email
+		List<Users> usersEmailList = listByIdNotUsersIdAndEmail(usersId, email, null);
+		if (usersEmailList.size() > 0) {
+			throw new CloudRuntimeException("已存在此邮箱：" + email);
+		}
+
+		// 昵称，不能为空，唯一键：uk__users__nickname
+		String nickname = usersUpdateBo.getNickname();
+		List<Users> usersNicknameList = listByIdNotUsersIdAndNickname(usersId, nickname, null);
+		if (usersNicknameList.size() > 0) {
+			throw new CloudRuntimeException("已存在此昵称：" + nickname);
+		}
+
 		users.setPassword(passwordDecrypt);
 
 		// 用户密码加密
 		encode(users);
 
 		return updateById(users);
+	}
+
+	/**
+	 * 获取不是某个用户是否存在指定邮箱的用户
+	 * @param usersId 用户ID
+	 * @param email 邮箱
+	 * @param deleted 是否逻辑删除
+	 * @return 返回 用户信息
+	 */
+	@Override
+	public List<Users> listByIdNotUsersIdAndEmail(Long usersId, String email, Boolean deleted) {
+		return baseMapper.listByIdNotUsersIdAndEmail(usersId, email, deleted);
+	}
+
+	/**
+	 * 获取不是某个用户是否存在指定昵称的用户
+	 * @param usersId 用户ID
+	 * @param nickname 昵称
+	 * @param deleted 是否逻辑删除
+	 * @return 返回 用户信息
+	 */
+	public List<Users> listByIdNotUsersIdAndNickname(Long usersId, String nickname, Boolean deleted) {
+		return baseMapper.listByIdNotUsersIdAndNickname(usersId, nickname, deleted);
 	}
 
 	/**

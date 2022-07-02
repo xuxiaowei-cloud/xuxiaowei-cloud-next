@@ -4,6 +4,8 @@ import cloud.xuxiaowei.next.system.entity.Users;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户表。
@@ -59,5 +61,25 @@ public interface UsersMapper extends BaseMapper<Users> {
 	 * @return 返回 用户信息
 	 */
 	Users getLogicByEmail(@Param("email") String email);
+
+	/**
+	 * 获取不是某个用户是否存在指定邮箱的用户
+	 * @param usersId 用户ID
+	 * @param email 邮箱
+	 * @param deleted 是否逻辑删除
+	 * @return 返回 用户信息
+	 */
+	List<Users> listByIdNotUsersIdAndEmail(@Param("usersId") Long usersId, @Param("email") String email,
+			@Param("deleted") Boolean deleted);
+
+	/**
+	 * 获取不是某个用户是否存在指定昵称的用户
+	 * @param usersId 用户ID
+	 * @param nickname 昵称
+	 * @param deleted 是否逻辑删除
+	 * @return 返回 用户信息
+	 */
+	List<Users> listByIdNotUsersIdAndNickname(@Param("usersId") Long usersId, @Param("nickname") String nickname,
+			@Param("deleted") Boolean deleted);
 
 }

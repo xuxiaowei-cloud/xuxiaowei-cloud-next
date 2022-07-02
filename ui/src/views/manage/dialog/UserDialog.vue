@@ -1,20 +1,21 @@
 <template>
   <el-container>
-    <el-form :model="param" label-position="left" label-width="160px" id="cloud-el-form">
+    <el-form :model="param" ref="cloudFormRef" label-position="left" label-width="160px" id="cloud-el-form">
       <el-form-item label="usersId" v-if="props.edit">
         <el-input v-model="param.usersId" disabled/>
       </el-form-item>
-      <el-form-item label="username">
+      <el-form-item label="username" prop="username"
+                    :rules="[{ required: true, message: 'username is required' }]">
         <el-input v-if="props.edit" v-model="param.username" disabled/>
         <el-input v-else v-model="param.username"/>
       </el-form-item>
-      <el-form-item label="email">
+      <el-form-item label="email" prop="email" :rules="[{ required: true, message: 'email is required' }]">
         <el-input v-model="param.email"/>
       </el-form-item>
       <el-form-item label="emailValid">
         <el-switch v-model="param.emailValid"/>
       </el-form-item>
-      <el-form-item label="nickname">
+      <el-form-item label="nickname" prop="nickname" :rules="[{ required: true, message: 'nickname is required' }]">
         <el-input v-model="param.nickname"/>
       </el-form-item>
       <el-form-item label="password">
@@ -136,25 +137,33 @@ const passwordGenerate = () => {
   param.password = randomPassword()
 }
 
+// 表单验证
+const cloudFormRef = ref(null)
+
 // 保存
 const cloudSave = () => {
-  const paramEncryption = JSON.parse(JSON.stringify(param))
-  JsEncrypt.prototype.setPublicKey(publicKey.value)
-  paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
-  save(paramEncryption).then(response => {
-    console.log(response)
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          emit('dialogVisibleClose')
+  // @ts-ignore
+  cloudFormRef.value.validate((valid: boolean) => {
+    if (valid) {
+      const paramEncryption = JSON.parse(JSON.stringify(param))
+      JsEncrypt.prototype.setPublicKey(publicKey.value)
+      paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
+      save(paramEncryption).then(response => {
+        console.log(response)
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              emit('dialogVisibleClose')
+            }
+          })
+        } else {
+          ElMessage.error(response.msg)
         }
       })
-    } else {
-      ElMessage.error(response.msg)
     }
   })
 }

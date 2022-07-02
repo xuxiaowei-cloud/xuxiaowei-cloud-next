@@ -8,6 +8,8 @@ import cloud.xuxiaowei.next.system.vo.UsersVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户表。
@@ -89,6 +91,24 @@ public interface IUsersService extends IService<Users> {
 	 * @return 返回 更新结果
 	 */
 	boolean updateByUsersUpdateBo(UsersUpdateBo usersUpdateBo);
+
+	/**
+	 * 获取不是某个用户是否存在指定邮箱的用户
+	 * @param usersId 用户ID
+	 * @param email 邮箱
+	 * @param deleted 是否逻辑删除
+	 * @return 返回 用户信息
+	 */
+	List<Users> listByIdNotUsersIdAndEmail(Long usersId, String email, Boolean deleted);
+
+	/**
+	 * 获取不是某个用户是否存在指定昵称的用户
+	 * @param usersId 用户ID
+	 * @param nickname 昵称
+	 * @param deleted 是否逻辑删除
+	 * @return 返回 用户信息
+	 */
+	List<Users> listByIdNotUsersIdAndNickname(Long usersId, String nickname, Boolean deleted);
 
 	/**
 	 * 根据 邮箱 查询用户
