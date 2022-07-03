@@ -69,7 +69,8 @@ authorityList().then(response => {
 const data = ref(authorityData)
 
 // 用户数据
-const userData = reactive([])
+const user : string[] = []
+const userData = reactive(user)
 
 const username = ref(null)
 
@@ -83,7 +84,6 @@ if (props.usersId) {
         const authorityList = data.authorityList
         for (const i in authorityList) {
           const team = authorityList[i]
-          // @ts-ignore
           userData.push(team.authority)
         }
       }

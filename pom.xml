@@ -138,6 +138,9 @@
         <!-- https://github.com/Wechat-Group/WxJava -->
         <weixin-java.version>4.3.0</weixin-java.version>
 
+        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
+        <httpspi-servlet.version>4.0.0</httpspi-servlet.version>
+
         <!-- https://nodejs.org/dist/ -->
         <!-- http://mirrors.aliyun.com/nodejs-release/ -->
         <node.version>v16.15.1</node.version>
@@ -341,6 +344,13 @@
                 <groupId>com.github.binarywang</groupId>
                 <artifactId>wx-java-miniapp-spring-boot-starter</artifactId>
                 <version>${weixin-java.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
+            <dependency>
+                <groupId>com.sun.xml.ws</groupId>
+                <artifactId>httpspi-servlet</artifactId>
+                <version>${httpspi-servlet.version}</version>
             </dependency>
 
             <!-- 核心组件 -->

@@ -36,6 +36,8 @@ logging:
     # 在微服务中，直接使用 `web: debug` 无效
     # web: debug
     # org.springframework.web: debug
+    org.springframework.ws: debug
+    jakarta.xml.ws: debug
     # 包：日志等级
     cloud.xuxiaowei: debug
   # 日志文件
