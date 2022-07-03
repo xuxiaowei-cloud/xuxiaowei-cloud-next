@@ -22,6 +22,13 @@ import java.util.List;
 public interface UsersMapper extends BaseMapper<Users> {
 
 	/**
+	 * 按用户名加载用户及权限（包含用户组权限）
+	 * @param username 用户名
+	 * @return 返回 用户信息及权限（包含用户组权限）
+	 */
+	Users loadUserByUsername(@Param("username") String username);
+
+	/**
 	 * 根据 用户主键 查询用户信息及权限
 	 * @param usersId 用户主键
 	 * @return 返回 用户信息及权限

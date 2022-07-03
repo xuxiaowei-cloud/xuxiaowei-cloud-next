@@ -53,7 +53,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Users users = usersService.getByUsername(username);
+		Users users = usersService.loadUserByUsername(username);
 		if (users == null) {
 			throw new LoginUsernameNotFoundException("用户名不存在");
 		}
