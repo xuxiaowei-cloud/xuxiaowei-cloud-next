@@ -141,6 +141,7 @@
     - [手动提取权限-6.0.0-M3](https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction)
     - [重命名声明](https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-claimsetmapping-rename)
 - [OAuth 2.0 不记名令牌 - 6.0.0-M3](https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/bearer-tokens.html)
+- [npm-cache](https://docs.npmjs.com/cli/v8/commands/npm-cache)
 
 ## 鸣谢
 
