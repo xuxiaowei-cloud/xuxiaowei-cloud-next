@@ -26,6 +26,13 @@ import java.util.List;
 public interface IUsersService extends IService<Users> {
 
 	/**
+	 * 按用户名加载用户及权限（包含用户组权限）
+	 * @param username 用户名
+	 * @return 返回 用户信息及权限（包含用户组权限）
+	 */
+	Users loadUserByUsername(String username);
+
+	/**
 	 * 根据 用户名 查询用户信息及权限
 	 * @param username 用户名
 	 * @return 返回 用户信息及权限

@@ -29,7 +29,8 @@
 
     </resultMap>
 
-    <sql id="BaseResultMap_field">
+    <!-- 用户、权限 -->
+    <sql id="users_authorities">
         u.*,
         a.username      AS a_username,
         a.authority     AS a_authority,
@@ -38,10 +39,45 @@
         a.create_date   AS a_create_date
     </sql>
 
+    <!-- 用户、权限组 -->
+    <sql id="users_group_authorities">
+        u.*,
+        u.username      AS a_username,
+        ga.authority    AS a_authority,
+        ay.explain      AS a_explain,
+        NULL            AS a_update_date,
+        NULL            AS a_create_date
+    </sql>
+
+    <!-- 按用户名加载用户及权限（包含用户组权限） -->
+    <select id="loadUserByUsername" resultMap="BaseResultMap">
+        SELECT
+            <include refid="users_authorities"/>
+        FROM
+            users AS u
+            LEFT JOIN authorities AS a ON u.username = a.username
+            LEFT JOIN authority as ay ON ay.authority = a.authority
+        WHERE
+            u.username = #{username} AND u.deleted = 0
+
+        UNION ALL
+
+        SELECT
+            <include refid="users_group_authorities"/>
+        FROM
+            users u
+            LEFT JOIN group_members AS gm ON gm.username = u.username
+            LEFT JOIN `groups` AS g ON g.id = gm.group_id
+            LEFT JOIN group_authorities AS ga ON ga.group_id = g.id
+            LEFT JOIN authority AS ay ON ay.authority = ga.authority
+        WHERE
+            u.username = #{username} AND u.deleted = 0
+    </select>
+
     <!-- 根据 用户主键 查询 -->
     <select id="getByUsersId" resultMap="BaseResultMap">
         SELECT
-            <include refid="BaseResultMap_field"/>
+            <include refid="users_authorities"/>
         FROM
             users AS u
             LEFT JOIN authorities AS a ON u.username = a.username
@@ -53,7 +89,7 @@
     <!-- 根据 用户名 查询用户信息及权限 -->
     <select id="getByUsername" resultMap="BaseResultMap">
         SELECT
-            <include refid="BaseResultMap_field"/>
+            <include refid="users_authorities"/>
         FROM
             users AS u
             LEFT JOIN authorities AS a ON u.username = a.username

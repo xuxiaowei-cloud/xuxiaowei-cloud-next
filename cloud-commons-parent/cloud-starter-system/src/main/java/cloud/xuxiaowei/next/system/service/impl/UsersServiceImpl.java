@@ -64,6 +64,16 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
 	}
 
 	/**
+	 * 按用户名加载用户及权限（包含用户组权限）
+	 * @param username 用户名
+	 * @return 返回 用户信息及权限（包含用户组权限）
+	 */
+	@Override
+	public Users loadUserByUsername(String username) {
+		return baseMapper.loadUserByUsername(username);
+	}
+
+	/**
 	 * 根据 用户名 查询用户信息及权限
 	 * <p>
 	 * 待加入Redis注解进行数据缓存
