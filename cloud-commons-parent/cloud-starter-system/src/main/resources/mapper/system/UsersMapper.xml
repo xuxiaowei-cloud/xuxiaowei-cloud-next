@@ -75,7 +75,10 @@
             u.username = #{username}
     </select>
 
-    <!-- 根据 昵称 查询用户信息 -->
+    <!--
+        根据 昵称 查询用户信息
+        条件无逻辑删除的判断
+     -->
     <select id="getLogicByNickname" resultType="cloud.xuxiaowei.next.system.entity.Users">
         SELECT
             u.*
@@ -85,7 +88,10 @@
             u.nickname = #{nickname}
     </select>
 
-    <!-- 根据 邮箱 查询用户信息 -->
+    <!--
+        根据 邮箱 查询用户信息
+        条件无逻辑删除的判断
+     -->
     <select id="getLogicByEmail" resultType="cloud.xuxiaowei.next.system.entity.Users">
         SELECT
             u.*
