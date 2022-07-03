@@ -183,8 +183,12 @@ public class AuthorizationServerConfiguration {
 	 */
 	@Bean
 	public JWKSource<SecurityContext> jwkSource() {
-		RSAKey rsaKey = new RSAKey.Builder(jwkKeyProperties.rsaPublicKey()).privateKey(jwkKeyProperties.privateKey())
+		// @formatter:off
+		RSAKey rsaKey = new RSAKey
+				.Builder(jwkKeyProperties.rsaPublicKey())
+				.privateKey(jwkKeyProperties.privateKey())
 				.build();
+		// @formatter:on
 		JWKSet jwkSet = new JWKSet(rsaKey);
 		return new ImmutableJWKSet<>(jwkSet);
 	}
