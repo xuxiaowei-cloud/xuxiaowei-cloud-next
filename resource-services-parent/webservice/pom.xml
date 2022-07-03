@@ -26,6 +26,12 @@
 			<artifactId>spring-boot-starter-web-services</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
+		<dependency>
+			<groupId>com.sun.xml.ws</groupId>
+			<artifactId>httpspi-servlet</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<licenses>
