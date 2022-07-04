@@ -189,6 +189,8 @@
         <module>admin-server</module>
         <!-- 微服务公共组件父模块 -->
         <module>cloud-commons-parent</module>
+        <!--  -->
+        <module>example-parent</module>
         <!-- 网关服务 -->
         <module>gateway</module>
         <!-- 登录服务 -->
