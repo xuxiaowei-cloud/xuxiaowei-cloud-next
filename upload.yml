@@ -1,0 +1,74 @@
+
+# 阿里云对象存储
+oss:
+  stage: s3-service
+  image: maven:3.6.3-openjdk-17
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - wget https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64
+    - chmod 755 ossutil64
+    - echo "[Credentials]" > .ossutilconfig
+    - echo "language=CH" >> .ossutilconfig
+    - echo "endpoint=$endpoint" >> .ossutilconfig
+    - echo "accessKeyID=$accessKeyID" >> .ossutilconfig
+    - echo "accessKeySecret=$accessKeySecret" >> .ossutilconfig
+    - chmod 755 oss.sh
+    - "./oss.sh"
+  only:
+    - s3
+
+# 腾讯云对象存储
+cos:
+  stage: s3-service
+  image: maven:3.6.3-openjdk-17
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - wget https://cosbrowser.cloud.tencent.com/software/coscli/coscli-linux
+    - mv coscli-linux coscli
+    - chmod 755 coscli
+    - ./coscli --version
+    - chmod 755 cos.sh
+    - "./cos.sh"
+  only:
+    - s3
+
+# 华为云对象存储
+obs:
+  stage: s3-service
+  image: maven:3.6.3-openjdk-17
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - wget https://obs-community.obs.cn-north-1.myhuaweicloud.com/obsutil/current/obsutil_linux_amd64.tar.gz
+    - tar -zxvf obsutil_linux_amd64.tar.gz
+    - cp obsutil_linux_amd64*/obsutil obsutil
+    - chmod 755 obsutil
+    - ./obsutil version
+    - echo 因为华为云对象存储OBS配置文件中的参数较多，并且下载的始终是最新版。不同版本可能存在配置参数的差异，故采用软件命令直接生成配置文件（使用的变量受保护，不会再日志中输出）。
+    - ./obsutil config -i=$ak -k=$sk -e=$et
+    - chmod 755 obs.sh
+    - "./obs.sh"
+  only:
+    - s3
+
+# 百度云对象存储
+bos:
+  stage: s3-service
+  image: maven:3.6.3-openjdk-17
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - wget https://bce-doc-on.bj.bcebos.com/bce-documentation/BOS/linux-bcecmd-0.3.3.zip
+    - unzip linux-bcecmd-0.3.3.zip
+    - cp ./linux-bcecmd-0.3.3/bcecmd bcecmd
+    - chmod 755 bcecmd
+    - chmod 755 bos.sh
+    - "./bos.sh"
+  only:
+    - s3
