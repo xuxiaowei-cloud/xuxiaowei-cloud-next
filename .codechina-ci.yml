@@ -1,5 +1,6 @@
 stages:
   - package
+  - s3-package
 
 # GitCode 禁用缓存（GitCode 未启用缓存），节省时间
 #cache:
