@@ -78,9 +78,13 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 
+		// 将当前用户名放入日志中
 		String userName = SecurityUtils.getUserName(authentication);
+		// 将当前用户ID放入日志中
+		String usersId = SecurityUtils.getUsersId(authentication);
 
 		MDC.put(Constant.NAME, userName);
+		MDC.put(Constant.USERS_ID, usersId);
 
 		UsersLogin usersLogin = HandlerUtils.usersLogin(userName, true, request, null);
 		usersLoginService.save(usersLogin);

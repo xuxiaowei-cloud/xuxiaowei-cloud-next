@@ -162,7 +162,12 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 		return authentication.map(requestAuthentication -> {
 
 			// 将当前用户名放入日志中
-			MDC.put(Constant.NAME, SecurityUtils.getUserName(requestAuthentication));
+			String userName = SecurityUtils.getUserName(requestAuthentication);
+			// 将当前用户ID放入日志中
+			String usersId = SecurityUtils.getUsersId(requestAuthentication);
+
+			MDC.put(Constant.NAME, userName);
+			MDC.put(Constant.USERS_ID, usersId);
 
 			// 已通过认证授权
 			if (requestAuthentication.isAuthenticated()) {

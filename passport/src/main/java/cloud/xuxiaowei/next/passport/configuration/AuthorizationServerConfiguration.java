@@ -3,6 +3,8 @@ package cloud.xuxiaowei.next.passport.configuration;
 import cloud.xuxiaowei.next.core.properties.CloudClientProperties;
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
 import cloud.xuxiaowei.next.passport.handler.AccessTokenAuthenticationFailureHandlerImpl;
+import cloud.xuxiaowei.next.system.entity.Users;
+import cloud.xuxiaowei.next.system.service.IUsersService;
 import cloud.xuxiaowei.next.utils.Constant;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -78,6 +80,8 @@ public class AuthorizationServerConfiguration {
 
 	private CloudClientProperties cloudClientProperties;
 
+	private IUsersService usersService;
+
 	@Autowired
 	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
 		this.jwkKeyProperties = jwkKeyProperties;
@@ -86,6 +90,11 @@ public class AuthorizationServerConfiguration {
 	@Autowired
 	public void setCloudClientProperties(CloudClientProperties cloudClientProperties) {
 		this.cloudClientProperties = cloudClientProperties;
+	}
+
+	@Autowired
+	public void setUsersService(IUsersService usersService) {
+		this.usersService = usersService;
 	}
 
 	/**
@@ -217,7 +226,14 @@ public class AuthorizationServerConfiguration {
 				Authentication principal = context.getPrincipal();
 
 				// 放入用户名
-				claims.claim(Constant.USERNAME, principal.getName());
+				String name = principal.getName();
+				claims.claim(Constant.USERNAME, name);
+
+				// 放入用户ID
+				Users users = usersService.getByUsername(name);
+				if (users != null) {
+					claims.claim(Constant.USERS_ID, users.getUsersId());
+				}
 
 				// 用户权限
 				Set<String> authorities = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority)

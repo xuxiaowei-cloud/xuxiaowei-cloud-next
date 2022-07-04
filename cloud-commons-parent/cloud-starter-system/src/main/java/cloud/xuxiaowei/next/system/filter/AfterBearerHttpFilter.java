@@ -41,9 +41,13 @@ public class AfterBearerHttpFilter extends HttpFilter {
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
 
+		// 将当前用户名放入日志中
 		String userName = SecurityUtils.getUserName();
+		// 将当前用户ID放入日志中
+		String usersId = SecurityUtils.getUsersId();
 
 		MDC.put(Constant.NAME, userName);
+		MDC.put(Constant.USERS_ID, usersId);
 
 		if (userName != null) {
 			logService.setCreateUsernameById(userName, MDC.get(Constant.LOG_ID));

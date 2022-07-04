@@ -93,4 +93,34 @@ public class SecurityUtils {
 		return null;
 	}
 
+	/**
+	 * 获取 用户ID
+	 * @return 返回 用户ID
+	 */
+	public static String getUsersId() {
+		SecurityContext context = SecurityContextHolder.getContext();
+		Authentication authentication = context.getAuthentication();
+		return getUsersId(authentication);
+	}
+
+	/**
+	 * 根据 验证 获取 用户ID
+	 * @param authentication 验证
+	 * @return 返回 用户ID
+	 */
+	public static String getUsersId(Authentication authentication) {
+		if (authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof Jwt jwt) {
+				Map<String, Object> claims = jwt.getClaims();
+				Object usersId = claims.get(Constant.USERS_ID);
+				if (usersId == null) {
+					return null;
+				}
+				return usersId.toString();
+			}
+		}
+		return null;
+	}
+
 }
