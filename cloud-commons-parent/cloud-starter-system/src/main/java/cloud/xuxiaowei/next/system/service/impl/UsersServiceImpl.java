@@ -65,12 +65,27 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
 
 	/**
 	 * 按用户名加载用户及权限（包含用户组权限）
+	 * <p>
+	 * 权限为空已剔除
 	 * @param username 用户名
 	 * @return 返回 用户信息及权限（包含用户组权限）
 	 */
 	@Override
 	public Users loadUserByUsername(String username) {
-		return baseMapper.loadUserByUsername(username);
+		Users users = baseMapper.loadUserByUsername(username);
+		if (users != null) {
+			// 去除 authority 为空的情况
+			List<Authorities> list = new ArrayList<>();
+			List<Authorities> authoritiesList = users.getAuthoritiesList();
+			for (Authorities authorities : authoritiesList) {
+				String authority = authorities.getAuthority();
+				if (StringUtils.hasText(authority)) {
+					list.add(authorities);
+				}
+			}
+			users.setAuthoritiesList(list);
+		}
+		return users;
 	}
 
 	/**

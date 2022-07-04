@@ -49,7 +49,10 @@
         NULL            AS a_create_date
     </sql>
 
-    <!-- 按用户名加载用户及权限（包含用户组权限） -->
+    <!--
+        按用户名加载用户及权限（包含用户组权限）
+     	可能存在空权限的情况，需要调用者额外处理
+     -->
     <select id="loadUserByUsername" resultMap="BaseResultMap">
         SELECT
             <include refid="users_authorities"/>

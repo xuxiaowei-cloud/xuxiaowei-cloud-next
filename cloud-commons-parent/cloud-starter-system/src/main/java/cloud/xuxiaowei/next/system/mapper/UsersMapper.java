@@ -23,6 +23,8 @@ public interface UsersMapper extends BaseMapper<Users> {
 
 	/**
 	 * 按用户名加载用户及权限（包含用户组权限）
+	 * <p>
+	 * 可能存在空权限的情况，需要调用者额外处理
 	 * @param username 用户名
 	 * @return 返回 用户信息及权限（包含用户组权限）
 	 */
