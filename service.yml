@@ -1,0 +1,377 @@
+#
+# s3 发布网关服务
+s3-gateway:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - JAR_PATH=/home/gitlab-runner/jar/$CI_COMMIT_BRANCH
+    - echo JAR_PATH：$JAR_PATH
+    - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
+    - MODULE='gateway'
+    - echo MODULE：$MODULE
+    - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
+    - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`
+    - PACKAGING=`mvn help:evaluate -pl $MODULE -Dexpression=project.packaging -q -DforceStdout`
+    - APP_NAME=$ARTIFACT_ID-$VERSION.$PACKAGING
+    - echo APP_NAME：$APP_NAME
+    - cp $MODULE/target/$APP_NAME $JAR_PATH/$APP_NAME && echo 复制新jar包完成
+    - SERVICE=/usr/lib/systemd/system/$MODULE.service
+    - echo SERVICE：$SERVICE
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - echo JAVA_HOME：$JAVA_HOME
+    - echo "" > $SERVICE
+    - echo "[Unit]" >> $SERVICE
+    - echo "Description=$MODULE" >> $SERVICE
+    - echo "After=syslog.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Service]" >> $SERVICE
+    - echo "EnvironmentFile=/etc/profile" >> $SERVICE
+    - echo "ExecStart=$JAVA_HOME/bin/java -jar $JAR_PATH/$APP_NAME --spring.profiles.active=prod" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Install]" >> $SERVICE
+    - echo "WantedBy=multi-user.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo 创建新启动脚本完成
+    - sudo systemctl enable $MODULE.service && echo 设置开机启动完成
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart $MODULE.service && echo 重启项目完成
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+    - MODULE_STATUS=0
+    - sleep 30 && echo 增加延时
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+  tags:
+    - s3
+  only:
+    - s3
+
+#
+# s3 发布监控（管理）服务
+s3-admin-server:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - JAR_PATH=/home/gitlab-runner/jar/$CI_COMMIT_BRANCH
+    - echo JAR_PATH：$JAR_PATH
+    - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
+    - MODULE='admin-server'
+    - echo MODULE：$MODULE
+    - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
+    - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`
+    - PACKAGING=`mvn help:evaluate -pl $MODULE -Dexpression=project.packaging -q -DforceStdout`
+    - APP_NAME=$ARTIFACT_ID-$VERSION.$PACKAGING
+    - echo APP_NAME：$APP_NAME
+    - cp $MODULE/target/$APP_NAME $JAR_PATH/$APP_NAME && echo 复制新jar包完成
+    - SERVICE=/usr/lib/systemd/system/$MODULE.service
+    - echo SERVICE：$SERVICE
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - echo JAVA_HOME：$JAVA_HOME
+    - echo "" > $SERVICE
+    - echo "[Unit]" >> $SERVICE
+    - echo "Description=$MODULE" >> $SERVICE
+    - echo "After=syslog.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Service]" >> $SERVICE
+    - echo "EnvironmentFile=/etc/profile" >> $SERVICE
+    - echo "ExecStart=$JAVA_HOME/bin/java -jar $JAR_PATH/$APP_NAME --spring.profiles.active=prod" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Install]" >> $SERVICE
+    - echo "WantedBy=multi-user.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo 创建新启动脚本完成
+    - sudo systemctl enable $MODULE.service && echo 设置开机启动完成
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart $MODULE.service && echo 重启项目完成
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+    - MODULE_STATUS=0
+    - sleep 30 && echo 增加延时
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+  tags:
+    - s3
+  only:
+    - s3
+
+#
+# s3 发布登录服务
+s3-passport:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - JAR_PATH=/home/gitlab-runner/jar/$CI_COMMIT_BRANCH
+    - echo JAR_PATH：$JAR_PATH
+    - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
+    - MODULE='passport'
+    - echo MODULE：$MODULE
+    - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
+    - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`
+    - PACKAGING=`mvn help:evaluate -pl $MODULE -Dexpression=project.packaging -q -DforceStdout`
+    - APP_NAME=$ARTIFACT_ID-$VERSION.$PACKAGING
+    - echo APP_NAME：$APP_NAME
+    - cp $MODULE/target/$APP_NAME $JAR_PATH/$APP_NAME && echo 复制新jar包完成
+    - SERVICE=/usr/lib/systemd/system/$MODULE.service
+    - echo SERVICE：$SERVICE
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - echo JAVA_HOME：$JAVA_HOME
+    - echo "" > $SERVICE
+    - echo "[Unit]" >> $SERVICE
+    - echo "Description=$MODULE" >> $SERVICE
+    - echo "After=syslog.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Service]" >> $SERVICE
+    - echo "EnvironmentFile=/etc/profile" >> $SERVICE
+    - echo "ExecStart=$JAVA_HOME/bin/java -jar $JAR_PATH/$APP_NAME --spring.profiles.active=prod" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Install]" >> $SERVICE
+    - echo "WantedBy=multi-user.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo 创建新启动脚本完成
+    - sudo systemctl enable $MODULE.service && echo 设置开机启动完成
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart $MODULE.service && echo 重启项目完成
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+    - MODULE_STATUS=0
+    - sleep 30 && echo 增加延时
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+  tags:
+    - s3
+  only:
+    - s3
+
+#
+# s3 发布用户服务
+s3-user:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - JAR_PATH=/home/gitlab-runner/jar/$CI_COMMIT_BRANCH
+    - echo JAR_PATH：$JAR_PATH
+    - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
+    - cd resource-services-parent
+    - pwd
+    - MODULE='user'
+    - echo MODULE：$MODULE
+    - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
+    - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`
+    - PACKAGING=`mvn help:evaluate -pl $MODULE -Dexpression=project.packaging -q -DforceStdout`
+    - APP_NAME=$ARTIFACT_ID-$VERSION.$PACKAGING
+    - echo APP_NAME：$APP_NAME
+    - cp $MODULE/target/$APP_NAME $JAR_PATH/$APP_NAME && echo 复制新jar包完成
+    - SERVICE=/usr/lib/systemd/system/$MODULE.service
+    - echo SERVICE：$SERVICE
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - echo JAVA_HOME：$JAVA_HOME
+    - echo "" > $SERVICE
+    - echo "[Unit]" >> $SERVICE
+    - echo "Description=$MODULE" >> $SERVICE
+    - echo "After=syslog.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Service]" >> $SERVICE
+    - echo "EnvironmentFile=/etc/profile" >> $SERVICE
+    - echo "ExecStart=$JAVA_HOME/bin/java -jar $JAR_PATH/$APP_NAME --spring.profiles.active=prod" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Install]" >> $SERVICE
+    - echo "WantedBy=multi-user.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo 创建新启动脚本完成
+    - sudo systemctl enable $MODULE.service && echo 设置开机启动完成
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart $MODULE.service && echo 重启项目完成
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+    - MODULE_STATUS=0
+    - sleep 30 && echo 增加延时
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+  tags:
+    - s3
+  only:
+    - s3
+
+#
+# s3 发布WebSocket服务
+s3-websocket:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - JAR_PATH=/home/gitlab-runner/jar/$CI_COMMIT_BRANCH
+    - echo JAR_PATH：$JAR_PATH
+    - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
+    - cd resource-services-parent
+    - pwd
+    - MODULE='websocket'
+    - echo MODULE：$MODULE
+    - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
+    - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`
+    - PACKAGING=`mvn help:evaluate -pl $MODULE -Dexpression=project.packaging -q -DforceStdout`
+    - APP_NAME=$ARTIFACT_ID-$VERSION.$PACKAGING
+    - echo APP_NAME：$APP_NAME
+    - cp $MODULE/target/$APP_NAME $JAR_PATH/$APP_NAME && echo 复制新jar包完成
+    - SERVICE=/usr/lib/systemd/system/$MODULE.service
+    - echo SERVICE：$SERVICE
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - echo JAVA_HOME：$JAVA_HOME
+    - echo "" > $SERVICE
+    - echo "[Unit]" >> $SERVICE
+    - echo "Description=$MODULE" >> $SERVICE
+    - echo "After=syslog.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Service]" >> $SERVICE
+    - echo "EnvironmentFile=/etc/profile" >> $SERVICE
+    - echo "ExecStart=$JAVA_HOME/bin/java -jar $JAR_PATH/$APP_NAME --spring.profiles.active=prod" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Install]" >> $SERVICE
+    - echo "WantedBy=multi-user.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo 创建新启动脚本完成
+    - sudo systemctl enable $MODULE.service && echo 设置开机启动完成
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart $MODULE.service && echo 重启项目完成
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+    - MODULE_STATUS=0
+    - sleep 30 && echo 增加延时
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+  tags:
+    - s3
+  only:
+    - s3
+
+#
+# s3 发布WebService服务
+s3-webservice:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - JAR_PATH=/home/gitlab-runner/jar/$CI_COMMIT_BRANCH
+    - echo JAR_PATH：$JAR_PATH
+    - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
+    - cd resource-services-parent
+    - pwd
+    - MODULE='webservice'
+    - echo MODULE：$MODULE
+    - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
+    - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`
+    - PACKAGING=`mvn help:evaluate -pl $MODULE -Dexpression=project.packaging -q -DforceStdout`
+    - APP_NAME=$ARTIFACT_ID-$VERSION.$PACKAGING
+    - echo APP_NAME：$APP_NAME
+    - cp $MODULE/target/$APP_NAME $JAR_PATH/$APP_NAME && echo 复制新jar包完成
+    - SERVICE=/usr/lib/systemd/system/$MODULE.service
+    - echo SERVICE：$SERVICE
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - echo JAVA_HOME：$JAVA_HOME
+    - echo "" > $SERVICE
+    - echo "[Unit]" >> $SERVICE
+    - echo "Description=$MODULE" >> $SERVICE
+    - echo "After=syslog.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Service]" >> $SERVICE
+    - echo "EnvironmentFile=/etc/profile" >> $SERVICE
+    - echo "ExecStart=$JAVA_HOME/bin/java -jar $JAR_PATH/$APP_NAME --spring.profiles.active=prod" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Install]" >> $SERVICE
+    - echo "WantedBy=multi-user.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo 创建新启动脚本完成
+    - sudo systemctl enable $MODULE.service && echo 设置开机启动完成
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart $MODULE.service && echo 重启项目完成
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+    - MODULE_STATUS=0
+    - sleep 30 && echo 增加延时
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+  tags:
+    - s3
+  only:
+    - s3
+
+#
+# s3 发布微信小程序服务
+s3-wechat-applet:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - JAR_PATH=/home/gitlab-runner/jar/$CI_COMMIT_BRANCH
+    - echo JAR_PATH：$JAR_PATH
+    - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
+    - cd resource-services-parent
+    - pwd
+    - MODULE='wechat-applet'
+    - echo MODULE：$MODULE
+    - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
+    - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`
+    - PACKAGING=`mvn help:evaluate -pl $MODULE -Dexpression=project.packaging -q -DforceStdout`
+    - APP_NAME=$ARTIFACT_ID-$VERSION.$PACKAGING
+    - echo APP_NAME：$APP_NAME
+    - cp $MODULE/target/$APP_NAME $JAR_PATH/$APP_NAME && echo 复制新jar包完成
+    - SERVICE=/usr/lib/systemd/system/$MODULE.service
+    - echo SERVICE：$SERVICE
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - echo JAVA_HOME：$JAVA_HOME
+    - echo "" > $SERVICE
+    - echo "[Unit]" >> $SERVICE
+    - echo "Description=$MODULE" >> $SERVICE
+    - echo "After=syslog.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Service]" >> $SERVICE
+    - echo "EnvironmentFile=/etc/profile" >> $SERVICE
+    - echo "ExecStart=$JAVA_HOME/bin/java -jar $JAR_PATH/$APP_NAME --spring.profiles.active=prod" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo "[Install]" >> $SERVICE
+    - echo "WantedBy=multi-user.target" >> $SERVICE
+    - echo "" >> $SERVICE
+    - echo 创建新启动脚本完成
+    - sudo systemctl enable $MODULE.service && echo 设置开机启动完成
+    - sudo systemctl daemon-reload
+    - sudo systemctl restart $MODULE.service && echo 重启项目完成
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+    - MODULE_STATUS=0
+    - sleep 30 && echo 增加延时
+    - sudo systemctl status $MODULE.service && MODULE_STATUS=1
+    - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
+  tags:
+    - s3
+  only:
+    - s3
+
+#
+# s3 发布UI服务
+s3-ui:
+  stage: s3-service
+  needs:
+    - job: s3-package
+      artifacts: true
+  script:
+    - MODULE='ui'
+    - echo MODULE：$MODULE
+    - RELEASE_PATH=/home/gitlab-runner/node/$MODULE
+    - if [ ! -f $RELEASE_PATH ]; then sudo mkdir $RELEASE_PATH -p && echo 创建文件夹完成; fi
+    - echo RELEASE_PATH：$RELEASE_PATH
+    - if [ ! -f $RELEASE_PATH ]; then sudo mkdir $RELEASE_PATH -p && echo 创建发布文件夹完成; fi
+    - cp -r ./$MODULE/dist/* $RELEASE_PATH && echo 复制新文件夹完成
+  tags:
+    - s3
+  only:
+    - s3
