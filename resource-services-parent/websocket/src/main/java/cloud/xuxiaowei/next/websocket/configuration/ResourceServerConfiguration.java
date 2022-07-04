@@ -88,6 +88,8 @@ public class ResourceServerConfiguration {
 			authorize
 					// 放行端点
 					.antMatchers("/actuator/**").permitAll()
+					// 放行错误地址
+					.antMatchers("/error").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});
