@@ -77,6 +77,8 @@ s3-package:
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
       - ui/dist
+  tags:
+    - s3
   only:
     - s3
 
