@@ -27,6 +27,8 @@ public interface IUsersService extends IService<Users> {
 
 	/**
 	 * 按用户名加载用户及权限（包含用户组权限）
+	 * <p>
+	 * 权限为空已剔除
 	 * @param username 用户名
 	 * @return 返回 用户信息及权限（包含用户组权限）
 	 */
