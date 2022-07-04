@@ -49,6 +49,7 @@ public class CorsBeforeWebFilter implements WebFilter {
 
 		String origin = RequestUtils.getOrigin(request);
 
+		// origin 为空时的处理
 		if (origin == null || Constant.NULL.equals(origin)) {
 			List<String> allowOrginNullList = cloudCorsProperties.getAllowOrginNullList();
 			if (allowOrginNullList != null) {
@@ -67,7 +68,7 @@ public class CorsBeforeWebFilter implements WebFilter {
 			// 此处为了防止网关调用服务时，服务不存在，导致跨域问题
 			HttpMethod method = request.getMethod();
 			if (HttpMethod.OPTIONS == method) {
-				// 响应 Access-Control-Allow-Origin 为 host
+				// 响应 Access-Control-Allow-Origin 为 origin
 				response.getHeaders().setAccessControlAllowOrigin(origin);
 				response.getHeaders().setAccessControlAllowCredentials(true);
 			}
