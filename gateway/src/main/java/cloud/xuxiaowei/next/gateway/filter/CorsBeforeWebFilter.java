@@ -5,6 +5,7 @@ import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.reactive.RequestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.lang.NonNull;
@@ -62,6 +63,15 @@ public class CorsBeforeWebFilter implements WebFilter {
 			// 允许跨域时携带授权信息
 			response.getHeaders().addAll(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
 					request.getHeaders().getAccessControlRequestHeaders());
+
+			// 此处为了防止网关调用服务时，服务不存在，导致跨域问题
+			HttpMethod method = request.getMethod();
+			if (HttpMethod.OPTIONS == method) {
+				// 响应 Access-Control-Allow-Origin 为 host
+				response.getHeaders().setAccessControlAllowOrigin(origin);
+				response.getHeaders().setAccessControlAllowCredentials(true);
+			}
+
 		}
 
 		return chain.filter(exchange);
