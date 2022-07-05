@@ -47,6 +47,9 @@
             <el-form-item label="scopes">
               <el-input v-model="props.row.scopes" class="cloud-el-expand-input" disabled/>
             </el-form-item>
+            <el-form-item label="jwkSetUrl">
+              <el-input v-model="props.row.jwkSetUrl" class="cloud-el-expand-input" disabled/>
+            </el-form-item>
             <el-form-item label="tokenSigningAlgorithm">
               <el-input v-model="props.row.tokenSigningAlgorithm" class="cloud-el-expand-input" disabled/>
             </el-form-item>

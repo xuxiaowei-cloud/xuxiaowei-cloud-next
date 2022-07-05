@@ -88,6 +88,7 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			ClientSettings build = builder.build();
 			this.requireProofKey = build.isRequireProofKey();
 			this.requireAuthorizationConsent = build.isRequireAuthorizationConsent();
+			this.jwkSetUrl = build.getJwkSetUrl();
 
 			List<String> tokenEndpointAuthenticationSigningAlgorithmList = build
 					.getSetting(ConfigurationSettingNames.Client.TOKEN_ENDPOINT_AUTHENTICATION_SIGNING_ALGORITHM);
@@ -104,6 +105,8 @@ public class Oauth2RegisteredClientVo implements Serializable {
 	}
 
 	private String tokenSigningAlgorithm;
+
+	private String jwkSetUrl;
 
 	private Boolean requireProofKey;
 

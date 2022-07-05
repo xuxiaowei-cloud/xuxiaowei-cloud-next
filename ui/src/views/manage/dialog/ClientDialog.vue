@@ -49,6 +49,9 @@
       <el-form-item label="requireAuthorizationConsent">
         <el-switch v-model="param.requireAuthorizationConsent"/>
       </el-form-item>
+      <el-form-item label="jwkSetUrl" prop="jwkSetUrl" :rules="[{ required: true, message: 'jwkSetUrl is required' }]">
+        <el-input v-model="param.jwkSetUrl"/>
+      </el-form-item>
       <el-form-item label="tokenSigningAlgorithm" prop="tokenSigningAlgorithm"
                     :rules="[{ required: true, message: 'tokenSigningAlgorithm is required' }]">
         <el-select v-model="param.tokenSigningAlgorithm" placeholder="Select tokenSigningAlgorithm" style="width: 100%">
@@ -212,6 +215,7 @@ const param = reactive({
   tokenSettings: null,
   requireProofKey: null,
   requireAuthorizationConsent: null,
+  jwkSetUrl: null,
   tokenSigningAlgorithm: null,
   tokenSignatureAlgorithm: null,
   accessTokenTimeToLive: null,

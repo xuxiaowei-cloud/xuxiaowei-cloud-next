@@ -153,7 +153,9 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		Boolean requireProofKey = oauth2RegisteredClientSaveBo.getRequireProofKey();
 		Boolean requireAuthorizationConsent = oauth2RegisteredClientSaveBo.getRequireAuthorizationConsent();
 		String tokenSigningAlgorithm = oauth2RegisteredClientSaveBo.getTokenSigningAlgorithm();
-		String clientSettings = clientSettings(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent);
+		String jwkSetUrl = oauth2RegisteredClientSaveBo.getJwkSetUrl();
+		String clientSettings = clientSettings(jwkSetUrl, tokenSigningAlgorithm, requireProofKey,
+				requireAuthorizationConsent);
 		oauthClientDetails.setClientSettings(clientSettings);
 
 		Long accessTokenTimeToLive = oauth2RegisteredClientSaveBo.getAccessTokenTimeToLive();
@@ -179,16 +181,17 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		return objectMapper;
 	}
 
-	private String clientSettings(String tokenSigningAlgorithm, boolean requireProofKey,
+	private String clientSettings(String jwkSetUrl, String tokenSigningAlgorithm, boolean requireProofKey,
 			boolean requireAuthorizationConsent) throws JsonProcessingException {
 		ClientSettings.Builder builder = ClientSettings.builder();
-		Map<String, Object> settings = client(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent,
-				builder);
+		Map<String, Object> settings = client(jwkSetUrl, tokenSigningAlgorithm, requireProofKey,
+				requireAuthorizationConsent, builder);
 		return objectMapper().writeValueAsString(settings);
 	}
 
-	private Map<String, Object> client(String tokenSigningAlgorithm, boolean requireProofKey,
+	private Map<String, Object> client(String jwkSetUrl, String tokenSigningAlgorithm, boolean requireProofKey,
 			boolean requireAuthorizationConsent, ClientSettings.Builder builder) {
+		builder.jwkSetUrl(jwkSetUrl);
 		builder.requireAuthorizationConsent(requireAuthorizationConsent);
 		builder.requireProofKey(requireProofKey);
 		if (StringUtils.hasText(tokenSigningAlgorithm)) {
@@ -209,14 +212,14 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		return build.getSettings();
 	}
 
-	private String clientSettings(String tokenSigningAlgorithm, boolean requireProofKey,
+	private String clientSettings(String jwkSetUrl, String tokenSigningAlgorithm, boolean requireProofKey,
 			boolean requireAuthorizationConsent, String clientSettings) throws JsonProcessingException {
 		ObjectMapper objectMapper = objectMapper();
 		Map<String, Object> map = objectMapper.readValue(clientSettings, new TypeReference<>() {
 		});
 		ClientSettings.Builder builder = ClientSettings.withSettings(map);
-		Map<String, Object> settings = client(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent,
-				builder);
+		Map<String, Object> settings = client(jwkSetUrl, tokenSigningAlgorithm, requireProofKey,
+				requireAuthorizationConsent, builder);
 		return objectMapper.writeValueAsString(settings);
 	}
 
@@ -285,8 +288,9 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		Boolean requireProofKey = oauth2RegisteredClientUpdateBo.getRequireProofKey();
 		Boolean requireAuthorizationConsent = oauth2RegisteredClientUpdateBo.getRequireAuthorizationConsent();
 		String tokenSigningAlgorithm = oauth2RegisteredClientUpdateBo.getTokenSigningAlgorithm();
-		String clientSettings = clientSettings(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent,
-				byId.getClientSettings());
+		String jwkSetUrl = oauth2RegisteredClientUpdateBo.getJwkSetUrl();
+		String clientSettings = clientSettings(jwkSetUrl, tokenSigningAlgorithm, requireProofKey,
+				requireAuthorizationConsent, byId.getClientSettings());
 		oauthClientDetails.setClientSettings(clientSettings);
 
 		Long accessTokenTimeToLive = oauth2RegisteredClientUpdateBo.getAccessTokenTimeToLive();
