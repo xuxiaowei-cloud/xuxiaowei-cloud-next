@@ -55,6 +55,12 @@
           <el-option v-for="item in tokenSigningAlgorithmList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
+      <el-form-item label="tokenSignatureAlgorithm" prop="tokenSignatureAlgorithm"
+                    :rules="[{ required: true, message: 'tokenSignatureAlgorithm is required' }]">
+        <el-select v-model="param.tokenSignatureAlgorithm" placeholder="Select tokenSignatureAlgorithm" style="width: 100%">
+          <el-option v-for="item in tokenSignatureAlgorithmList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
+      </el-form-item>
       <el-form-item label="accessTokenTimeToLive" prop="accessTokenTimeToLive"
                     :rules="[{ required: true, message: 'accessTokenTimeToLive is required' }]">
         <el-input v-model="param.accessTokenTimeToLive" type="number"/>
@@ -80,7 +86,8 @@ import {
   grantTypeOptions,
   authenticationMethodOptions,
   scopeOptions,
-  tokenSigningAlgorithmOptions
+  tokenSigningAlgorithmOptions,
+  tokenSignatureAlgorithmOptions
 } from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
@@ -156,7 +163,7 @@ scopeOptions().then(response => {
   }
 })
 
-// 算法选项
+// 令牌端点认证签名算法选项
 const tokenSigningAlgorithmData: Option[] = []
 const tokenSigningAlgorithmList = reactive(tokenSigningAlgorithmData)
 tokenSigningAlgorithmOptions().then(response => {
@@ -164,6 +171,21 @@ tokenSigningAlgorithmOptions().then(response => {
     const data = response.data
     for (const i in data) {
       tokenSigningAlgorithmList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
+// id 令牌签名算法选项
+const tokenSignatureAlgorithmData: Option[] = []
+const tokenSignatureAlgorithmList = reactive(tokenSignatureAlgorithmData)
+tokenSignatureAlgorithmOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      tokenSignatureAlgorithmList.push({
         label: data[i].label,
         value: data[i].value
       })
@@ -191,6 +213,7 @@ const param = reactive({
   requireProofKey: null,
   requireAuthorizationConsent: null,
   tokenSigningAlgorithm: null,
+  tokenSignatureAlgorithm: null,
   accessTokenTimeToLive: null,
   refreshTokenTimeToLive: null,
   // 识别码

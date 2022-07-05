@@ -65,4 +65,6 @@ public class Oauth2RegisteredClientSaveBo implements Serializable {
 
 	private String tokenSigningAlgorithm;
 
+	private String tokenSignatureAlgorithm;
+
 }

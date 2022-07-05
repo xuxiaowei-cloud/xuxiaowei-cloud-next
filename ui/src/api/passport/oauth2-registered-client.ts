@@ -37,6 +37,15 @@ export const tokenSigningAlgorithmOptions = function () {
 }
 
 /**
+ * id 令牌签名算法选项
+ */
+export const tokenSignatureAlgorithmOptions = function () {
+  return request.post('/passport/oauth2-registered-client/token-signature-algorithm-options').then(response => {
+    return response.data
+  })
+}
+
+/**
  * 分页查询客户
  * @param data
  */

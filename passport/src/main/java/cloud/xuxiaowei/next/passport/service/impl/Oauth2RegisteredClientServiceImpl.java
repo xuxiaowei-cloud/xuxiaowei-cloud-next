@@ -158,7 +158,9 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 
 		Long accessTokenTimeToLive = oauth2RegisteredClientSaveBo.getAccessTokenTimeToLive();
 		Long refreshTokenTimeToLive = oauth2RegisteredClientSaveBo.getRefreshTokenTimeToLive();
-		oauthClientDetails.setTokenSettings(tokenSettings(accessTokenTimeToLive, refreshTokenTimeToLive));
+		String tokenSignatureAlgorithm = oauth2RegisteredClientSaveBo.getTokenSignatureAlgorithm();
+		String tokenSettings = tokenSettings(tokenSignatureAlgorithm, accessTokenTimeToLive, refreshTokenTimeToLive);
+		oauthClientDetails.setTokenSettings(tokenSettings);
 
 		oauthClientDetails.setClientSecret(clientSecretDecrypt);
 
@@ -218,27 +220,44 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		return objectMapper.writeValueAsString(settings);
 	}
 
-	private String tokenSettings(long accessTokenTimeToLive, long refreshTokenTimeToLive)
-			throws JsonProcessingException {
-		TokenSettings.Builder tokenSettingsBuilder = TokenSettings.builder();
-		tokenSettingsBuilder.accessTokenTimeToLive(Duration.ofSeconds(accessTokenTimeToLive));
-		tokenSettingsBuilder.refreshTokenTimeToLive(Duration.ofSeconds(refreshTokenTimeToLive));
-		TokenSettings tokenSettings = tokenSettingsBuilder.build();
-		Map<String, Object> settings = tokenSettings.getSettings();
+	private String tokenSettings(String tokenSignatureAlgorithm, long accessTokenTimeToLive,
+			long refreshTokenTimeToLive) throws JsonProcessingException {
+		TokenSettings.Builder builder = TokenSettings.builder();
+		Map<String, Object> settings = setting(tokenSignatureAlgorithm, accessTokenTimeToLive, refreshTokenTimeToLive,
+				builder);
 		return objectMapper().writeValueAsString(settings);
 	}
 
-	private String tokenSettings(long accessTokenTimeToLive, long refreshTokenTimeToLive, String tokenSettings)
-			throws JsonProcessingException {
+	private String tokenSettings(String tokenSignatureAlgorithm, long accessTokenTimeToLive,
+			long refreshTokenTimeToLive, String tokenSettings) throws JsonProcessingException {
 		ObjectMapper objectMapper = objectMapper();
 		Map<String, Object> map = objectMapper.readValue(tokenSettings, new TypeReference<>() {
 		});
 		TokenSettings.Builder builder = TokenSettings.withSettings(map);
+		Map<String, Object> setting = setting(tokenSignatureAlgorithm, accessTokenTimeToLive, refreshTokenTimeToLive,
+				builder);
+		return objectMapper.writeValueAsString(setting);
+	}
+
+	private Map<String, Object> setting(String tokenSignatureAlgorithm, long accessTokenTimeToLive,
+			long refreshTokenTimeToLive, TokenSettings.Builder builder) {
 		builder.accessTokenTimeToLive(Duration.ofSeconds(accessTokenTimeToLive));
 		builder.refreshTokenTimeToLive(Duration.ofSeconds(refreshTokenTimeToLive));
+
+		if (StringUtils.hasText(tokenSignatureAlgorithm)) {
+			List<String> strings = Splitter.on(ALGORITHM_SPLIT).splitToList(tokenSignatureAlgorithm);
+			String algorithmClasses = strings.get(0);
+			String algorithmName = strings.get(1);
+			if (SignatureAlgorithm.class.getName().equals(algorithmClasses)) {
+				builder.idTokenSignatureAlgorithm(SignatureAlgorithm.from(algorithmName));
+			}
+			else {
+				throw new CloudRuntimeException(String.format("非法id 令牌签名算法：%s", tokenSignatureAlgorithm));
+			}
+		}
+
 		TokenSettings build = builder.build();
-		Map<String, Object> settings = build.getSettings();
-		return objectMapper.writeValueAsString(settings);
+		return build.getSettings();
 	}
 
 	/**
@@ -272,7 +291,9 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 
 		Long accessTokenTimeToLive = oauth2RegisteredClientUpdateBo.getAccessTokenTimeToLive();
 		Long refreshTokenTimeToLive = oauth2RegisteredClientUpdateBo.getRefreshTokenTimeToLive();
-		String tokenSettings = tokenSettings(accessTokenTimeToLive, refreshTokenTimeToLive, byId.getTokenSettings());
+		String tokenSignatureAlgorithm = oauth2RegisteredClientUpdateBo.getTokenSignatureAlgorithm();
+		String tokenSettings = tokenSettings(tokenSignatureAlgorithm, accessTokenTimeToLive, refreshTokenTimeToLive,
+				byId.getTokenSettings());
 		oauthClientDetails.setTokenSettings(tokenSettings);
 
 		oauthClientDetails.setClientSecret(clientSecretDecrypt);

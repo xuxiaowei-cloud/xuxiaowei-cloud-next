@@ -67,4 +67,6 @@ public class Oauth2RegisteredClientUpdateBo implements Serializable {
 
 	private String tokenSigningAlgorithm;
 
+	private String tokenSignatureAlgorithm;
+
 }

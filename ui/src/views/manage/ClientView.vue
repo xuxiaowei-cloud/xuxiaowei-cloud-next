@@ -59,6 +59,9 @@
             <el-form-item label="requireAuthorizationConsent">
               <el-input v-model="props.row.requireAuthorizationConsent" class="cloud-el-expand-input" disabled/>
             </el-form-item>
+            <el-form-item label="tokenSignatureAlgorithm">
+              <el-input v-model="props.row.tokenSignatureAlgorithm" class="cloud-el-expand-input" disabled/>
+            </el-form-item>
             <el-form-item label="tokenSettings">
               <el-input v-model="props.row.tokenSettings" class="cloud-el-expand-input" type="textarea" disabled rows="5"/>
             </el-form-item>

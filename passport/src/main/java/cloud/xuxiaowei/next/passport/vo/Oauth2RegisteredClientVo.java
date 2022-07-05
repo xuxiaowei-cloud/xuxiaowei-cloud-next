@@ -8,6 +8,7 @@ import com.google.common.base.Splitter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.config.ConfigurationSettingNames;
@@ -87,6 +88,7 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			ClientSettings build = builder.build();
 			this.requireProofKey = build.isRequireProofKey();
 			this.requireAuthorizationConsent = build.isRequireAuthorizationConsent();
+
 			List<String> tokenEndpointAuthenticationSigningAlgorithmList = build
 					.getSetting(ConfigurationSettingNames.Client.TOKEN_ENDPOINT_AUTHENTICATION_SIGNING_ALGORITHM);
 			if (tokenEndpointAuthenticationSigningAlgorithmList != null
@@ -125,11 +127,20 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			TokenSettings build = builder.build();
 			this.accessTokenTimeToLive = build.getAccessTokenTimeToLive().getSeconds();
 			this.refreshTokenTimeToLive = build.getRefreshTokenTimeToLive().getSeconds();
+
+			SignatureAlgorithm signatureAlgorithm = build
+					.getSetting(ConfigurationSettingNames.Token.ID_TOKEN_SIGNATURE_ALGORITHM);
+			if (signatureAlgorithm != null) {
+				this.tokenSignatureAlgorithm = signatureAlgorithm.getClass().getName() + ALGORITHM_SPLIT
+						+ signatureAlgorithm.getName();
+			}
 		}
 		catch (Exception e) {
 			log.error("Token配置转换异常", e);
 		}
 	}
+
+	private String tokenSignatureAlgorithm;
 
 	private long accessTokenTimeToLive;
 

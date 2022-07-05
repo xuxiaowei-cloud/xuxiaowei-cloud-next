@@ -131,6 +131,26 @@ public class Oauth2RegisteredClientController {
 	}
 
 	/**
+	 * id 令牌签名算法选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 id 令牌签名算法选项
+	 */
+	@RequestMapping("/token-signature-algorithm-options")
+	@ControllerAnnotation(description = "id 令牌签名算法选项")
+	public Response<?> tokenSignatureAlgorithmOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<Option> list = new ArrayList<>();
+
+		SignatureAlgorithm[] signatureAlgorithms = SignatureAlgorithm.values();
+		for (SignatureAlgorithm value : signatureAlgorithms) {
+			String algorithm = value.getClass().getName() + ALGORITHM_SPLIT + value.getName();
+			list.add(new Option(algorithm, algorithm));
+		}
+
+		return Response.ok(list);
+	}
+
+	/**
 	 * 分页查询客户
 	 * @param request 请求
 	 * @param response 响应
