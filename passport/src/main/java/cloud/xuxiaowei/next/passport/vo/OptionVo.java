@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Option implements Serializable {
+public class OptionVo implements Serializable {
 
 	private String value;
 
