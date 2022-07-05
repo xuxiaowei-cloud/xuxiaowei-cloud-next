@@ -110,9 +110,9 @@ public class Oauth2RegisteredClientController {
 	 * @param response 响应
 	 * @return 返回 令牌端点认证签名算法选项
 	 */
-	@RequestMapping("/algorithm-options")
+	@RequestMapping("/token-signing-algorithm-options")
 	@ControllerAnnotation(description = "令牌端点认证签名算法选项")
-	public Response<?> algorithmOptions(HttpServletRequest request, HttpServletResponse response) {
+	public Response<?> tokenSigningAlgorithmOptions(HttpServletRequest request, HttpServletResponse response) {
 		List<Option> list = new ArrayList<>();
 
 		MacAlgorithm[] macAlgorithms = MacAlgorithm.values();

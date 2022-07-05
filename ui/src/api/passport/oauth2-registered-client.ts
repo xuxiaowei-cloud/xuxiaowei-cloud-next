@@ -31,7 +31,7 @@ export const scopeOptions = function () {
  * 令牌端点认证签名算法选项
  */
 export const tokenSigningAlgorithmOptions = function () {
-  return request.post('/passport/oauth2-registered-client/algorithm-options').then(response => {
+  return request.post('/passport/oauth2-registered-client/token-signing-algorithm-options').then(response => {
     return response.data
   })
 }
