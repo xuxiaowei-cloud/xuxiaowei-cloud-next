@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 授权类型
+ * 选项
  *
  * @author xuxiaowei
  * @since 0.0.1
@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GrantTypeOption implements Serializable {
+public class Option implements Serializable {
 
 	private String value;
 

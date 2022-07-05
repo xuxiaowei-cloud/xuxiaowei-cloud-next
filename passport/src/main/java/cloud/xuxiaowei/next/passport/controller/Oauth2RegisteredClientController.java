@@ -4,8 +4,8 @@ import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientPageBo;
 import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientSaveBo;
 import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientUpdateBo;
 import cloud.xuxiaowei.next.passport.service.IOauth2RegisteredClientService;
-import cloud.xuxiaowei.next.passport.vo.GrantTypeOption;
 import cloud.xuxiaowei.next.passport.vo.Oauth2RegisteredClientVo;
+import cloud.xuxiaowei.next.passport.vo.Option;
 import cloud.xuxiaowei.next.system.annotation.ControllerAnnotation;
 import cloud.xuxiaowei.next.utils.AssertUtils;
 import cloud.xuxiaowei.next.utils.Response;
@@ -56,12 +56,12 @@ public class Oauth2RegisteredClientController {
 	@RequestMapping("/grant-type-options")
 	@ControllerAnnotation(description = "授权类型选项")
 	public Response<?> grantTypeOptions(HttpServletRequest request, HttpServletResponse response) {
-		List<GrantTypeOption> list = new ArrayList<>();
-		list.add(new GrantTypeOption("authorization_code", "authorization_code"));
-		list.add(new GrantTypeOption("refresh_token", "refresh_token"));
-		list.add(new GrantTypeOption("client_credentials", "client_credentials"));
-		list.add(new GrantTypeOption("password", "password"));
-		list.add(new GrantTypeOption("webchat_miniprogram", "webchat_miniprogram"));
+		List<Option> list = new ArrayList<>();
+		list.add(new Option("authorization_code", "authorization_code"));
+		list.add(new Option("refresh_token", "refresh_token"));
+		list.add(new Option("client_credentials", "client_credentials"));
+		list.add(new Option("password", "password"));
+		list.add(new Option("webchat_miniprogram", "webchat_miniprogram"));
 		return Response.ok(list);
 	}
 
@@ -74,14 +74,14 @@ public class Oauth2RegisteredClientController {
 	@RequestMapping("/authentication-method-options")
 	@ControllerAnnotation(description = "客户端身份验证方法选项")
 	public Response<?> authenticationMethodOptions(HttpServletRequest request, HttpServletResponse response) {
-		List<GrantTypeOption> list = new ArrayList<>();
-		list.add(new GrantTypeOption("basic", "basic"));
-		list.add(new GrantTypeOption("client_secret_basic", "client_secret_basic"));
-		list.add(new GrantTypeOption("post", "post"));
-		list.add(new GrantTypeOption("client_secret_post", "client_secret_post"));
-		list.add(new GrantTypeOption("client_secret_jwt", "client_secret_jwt"));
-		list.add(new GrantTypeOption("private_key_jwt", "private_key_jwt"));
-		list.add(new GrantTypeOption("none", "none"));
+		List<Option> list = new ArrayList<>();
+		list.add(new Option("basic", "basic"));
+		list.add(new Option("client_secret_basic", "client_secret_basic"));
+		list.add(new Option("post", "post"));
+		list.add(new Option("client_secret_post", "client_secret_post"));
+		list.add(new Option("client_secret_jwt", "client_secret_jwt"));
+		list.add(new Option("private_key_jwt", "private_key_jwt"));
+		list.add(new Option("none", "none"));
 		return Response.ok(list);
 	}
 
@@ -94,9 +94,9 @@ public class Oauth2RegisteredClientController {
 	@RequestMapping("/scope-options")
 	@ControllerAnnotation(description = "授权范围选项")
 	public Response<?> scopeOptions(HttpServletRequest request, HttpServletResponse response) {
-		List<GrantTypeOption> list = new ArrayList<>();
-		list.add(new GrantTypeOption("snsapi_base", "snsapi_base"));
-		list.add(new GrantTypeOption("snsapi_info", "snsapi_info"));
+		List<Option> list = new ArrayList<>();
+		list.add(new Option("snsapi_base", "snsapi_base"));
+		list.add(new Option("snsapi_info", "snsapi_info"));
 		return Response.ok(list);
 	}
 
