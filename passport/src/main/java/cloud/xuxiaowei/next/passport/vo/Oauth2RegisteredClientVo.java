@@ -66,6 +66,13 @@ public class Oauth2RegisteredClientVo implements Serializable {
 
 	private String scopes;
 
+	public void setScopes(String scopes) {
+		this.scopes = scopes;
+		this.scopeList = Splitter.on(",").splitToList(scopes);
+	}
+
+	private List<String> scopeList;
+
 	private String clientSettings;
 
 	public void setClientSettings(String clientSettings) {

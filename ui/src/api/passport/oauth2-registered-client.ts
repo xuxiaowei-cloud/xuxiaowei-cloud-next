@@ -19,6 +19,15 @@ export const authenticationMethodOptions = function () {
 }
 
 /**
+ * 授权范围选项
+ */
+export const scopeOptions = function () {
+  return request.post('/passport/oauth2-registered-client/scope-options').then(response => {
+    return response.data
+  })
+}
+
+/**
  * 分页查询客户
  * @param data
  */

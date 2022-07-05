@@ -39,7 +39,9 @@
         <el-input v-model="param.redirectUris"/>
       </el-form-item>
       <el-form-item label="scopes" prop="scopes" :rules="[{ required: true, message: 'scopes is required' }]">
-        <el-input v-model="param.scopes"/>
+        <el-select v-model="param.scopeList" multiple placeholder="Select scopes" style="width: 100%">
+          <el-option v-for="item in scopeList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
       </el-form-item>
       <el-form-item label="requireProofKey">
         <el-switch v-model="param.requireProofKey"/>
@@ -65,7 +67,7 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, reactive, ref } from 'vue'
-import { getById, save, updateById, grantTypeOptions, authenticationMethodOptions } from '../../../api/passport/oauth2-registered-client'
+import { getById, save, updateById, grantTypeOptions, authenticationMethodOptions, scopeOptions } from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
@@ -125,6 +127,21 @@ authenticationMethodOptions().then(response => {
   }
 })
 
+// 授权范围
+const scopeData: Option[] = []
+const scopeList = reactive(scopeData)
+scopeOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      scopeList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
 // 参数
 const param = reactive({
   id: null,
@@ -139,6 +156,7 @@ const param = reactive({
   grantTypes: [],
   redirectUris: null,
   scopes: null,
+  scopeList: [],
   clientSettings: null,
   tokenSettings: null,
   requireProofKey: null,
@@ -201,6 +219,7 @@ const encryption = () => {
   paramEncryption.clientSecret = JsEncrypt.prototype.encrypt(param.clientSecret)
   paramEncryption.authorizationGrantTypes = param.grantTypes.toString()
   paramEncryption.clientAuthenticationMethods = param.authenticationMethods.toString()
+  paramEncryption.scopes = param.scopeList.toString()
   return paramEncryption
 }
 

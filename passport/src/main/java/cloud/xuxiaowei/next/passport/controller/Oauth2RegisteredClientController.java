@@ -86,6 +86,21 @@ public class Oauth2RegisteredClientController {
 	}
 
 	/**
+	 * 授权范围选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 授权范围选项
+	 */
+	@RequestMapping("/scope-options")
+	@ControllerAnnotation(description = "授权范围选项")
+	public Response<?> scopeOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<GrantTypeOption> list = new ArrayList<>();
+		list.add(new GrantTypeOption("snsapi_base", "snsapi_base"));
+		list.add(new GrantTypeOption("snsapi_info", "snsapi_info"));
+		return Response.ok(list);
+	}
+
+	/**
 	 * 分页查询客户
 	 * @param request 请求
 	 * @param response 响应
