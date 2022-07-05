@@ -173,20 +173,25 @@ const cloudUpdate = () => {
   const paramEncryption = JSON.parse(JSON.stringify(param))
   JsEncrypt.prototype.setPublicKey(publicKey.value)
   paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
-  updateById(paramEncryption).then(response => {
-    console.log(response)
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          emit('dialogVisibleClose')
+  // @ts-ignore
+  cloudFormRef.value.validate((valid: boolean) => {
+    if (valid) {
+      updateById(paramEncryption).then(response => {
+        console.log(response)
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              emit('dialogVisibleClose')
+            }
+          })
+        } else {
+          ElMessage.error(response.msg)
         }
       })
-    } else {
-      ElMessage.error(response.msg)
     }
   })
 }

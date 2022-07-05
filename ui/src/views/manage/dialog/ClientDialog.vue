@@ -306,20 +306,25 @@ const cloudSave = () => {
 
 // 更新
 const cloudUpdate = () => {
-  updateById(encryption()).then(response => {
-    console.log(response)
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          emit('dialogVisibleClose')
+  // @ts-ignore
+  cloudFormRef.value.validate((valid: boolean) => {
+    if (valid) {
+      updateById(encryption()).then(response => {
+        console.log(response)
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              emit('dialogVisibleClose')
+            }
+          })
+        } else {
+          ElMessage.error(response.msg)
         }
       })
-    } else {
-      ElMessage.error(response.msg)
     }
   })
 }
