@@ -4,7 +4,7 @@ import request from '../../utils/request'
  * 授权类型选项
  */
 export const grantTypeOptions = function () {
-  return request.post('/passport/oauth2-registered-client/grantTypeOptions').then(response => {
+  return request.post('/passport/oauth2-registered-client/grant-type-options').then(response => {
     return response.data
   })
 }
@@ -13,7 +13,7 @@ export const grantTypeOptions = function () {
  * 客户端身份验证方法选项
  */
 export const authenticationMethodOptions = function () {
-  return request.post('/passport/oauth2-registered-client/authenticationMethodOptions').then(response => {
+  return request.post('/passport/oauth2-registered-client/authentication-method-options').then(response => {
     return response.data
   })
 }

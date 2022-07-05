@@ -53,7 +53,7 @@ public class Oauth2RegisteredClientController {
 	 * @param response 响应
 	 * @return 返回 授权类型选项
 	 */
-	@RequestMapping("/grantTypeOptions")
+	@RequestMapping("/grant-type-options")
 	@ControllerAnnotation(description = "授权类型选项")
 	public Response<?> grantTypeOptions(HttpServletRequest request, HttpServletResponse response) {
 		List<GrantTypeOption> list = new ArrayList<>();
@@ -71,7 +71,7 @@ public class Oauth2RegisteredClientController {
 	 * @param response 响应
 	 * @return 返回 客户端身份验证方法选项
 	 */
-	@RequestMapping("/authenticationMethodOptions")
+	@RequestMapping("/authentication-method-options")
 	@ControllerAnnotation(description = "客户端身份验证方法选项")
 	public Response<?> authenticationMethodOptions(HttpServletRequest request, HttpServletResponse response) {
 		List<GrantTypeOption> list = new ArrayList<>();
