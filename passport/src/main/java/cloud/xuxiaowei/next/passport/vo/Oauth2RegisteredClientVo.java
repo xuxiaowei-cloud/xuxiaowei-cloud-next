@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
+import org.springframework.security.oauth2.server.authorization.config.ConfigurationSettingNames;
 import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
 import org.springframework.security.oauth2.server.authorization.jackson2.OAuth2AuthorizationServerJackson2Module;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
+import static cloud.xuxiaowei.next.passport.controller.Oauth2RegisteredClientController.ALGORITHM_SPLIT;
 import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 
 /**
@@ -85,11 +87,21 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			ClientSettings build = builder.build();
 			this.requireProofKey = build.isRequireProofKey();
 			this.requireAuthorizationConsent = build.isRequireAuthorizationConsent();
+			List<String> tokenEndpointAuthenticationSigningAlgorithmList = build
+					.getSetting(ConfigurationSettingNames.Client.TOKEN_ENDPOINT_AUTHENTICATION_SIGNING_ALGORITHM);
+			if (tokenEndpointAuthenticationSigningAlgorithmList != null
+					&& tokenEndpointAuthenticationSigningAlgorithmList.size() > 0) {
+				String algorithmClasses = tokenEndpointAuthenticationSigningAlgorithmList.get(0);
+				String algorithmName = tokenEndpointAuthenticationSigningAlgorithmList.get(1);
+				this.tokenSigningAlgorithm = algorithmClasses + ALGORITHM_SPLIT + algorithmName;
+			}
 		}
 		catch (Exception e) {
 			log.error("客户配置转换异常", e);
 		}
 	}
+
+	private String tokenSigningAlgorithm;
 
 	private Boolean requireProofKey;
 

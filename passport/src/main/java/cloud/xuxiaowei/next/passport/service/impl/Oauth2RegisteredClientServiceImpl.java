@@ -22,12 +22,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Splitter;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
@@ -39,6 +42,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static cloud.xuxiaowei.next.passport.controller.Oauth2RegisteredClientController.ALGORITHM_SPLIT;
 
 /**
  * <p>
@@ -147,7 +152,9 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 
 		Boolean requireProofKey = oauth2RegisteredClientSaveBo.getRequireProofKey();
 		Boolean requireAuthorizationConsent = oauth2RegisteredClientSaveBo.getRequireAuthorizationConsent();
-		oauthClientDetails.setClientSettings(clientSettings(requireProofKey, requireAuthorizationConsent));
+		String tokenSigningAlgorithm = oauth2RegisteredClientSaveBo.getTokenSigningAlgorithm();
+		String clientSettings = clientSettings(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent);
+		oauthClientDetails.setClientSettings(clientSettings);
 
 		Long accessTokenTimeToLive = oauth2RegisteredClientSaveBo.getAccessTokenTimeToLive();
 		Long refreshTokenTimeToLive = oauth2RegisteredClientSaveBo.getRefreshTokenTimeToLive();
@@ -170,26 +177,44 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		return objectMapper;
 	}
 
-	private String clientSettings(boolean requireProofKey, boolean requireAuthorizationConsent)
-			throws JsonProcessingException {
-		ClientSettings.Builder clientSettingsBuilder = ClientSettings.builder();
-		clientSettingsBuilder.requireProofKey(requireProofKey);
-		clientSettingsBuilder.requireAuthorizationConsent(requireAuthorizationConsent);
-		ClientSettings clientSettings = clientSettingsBuilder.build();
-		Map<String, Object> settings = clientSettings.getSettings();
+	private String clientSettings(String tokenSigningAlgorithm, boolean requireProofKey,
+			boolean requireAuthorizationConsent) throws JsonProcessingException {
+		ClientSettings.Builder builder = ClientSettings.builder();
+		Map<String, Object> settings = client(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent,
+				builder);
 		return objectMapper().writeValueAsString(settings);
 	}
 
-	private String clientSettings(boolean requireProofKey, boolean requireAuthorizationConsent, String clientSettings)
-			throws JsonProcessingException {
+	private Map<String, Object> client(String tokenSigningAlgorithm, boolean requireProofKey,
+			boolean requireAuthorizationConsent, ClientSettings.Builder builder) {
+		builder.requireAuthorizationConsent(requireAuthorizationConsent);
+		builder.requireProofKey(requireProofKey);
+		if (StringUtils.hasText(tokenSigningAlgorithm)) {
+			List<String> strings = Splitter.on(ALGORITHM_SPLIT).splitToList(tokenSigningAlgorithm);
+			String algorithmClasses = strings.get(0);
+			String algorithmName = strings.get(1);
+			if (MacAlgorithm.class.getName().equals(algorithmClasses)) {
+				builder.tokenEndpointAuthenticationSigningAlgorithm(MacAlgorithm.from(algorithmName));
+			}
+			else if (SignatureAlgorithm.class.getName().equals(algorithmClasses)) {
+				builder.tokenEndpointAuthenticationSigningAlgorithm(SignatureAlgorithm.from(algorithmName));
+			}
+			else {
+				throw new CloudRuntimeException(String.format("非法令牌端点认证签名算法：%s", tokenSigningAlgorithm));
+			}
+		}
+		ClientSettings build = builder.build();
+		return build.getSettings();
+	}
+
+	private String clientSettings(String tokenSigningAlgorithm, boolean requireProofKey,
+			boolean requireAuthorizationConsent, String clientSettings) throws JsonProcessingException {
 		ObjectMapper objectMapper = objectMapper();
 		Map<String, Object> map = objectMapper.readValue(clientSettings, new TypeReference<>() {
 		});
 		ClientSettings.Builder builder = ClientSettings.withSettings(map);
-		builder.requireAuthorizationConsent(requireAuthorizationConsent);
-		builder.requireProofKey(requireProofKey);
-		ClientSettings build = builder.build();
-		Map<String, Object> settings = build.getSettings();
+		Map<String, Object> settings = client(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent,
+				builder);
 		return objectMapper.writeValueAsString(settings);
 	}
 
@@ -240,7 +265,9 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 
 		Boolean requireProofKey = oauth2RegisteredClientUpdateBo.getRequireProofKey();
 		Boolean requireAuthorizationConsent = oauth2RegisteredClientUpdateBo.getRequireAuthorizationConsent();
-		String clientSettings = clientSettings(requireProofKey, requireAuthorizationConsent, byId.getClientSettings());
+		String tokenSigningAlgorithm = oauth2RegisteredClientUpdateBo.getTokenSigningAlgorithm();
+		String clientSettings = clientSettings(tokenSigningAlgorithm, requireProofKey, requireAuthorizationConsent,
+				byId.getClientSettings());
 		oauthClientDetails.setClientSettings(clientSettings);
 
 		Long accessTokenTimeToLive = oauth2RegisteredClientUpdateBo.getAccessTokenTimeToLive();

@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/oauth2-registered-client")
 public class Oauth2RegisteredClientController {
+
+	public static final String ALGORITHM_SPLIT = "#";
 
 	private IOauth2RegisteredClientService oauth2RegisteredClientService;
 
@@ -97,6 +101,32 @@ public class Oauth2RegisteredClientController {
 		List<Option> list = new ArrayList<>();
 		list.add(new Option("snsapi_base", "snsapi_base"));
 		list.add(new Option("snsapi_info", "snsapi_info"));
+		return Response.ok(list);
+	}
+
+	/**
+	 * 令牌端点认证签名算法选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 令牌端点认证签名算法选项
+	 */
+	@RequestMapping("/algorithm-options")
+	@ControllerAnnotation(description = "令牌端点认证签名算法选项")
+	public Response<?> algorithmOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<Option> list = new ArrayList<>();
+
+		MacAlgorithm[] macAlgorithms = MacAlgorithm.values();
+		for (MacAlgorithm value : macAlgorithms) {
+			String algorithm = value.getClass().getName() + ALGORITHM_SPLIT + value.getName();
+			list.add(new Option(algorithm, algorithm));
+		}
+
+		SignatureAlgorithm[] signatureAlgorithms = SignatureAlgorithm.values();
+		for (SignatureAlgorithm value : signatureAlgorithms) {
+			String algorithm = value.getClass().getName() + ALGORITHM_SPLIT + value.getName();
+			list.add(new Option(algorithm, algorithm));
+		}
+
 		return Response.ok(list);
 	}
 

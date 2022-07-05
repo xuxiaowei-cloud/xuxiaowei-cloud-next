@@ -63,4 +63,6 @@ public class Oauth2RegisteredClientSaveBo implements Serializable {
 	@NotNull(message = "refreshTokenTimeToLive 不能为空")
 	private Long refreshTokenTimeToLive;
 
+	private String tokenSigningAlgorithm;
+
 }
