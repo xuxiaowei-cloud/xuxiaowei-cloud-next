@@ -4,8 +4,8 @@ import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientPageBo;
 import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientSaveBo;
 import cloud.xuxiaowei.next.passport.bo.Oauth2RegisteredClientUpdateBo;
 import cloud.xuxiaowei.next.passport.service.IOauth2RegisteredClientService;
-import cloud.xuxiaowei.next.passport.vo.GrantTypeOption;
 import cloud.xuxiaowei.next.passport.vo.Oauth2RegisteredClientVo;
+import cloud.xuxiaowei.next.passport.vo.OptionVo;
 import cloud.xuxiaowei.next.system.annotation.ControllerAnnotation;
 import cloud.xuxiaowei.next.utils.AssertUtils;
 import cloud.xuxiaowei.next.utils.Response;
@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,8 @@ import java.util.List;
 @RequestMapping("/oauth2-registered-client")
 public class Oauth2RegisteredClientController {
 
+	public static final String ALGORITHM_SPLIT = "#";
+
 	private IOauth2RegisteredClientService oauth2RegisteredClientService;
 
 	@Autowired
@@ -53,14 +57,96 @@ public class Oauth2RegisteredClientController {
 	 * @param response 响应
 	 * @return 返回 授权类型选项
 	 */
-	@RequestMapping("/grantTypeOptions")
+	@RequestMapping("/grant-type-options")
 	@ControllerAnnotation(description = "授权类型选项")
 	public Response<?> grantTypeOptions(HttpServletRequest request, HttpServletResponse response) {
-		List<GrantTypeOption> list = new ArrayList<>();
-		list.add(new GrantTypeOption("authorization_code", "authorization_code"));
-		list.add(new GrantTypeOption("refresh_token", "refresh_token"));
-		list.add(new GrantTypeOption("client_credentials", "client_credentials"));
-		list.add(new GrantTypeOption("password", "password"));
+		List<OptionVo> list = new ArrayList<>();
+		list.add(new OptionVo("authorization_code", "authorization_code"));
+		list.add(new OptionVo("refresh_token", "refresh_token"));
+		list.add(new OptionVo("client_credentials", "client_credentials"));
+		list.add(new OptionVo("password", "password"));
+		list.add(new OptionVo("webchat_miniprogram", "webchat_miniprogram"));
+		return Response.ok(list);
+	}
+
+	/**
+	 * 客户端身份验证方法选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 客户端身份验证方法选项
+	 */
+	@RequestMapping("/authentication-method-options")
+	@ControllerAnnotation(description = "客户端身份验证方法选项")
+	public Response<?> authenticationMethodOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<OptionVo> list = new ArrayList<>();
+		list.add(new OptionVo("basic", "basic"));
+		list.add(new OptionVo("client_secret_basic", "client_secret_basic"));
+		list.add(new OptionVo("post", "post"));
+		list.add(new OptionVo("client_secret_post", "client_secret_post"));
+		list.add(new OptionVo("client_secret_jwt", "client_secret_jwt"));
+		list.add(new OptionVo("private_key_jwt", "private_key_jwt"));
+		list.add(new OptionVo("none", "none"));
+		return Response.ok(list);
+	}
+
+	/**
+	 * 授权范围选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 授权范围选项
+	 */
+	@RequestMapping("/scope-options")
+	@ControllerAnnotation(description = "授权范围选项")
+	public Response<?> scopeOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<OptionVo> list = new ArrayList<>();
+		list.add(new OptionVo("snsapi_base", "snsapi_base"));
+		list.add(new OptionVo("snsapi_info", "snsapi_info"));
+		return Response.ok(list);
+	}
+
+	/**
+	 * 令牌端点认证签名算法选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 令牌端点认证签名算法选项
+	 */
+	@RequestMapping("/token-signing-algorithm-options")
+	@ControllerAnnotation(description = "令牌端点认证签名算法选项")
+	public Response<?> tokenSigningAlgorithmOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<OptionVo> list = new ArrayList<>();
+
+		MacAlgorithm[] macAlgorithms = MacAlgorithm.values();
+		for (MacAlgorithm value : macAlgorithms) {
+			String algorithm = value.getClass().getName() + ALGORITHM_SPLIT + value.getName();
+			list.add(new OptionVo(algorithm, algorithm));
+		}
+
+		SignatureAlgorithm[] signatureAlgorithms = SignatureAlgorithm.values();
+		for (SignatureAlgorithm value : signatureAlgorithms) {
+			String algorithm = value.getClass().getName() + ALGORITHM_SPLIT + value.getName();
+			list.add(new OptionVo(algorithm, algorithm));
+		}
+
+		return Response.ok(list);
+	}
+
+	/**
+	 * id 令牌签名算法选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 id 令牌签名算法选项
+	 */
+	@RequestMapping("/token-signature-algorithm-options")
+	@ControllerAnnotation(description = "id 令牌签名算法选项")
+	public Response<?> tokenSignatureAlgorithmOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<OptionVo> list = new ArrayList<>();
+
+		SignatureAlgorithm[] signatureAlgorithms = SignatureAlgorithm.values();
+		for (SignatureAlgorithm value : signatureAlgorithms) {
+			String algorithm = value.getClass().getName() + ALGORITHM_SPLIT + value.getName();
+			list.add(new OptionVo(algorithm, algorithm));
+		}
+
 		return Response.ok(list);
 	}
 

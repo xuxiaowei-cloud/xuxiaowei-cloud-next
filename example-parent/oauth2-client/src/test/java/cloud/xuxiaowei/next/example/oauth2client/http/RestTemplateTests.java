@@ -28,10 +28,14 @@ class RestTemplateTests {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
+		String clientId = "xuxiaowei_client_id";
+		String clientSecret = "xuxiaowei_client_secret";
+		String scope = "snsapi_base snsapi_info";
+
 		Map<String, String> map = new HashMap<>(8);
-		map.put("client_id", "xuxiaowei_client_id");
-		map.put("client_secret", "xuxiaowei_client_secret");
-		map.put("scope", "snsapi_base snsapi_info");
+		map.put("client_id", clientId);
+		map.put("client_secret", clientSecret);
+		map.put("scope", scope);
 
 		HttpEntity<?> httpEntity = new HttpEntity<>(httpHeaders);
 

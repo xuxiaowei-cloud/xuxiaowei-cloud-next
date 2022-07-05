@@ -25,7 +25,9 @@
       </el-form-item>
       <el-form-item label="clientAuthenticationMethods" prop="clientAuthenticationMethods"
                     :rules="[{ required: true, message: 'clientAuthenticationMethods is required' }]">
-        <el-input v-model="param.clientAuthenticationMethods"/>
+        <el-select v-model="param.authenticationMethods" multiple placeholder="Select authenticationMethods" style="width: 100%">
+          <el-option v-for="item in authenticationMethodList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
       </el-form-item>
       <el-form-item label="authorizationGrantTypes" prop="authorizationGrantTypes"
                     :rules="[{ required: true, message: 'authorizationGrantTypes is required' }]">
@@ -37,13 +39,30 @@
         <el-input v-model="param.redirectUris"/>
       </el-form-item>
       <el-form-item label="scopes" prop="scopes" :rules="[{ required: true, message: 'scopes is required' }]">
-        <el-input v-model="param.scopes"/>
+        <el-select v-model="param.scopeList" multiple placeholder="Select scopes" style="width: 100%">
+          <el-option v-for="item in scopeList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
       </el-form-item>
       <el-form-item label="requireProofKey">
         <el-switch v-model="param.requireProofKey"/>
       </el-form-item>
       <el-form-item label="requireAuthorizationConsent">
         <el-switch v-model="param.requireAuthorizationConsent"/>
+      </el-form-item>
+      <el-form-item label="jwkSetUrl" prop="jwkSetUrl" :rules="[{ required: true, message: 'jwkSetUrl is required' }]">
+        <el-input v-model="param.jwkSetUrl"/>
+      </el-form-item>
+      <el-form-item label="tokenSigningAlgorithm" prop="tokenSigningAlgorithm"
+                    :rules="[{ required: true, message: 'tokenSigningAlgorithm is required' }]">
+        <el-select v-model="param.tokenSigningAlgorithm" placeholder="Select tokenSigningAlgorithm" style="width: 100%">
+          <el-option v-for="item in tokenSigningAlgorithmList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="tokenSignatureAlgorithm" prop="tokenSignatureAlgorithm"
+                    :rules="[{ required: true, message: 'tokenSignatureAlgorithm is required' }]">
+        <el-select v-model="param.tokenSignatureAlgorithm" placeholder="Select tokenSignatureAlgorithm" style="width: 100%">
+          <el-option v-for="item in tokenSignatureAlgorithmList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
       </el-form-item>
       <el-form-item label="accessTokenTimeToLive" prop="accessTokenTimeToLive"
                     :rules="[{ required: true, message: 'accessTokenTimeToLive is required' }]">
@@ -63,7 +82,16 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, reactive, ref } from 'vue'
-import { getById, save, updateById, grantTypeOptions } from '../../../api/passport/oauth2-registered-client'
+import {
+  getById,
+  save,
+  updateById,
+  grantTypeOptions,
+  authenticationMethodOptions,
+  scopeOptions,
+  tokenSigningAlgorithmOptions,
+  tokenSignatureAlgorithmOptions
+} from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
@@ -87,11 +115,13 @@ const props = defineProps({
   }
 })
 
-// 授权类型：可选内容
+// 可选内容
 interface Option {
   label: string
   value: string
 }
+
+// 授权类型
 const grantTypeData: Option[] = []
 const grantTypeList = reactive(grantTypeData)
 grantTypeOptions().then(response => {
@@ -99,6 +129,66 @@ grantTypeOptions().then(response => {
     const data = response.data
     for (const i in data) {
       grantTypeList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
+// 客户端身份验证方法
+const authenticationMethodData: Option[] = []
+const authenticationMethodList = reactive(authenticationMethodData)
+authenticationMethodOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      authenticationMethodList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
+// 授权范围
+const scopeData: Option[] = []
+const scopeList = reactive(scopeData)
+scopeOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      scopeList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
+// 令牌端点认证签名算法选项
+const tokenSigningAlgorithmData: Option[] = []
+const tokenSigningAlgorithmList = reactive(tokenSigningAlgorithmData)
+tokenSigningAlgorithmOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      tokenSigningAlgorithmList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
+// id 令牌签名算法选项
+const tokenSignatureAlgorithmData: Option[] = []
+const tokenSignatureAlgorithmList = reactive(tokenSignatureAlgorithmData)
+tokenSignatureAlgorithmOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      tokenSignatureAlgorithmList.push({
         label: data[i].label,
         value: data[i].value
       })
@@ -115,14 +205,19 @@ const param = reactive({
   clientIdIssuedAt: null,
   clientSecretExpiresAt: null,
   clientAuthenticationMethods: null,
+  authenticationMethods: [],
   authorizationGrantTypes: null,
   grantTypes: [],
   redirectUris: null,
   scopes: null,
+  scopeList: [],
   clientSettings: null,
   tokenSettings: null,
   requireProofKey: null,
   requireAuthorizationConsent: null,
+  jwkSetUrl: null,
+  tokenSigningAlgorithm: null,
+  tokenSignatureAlgorithm: null,
   accessTokenTimeToLive: null,
   refreshTokenTimeToLive: null,
   // 识别码
@@ -180,6 +275,8 @@ const encryption = () => {
   JsEncrypt.prototype.setPublicKey(publicKey.value)
   paramEncryption.clientSecret = JsEncrypt.prototype.encrypt(param.clientSecret)
   paramEncryption.authorizationGrantTypes = param.grantTypes.toString()
+  paramEncryption.clientAuthenticationMethods = param.authenticationMethods.toString()
+  paramEncryption.scopes = param.scopeList.toString()
   return paramEncryption
 }
 
@@ -213,20 +310,25 @@ const cloudSave = () => {
 
 // 更新
 const cloudUpdate = () => {
-  updateById(encryption()).then(response => {
-    console.log(response)
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          emit('dialogVisibleClose')
+  // @ts-ignore
+  cloudFormRef.value.validate((valid: boolean) => {
+    if (valid) {
+      updateById(encryption()).then(response => {
+        console.log(response)
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              emit('dialogVisibleClose')
+            }
+          })
+        } else {
+          ElMessage.error(response.msg)
         }
       })
-    } else {
-      ElMessage.error(response.msg)
     }
   })
 }

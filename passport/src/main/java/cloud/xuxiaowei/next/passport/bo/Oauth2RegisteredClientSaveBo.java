@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.hibernate.validator.constraints.URL;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -62,5 +63,13 @@ public class Oauth2RegisteredClientSaveBo implements Serializable {
 
 	@NotNull(message = "refreshTokenTimeToLive 不能为空")
 	private Long refreshTokenTimeToLive;
+
+	private String tokenSigningAlgorithm;
+
+	private String tokenSignatureAlgorithm;
+
+	@NotNull(message = "jwkSetUrl 不能为空")
+	@URL(message = "jwkSetUrl 不合法")
+	private String jwkSetUrl;
 
 }
