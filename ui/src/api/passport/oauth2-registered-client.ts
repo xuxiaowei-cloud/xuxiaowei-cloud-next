@@ -10,6 +10,15 @@ export const grantTypeOptions = function () {
 }
 
 /**
+ * 客户端身份验证方法选项
+ */
+export const authenticationMethodOptions = function () {
+  return request.post('/passport/oauth2-registered-client/authenticationMethodOptions').then(response => {
+    return response.data
+  })
+}
+
+/**
  * 分页查询客户
  * @param data
  */

@@ -25,7 +25,9 @@
       </el-form-item>
       <el-form-item label="clientAuthenticationMethods" prop="clientAuthenticationMethods"
                     :rules="[{ required: true, message: 'clientAuthenticationMethods is required' }]">
-        <el-input v-model="param.clientAuthenticationMethods"/>
+        <el-select v-model="param.authenticationMethods" multiple placeholder="Select authenticationMethods" style="width: 100%">
+          <el-option v-for="item in authenticationMethodList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
       </el-form-item>
       <el-form-item label="authorizationGrantTypes" prop="authorizationGrantTypes"
                     :rules="[{ required: true, message: 'authorizationGrantTypes is required' }]">
@@ -63,7 +65,7 @@
 
 <script setup lang="ts">
 import { defineEmits, defineProps, reactive, ref } from 'vue'
-import { getById, save, updateById, grantTypeOptions } from '../../../api/passport/oauth2-registered-client'
+import { getById, save, updateById, grantTypeOptions, authenticationMethodOptions } from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
@@ -87,11 +89,13 @@ const props = defineProps({
   }
 })
 
-// 授权类型：可选内容
+// 可选内容
 interface Option {
   label: string
   value: string
 }
+
+// 授权类型
 const grantTypeData: Option[] = []
 const grantTypeList = reactive(grantTypeData)
 grantTypeOptions().then(response => {
@@ -99,6 +103,21 @@ grantTypeOptions().then(response => {
     const data = response.data
     for (const i in data) {
       grantTypeList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
+// 客户端身份验证方法
+const authenticationMethodData: Option[] = []
+const authenticationMethodList = reactive(authenticationMethodData)
+authenticationMethodOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      authenticationMethodList.push({
         label: data[i].label,
         value: data[i].value
       })
@@ -115,6 +134,7 @@ const param = reactive({
   clientIdIssuedAt: null,
   clientSecretExpiresAt: null,
   clientAuthenticationMethods: null,
+  authenticationMethods: [],
   authorizationGrantTypes: null,
   grantTypes: [],
   redirectUris: null,
@@ -180,6 +200,7 @@ const encryption = () => {
   JsEncrypt.prototype.setPublicKey(publicKey.value)
   paramEncryption.clientSecret = JsEncrypt.prototype.encrypt(param.clientSecret)
   paramEncryption.authorizationGrantTypes = param.grantTypes.toString()
+  paramEncryption.clientAuthenticationMethods = param.authenticationMethods.toString()
   return paramEncryption
 }
 

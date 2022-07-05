@@ -46,6 +46,13 @@ public class Oauth2RegisteredClientVo implements Serializable {
 
 	private String clientAuthenticationMethods;
 
+	public void setClientAuthenticationMethods(String clientAuthenticationMethods) {
+		this.clientAuthenticationMethods = clientAuthenticationMethods;
+		this.authenticationMethods = Splitter.on(",").splitToList(clientAuthenticationMethods);
+	}
+
+	private List<String> authenticationMethods;
+
 	private String authorizationGrantTypes;
 
 	public void setAuthorizationGrantTypes(String authorizationGrantTypes) {

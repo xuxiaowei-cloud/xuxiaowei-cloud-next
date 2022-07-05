@@ -61,6 +61,27 @@ public class Oauth2RegisteredClientController {
 		list.add(new GrantTypeOption("refresh_token", "refresh_token"));
 		list.add(new GrantTypeOption("client_credentials", "client_credentials"));
 		list.add(new GrantTypeOption("password", "password"));
+		list.add(new GrantTypeOption("webchat_miniprogram", "webchat_miniprogram"));
+		return Response.ok(list);
+	}
+
+	/**
+	 * 客户端身份验证方法选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 客户端身份验证方法选项
+	 */
+	@RequestMapping("/authenticationMethodOptions")
+	@ControllerAnnotation(description = "客户端身份验证方法选项")
+	public Response<?> authenticationMethodOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<GrantTypeOption> list = new ArrayList<>();
+		list.add(new GrantTypeOption("basic", "basic"));
+		list.add(new GrantTypeOption("client_secret_basic", "client_secret_basic"));
+		list.add(new GrantTypeOption("post", "post"));
+		list.add(new GrantTypeOption("client_secret_post", "client_secret_post"));
+		list.add(new GrantTypeOption("client_secret_jwt", "client_secret_jwt"));
+		list.add(new GrantTypeOption("private_key_jwt", "private_key_jwt"));
+		list.add(new GrantTypeOption("none", "none"));
 		return Response.ok(list);
 	}
 
