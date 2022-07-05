@@ -47,6 +47,9 @@
             <el-form-item label="scopes">
               <el-input v-model="props.row.scopes" class="cloud-el-expand-input" disabled/>
             </el-form-item>
+            <el-form-item label="tokenSigningAlgorithm">
+              <el-input v-model="props.row.tokenSigningAlgorithm" class="cloud-el-expand-input" disabled/>
+            </el-form-item>
             <el-form-item label="clientSettings">
               <el-input v-model="props.row.clientSettings" class="cloud-el-expand-input" type="textarea" disabled rows="3"/>
             </el-form-item>
@@ -55,9 +58,6 @@
             </el-form-item>
             <el-form-item label="requireAuthorizationConsent">
               <el-input v-model="props.row.requireAuthorizationConsent" class="cloud-el-expand-input" disabled/>
-            </el-form-item>
-            <el-form-item label="tokenSigningAlgorithm">
-              <el-input v-model="props.row.tokenSigningAlgorithm" class="cloud-el-expand-input" disabled/>
             </el-form-item>
             <el-form-item label="tokenSettings">
               <el-input v-model="props.row.tokenSettings" class="cloud-el-expand-input" type="textarea" disabled rows="5"/>
