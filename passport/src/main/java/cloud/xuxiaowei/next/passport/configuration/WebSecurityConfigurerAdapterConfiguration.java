@@ -166,6 +166,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 					.antMatchers("/signout").permitAll()
 					// 放行错误地址
 					.antMatchers("/error").permitAll()
+					.antMatchers("/a").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});
