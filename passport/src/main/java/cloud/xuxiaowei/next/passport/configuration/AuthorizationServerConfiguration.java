@@ -107,7 +107,7 @@ public class AuthorizationServerConfiguration {
 	 *
 	 * @see OAuth2TokenEndpointFilter#setAuthenticationConverter(AuthenticationConverter)
 	 * @see OAuth2TokenEndpointConfigurer#accessTokenRequestConverter(AuthenticationConverter)
-	 *
+	 * @see OAuth2TokenEndpointConfigurer#authenticationProvider(AuthenticationProvider)
 	 * @see AnonymousAuthenticationProvider
 	 * @see JwtClientAssertionAuthenticationProvider
 	 * @see ClientSecretAuthenticationProvider
