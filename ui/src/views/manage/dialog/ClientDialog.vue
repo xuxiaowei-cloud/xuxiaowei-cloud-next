@@ -67,6 +67,12 @@
           <el-option v-for="item in tokenSignatureAlgorithmList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
+      <el-form-item label="accessTokenFormat" prop="accessTokenFormat"
+                    :rules="[{ required: true, message: 'tokenSigningAlgorithm is required' }]">
+        <el-select v-model="param.accessTokenFormat" placeholder="Select accessTokenFormat" style="width: 100%">
+          <el-option v-for="item in accessTokenFormatList" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
+      </el-form-item>
       <el-form-item label="accessTokenTimeToLive" prop="accessTokenTimeToLive"
                     :rules="[{ required: true, message: 'accessTokenTimeToLive is required' }]">
         <el-input v-model="param.accessTokenTimeToLive" type="number"/>
@@ -93,7 +99,8 @@ import {
   authenticationMethodOptions,
   scopeOptions,
   tokenSigningAlgorithmOptions,
-  tokenSignatureAlgorithmOptions
+  tokenSignatureAlgorithmOptions,
+  accessTokenFormatOptions
 } from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
@@ -199,6 +206,21 @@ tokenSignatureAlgorithmOptions().then(response => {
   }
 })
 
+// 授权Token格式选项
+const accessTokenFormatData: Option[] = []
+const accessTokenFormatList = reactive(accessTokenFormatData)
+accessTokenFormatOptions().then(response => {
+  if (response.code === store.state.settings.okCode) {
+    const data = response.data
+    for (const i in data) {
+      accessTokenFormatList.push({
+        label: data[i].label,
+        value: data[i].value
+      })
+    }
+  }
+})
+
 // 参数
 const param = reactive({
   id: null,
@@ -222,6 +244,7 @@ const param = reactive({
   tokenSigningAlgorithm: null,
   reuseRefreshTokens: null,
   tokenSignatureAlgorithm: null,
+  accessTokenFormat: null,
   accessTokenTimeToLive: null,
   refreshTokenTimeToLive: null,
   // 识别码

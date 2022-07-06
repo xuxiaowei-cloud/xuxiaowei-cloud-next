@@ -46,6 +46,15 @@ export const tokenSignatureAlgorithmOptions = function () {
 }
 
 /**
+ * 授权Token格式选项
+ */
+export const accessTokenFormatOptions = function () {
+  return request.post('/passport/oauth2-registered-client/access-token-format-options').then(response => {
+    return response.data
+  })
+}
+
+/**
  * 分页查询客户
  * @param data
  */

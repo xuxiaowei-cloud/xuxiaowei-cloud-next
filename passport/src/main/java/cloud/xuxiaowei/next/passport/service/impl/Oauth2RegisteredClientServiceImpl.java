@@ -29,6 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
+import org.springframework.security.oauth2.core.OAuth2TokenFormat;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
@@ -162,8 +163,10 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		Long refreshTokenTimeToLive = oauth2RegisteredClientSaveBo.getRefreshTokenTimeToLive();
 		String tokenSignatureAlgorithm = oauth2RegisteredClientSaveBo.getTokenSignatureAlgorithm();
 		Boolean reuseRefreshTokens = oauth2RegisteredClientSaveBo.getReuseRefreshTokens();
-		String tokenSettings = tokenSettings(reuseRefreshTokens, tokenSignatureAlgorithm, accessTokenTimeToLive,
-				refreshTokenTimeToLive);
+		String accessTokenFormat = oauth2RegisteredClientSaveBo.getAccessTokenFormat();
+
+		String tokenSettings = tokenSettings(accessTokenFormat, reuseRefreshTokens, tokenSignatureAlgorithm,
+				accessTokenTimeToLive, refreshTokenTimeToLive);
 		oauthClientDetails.setTokenSettings(tokenSettings);
 
 		oauthClientDetails.setClientSecret(clientSecretDecrypt);
@@ -225,31 +228,36 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		return objectMapper.writeValueAsString(settings);
 	}
 
-	private String tokenSettings(Boolean reuseRefreshTokens, String tokenSignatureAlgorithm, long accessTokenTimeToLive,
-			long refreshTokenTimeToLive) throws JsonProcessingException {
+	private String tokenSettings(String accessTokenFormat, Boolean reuseRefreshTokens, String tokenSignatureAlgorithm,
+			long accessTokenTimeToLive, long refreshTokenTimeToLive) throws JsonProcessingException {
 		TokenSettings.Builder builder = TokenSettings.builder();
-		Map<String, Object> settings = setting(reuseRefreshTokens, tokenSignatureAlgorithm, accessTokenTimeToLive,
-				refreshTokenTimeToLive, builder);
+		Map<String, Object> settings = setting(accessTokenFormat, reuseRefreshTokens, tokenSignatureAlgorithm,
+				accessTokenTimeToLive, refreshTokenTimeToLive, builder);
 		return objectMapper().writeValueAsString(settings);
 	}
 
-	private String tokenSettings(Boolean reuseRefreshTokens, String tokenSignatureAlgorithm, long accessTokenTimeToLive,
-			long refreshTokenTimeToLive, String tokenSettings) throws JsonProcessingException {
+	private String tokenSettings(String accessTokenFormat, Boolean reuseRefreshTokens, String tokenSignatureAlgorithm,
+			long accessTokenTimeToLive, long refreshTokenTimeToLive, String tokenSettings)
+			throws JsonProcessingException {
 		ObjectMapper objectMapper = objectMapper();
 		Map<String, Object> map = objectMapper.readValue(tokenSettings, new TypeReference<>() {
 		});
 		TokenSettings.Builder builder = TokenSettings.withSettings(map);
-		Map<String, Object> setting = setting(reuseRefreshTokens, tokenSignatureAlgorithm, accessTokenTimeToLive,
-				refreshTokenTimeToLive, builder);
+		Map<String, Object> setting = setting(accessTokenFormat, reuseRefreshTokens, tokenSignatureAlgorithm,
+				accessTokenTimeToLive, refreshTokenTimeToLive, builder);
 		return objectMapper.writeValueAsString(setting);
 	}
 
-	private Map<String, Object> setting(Boolean reuseRefreshTokens, String tokenSignatureAlgorithm,
-			long accessTokenTimeToLive, long refreshTokenTimeToLive, TokenSettings.Builder builder) {
+	private Map<String, Object> setting(String accessTokenFormat, Boolean reuseRefreshTokens,
+			String tokenSignatureAlgorithm, long accessTokenTimeToLive, long refreshTokenTimeToLive,
+			TokenSettings.Builder builder) {
 		builder.accessTokenTimeToLive(Duration.ofSeconds(accessTokenTimeToLive));
 		builder.refreshTokenTimeToLive(Duration.ofSeconds(refreshTokenTimeToLive));
 		if (reuseRefreshTokens != null) {
 			builder.reuseRefreshTokens(reuseRefreshTokens);
+		}
+		if (accessTokenFormat != null) {
+			builder.accessTokenFormat(new OAuth2TokenFormat(accessTokenFormat));
 		}
 
 		if (StringUtils.hasText(tokenSignatureAlgorithm)) {
@@ -302,8 +310,9 @@ public class Oauth2RegisteredClientServiceImpl extends ServiceImpl<Oauth2Registe
 		Long refreshTokenTimeToLive = oauth2RegisteredClientUpdateBo.getRefreshTokenTimeToLive();
 		String tokenSignatureAlgorithm = oauth2RegisteredClientUpdateBo.getTokenSignatureAlgorithm();
 		Boolean reuseRefreshTokens = oauth2RegisteredClientUpdateBo.getReuseRefreshTokens();
-		String tokenSettings = tokenSettings(reuseRefreshTokens, tokenSignatureAlgorithm, accessTokenTimeToLive,
-				refreshTokenTimeToLive, byId.getTokenSettings());
+		String accessTokenFormat = oauth2RegisteredClientUpdateBo.getAccessTokenFormat();
+		String tokenSettings = tokenSettings(accessTokenFormat, reuseRefreshTokens, tokenSignatureAlgorithm,
+				accessTokenTimeToLive, refreshTokenTimeToLive, byId.getTokenSettings());
 		oauthClientDetails.setTokenSettings(tokenSettings);
 
 		oauthClientDetails.setClientSecret(clientSecretDecrypt);

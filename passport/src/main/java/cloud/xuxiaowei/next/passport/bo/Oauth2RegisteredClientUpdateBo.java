@@ -76,4 +76,6 @@ public class Oauth2RegisteredClientUpdateBo implements Serializable {
 
 	private Boolean reuseRefreshTokens;
 
+	private String accessTokenFormat;
+
 }
