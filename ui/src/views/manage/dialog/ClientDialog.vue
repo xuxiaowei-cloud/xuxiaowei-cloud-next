@@ -58,6 +58,9 @@
           <el-option v-for="item in tokenSigningAlgorithmList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
+      <el-form-item label="reuseRefreshTokens">
+        <el-switch v-model="param.reuseRefreshTokens"/>
+      </el-form-item>
       <el-form-item label="tokenSignatureAlgorithm" prop="tokenSignatureAlgorithm"
                     :rules="[{ required: true, message: 'tokenSignatureAlgorithm is required' }]">
         <el-select v-model="param.tokenSignatureAlgorithm" placeholder="Select tokenSignatureAlgorithm" style="width: 100%">
@@ -217,6 +220,7 @@ const param = reactive({
   requireAuthorizationConsent: null,
   jwkSetUrl: null,
   tokenSigningAlgorithm: null,
+  reuseRefreshTokens: null,
   tokenSignatureAlgorithm: null,
   accessTokenTimeToLive: null,
   refreshTokenTimeToLive: null,

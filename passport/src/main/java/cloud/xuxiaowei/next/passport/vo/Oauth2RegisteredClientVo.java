@@ -130,6 +130,7 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			TokenSettings build = builder.build();
 			this.accessTokenTimeToLive = build.getAccessTokenTimeToLive().getSeconds();
 			this.refreshTokenTimeToLive = build.getRefreshTokenTimeToLive().getSeconds();
+			this.reuseRefreshTokens = build.getSetting(ConfigurationSettingNames.Token.REUSE_REFRESH_TOKENS);
 
 			SignatureAlgorithm signatureAlgorithm = build
 					.getSetting(ConfigurationSettingNames.Token.ID_TOKEN_SIGNATURE_ALGORITHM);
@@ -148,5 +149,7 @@ public class Oauth2RegisteredClientVo implements Serializable {
 	private long accessTokenTimeToLive;
 
 	private long refreshTokenTimeToLive;
+
+	private Boolean reuseRefreshTokens;
 
 }

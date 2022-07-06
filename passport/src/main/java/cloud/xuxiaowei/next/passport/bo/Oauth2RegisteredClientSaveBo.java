@@ -72,4 +72,6 @@ public class Oauth2RegisteredClientSaveBo implements Serializable {
 	@URL(message = "jwkSetUrl 不合法")
 	private String jwkSetUrl;
 
+	private Boolean reuseRefreshTokens;
+
 }
