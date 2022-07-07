@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.core.OAuth2TokenFormat;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,6 +87,23 @@ public class Oauth2RegisteredClientController {
 		list.add(new OptionVo("client_secret_jwt", "client_secret_jwt"));
 		list.add(new OptionVo("private_key_jwt", "private_key_jwt"));
 		list.add(new OptionVo("none", "none"));
+		return Response.ok(list);
+	}
+
+	/**
+	 * 授权Token格式选项
+	 * @param request 请求
+	 * @param response 响应
+	 * @return 返回 授权Token格式选项
+	 */
+	@RequestMapping("/access-token-format-options")
+	@ControllerAnnotation(description = "授权Token格式选项")
+	public Response<?> accessTokenFormatOptions(HttpServletRequest request, HttpServletResponse response) {
+		List<OptionVo> list = new ArrayList<>();
+		String selfContained = OAuth2TokenFormat.SELF_CONTAINED.getValue();
+		String reference = OAuth2TokenFormat.REFERENCE.getValue();
+		list.add(new OptionVo(selfContained, selfContained));
+		list.add(new OptionVo(reference, reference));
 		return Response.ok(list);
 	}
 

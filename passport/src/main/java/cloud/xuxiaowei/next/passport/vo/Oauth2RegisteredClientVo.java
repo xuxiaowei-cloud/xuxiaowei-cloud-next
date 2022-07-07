@@ -8,6 +8,7 @@ import com.google.common.base.Splitter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
+import org.springframework.security.oauth2.core.OAuth2TokenFormat;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
@@ -130,6 +131,11 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			TokenSettings build = builder.build();
 			this.accessTokenTimeToLive = build.getAccessTokenTimeToLive().getSeconds();
 			this.refreshTokenTimeToLive = build.getRefreshTokenTimeToLive().getSeconds();
+			OAuth2TokenFormat accessTokenFormat = build.getAccessTokenFormat();
+			if (accessTokenFormat != null) {
+				this.accessTokenFormat = accessTokenFormat.getValue();
+			}
+			this.reuseRefreshTokens = build.getSetting(ConfigurationSettingNames.Token.REUSE_REFRESH_TOKENS);
 
 			SignatureAlgorithm signatureAlgorithm = build
 					.getSetting(ConfigurationSettingNames.Token.ID_TOKEN_SIGNATURE_ALGORITHM);
@@ -148,5 +154,9 @@ public class Oauth2RegisteredClientVo implements Serializable {
 	private long accessTokenTimeToLive;
 
 	private long refreshTokenTimeToLive;
+
+	private Boolean reuseRefreshTokens;
+
+	private String accessTokenFormat;
 
 }
