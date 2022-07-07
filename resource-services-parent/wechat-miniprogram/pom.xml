@@ -9,10 +9,10 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <groupId>cloud.xuxiaowei.next</groupId>
-    <artifactId>webchat-miniprogram</artifactId>
+    <artifactId>wechat-miniprogram</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>webchat-miniprogram</name>
+    <name>wechat-miniprogram</name>
     <description>微信小程序</description>
     <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>

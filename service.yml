@@ -306,7 +306,7 @@ s3-webservice:
 
 #
 # s3 发布微信小程序服务
-s3-webchat-miniprogram:
+s3-wechat-miniprogram:
   stage: s3-service
   needs:
     - job: s3-package
@@ -317,7 +317,7 @@ s3-webchat-miniprogram:
     - if [ ! -f $JAR_PATH ]; then sudo mkdir $JAR_PATH -p && echo 创建发布文件夹完成; fi
     - cd resource-services-parent
     - pwd
-    - MODULE='webchat-miniprogram'
+    - MODULE='wechat-miniprogram'
     - echo MODULE：$MODULE
     - ARTIFACT_ID=`mvn -e -U help:evaluate -pl $MODULE -Dexpression=project.artifactId -q -DforceStdout`
     - VERSION=`mvn help:evaluate -pl $MODULE -Dexpression=project.version -q -DforceStdout`

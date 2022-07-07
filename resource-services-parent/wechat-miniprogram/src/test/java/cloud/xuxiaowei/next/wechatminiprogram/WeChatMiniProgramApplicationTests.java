@@ -1,10 +1,10 @@
-package cloud.xuxiaowei.next.webchatminiprogram;
+package cloud.xuxiaowei.next.wechatminiprogram;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WebChatMiniProgramApplicationTests {
+class WeChatMiniProgramApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.webchatminiprogram.configuration;
+package cloud.xuxiaowei.next.wechatminiprogram.configuration;
 
 import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
 import cloud.xuxiaowei.next.oauth2.filter.AfterBearerTokenAuthenticationFilter;

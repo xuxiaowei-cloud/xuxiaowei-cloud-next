@@ -71,9 +71,9 @@
         <!-- https://github.com/xuxiaowei-io/spring-security-oauth2-authorization-server -->
         <spring-security-oauth2-authorization-server-next.version>0.3.1</spring-security-oauth2-authorization-server-next.version>
 
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-webchat-miniprogram -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-webchat-miniprogram/ -->
-        <spring-boot-starter-webchat-miniprogram.version>0.0.1-SNAPSHOT</spring-boot-starter-webchat-miniprogram.version>
+        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
+        <spring-boot-starter-wechat-miniprogram.version>0.0.1-SNAPSHOT</spring-boot-starter-wechat-miniprogram.version>
 
         <!-- MyBatis -->
         <!--
@@ -252,12 +252,12 @@
                 <version>${spring-security-oauth2-authorization-server-next.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-webchat-miniprogram -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-webchat-miniprogram/ -->
+            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
+            <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
             <dependency>
                 <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-webchat-miniprogram</artifactId>
-                <version>${spring-boot-starter-webchat-miniprogram.version}</version>
+                <artifactId>spring-boot-starter-wechat-miniprogram</artifactId>
+                <version>${spring-boot-starter-wechat-miniprogram.version}</version>
             </dependency>
 
             <!-- MyBatis -->
