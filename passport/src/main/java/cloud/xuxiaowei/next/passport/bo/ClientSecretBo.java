@@ -26,7 +26,7 @@ public class ClientSecretBo implements Serializable {
 	@LowerCaseAnnotation(message = "客户凭证必须包含小写字母")
 	@UpperCaseAnnotation(message = "客户凭证必须包含大写字母")
 	@SymbolAnnotation(message = "客户凭证必须包含特殊符号")
-	@Length(min = 6, max = 16, message = "客户凭证 长度限制：6-16")
+	@Length(min = 32, max = 32, message = "客户凭证 长度限制：32 位")
 	private String clientSecret;
 
 }
