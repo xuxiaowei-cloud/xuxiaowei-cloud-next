@@ -96,7 +96,7 @@
       <el-table-column fixed="right" label="Operations" width="140"
                        v-if="hasAnyAuthority(['manage_client_delete', 'manage_client_edit', 'manage_client_authority'])">
         <template #default="scope">
-          <el-button size="small" @click="deleteId(scope.row.id)" v-if="hasAuthority('manage_client_delete')">Delete</el-button>
+          <el-button size="small" @click="deleteId(scope.row)" v-if="hasAuthority('manage_client_delete')">Delete</el-button>
           <el-button size="small" @click="editId(scope.row.id)" v-if="hasAuthority('manage_client_edit')">Edit</el-button>
         </template>
       </el-table-column>
@@ -112,7 +112,7 @@ import { page, removeByIds, removeById } from '../../api/passport/oauth2-registe
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 // 客户添加、编辑弹窗内容
 import ClientDialog from './dialog/ClientDialog.vue'
 
@@ -221,30 +221,38 @@ const cloudRemove = () => {
       type: 'error'
     })
   } else {
-    removeByIds(ids.value).then(response => {
-      if (response.code === store.state.settings.okCode) {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'success',
-          onClose: () => {
-            // 重新搜索
-            cloudSearch()
-          }
-        })
-      } else {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'error',
-          onClose: () => {
-            // 重新搜索
-            cloudSearch()
-          }
-        })
-      }
+    ElMessageBox.confirm('确认批量删除？', '警告', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      removeByIds(ids.value).then(response => {
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              // 重新搜索
+              cloudSearch()
+            }
+          })
+        } else {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'error',
+            onClose: () => {
+              // 重新搜索
+              cloudSearch()
+            }
+          })
+        }
+      })
+    }).catch(() => {
+
     })
   }
 }
@@ -259,29 +267,37 @@ const currentChange = (e: number) => {
 }
 
 // 删除客户
-const deleteId = (e: number) => {
-  removeById(e).then(response => {
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          cloudSearch()
-        }
-      })
-    } else {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'error',
-        onClose: () => {
-          cloudSearch()
-        }
-      })
-    }
+const deleteId = (e: any) => {
+  ElMessageBox.confirm(`确认删除【${e.clientId}】？`, '警告', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    removeById(e.id).then(response => {
+      if (response.code === store.state.settings.okCode) {
+        ElMessage({
+          message: response.msg,
+          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+          duration: 1500,
+          type: 'success',
+          onClose: () => {
+            cloudSearch()
+          }
+        })
+      } else {
+        ElMessage({
+          message: response.msg,
+          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+          duration: 1500,
+          type: 'error',
+          onClose: () => {
+            cloudSearch()
+          }
+        })
+      }
+    })
+  }).catch(() => {
+
   })
 }
 

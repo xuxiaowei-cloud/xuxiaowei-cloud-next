@@ -61,7 +61,7 @@
       <el-table-column fixed="right" label="Operations" width="230"
                        v-if="hasAnyAuthority(['manage_user_delete', 'manage_user_edit', 'manage_user_authority'])">
         <template #default="scope">
-          <el-button size="small" @click="deleteUsersId(scope.row.usersId)"
+          <el-button size="small" @click="deleteUsersId(scope.row)"
                      v-if="hasAuthority('manage_user_delete')">Delete
           </el-button>
           <el-button size="small" @click="editUsersId(scope.row.usersId)"
@@ -84,7 +84,7 @@ import { page, removeById, removeByIds } from '../../api/user'
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 // 用户添加、编辑弹窗内容
 import UserDialog from './dialog/UserDialog.vue'
 // 用户权限管理弹窗内容
@@ -228,30 +228,38 @@ const cloudRemove = () => {
       type: 'error'
     })
   } else {
-    removeByIds(usersIds.value).then(response => {
-      if (response.code === store.state.settings.okCode) {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'success',
-          onClose: () => {
-            // 重新搜索
-            cloudSearch()
-          }
-        })
-      } else {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'error',
-          onClose: () => {
-            // 重新搜索
-            cloudSearch()
-          }
-        })
-      }
+    ElMessageBox.confirm('确认批量删除？', '警告', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      removeByIds(usersIds.value).then(response => {
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              // 重新搜索
+              cloudSearch()
+            }
+          })
+        } else {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'error',
+            onClose: () => {
+              // 重新搜索
+              cloudSearch()
+            }
+          })
+        }
+      })
+    }).catch(() => {
+
     })
   }
 }
@@ -266,29 +274,37 @@ const currentChange = (e: number) => {
 }
 
 // 删除授权Code
-const deleteUsersId = (e: number) => {
-  removeById(e).then(response => {
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          cloudSearch()
-        }
-      })
-    } else {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'error',
-        onClose: () => {
-          cloudSearch()
-        }
-      })
-    }
+const deleteUsersId = (e: any) => {
+  ElMessageBox.confirm(`确认删除【${e.username}】？`, '警告', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    removeById(e.usersId).then(response => {
+      if (response.code === store.state.settings.okCode) {
+        ElMessage({
+          message: response.msg,
+          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+          duration: 1500,
+          type: 'success',
+          onClose: () => {
+            cloudSearch()
+          }
+        })
+      } else {
+        ElMessage({
+          message: response.msg,
+          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+          duration: 1500,
+          type: 'error',
+          onClose: () => {
+            cloudSearch()
+          }
+        })
+      }
+    })
+  }).catch(() => {
+
   })
 }
 
