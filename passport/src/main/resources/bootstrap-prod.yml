@@ -13,7 +13,7 @@ cloud:
     access-token-uri: http://passport/oauth2/token
     scope: snsapi_base
     state-name: STATE_NAME
-    home-page: http://example.next.xuxiaowei.cloud:1001/#/
+    home-page: https://example.next.xuxiaowei.cloud:1001/#/
 
 ---
 
