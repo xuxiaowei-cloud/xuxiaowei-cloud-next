@@ -66,7 +66,7 @@ public class Oauth2RegisteredClientController {
 		list.add(new OptionVo("refresh_token", "refresh_token"));
 		list.add(new OptionVo("client_credentials", "client_credentials"));
 		list.add(new OptionVo("password", "password"));
-		list.add(new OptionVo("webchat_miniprogram", "webchat_miniprogram"));
+		list.add(new OptionVo("wechat_miniprogram", "wechat_miniprogram"));
 		return Response.ok(list);
 	}
 

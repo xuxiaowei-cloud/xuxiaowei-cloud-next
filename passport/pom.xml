@@ -69,11 +69,11 @@
             <artifactId>spring-security-oauth2-authorization-server</artifactId>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-webchat-miniprogram -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-webchat-miniprogram/ -->
+        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
         <dependency>
             <groupId>cn.com.xuxiaowei.boot.next</groupId>
-            <artifactId>spring-boot-starter-webchat-miniprogram</artifactId>
+            <artifactId>spring-boot-starter-wechat-miniprogram</artifactId>
         </dependency>
 
         <!-- SQL 性能分析 -->
