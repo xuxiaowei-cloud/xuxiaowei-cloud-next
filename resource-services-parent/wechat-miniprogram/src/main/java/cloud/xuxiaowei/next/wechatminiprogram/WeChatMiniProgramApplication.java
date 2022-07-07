@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.webchatminiprogram;
+package cloud.xuxiaowei.next.wechatminiprogram;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 0.0.1
  */
 @SpringBootApplication
-public class WebChatMiniProgramApplication {
+public class WeChatMiniProgramApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebChatMiniProgramApplication.class, args);
+		SpringApplication.run(WeChatMiniProgramApplication.class, args);
 	}
 
 }

@@ -32,8 +32,8 @@ class OAuth2WeChatMiniProgramTests {
 
 		String appid = "wxcf4f3a217a8bc728";
 		String code = "043By2100okt7O1577200vJEsx1By21J";
-		String clientId = "xuxiaowei_client_webchat_miniprogram_id";
-		String clientSecret = "xuxiaowei_client_webchat_miniprogram_secret";
+		String clientId = "xuxiaowei_client_wechat_miniprogram_id";
+		String clientSecret = "xuxiaowei_client_wechat_miniprogram_secret";
 
 		Map<String, String> map = new HashMap<>();
 		map.put("grant_type", "wechat_miniprogram");
@@ -57,9 +57,9 @@ class OAuth2WeChatMiniProgramTests {
 	/**
 	 * // @formatter:off
 	 * {
-	 *   "tokenValue" : "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJvcGVuaWQiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwiaXNzIjoiaHR0cDpcL1wvREVTS1RPUC1ER1FMMkZUOjE0MDEiLCJhdXRob3JpdGllcyI6WyJ3ZWNoYXRfbWluaXByb2dyYW0iLCJzbnNhcGlfYmFzZSJdLCJhdWQiOiJ4dXhpYW93ZWlfY2xpZW50X3dlYmNoYXRfbWluaXByb2dyYW1faWQiLCJuYmYiOjE2NTY1ODczMTAsInNjb3BlIjpbInNuc2FwaV9iYXNlIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU2NjMwNTEwLCJpYXQiOjE2NTY1ODczMTAsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.cc9rZMo4yHY3d4Gm7K8NUJUxgxnT5ppUZqPAneY54EjJ_xTgr5ONKsXUvmvteuHOvOWB1b-1nelm_d0g-K-9SaV73m130rlesd5H_RlXg1a4q84G2RDOcEPBhW01Qu4Q5FfvjjUXxI95dpl9Dp-3gMl7-mOUWAqCPRS-usD_bdmm6GJhrWRCO82-_vYyxF0W8EdyS33hYwHtdcPiAiF5tl3N2YqGdiG1MfSGr8aTz3nSE1KZkPM3w-mfMqjexM9cSdF0oBE4iu4cuXRhCm_iX8WKtE-URyRiTMgHFQ-76m0ScYl7SqYALZhjrrOF00NIAZbN9w5VEWx3n3KwZeQMMg",
-	 *   "issuedAt" : 1656587310.000000000,
-	 *   "expiresAt" : 1656630510.000000000,
+	 *   "tokenValue" : "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJvcGVuaWQiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwiaXNzIjoiaHR0cDpcL1wvbG9jYWxob3N0OjE0MDEiLCJhdXRob3JpdGllcyI6WyJ3ZWNoYXRfbWluaXByb2dyYW0iLCJzbnNhcGlfYmFzZSIsInNuc2FwaV9pbmZvIl0sImF1ZCI6Inh1eGlhb3dlaV9jbGllbnRfd2VjaGF0X21pbmlwcm9ncmFtX2lkIiwibmJmIjoxNjU3MjA3NjM0LCJzY29wZSI6WyJzbnNhcGlfYmFzZSIsInNuc2FwaV9pbmZvIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU3MjUwODM0LCJpYXQiOjE2NTcyMDc2MzQsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.p51ICvOJXgQ60zPrbqkit7VXTcHSf_3RpORJCpzu4miKds0VPSjFGRTkmTEdtPMc9gvIUKU0JuG-wo7nq8yIotSzj0WEEfkMq44UsJEmMgBjLcfoNAkemrbSLXRScaMfJgcvUe9fy2D_KlwxwtxNRL6zlyuKjFwX9Gug8s7bjuKU86haoEmj_P2h2GKEm_p9YiFvruVFD15sKY7ng7uNzOlmBw-Ca-KaQcKGpH6jxMIskI_EN4WpO03MOcTJtuXS2Kz9-Vi5UmvqhsgQbtK966UJsLn86BHZnp0Pxjs6L1zYWEHM5SbHDEqdDI2QBOSINDII0eag8lcBejRXazD-ew",
+	 *   "issuedAt" : 1657207634.000000000,
+	 *   "expiresAt" : 1657250834.000000000,
 	 *   "headers" : {
 	 *     "alg" : "RS256"
 	 *   },
@@ -68,20 +68,20 @@ class OAuth2WeChatMiniProgramTests {
 	 *     "unionid" : "oTfUJxOyHtaWx1V_a7vrEpv6d9CU",
 	 *     "openid" : "o5GBO5fZP437JhJ74l40XSZd5Eb8",
 	 *     "iss" : "http://DESKTOP-DGQL2FT:1401",
-	 *     "authorities" : [ "wechat_miniprogram", "snsapi_base" ],
-	 *     "aud" : [ "xuxiaowei_client_webchat_miniprogram_id" ],
-	 *     "nbf" : 1656587310.000000000,
-	 *     "scope" : [ "snsapi_base" ],
+	 *     "authorities" : [ "wechat_miniprogram", "snsapi_base", "snsapi_info" ],
+	 *     "aud" : [ "xuxiaowei_client_wechat_miniprogram_id" ],
+	 *     "nbf" : 1657207634.000000000,
+	 *     "scope" : [ "snsapi_base", "snsapi_info" ],
 	 *     "appid" : "wxcf4f3a217a8bc728",
-	 *     "exp" : 1656630510.000000000,
-	 *     "iat" : 1656587310.000000000,
+	 *     "exp" : 1657250834.000000000,
+	 *     "iat" : 1657207634.000000000,
 	 *     "username" : "o5GBO5fZP437JhJ74l40XSZd5Eb8"
 	 *   },
 	 *   "id" : null,
 	 *   "subject" : "o5GBO5fZP437JhJ74l40XSZd5Eb8",
-	 *   "notBefore" : 1656587310.000000000,
+	 *   "notBefore" : 1657207634.000000000,
 	 *   "issuer" : "http://DESKTOP-DGQL2FT:1401",
-	 *   "audience" : [ "xuxiaowei_client_webchat_miniprogram_id" ]
+	 *   "audience" : [ "xuxiaowei_client_wechat_miniprogram_id" ]
 	 * }
 	 * // @formatter:on
 	 */
@@ -95,7 +95,7 @@ class OAuth2WeChatMiniProgramTests {
 		NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
 
 		Jwt jwt = nimbusJwtDecoder.decode(
-				"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJvcGVuaWQiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwiaXNzIjoiaHR0cDpcL1wvREVTS1RPUC1ER1FMMkZUOjE0MDEiLCJhdXRob3JpdGllcyI6WyJ3ZWNoYXRfbWluaXByb2dyYW0iLCJzbnNhcGlfYmFzZSJdLCJhdWQiOiJ4dXhpYW93ZWlfY2xpZW50X3dlYmNoYXRfbWluaXByb2dyYW1faWQiLCJuYmYiOjE2NTY1ODczMTAsInNjb3BlIjpbInNuc2FwaV9iYXNlIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU2NjMwNTEwLCJpYXQiOjE2NTY1ODczMTAsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.cc9rZMo4yHY3d4Gm7K8NUJUxgxnT5ppUZqPAneY54EjJ_xTgr5ONKsXUvmvteuHOvOWB1b-1nelm_d0g-K-9SaV73m130rlesd5H_RlXg1a4q84G2RDOcEPBhW01Qu4Q5FfvjjUXxI95dpl9Dp-3gMl7-mOUWAqCPRS-usD_bdmm6GJhrWRCO82-_vYyxF0W8EdyS33hYwHtdcPiAiF5tl3N2YqGdiG1MfSGr8aTz3nSE1KZkPM3w-mfMqjexM9cSdF0oBE4iu4cuXRhCm_iX8WKtE-URyRiTMgHFQ-76m0ScYl7SqYALZhjrrOF00NIAZbN9w5VEWx3n3KwZeQMMg");
+				"eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwidW5pb25pZCI6Im9UZlVKeE95SHRhV3gxVl9hN3ZyRXB2NmQ5Q1UiLCJvcGVuaWQiOiJvNUdCTzVmWlA0MzdKaEo3NGw0MFhTWmQ1RWI4IiwiaXNzIjoiaHR0cDpcL1wvbG9jYWxob3N0OjE0MDEiLCJhdXRob3JpdGllcyI6WyJ3ZWNoYXRfbWluaXByb2dyYW0iLCJzbnNhcGlfYmFzZSIsInNuc2FwaV9pbmZvIl0sImF1ZCI6Inh1eGlhb3dlaV9jbGllbnRfd2VjaGF0X21pbmlwcm9ncmFtX2lkIiwibmJmIjoxNjU3MjA3NjM0LCJzY29wZSI6WyJzbnNhcGlfYmFzZSIsInNuc2FwaV9pbmZvIl0sImFwcGlkIjoid3hjZjRmM2EyMTdhOGJjNzI4IiwiZXhwIjoxNjU3MjUwODM0LCJpYXQiOjE2NTcyMDc2MzQsInVzZXJuYW1lIjoibzVHQk81ZlpQNDM3SmhKNzRsNDBYU1pkNUViOCJ9.p51ICvOJXgQ60zPrbqkit7VXTcHSf_3RpORJCpzu4miKds0VPSjFGRTkmTEdtPMc9gvIUKU0JuG-wo7nq8yIotSzj0WEEfkMq44UsJEmMgBjLcfoNAkemrbSLXRScaMfJgcvUe9fy2D_KlwxwtxNRL6zlyuKjFwX9Gug8s7bjuKU86haoEmj_P2h2GKEm_p9YiFvruVFD15sKY7ng7uNzOlmBw-Ca-KaQcKGpH6jxMIskI_EN4WpO03MOcTJtuXS2Kz9-Vi5UmvqhsgQbtK966UJsLn86BHZnp0Pxjs6L1zYWEHM5SbHDEqdDI2QBOSINDII0eag8lcBejRXazD-ew");
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());

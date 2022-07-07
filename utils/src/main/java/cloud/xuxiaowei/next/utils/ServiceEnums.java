@@ -51,7 +51,7 @@ public enum ServiceEnums {
 	/**
 	 * 微信小程序服务
 	 */
-	WEBCHAT_MINIPROGRAM("webchat-miniprogram", "微信小程序服务"),
+	WECHAT_MINIPROGRAM("wechat-miniprogram", "微信小程序服务"),
 
 	/**
 	 * XXL Job Admin
