@@ -49,7 +49,7 @@ import { defineProps, reactive, defineEmits, ref } from 'vue'
 import { getById, save, updateById, codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 // TS 未能识别，其实不存在问题
 // @ts-ignore
 import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
@@ -151,24 +151,32 @@ const cloudSave = () => {
   // @ts-ignore
   cloudFormRef.value.validate((valid: boolean) => {
     if (valid) {
-      const paramEncryption = JSON.parse(JSON.stringify(param))
-      JsEncrypt.prototype.setPublicKey(publicKey.value)
-      paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
-      save(paramEncryption).then(response => {
-        console.log(response)
-        if (response.code === store.state.settings.okCode) {
-          ElMessage({
-            message: response.msg,
-            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-            duration: 1500,
-            type: 'success',
-            onClose: () => {
-              emit('dialogVisibleClose')
-            }
-          })
-        } else {
-          ElMessage.error(response.msg)
-        }
+      ElMessageBox.confirm('确认添加？', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const paramEncryption = JSON.parse(JSON.stringify(param))
+        JsEncrypt.prototype.setPublicKey(publicKey.value)
+        paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
+        save(paramEncryption).then(response => {
+          console.log(response)
+          if (response.code === store.state.settings.okCode) {
+            ElMessage({
+              message: response.msg,
+              // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+              duration: 1500,
+              type: 'success',
+              onClose: () => {
+                emit('dialogVisibleClose')
+              }
+            })
+          } else {
+            ElMessage.error(response.msg)
+          }
+        })
+      }).catch(() => {
+
       })
     }
   })
@@ -182,21 +190,29 @@ const cloudUpdate = () => {
   // @ts-ignore
   cloudFormRef.value.validate((valid: boolean) => {
     if (valid) {
-      updateById(paramEncryption).then(response => {
-        console.log(response)
-        if (response.code === store.state.settings.okCode) {
-          ElMessage({
-            message: response.msg,
-            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-            duration: 1500,
-            type: 'success',
-            onClose: () => {
-              emit('dialogVisibleClose')
-            }
-          })
-        } else {
-          ElMessage.error(response.msg)
-        }
+      ElMessageBox.confirm('确认更新？', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        updateById(paramEncryption).then(response => {
+          console.log(response)
+          if (response.code === store.state.settings.okCode) {
+            ElMessage({
+              message: response.msg,
+              // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+              duration: 1500,
+              type: 'success',
+              onClose: () => {
+                emit('dialogVisibleClose')
+              }
+            })
+          } else {
+            ElMessage.error(response.msg)
+          }
+        })
+      }).catch(() => {
+
       })
     }
   })
