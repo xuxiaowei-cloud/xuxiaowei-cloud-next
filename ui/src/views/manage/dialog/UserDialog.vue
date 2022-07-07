@@ -134,7 +134,13 @@ initData()
 
 // 生成随机密码
 const passwordGenerate = () => {
-  param.password = randomPassword()
+  param.password = randomPassword({
+    number: 3,
+    lowerCase: 1,
+    upperCase: 1,
+    symbol: 1,
+    suppl: 0
+  })
 }
 
 // 表单验证
