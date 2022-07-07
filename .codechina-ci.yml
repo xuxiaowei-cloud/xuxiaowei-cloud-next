@@ -6,6 +6,7 @@ stages:
 #
 # package
 package:
+  stage: package
   script:
     - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
     - echo $GPG_FILE
