@@ -22,7 +22,8 @@
   </el-dialog>
 
   <el-container>
-    <el-table stripe :data="tableData" v-loading="loading" height="460" @selection-change="handleSelectionChange">
+    <el-table stripe :data="tableData" v-loading="loading" height="460" @selection-change="handleSelectionChange"
+              @cell-dblclick="rowDblClick">
       <el-table-column type="expand">
         <template #default="props">
           <el-form label-width="200px">
@@ -57,13 +58,13 @@
               <el-input v-model="props.row.clientSettings" class="cloud-el-expand-input" type="textarea" disabled rows="3"/>
             </el-form-item>
             <el-form-item label="requireProofKey">
-              <el-input v-model="props.row.requireProofKey" class="cloud-el-expand-input" disabled/>
+              <el-switch v-model="props.row.requireProofKey" class="cloud-el-expand-input" disabled/>
             </el-form-item>
             <el-form-item label="requireAuthorizationConsent">
-              <el-input v-model="props.row.requireAuthorizationConsent" class="cloud-el-expand-input" disabled/>
+              <el-switch v-model="props.row.requireAuthorizationConsent" class="cloud-el-expand-input" disabled/>
             </el-form-item>
             <el-form-item label="reuseRefreshTokens">
-              <el-input v-model="props.row.reuseRefreshTokens" class="cloud-el-expand-input" disabled/>
+              <el-switch v-model="props.row.reuseRefreshTokens" class="cloud-el-expand-input" disabled/>
             </el-form-item>
             <el-form-item label="tokenSignatureAlgorithm">
               <el-input v-model="props.row.tokenSignatureAlgorithm" class="cloud-el-expand-input" disabled/>
@@ -96,7 +97,7 @@
       <el-table-column fixed="right" label="Operations" width="140"
                        v-if="hasAnyAuthority(['manage_client_delete', 'manage_client_edit', 'manage_client_authority'])">
         <template #default="scope">
-          <el-button size="small" @click="deleteId(scope.row.id)" v-if="hasAuthority('manage_client_delete')">Delete</el-button>
+          <el-button size="small" @click="deleteId(scope.row)" v-if="hasAuthority('manage_client_delete')">Delete</el-button>
           <el-button size="small" @click="editId(scope.row.id)" v-if="hasAuthority('manage_client_edit')">Edit</el-button>
         </template>
       </el-table-column>
@@ -112,12 +113,16 @@ import { page, removeByIds, removeById } from '../../api/passport/oauth2-registe
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
-import { ElMessage } from 'element-plus'
+import useClipboard from 'vue-clipboard3'
+import { ElMessage, ElMessageBox } from 'element-plus'
 // 客户添加、编辑弹窗内容
 import ClientDialog from './dialog/ClientDialog.vue'
 
 // 缓存
 const store = useStore()
+
+// 复制
+const { toClipboard } = useClipboard()
 
 // 客户弹窗：是否打开
 const clientDialogVisible = ref(false)
@@ -221,30 +226,38 @@ const cloudRemove = () => {
       type: 'error'
     })
   } else {
-    removeByIds(ids.value).then(response => {
-      if (response.code === store.state.settings.okCode) {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'success',
-          onClose: () => {
-            // 重新搜索
-            cloudSearch()
-          }
-        })
-      } else {
-        ElMessage({
-          message: response.msg,
-          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-          duration: 1500,
-          type: 'error',
-          onClose: () => {
-            // 重新搜索
-            cloudSearch()
-          }
-        })
-      }
+    ElMessageBox.confirm('确认批量删除？', '警告', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      removeByIds(ids.value).then(response => {
+        if (response.code === store.state.settings.okCode) {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'success',
+            onClose: () => {
+              // 重新搜索
+              cloudSearch()
+            }
+          })
+        } else {
+          ElMessage({
+            message: response.msg,
+            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+            duration: 1500,
+            type: 'error',
+            onClose: () => {
+              // 重新搜索
+              cloudSearch()
+            }
+          })
+        }
+      })
+    }).catch(() => {
+
     })
   }
 }
@@ -259,29 +272,37 @@ const currentChange = (e: number) => {
 }
 
 // 删除客户
-const deleteId = (e: number) => {
-  removeById(e).then(response => {
-    if (response.code === store.state.settings.okCode) {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'success',
-        onClose: () => {
-          cloudSearch()
-        }
-      })
-    } else {
-      ElMessage({
-        message: response.msg,
-        // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-        duration: 1500,
-        type: 'error',
-        onClose: () => {
-          cloudSearch()
-        }
-      })
-    }
+const deleteId = (e: any) => {
+  ElMessageBox.confirm(`确认删除【${e.clientId}】？`, '警告', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    removeById(e.id).then(response => {
+      if (response.code === store.state.settings.okCode) {
+        ElMessage({
+          message: response.msg,
+          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+          duration: 1500,
+          type: 'success',
+          onClose: () => {
+            cloudSearch()
+          }
+        })
+      } else {
+        ElMessage({
+          message: response.msg,
+          // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+          duration: 1500,
+          type: 'error',
+          onClose: () => {
+            cloudSearch()
+          }
+        })
+      }
+    })
+  }).catch(() => {
+
   })
 }
 
@@ -330,6 +351,21 @@ const handleSelectionChange = (val: any[]) => {
   ids.value = []
   for (const i in val) {
     ids.value[i] = multipleSelection.value[i].id
+  }
+}
+
+// 当某个单元格被双击击时会触发该事件
+const rowDblClick = async (row: any, column: any, cell: any, event: any) => {
+  const columnValue = row[column.property]
+  console.log(columnValue)
+  try {
+    await toClipboard(columnValue)
+    ElMessage({
+      message: '已复制到剪贴板。',
+      type: 'success'
+    })
+  } catch (e) {
+    console.error(e)
   }
 }
 

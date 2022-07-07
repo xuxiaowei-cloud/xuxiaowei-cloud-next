@@ -23,13 +23,13 @@
         <el-date-picker v-model="param.clientSecretExpiresAt" type="datetime" placeholder="Pick a day"
                         value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
       </el-form-item>
-      <el-form-item label="clientAuthenticationMethods" prop="clientAuthenticationMethods"
+      <el-form-item label="clientAuthenticationMethods" prop="authenticationMethods"
                     :rules="[{ required: true, message: 'clientAuthenticationMethods is required' }]">
         <el-select v-model="param.authenticationMethods" multiple placeholder="Select authenticationMethods" style="width: 100%">
           <el-option v-for="item in authenticationMethodList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="authorizationGrantTypes" prop="authorizationGrantTypes"
+      <el-form-item label="authorizationGrantTypes" prop="grantTypes"
                     :rules="[{ required: true, message: 'authorizationGrantTypes is required' }]">
         <el-select v-model="param.grantTypes" multiple placeholder="Select authorizationGrantTypes" style="width: 100%">
           <el-option v-for="item in grantTypeList" :key="item.value" :label="item.label" :value="item.value"/>
@@ -38,7 +38,7 @@
       <el-form-item label="redirectUris">
         <el-input v-model="param.redirectUris"/>
       </el-form-item>
-      <el-form-item label="scopes" prop="scopes" :rules="[{ required: true, message: 'scopes is required' }]">
+      <el-form-item label="scopes" prop="scopeList" :rules="[{ required: true, message: 'scopes is required' }]">
         <el-select v-model="param.scopeList" multiple placeholder="Select scopes" style="width: 100%">
           <el-option v-for="item in scopeList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
@@ -105,7 +105,7 @@ import {
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import { useStore } from 'vuex'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 // TS 未能识别，其实不存在问题
 // @ts-ignore
 import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
@@ -293,7 +293,13 @@ initData()
 
 // 生成随机密码
 const passwordGenerate = () => {
-  param.clientSecret = randomPassword()
+  param.clientSecret = randomPassword({
+    number: 3,
+    lowerCase: 1,
+    upperCase: 1,
+    symbol: 1,
+    suppl: 26
+  })
 }
 
 // 数据处理
@@ -315,21 +321,29 @@ const cloudSave = () => {
   // @ts-ignore
   cloudFormRef.value.validate((valid: boolean) => {
     if (valid) {
-      save(encryption()).then(response => {
-        console.log(response)
-        if (response.code === store.state.settings.okCode) {
-          ElMessage({
-            message: response.msg,
-            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-            duration: 1500,
-            type: 'success',
-            onClose: () => {
-              emit('dialogVisibleClose')
-            }
-          })
-        } else {
-          ElMessage.error(response.msg)
-        }
+      ElMessageBox.confirm('确认添加？', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        save(encryption()).then(response => {
+          console.log(response)
+          if (response.code === store.state.settings.okCode) {
+            ElMessage({
+              message: response.msg,
+              // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+              duration: 1500,
+              type: 'success',
+              onClose: () => {
+                emit('dialogVisibleClose')
+              }
+            })
+          } else {
+            ElMessage.error(response.msg)
+          }
+        })
+      }).catch(() => {
+
       })
     }
   })
@@ -340,21 +354,29 @@ const cloudUpdate = () => {
   // @ts-ignore
   cloudFormRef.value.validate((valid: boolean) => {
     if (valid) {
-      updateById(encryption()).then(response => {
-        console.log(response)
-        if (response.code === store.state.settings.okCode) {
-          ElMessage({
-            message: response.msg,
-            // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
-            duration: 1500,
-            type: 'success',
-            onClose: () => {
-              emit('dialogVisibleClose')
-            }
-          })
-        } else {
-          ElMessage.error(response.msg)
-        }
+      ElMessageBox.confirm('确认更新？', '警告', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        updateById(encryption()).then(response => {
+          console.log(response)
+          if (response.code === store.state.settings.okCode) {
+            ElMessage({
+              message: response.msg,
+              // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
+              duration: 1500,
+              type: 'success',
+              onClose: () => {
+                emit('dialogVisibleClose')
+              }
+            })
+          } else {
+            ElMessage.error(response.msg)
+          }
+        })
+      }).catch(() => {
+
       })
     }
   })

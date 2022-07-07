@@ -1,6 +1,7 @@
 stages:
   - package
   - s3-package
+  - s3-service
 
 # GitCode 禁用缓存（GitCode 未启用缓存），节省时间
 #cache:
@@ -49,22 +50,21 @@ package:
 # s3 打包
 s3-package:
   stage: s3-package
-  image: maven:3.6.3-openjdk-17
   script:
-    - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
-    - echo $GPG_FILE
-    - gpg --import $GPG_FILE
-    - SETTINGS_FILE=/usr/share/maven/conf/settings.xml
-    - echo $SETTINGS_FILE
-    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>&#" $SETTINGS_FILE
-    - sed -i "s#</mirrors>#<mirror><id>mirror</id><mirrorOf>central,jcenter,!rdc-releases,!rdc-snapshots</mirrorOf><name>mirror</name><url>https://maven.aliyun.com/nexus/content/groups/public</url></mirror>&#" $SETTINGS_FILE
     - git --version
     - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     - echo 当前分支：$CI_COMMIT_BRANCH
     - echo 主分支：$CI_DEFAULT_BRANCH
     - echo 项目路径：$CI_PROJECT_DIR
-    - mvn clean -e -U package source:jar javadoc:jar install -Pgpg -DskipTests && PACKAGE_FLAG=1
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
+  cache:
+    paths:
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
   artifacts:
     paths:
       - target/*.jar
@@ -77,6 +77,8 @@ s3-package:
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
       - ui/dist
+  tags:
+    - s3
   only:
     - s3
 
