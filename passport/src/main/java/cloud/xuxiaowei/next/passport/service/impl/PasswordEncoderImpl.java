@@ -13,8 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 密码编辑器
@@ -61,32 +67,44 @@ public class PasswordEncoderImpl implements PasswordEncoder {
 		String rsaPrivateKeyBase64 = session.getAttribute(IndexController.RSA_PRIVATE_KEY_BASE64) + "";
 
 		boolean matches;
-		try {
-			if (cloudSecurityProperties.isEnabledRsa()) {
-				log.info("比较密码时启用了RSA对密码进行解密");
-				RSA rsa = new RSA(rsaPrivateKeyBase64, null);
-				String rawPasswordDecryptStr = rsa.decryptStr(rawPassword.toString(), KeyType.PrivateKey);
 
-				matches = passwordEncoder.matches(rawPasswordDecryptStr, encodedPassword);
-			}
-			else {
-				log.info("比较密码时未启用RSA对密码进行解密");
-				matches = passwordEncoder.matches(rawPassword, encodedPassword);
-			}
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		int size = parameterMap.size();
+		Set<String> keySet = parameterMap.keySet();
+		List<String> list = Arrays.asList(OAuth2ParameterNames.CODE, OAuth2ParameterNames.CLIENT_ID,
+				OAuth2ParameterNames.CLIENT_SECRET, OAuth2ParameterNames.REDIRECT_URI, OAuth2ParameterNames.GRANT_TYPE);
+		if (size == 5 && keySet.containsAll(list)) {
+			log.info("客户密码认证");
+			matches = passwordEncoder.matches(rawPassword, encodedPassword);
 		}
-		catch (Exception e) {
-			// 可能根据用户名没有找到用户信息（即：密码），导致比较失败
-			LoginParamPasswordValidException loginException = new LoginParamPasswordValidException("比较密码时异常", e);
-			loginException.setUsername(request.getParameter(Constant.USERNAME));
-			throw loginException;
-		}
-		if (!matches) {
-			LoginParamPasswordValidException loginException = new LoginParamPasswordValidException("密码不匹配");
-			loginException.setUsername(request.getParameter(Constant.USERNAME));
-			throw loginException;
+		else {
+			try {
+				if (cloudSecurityProperties.isEnabledRsa()) {
+					log.info("比较密码时启用了RSA对密码进行解密");
+					RSA rsa = new RSA(rsaPrivateKeyBase64, null);
+					String rawPasswordDecryptStr = rsa.decryptStr(rawPassword.toString(), KeyType.PrivateKey);
+
+					matches = passwordEncoder.matches(rawPasswordDecryptStr, encodedPassword);
+				}
+				else {
+					log.info("比较密码时未启用RSA对密码进行解密");
+					matches = passwordEncoder.matches(rawPassword, encodedPassword);
+				}
+			}
+			catch (Exception e) {
+				// 可能根据用户名没有找到用户信息（即：密码），导致比较失败
+				LoginParamPasswordValidException loginException = new LoginParamPasswordValidException("比较密码时异常", e);
+				loginException.setUsername(request.getParameter(Constant.USERNAME));
+				throw loginException;
+			}
+			if (!matches) {
+				LoginParamPasswordValidException loginException = new LoginParamPasswordValidException("密码不匹配");
+				loginException.setUsername(request.getParameter(Constant.USERNAME));
+				throw loginException;
+			}
 		}
 
-		return true;
+		return matches;
 	}
 
 }
