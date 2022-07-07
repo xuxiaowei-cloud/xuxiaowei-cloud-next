@@ -22,7 +22,8 @@
   </el-dialog>
 
   <el-container>
-    <el-table stripe :data="tableData" v-loading="loading" height="460" @selection-change="handleSelectionChange">
+    <el-table stripe :data="tableData" v-loading="loading" height="460" @selection-change="handleSelectionChange"
+              @cell-dblclick="rowDblClick">
       <el-table-column type="expand">
         <template #default="props">
           <el-form label-width="200px">
@@ -112,12 +113,16 @@ import { page, removeByIds, removeById } from '../../api/passport/oauth2-registe
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import useClipboard from 'vue-clipboard3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 客户添加、编辑弹窗内容
 import ClientDialog from './dialog/ClientDialog.vue'
 
 // 缓存
 const store = useStore()
+
+// 复制
+const { toClipboard } = useClipboard()
 
 // 客户弹窗：是否打开
 const clientDialogVisible = ref(false)
@@ -346,6 +351,21 @@ const handleSelectionChange = (val: any[]) => {
   ids.value = []
   for (const i in val) {
     ids.value[i] = multipleSelection.value[i].id
+  }
+}
+
+// 当某个单元格被双击击时会触发该事件
+const rowDblClick = async (row: any, column: any, cell: any, event: any) => {
+  const columnValue = row[column.property]
+  console.log(columnValue)
+  try {
+    await toClipboard(columnValue)
+    ElMessage({
+      message: '已复制到剪贴板。',
+      type: 'success'
+    })
+  } catch (e) {
+    console.error(e)
   }
 }
 

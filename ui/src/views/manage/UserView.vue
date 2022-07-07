@@ -30,7 +30,8 @@
   </el-dialog>
 
   <el-container>
-    <el-table stripe :data="tableData" v-loading="loading" height="460" @selection-change="handleSelectionChange">
+    <el-table stripe :data="tableData" v-loading="loading" height="460" @selection-change="handleSelectionChange"
+              @cell-dblclick="rowDblClick">
       <el-table-column type="expand">
         <template #default="props">
           <el-form label-width="260px" v-if="props.row.authorityList.length > 0">
@@ -84,6 +85,7 @@ import { page, removeById, removeByIds } from '../../api/user'
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
 import { useStore } from 'vuex'
+import useClipboard from 'vue-clipboard3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 用户添加、编辑弹窗内容
 import UserDialog from './dialog/UserDialog.vue'
@@ -92,6 +94,9 @@ import UserAuthorityDialog from './dialog/UserAuthorityDialog.vue'
 
 // 缓存
 const store = useStore()
+
+// 复制
+const { toClipboard } = useClipboard()
 
 // 用户弹窗：是否打开
 const userDialogVisible = ref(false)
@@ -337,6 +342,21 @@ const handleSelectionChange = (val: any[]) => {
   for (const i in val) {
     usersIds.value[i] = multipleSelection.value[i].usersId
     usernames.value[i] = multipleSelection.value[i].username
+  }
+}
+
+// 当某个单元格被双击击时会触发该事件
+const rowDblClick = async (row: any, column: any, cell: any, event: any) => {
+  const columnValue = row[column.property]
+  console.log(columnValue)
+  try {
+    await toClipboard(columnValue)
+    ElMessage({
+      message: '已复制到剪贴板。',
+      type: 'success'
+    })
+  } catch (e) {
+    console.error(e)
   }
 }
 
