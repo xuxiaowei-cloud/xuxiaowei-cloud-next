@@ -23,13 +23,13 @@
         <el-date-picker v-model="param.clientSecretExpiresAt" type="datetime" placeholder="Pick a day"
                         value-format="YYYY-MM-DD HH:mm:ss" format="YYYY-MM-DD HH:mm:ss"/>
       </el-form-item>
-      <el-form-item label="clientAuthenticationMethods" prop="clientAuthenticationMethods"
+      <el-form-item label="clientAuthenticationMethods" prop="authenticationMethods"
                     :rules="[{ required: true, message: 'clientAuthenticationMethods is required' }]">
         <el-select v-model="param.authenticationMethods" multiple placeholder="Select authenticationMethods" style="width: 100%">
           <el-option v-for="item in authenticationMethodList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="authorizationGrantTypes" prop="authorizationGrantTypes"
+      <el-form-item label="authorizationGrantTypes" prop="grantTypes"
                     :rules="[{ required: true, message: 'authorizationGrantTypes is required' }]">
         <el-select v-model="param.grantTypes" multiple placeholder="Select authorizationGrantTypes" style="width: 100%">
           <el-option v-for="item in grantTypeList" :key="item.value" :label="item.label" :value="item.value"/>
@@ -38,7 +38,7 @@
       <el-form-item label="redirectUris">
         <el-input v-model="param.redirectUris"/>
       </el-form-item>
-      <el-form-item label="scopes" prop="scopes" :rules="[{ required: true, message: 'scopes is required' }]">
+      <el-form-item label="scopes" prop="scopeList" :rules="[{ required: true, message: 'scopes is required' }]">
         <el-select v-model="param.scopeList" multiple placeholder="Select scopes" style="width: 100%">
           <el-option v-for="item in scopeList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
