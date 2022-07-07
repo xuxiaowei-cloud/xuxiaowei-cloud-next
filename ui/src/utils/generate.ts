@@ -27,33 +27,31 @@ export const SYMBOL = '!@#$%^&*()-_=+[{]};:,<.>/?'
 /**
  * 生成密码选项
  */
-class PasswordOption {
+interface PasswordOption {
   /**
    * 数字个数
    */
-  number: number
+  number: Number
 
   /**
    * 小写字母个数
    */
-  lowerCase: number
+  lowerCase: Number
 
   /**
    * 大写字母个数
    */
-  upperCase: number
+  upperCase: Number
 
   /**
    * 符号个数
    */
-  symbol: number
+  symbol: Number
 
-  constructor () {
-    this.number = 3
-    this.lowerCase = 1
-    this.upperCase = 1
-    this.symbol = 1
-  }
+  /**
+   * 补充长度
+   */
+  suppl: Number
 }
 
 /**
@@ -61,7 +59,7 @@ class PasswordOption {
  * @param chars
  * @param length
  */
-const generate = (chars: string, length: number) => {
+const generate = (chars: string, length: Number) => {
   let password = ''
   for (let i = 0; i < length; i++) {
     password += chars.charAt(Math.floor(Math.random() * chars.length))
@@ -73,15 +71,17 @@ const generate = (chars: string, length: number) => {
  * 生成密码
  * @param option
  */
-export const randomPassword = (option: PasswordOption = new PasswordOption()): any => {
+export const randomPassword = (option: PasswordOption): any => {
   let password = ''
 
   password += generate(NUMBER, option.number)
   password += generate(LOWER_CASE, option.lowerCase)
   password += generate(UPPER_CASE, option.upperCase)
   password += generate(SYMBOL, option.symbol)
+  password += generate(LOWER_CASE, option.suppl)
 
+  // 随机排列
   return password.split('').sort(function () {
-    return Math.random() - 0.3
+    return Math.random() - 0.5
   }).join('')
 }

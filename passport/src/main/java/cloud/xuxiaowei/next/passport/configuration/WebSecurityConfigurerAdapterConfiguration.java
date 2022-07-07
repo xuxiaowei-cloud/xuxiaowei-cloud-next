@@ -164,6 +164,8 @@ public class WebSecurityConfigurerAdapterConfiguration {
 					.antMatchers("/oauth2/token").permitAll()
 					// 注销登录放行
 					.antMatchers("/signout").permitAll()
+					// 放行错误地址
+					.antMatchers("/error").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});

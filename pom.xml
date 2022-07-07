@@ -76,10 +76,14 @@
         <spring-boot-starter-webchat-miniprogram.version>0.0.1-SNAPSHOT</spring-boot-starter-webchat-miniprogram.version>
 
         <!-- MyBatis -->
+        <!--
+            使用快照版，解决打包后出现不存在 org.springframework.core.NestedIOException 的异常
+            移除 org.springframework.core.NestedIOException 议题：https://github.com/mybatis/spring/pull/663
+         -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
         <!-- https://repo1.maven.org/maven2/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
         <!-- https://github.com/mybatis/spring-boot-starter -->
-        <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
+        <mybatis-spring-boot-starter.version>2.3.0-SNAPSHOT</mybatis-spring-boot-starter.version>
         <!-- MyBatis Plus -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <!-- https://repo1.maven.org/maven2/com/baomidou/mybatis-plus-boot-starter -->
@@ -677,6 +681,11 @@
         <repository>
             <id>repo1</id>
             <url>https://repo1.maven.org/maven2/</url>
+        </repository>
+
+        <repository>
+            <id>oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
 
         <repository>
