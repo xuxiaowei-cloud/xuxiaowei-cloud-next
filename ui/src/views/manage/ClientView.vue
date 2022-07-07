@@ -57,13 +57,13 @@
               <el-input v-model="props.row.clientSettings" class="cloud-el-expand-input" type="textarea" disabled rows="3"/>
             </el-form-item>
             <el-form-item label="requireProofKey">
-              <el-input v-model="props.row.requireProofKey" class="cloud-el-expand-input" disabled/>
+              <el-switch v-model="props.row.requireProofKey" class="cloud-el-expand-input" disabled/>
             </el-form-item>
             <el-form-item label="requireAuthorizationConsent">
-              <el-input v-model="props.row.requireAuthorizationConsent" class="cloud-el-expand-input" disabled/>
+              <el-switch v-model="props.row.requireAuthorizationConsent" class="cloud-el-expand-input" disabled/>
             </el-form-item>
             <el-form-item label="reuseRefreshTokens">
-              <el-input v-model="props.row.reuseRefreshTokens" class="cloud-el-expand-input" disabled/>
+              <el-switch v-model="props.row.reuseRefreshTokens" class="cloud-el-expand-input" disabled/>
             </el-form-item>
             <el-form-item label="tokenSignatureAlgorithm">
               <el-input v-model="props.row.tokenSignatureAlgorithm" class="cloud-el-expand-input" disabled/>
