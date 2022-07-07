@@ -3,19 +3,9 @@ stages:
   - s3-package
   - s3-service
 
-# GitCode 禁用缓存（GitCode 未启用缓存），节省时间
-#cache:
-#  paths:
-#    - .m2/repository
-
 #
 # package
 package:
-  variables:
-    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
-    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
-  stage: package
-  image: maven:3.6.3-openjdk-17
   script:
     - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
     - echo $GPG_FILE
@@ -29,6 +19,7 @@ package:
     - echo 当前分支：$CI_COMMIT_BRANCH
     - echo 主分支：$CI_DEFAULT_BRANCH
     - echo 项目路径：$CI_PROJECT_DIR
+    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
     - mvn clean -e -U package source:jar javadoc:jar install -Pgpg -DskipTests && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
   artifacts:
@@ -43,6 +34,8 @@ package:
       - "*/*/target/*.jar"
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
+  tags:
+    - s3
   only:
     - main
 
