@@ -36,6 +36,9 @@ stages:
         settings:
           - isRelease: true
             isSnapshot: true
+            certificate: aliyun-central
+          - isRelease: true
+            isSnapshot: true
             certificate: repo1
           - isRelease: true
             isSnapshot: true
