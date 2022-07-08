@@ -33,7 +33,22 @@ stages:
               - gateway/target/gateway-0.0.1-SNAPSHOT.jar
               - passport/target/passport-0.0.1-SNAPSHOT.jar
               - passport-ui/target/passport-ui-0.0.1-SNAPSHOT.jar
-        settings: []
+        settings:
+          - isRelease: true
+            isSnapshot: true
+            certificate: repo1
+          - isRelease: true
+            isSnapshot: true
+            certificate: oss-snapshots
+          - isRelease: true
+            isSnapshot: true
+            certificate: oss-s01-snapshots
+          - isRelease: true
+            isSnapshot: true
+            certificate: aliyun-spring
+          - isRelease: true
+            isSnapshot: true
+            certificate: spring-milestones
         caches:
           - ~/.m2
           - ~/.npm
