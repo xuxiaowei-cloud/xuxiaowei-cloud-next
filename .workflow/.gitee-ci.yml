@@ -48,6 +48,9 @@ stages:
             certificate: oss-s01-snapshots
           - isRelease: true
             isSnapshot: true
+            certificate: grails
+          - isRelease: true
+            isSnapshot: true
             certificate: aliyun-spring
           - isRelease: true
             isSnapshot: true
