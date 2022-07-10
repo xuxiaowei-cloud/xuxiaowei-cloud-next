@@ -62,7 +62,7 @@ service.interceptors.response.use(
         })
       } else {
         ElMessage({
-          message: message,
+          message,
           // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
           duration: 3000,
           type: 'error'

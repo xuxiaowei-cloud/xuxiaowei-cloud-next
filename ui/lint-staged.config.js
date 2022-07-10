@@ -1,3 +1,3 @@
 module.exports = {
-  '*.{js,jsx,vue,ts,tsx}': 'vue-cli-service lint'
+  '*.{js,jsx,vue,ts,tsx}': 'eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix'
 }

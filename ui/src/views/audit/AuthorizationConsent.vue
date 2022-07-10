@@ -140,10 +140,7 @@ const currentChange = (e: number) => {
 
 // 删除授权Token
 const deletePrimaryKey = (registeredClientId:string, principalName:string) => {
-  removeById({
-    registeredClientId: registeredClientId,
-    principalName: principalName
-  }).then(response => {
+  removeById({ registeredClientId, principalName }).then(response => {
     if (response.code === store.state.settings.okCode) {
       if (response.data) {
         ElMessage({
