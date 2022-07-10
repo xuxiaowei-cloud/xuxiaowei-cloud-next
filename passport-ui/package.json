@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite --host --port 1411",
     "dev:example": "vite --host passport.example.next.xuxiaowei.cloud --port 1411",
-    "build": "vite build",
-    "lint": "vue-cli-service lint",
+    "build": "vue-tsc --noEmit && vite build",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx,.vue --cache --fix",
     "preview": "vite preview --host"
   },
   "author": "徐晓伟 <xuxiaowei@xuxiaowei.com.cn>",
@@ -30,7 +30,8 @@
     "vite",
     "vue",
     "vue-router",
-    "vuex"
+    "vuex",
+    "typescript"
   ],
   "dependencies": {
     "@element-plus/icons-vue": "2.0.6",
@@ -43,18 +44,20 @@
     "vuex-persistedstate": "4.1.0"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.30.5",
+    "@typescript-eslint/parser": "5.30.5",
     "@vitejs/plugin-vue": "2.3.3",
-    "@vue/cli-plugin-eslint": "5.0.6",
-    "@vue/cli-service": "5.0.6",
-    "@vue/eslint-config-standard": "6.1.0",
-    "eslint": "7.32.0",
+    "eslint": "8.19.0",
+    "eslint-config-standard": "17.0.0",
     "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-node": "11.1.0",
-    "eslint-plugin-promise": "5.2.0",
-    "eslint-plugin-vue": "7.20.0",
+    "eslint-plugin-n": "15.2.4",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-vue": "9.2.0",
     "lint-staged": "13.0.3",
+    "typescript": "4.7.4",
     "unplugin-auto-import": "0.9.2",
-    "unplugin-vue-components": "0.20.1",
-    "vite": "2.9.13"
+    "unplugin-vue-components": "0.21.1",
+    "vite": "2.9.14",
+    "vue-tsc": "0.38.3"
   }
 }

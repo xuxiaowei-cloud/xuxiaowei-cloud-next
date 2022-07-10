@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '../utils/request'
 
 /**
  * 登录
@@ -10,9 +10,9 @@ import request from '@/utils/request'
  * @param rememberMeParameter 记住我参数名
  * @param redirectUri 授权重定向地址
  * @param homePage 登录成功主页
- * @returns {*}
  */
-export const login = function (username, password, rememberMe, header, token, rememberMeParameter, redirectUri, homePage) {
+export const login = function (username: string, password: string, rememberMe: string, header: string, token: string,
+  rememberMeParameter: string, redirectUri: string, homePage: string) {
   // 以 form 提交
   const formData = new FormData()
   formData.append('username', username)
@@ -21,9 +21,10 @@ export const login = function (username, password, rememberMe, header, token, re
   formData.append('redirectUri', redirectUri)
   formData.append('homePage', homePage)
   const headers = {}
+  // @ts-ignore
   headers[header] = token
   return request.post('/login', formData, {
-    headers: headers
+    headers
   }).then(response => {
     return response.data
   })

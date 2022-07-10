@@ -48,12 +48,13 @@
   </el-container>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { User, Key, Lock, Unlock } from '@element-plus/icons-vue'
+// @ts-ignore
 import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
 
-import { login } from '@/api/user'
+import { login } from '../api/user'
 
 import { useStore } from 'vuex'
 import { ElMessage } from 'element-plus'
@@ -83,16 +84,22 @@ const cloudFormRef = ref(null)
 
 // 提交表单
 const submitCloudForm = () => {
+  // @ts-ignore
   cloudFormRef.value.validate(valid => {
     if (valid) {
       let header = 'header'
       let token = 'token'
       let password = cloudForm.password
       let rememberMeParameter = 'remember-me'
+      // @ts-ignore
       if (process.env.NODE_ENV === 'production') {
+        // @ts-ignore
         header = document.head.querySelector('[name=_csrf_header][content]').content
+        // @ts-ignore
         token = document.head.querySelector('[name=_csrf][content]').content
+        // @ts-ignore
         const rsaPublicKeyBase64 = document.head.querySelector('[name=rsa_public_key_base64][content]').content
+        // @ts-ignore
         rememberMeParameter = document.head.querySelector('[name=rememberMeParameter][content]').content
         JsEncrypt.prototype.setPublicKey(rsaPublicKeyBase64)
         password = JsEncrypt.prototype.encrypt(password)
@@ -101,6 +108,7 @@ const submitCloudForm = () => {
 
       // encodeURIComponent()
       const homePage = route.query.homePage
+      // @ts-ignore
       login(cloudForm.username, password, cloudForm.rememberMe[0], header, token, rememberMeParameter, redirectUri, homePage).then(response => {
         console.log(response)
         const msg = response.msg
