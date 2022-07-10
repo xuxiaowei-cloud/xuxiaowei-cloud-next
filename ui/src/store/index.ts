@@ -204,7 +204,7 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
       info().then(() => {})
     })
 
-    router.push({ path: path, query: query }).then(() => {
+    router.push({ path, query }).then(() => {
 
     })
   } else {

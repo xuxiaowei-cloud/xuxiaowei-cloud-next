@@ -41,17 +41,10 @@ npm run lint
 npm create vite@latest ui -- --template vue-ts
 ```
 
-1. [eslint](https://eslint.vuejs.org/user-guide/#installation)
+1. [eslint](https://www.npmjs.com/package/eslint)
     ```shell
-    npm install -g @vue/cli
-    # 选择 Standard
-    # 勾选 Lint on save、Lint and fix on commit
-    vue add @vue/cli-plugin-eslint
-    # vue-cli-service lint 无法运行
-    npm i -D @vue/cli-service
-    
-    npm i -D @typescript-eslint/parser
-    npm i -D @vue/cli-plugin-typescript
+    npm i eslint -D
+    npx eslint --init
     ```
 
 1. [vue-router](https://router.vuejs.org/installation.html)
@@ -151,15 +144,13 @@ npm create vite@latest ui -- --template vue-ts
 - [vuex-persistedstate](https://www.npmjs.com/package/vuex-persistedstate)
 
 - [@tauri-apps/cli](https://www.npmjs.com/package/@tauri-apps/cli)
+- [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin)
 - [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser)
 - [@vitejs/plugin-vue](https://www.npmjs.com/package/@vitejs/plugin-vue)
-- [@vue/cli-plugin-eslint](https://www.npmjs.com/package/@vue/cli-plugin-eslint)
-- [@vue/cli-plugin-typescript](https://www.npmjs.com/package/@vue/cli-plugin-typescript)
-- [@vue/cli-service](https://www.npmjs.com/package/@vue/cli-service)
-- [@vue/eslint-config-standard](https://www.npmjs.com/package/@vue/eslint-config-standard)
 - [eslint](https://www.npmjs.com/package/eslint)
+- [eslint-config-standard](https://www.npmjs.com/package/eslint-config-standard)
 - [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import)
-- [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node)
+- [eslint-plugin-n](https://www.npmjs.com/package/eslint-plugin-n)
 - [eslint-plugin-promise](https://www.npmjs.com/package/eslint-plugin-promise)
 - [eslint-plugin-vue](https://www.npmjs.com/package/eslint-plugin-vue)
 - [lint-staged](https://www.npmjs.com/package/lint-staged)
