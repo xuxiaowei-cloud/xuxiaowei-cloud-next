@@ -36,10 +36,10 @@
   "dependencies": {
     "@element-plus/icons-vue": "2.0.6",
     "axios": "0.27.2",
-    "element-plus": "2.2.6",
+    "element-plus": "2.2.9",
     "jsencrypt": "3.2.1",
     "vue": "3.2.37",
-    "vue-router": "4.0.16",
+    "vue-router": "4.1.1",
     "vuex": "4.0.2",
     "vuex-persistedstate": "4.1.0"
   },

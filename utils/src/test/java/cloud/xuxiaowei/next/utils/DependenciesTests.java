@@ -10,7 +10,11 @@ import java.io.IOException;
 /**
  * 处理依赖分析
  * <p>
- * 命令 <code>mvn dependency:tree &lt; D:/tree.txt</code>
+ * 1. mvn clean install
+ * <p>
+ * 2. <code>mvn dependency:tree &lt; D:/tree.txt</code>
+ * <p>
+ * 3. 运行 {@link #main()}
  *
  * @author xuxiaowei
  * @since 0.0.1

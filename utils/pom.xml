@@ -23,6 +23,15 @@
 	</properties>
 	<dependencies>
 
+		<!-- guava -->
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- 提供：ObjectMapper -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>

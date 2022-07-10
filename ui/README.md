@@ -138,6 +138,7 @@ npm create vite@latest ui -- --template vue-ts
 - [sockjs-client](https://www.npmjs.com/package/sockjs-client)
 - [stompjs](https://www.npmjs.com/package/stompjs)
 - [vue](https://www.npmjs.com/package/vue)
+- [vue-clipboard3](https://www.npmjs.com/package/vue-clipboard3)
 - [vue-echarts](https://www.npmjs.com/package/vue-echarts)
 - [vue-router](https://www.npmjs.com/package/vue-router)
 - [vuex](https://www.npmjs.com/package/vuex)

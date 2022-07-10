@@ -14,7 +14,7 @@ import java.net.UnknownHostException;
  * 支持 IPv6 和 IPv4 地址，但配置了 IPv4 地址的匹配器永远不会匹配返回 IPv6 地址的请求，反之亦然。
  * <p>
  * 抽取自 <code>org.springframework.security.web.util.matcher.IpAddressMatcher</code>，剔除了
- * <code>javax.servlet.http.HttpServletRequest</code>
+ * <code>jakarta.servlet.http.HttpServletRequest</code>
  *
  * @author xuxiaowei
  * @since 0.0.1
