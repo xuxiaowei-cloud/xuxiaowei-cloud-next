@@ -6,16 +6,17 @@
   </el-container>
 </template>
 
-<script setup>
-import { actuator, baidu } from '@/api/actuator'
+<script setup lang="ts">
+import { actuator, baidu } from '../api/actuator'
 import { getCurrentInstance } from 'vue'
 
 const currentInstance = getCurrentInstance()
-const globalProperties = currentInstance.appContext.config.globalProperties
-
-globalProperties.$ipv4().then(response => {
-  console.log(response)
-})
+if (currentInstance != null) {
+  const globalProperties = currentInstance.appContext.config.globalProperties
+  globalProperties.$ipv4().then((response: any) => {
+    console.log(response)
+  })
+}
 
 actuator().then(response => {
   console.log(response)

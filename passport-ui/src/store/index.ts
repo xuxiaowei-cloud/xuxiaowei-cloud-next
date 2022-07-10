@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import settings from '@/settings'
+import settings from '../settings'
 
 export default createStore({
   state: { // 单一状态树

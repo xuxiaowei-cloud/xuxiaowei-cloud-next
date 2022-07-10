@@ -62,3 +62,6 @@ package-lock.json
 node
 
 pom.xml.versionsBackup
+/auto-imports.d.ts
+/components.d.ts
+.eslintcache

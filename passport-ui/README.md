@@ -38,17 +38,13 @@ npm run lint
 1. init
 
 ```shell
-npm create vite@latest passport-ui -- --template vue
+npm create vite@latest passport-ui -- --template vue-ts
 ```
 
-1. [eslint](https://eslint.vuejs.org/user-guide/#installation)
+1. [eslint](https://www.npmjs.com/package/eslint)
     ```shell
-    npm install -g @vue/cli
-    # 选择 Standard
-    # 勾选 Lint on save、Lint and fix on commit
-    vue add @vue/cli-plugin-eslint
-    # vue-cli-service lint 无法运行
-    npm i -D @vue/cli-service
+    npm i eslint -D
+    npx eslint --init
     ```
 
 1. [vue-router](https://router.vuejs.org/installation.html)
@@ -124,19 +120,21 @@ npm create vite@latest passport-ui -- --template vue
 - [vuex](https://www.npmjs.com/package/vuex)
 - [vuex-persistedstate](https://www.npmjs.com/package/vuex-persistedstate)
 
+- [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin)
+- [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser)
 - [@vitejs/plugin-vue](https://www.npmjs.com/package/@vitejs/plugin-vue)
-- [@vue/cli-plugin-eslint](https://www.npmjs.com/package/@vue/cli-plugin-eslint)
-- [@vue/cli-service](https://www.npmjs.com/package/@vue/cli-service)
-- [@vue/eslint-config-standard](https://www.npmjs.com/package/@vue/eslint-config-standard)
 - [eslint](https://www.npmjs.com/package/eslint)
+- [eslint-config-standard](https://www.npmjs.com/package/eslint-config-standard)
 - [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import)
-- [eslint-plugin-node](https://www.npmjs.com/package/eslint-plugin-node)
+- [eslint-plugin-n](https://www.npmjs.com/package/eslint-plugin-n)
 - [eslint-plugin-promise](https://www.npmjs.com/package/eslint-plugin-promise)
 - [eslint-plugin-vue](https://www.npmjs.com/package/eslint-plugin-vue)
 - [lint-staged](https://www.npmjs.com/package/lint-staged)
+- [typescript](https://www.npmjs.com/package/typescript)
 - [unplugin-auto-import](https://www.npmjs.com/package/unplugin-auto-import)
 - [unplugin-vue-components](https://www.npmjs.com/package/unplugin-vue-components)
 - [vite](https://www.npmjs.com/package/vite)
+- [vue-tsc](https://www.npmjs.com/package/vue-tsc)
 
 ## 其他说明
 
