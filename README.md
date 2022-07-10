@@ -113,6 +113,17 @@
   </a>
 </div>
 
+## 相关项目
+
+- xuxiaowei-cloud
+    - 使用 Spring Boot 2.7.x，将仓库地址后面删除 `-next` 即可
+      （全平台仓库同名，包含：
+      [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud)、
+      [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud)、
+      [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud)、
+      [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud)、
+      [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud)）
+
 ## [脚本](./sh/README.md)
 
 ## [代码格式规范 spring-javaformat](https://github.com/spring-io/spring-javaformat)
