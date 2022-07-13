@@ -63,10 +63,11 @@ public class LogHttpFilter extends HttpFilter {
 		String requestUri = req.getRequestURI();
 		String queryString = req.getQueryString();
 		String headersMap = RequestUtils.getHeadersJson(req);
+		String authorization = RequestUtils.getAuthorization(req);
 		String userAgent = RequestUtils.getUserAgent(req);
 
-		logService.saveLog(remoteHost, requestId, sessionId, method, requestUri, queryString, headersMap, userAgent,
-				null);
+		logService.saveLog(remoteHost, requestId, sessionId, method, requestUri, queryString, headersMap, authorization,
+				userAgent, null);
 
 		super.doFilter(req, res, chain);
 	}

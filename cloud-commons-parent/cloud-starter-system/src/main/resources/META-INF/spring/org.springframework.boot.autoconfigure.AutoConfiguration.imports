@@ -1,5 +1,4 @@
 cloud.xuxiaowei.next.system.aspect.ControllerLogAspect
-cloud.xuxiaowei.next.system.filter.AfterBearerHttpFilter
 cloud.xuxiaowei.next.system.filter.LogHttpFilter
 cloud.xuxiaowei.next.system.service.impl.AuthoritiesServiceImpl
 cloud.xuxiaowei.next.system.service.impl.AuthorityServiceImpl

@@ -90,9 +90,11 @@ public class LogGlobalFilter implements GlobalFilter, Ordered {
 		String requestUri = uri.getPath();
 		String queryString = uri.getQuery();
 		String headersMap = RequestUtils.getHeadersJson(request);
+		String authorization = RequestUtils.getAuthorization(request);
 		String userAgent = RequestUtils.getUserAgent(request);
 
-		logService.saveLog(hostAddress, requestId, null, method, requestUri, queryString, headersMap, userAgent, ex);
+		logService.saveLog(hostAddress, requestId, null, method, requestUri, queryString, headersMap, authorization,
+				userAgent, ex);
 
 	}
 

@@ -48,6 +48,13 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- OAuth 2.1 依赖 -->
+        <!-- https://mvnrepository.com/artifact/io.xuxiaowei.security.next/spring-security-oauth2-authorization-server -->
+        <dependency>
+            <groupId>io.xuxiaowei.security.next</groupId>
+            <artifactId>spring-security-oauth2-authorization-server</artifactId>
+        </dependency>
+
         <!-- OAuth2 资源 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

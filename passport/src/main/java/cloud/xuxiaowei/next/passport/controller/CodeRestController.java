@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.endpoint.DefaultMapOAuth2AccessTokenResponseConverter;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse;
+import org.springframework.security.oauth2.core.endpoint.OAuth2ParameterNames;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,7 +65,7 @@ public class CodeRestController {
 	 * @param state 状态码
 	 * @throws IOException 重定向异常
 	 */
-	@RequestMapping(params = { "code", "state" })
+	@RequestMapping(params = { OAuth2ParameterNames.CODE, OAuth2ParameterNames.STATE })
 	public void index(HttpServletRequest request, HttpServletResponse response, HttpSession session, String code,
 			String state) throws IOException {
 
@@ -82,11 +83,11 @@ public class CodeRestController {
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 
 		Map<String, String> map = new HashMap<>(8);
-		map.put("code", code);
-		map.put("state", state);
-		map.put("client_id", cloudClientProperties.getClientId());
-		map.put("client_secret", cloudClientProperties.getClientSecret());
-		map.put("redirect_uri", cloudClientProperties.getRedirectUri());
+		map.put(OAuth2ParameterNames.CODE, code);
+		map.put(OAuth2ParameterNames.STATE, state);
+		map.put(OAuth2ParameterNames.CLIENT_ID, cloudClientProperties.getClientId());
+		map.put(OAuth2ParameterNames.CLIENT_SECRET, cloudClientProperties.getClientSecret());
+		map.put(OAuth2ParameterNames.REDIRECT_URI, cloudClientProperties.getRedirectUri());
 
 		HttpEntity<?> httpEntity = new HttpEntity<>(httpHeaders);
 
@@ -145,10 +146,13 @@ public class CodeRestController {
 	 * @param state 状态码
 	 * @return 返回 授权失败
 	 */
-	@RequestMapping(params = { "error", "error_description", "state", "error_uri" })
+	@RequestMapping(params = { OAuth2ParameterNames.ERROR, OAuth2ParameterNames.ERROR_DESCRIPTION,
+			OAuth2ParameterNames.STATE, OAuth2ParameterNames.ERROR_URI })
 	public Response<?> errorState(HttpServletRequest request, HttpServletResponse response, HttpSession session,
-			@RequestParam("error") String error, @RequestParam("error_description") String errorDescription,
-			@RequestParam("error_uri") String errorUri, @RequestParam("state") String state) {
+			@RequestParam(OAuth2ParameterNames.ERROR) String error,
+			@RequestParam(OAuth2ParameterNames.ERROR_DESCRIPTION) String errorDescription,
+			@RequestParam(OAuth2ParameterNames.ERROR_URI) String errorUri,
+			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
 		return ResponseMap.error().put("error", error).put("error_description", errorDescription)
 				.put("error_uri", errorUri).put("state", state);

@@ -82,6 +82,16 @@ public class Log implements Serializable {
 	private String headersMap;
 
 	/**
+	 * headers中authorization
+	 */
+	private String authorization;
+
+	/**
+	 * authorization解密
+	 */
+	private String payload;
+
+	/**
 	 * 标识
 	 */
 	private String userAgent;
@@ -155,8 +165,9 @@ public class Log implements Serializable {
 
 	/**
 	 * 创建人，不为空
+	 * <p>
+	 * 日志表中的创建者，不使用 MyBatis Plus 自动填充，而是在保存时进行设置
 	 */
-	@TableField(fill = FieldFill.INSERT)
 	private String createUsername;
 
 	/**
