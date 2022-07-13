@@ -14,7 +14,7 @@
 
     <name>canal</name>
     <description>阿里巴巴 MySQL binlog 增量订阅、消费服务</description>
-    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud</url>
+    <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>
 
     <properties>
@@ -36,6 +36,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
     </dependencies>
