@@ -13,6 +13,7 @@ cloud.xuxiaowei.next:admin-server:jar:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
+│        └──cn.hutool:hutool-all:jar:5.8.3:provided
 │        └──com.google.guava:guava:jar:31.1-jre:provided
 │        └──com.fasterxml.jackson.core:jackson-databind:jar:2.13.3:provided
 │        └──com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.13.3:provided
@@ -178,6 +179,7 @@ cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-log:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
 │        └──cn.hutool:hutool-all:jar:5.8.3:compile
+│        └──io.xuxiaowei.security.next:spring-security-oauth2-authorization-server:jar:0.3.1:compile
 │        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.0.0-M3:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M3:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M3:compile
@@ -211,6 +213,21 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:resource-services-parent:pom:0.0.1-SNAPSHOT
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M3:compile
+│        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M3:compile
+│        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M3:compile
+│        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.0.0-M3:compile
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.0-M3:compile
+│        └──org.projectlombok:lombok:jar:1.18.24:compile
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.0-M3:test
+
+
+cloud.xuxiaowei.next:canal:jar:0.0.1-SNAPSHOT
+│        └──com.alibaba.otter:canal.client:jar:1.1.6:compile
+│        └──com.alibaba.otter:canal.protocol:jar:1.1.6:compile
+│        └──mysql:mysql-connector-java:jar:8.0.29:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M3:compile

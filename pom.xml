@@ -128,6 +128,14 @@
         <!-- https://repo1.maven.org/maven2/org/apache/commons/commons-lang3 -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
 
+        <!-- 阿里巴巴 MySQL binlog 增量订阅、消费服务 -->
+        <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.client -->
+        <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.protocol -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/otter/canal.client -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/otter/canal.protocol -->
+        <!-- https://github.com/alibaba/canal -->
+        <canal.version>1.1.6</canal.version>
+
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://repo1.maven.org/maven2/com/alibaba/fastjson -->
         <!-- https://github.com/alibaba/fastjson -->
@@ -336,6 +344,20 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+            </dependency>
+
+            <!-- 阿里巴巴 MySQL binlog 增量订阅、消费服务 -->
+            <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.client -->
+            <dependency>
+                <groupId>com.alibaba.otter</groupId>
+                <artifactId>canal.client</artifactId>
+                <version>${canal.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.protocol -->
+            <dependency>
+                <groupId>com.alibaba.otter</groupId>
+                <artifactId>canal.protocol</artifactId>
+                <version>${canal.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
