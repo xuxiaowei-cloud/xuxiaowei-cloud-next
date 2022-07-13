@@ -98,9 +98,9 @@ spring:
   # 数据库
   datasource:
     # 数据库 连接串
-    # url: jdbc:mysql://${mysql_xuxiaowei_cloud:mysql.example.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database:xuxiaowei_cloud_next_xxl_job}?useSSL=false&serverTimezone=GMT%2B8
+    # url: jdbc:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_database:xuxiaowei_cloud_next_xxl_job}?useSSL=false&serverTimezone=GMT%2B8
     # 数据库 连接串 - 测试环境使用
-    url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_xxl_job_database:xuxiaowei_cloud_next_xxl_job}?useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:p6spy:mysql://${mysql_xuxiaowei_cloud:mysql.example.next.xuxiaowei.cloud:3306}/${mysql_xuxiaowei_xxl_job_database:xuxiaowei_cloud_next_xxl_job}?useSSL=false&serverTimezone=GMT%2B8
     # 数据库 用户名
     username: ${mysql_xuxiaowei_cloud_username:root}
     # 数据库 密码
