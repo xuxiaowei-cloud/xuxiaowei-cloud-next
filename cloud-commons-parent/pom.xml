@@ -36,6 +36,8 @@
         <module>cloud-starter-mybatis</module>
         <!-- OAuth2 组件 -->
         <module>cloud-starter-oauth2</module>
+        <!-- OpenFeign 组件 -->
+        <module>cloud-starter-openfeign</module>
         <!-- Redis 组件 -->
         <module>cloud-starter-redis</module>
         <!-- Session Redis 组件 -->
