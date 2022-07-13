@@ -1,5 +1,4 @@
 cloud.xuxiaowei.next.oauth2.configuration.JwtAuthenticationConverterConfiguration
-cloud.xuxiaowei.next.oauth2.filter.AfterBearerTokenAuthenticationFilter
 cloud.xuxiaowei.next.oauth2.handler.AccessDeniedHandlerImpl
 cloud.xuxiaowei.next.oauth2.impl.CsrfRequestMatcherImpl
 cloud.xuxiaowei.next.oauth2.point.AuthenticationEntryPointImpl

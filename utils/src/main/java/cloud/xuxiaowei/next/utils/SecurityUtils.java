@@ -82,15 +82,27 @@ public class SecurityUtils {
 
 			Object principal = authentication.getPrincipal();
 			if (principal instanceof Jwt jwt) {
-				Map<String, Object> claims = jwt.getClaims();
-				Object userName = claims.get("user_name");
-				if (userName == null) {
-					return null;
-				}
-				return userName.toString();
+				return getUserName(jwt);
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 根据 {@link Jwt} 获取 用户名
+	 * @param jwt Jwt
+	 * @return 返回 用户名
+	 */
+	public static String getUserName(Jwt jwt) {
+		Map<String, Object> claims = jwt.getClaims();
+		Object userName = claims.get("user_name");
+		if (userName == null) {
+			userName = claims.get("username");
+			if (userName == null) {
+				return null;
+			}
+		}
+		return userName.toString();
 	}
 
 	/**
@@ -112,15 +124,24 @@ public class SecurityUtils {
 		if (authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if (principal instanceof Jwt jwt) {
-				Map<String, Object> claims = jwt.getClaims();
-				Object usersId = claims.get(Constant.USERS_ID);
-				if (usersId == null) {
-					return null;
-				}
-				return usersId.toString();
+				return getUsersId(jwt);
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 根据 Jwt 获取 用户ID
+	 * @param jwt Jwt
+	 * @return 返回 用户ID
+	 */
+	public static String getUsersId(Jwt jwt) {
+		Map<String, Object> claims = jwt.getClaims();
+		Object usersId = claims.get(Constant.USERS_ID);
+		if (usersId == null) {
+			return null;
+		}
+		return usersId.toString();
 	}
 
 }

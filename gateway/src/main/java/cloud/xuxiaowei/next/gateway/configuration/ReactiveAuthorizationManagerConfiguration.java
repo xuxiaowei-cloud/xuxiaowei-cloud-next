@@ -5,7 +5,6 @@ import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
 import cloud.xuxiaowei.next.gateway.filter.CorsBeforeWebFilter;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.IpAddressMatcher;
-import cloud.xuxiaowei.next.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -32,7 +30,6 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import javax.sql.DataSource;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.URI;
@@ -56,8 +53,6 @@ import java.util.UUID;
 @EnableWebFluxSecurity
 public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthorizationManager<AuthorizationContext> {
 
-	private DataSource dataSource;
-
 	private ServerAuthenticationEntryPoint serverAuthenticationEntryPoint;
 
 	private ServerAccessDeniedHandler serverAccessDeniedHandler;
@@ -68,10 +63,7 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 
 	private JwkKeyProperties jwkKeyProperties;
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+	private OAuth2AuthorizationServiceReactiveJwtAuthenticationConverter jwtAuthenticationConverter;
 
 	@Autowired
 	public void setServerAuthenticationEntryPoint(ServerAuthenticationEntryPoint serverAuthenticationEntryPoint) {
@@ -98,6 +90,12 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 		this.jwkKeyProperties = jwkKeyProperties;
 	}
 
+	@Autowired
+	public void setJwtAuthenticationConverter(
+			OAuth2AuthorizationServiceReactiveJwtAuthenticationConverter jwtAuthenticationConverter) {
+		this.jwtAuthenticationConverter = jwtAuthenticationConverter;
+	}
+
 	/**
 	 * 禁止控制室台输出默认用户的密码
 	 */
@@ -119,13 +117,20 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 		// 禁用 form 登录
 		http.formLogin().disable();
 
-		// 资源服务配置秘钥
-		// 启用 OAuth2 JWT 资源服务器支持
-		RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
-		http.oauth2ResourceServer().jwt().publicKey(rsaPublicKey);
+		http.oauth2ResourceServer(oauth2ResourceServerCustomizer -> {
 
-		// 资源服务异常切入点（验证Token异常）
-		http.oauth2ResourceServer().authenticationEntryPoint(serverAuthenticationEntryPoint);
+			// 资源服务配置秘钥
+			// 启用 OAuth2 JWT 资源服务器支持
+			RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
+			oauth2ResourceServerCustomizer.jwt().publicKey(rsaPublicKey);
+
+			// 检查数据库中是否存在Token
+			// 该功能仅在网关中使用，否则会造成数据库压力较大
+			oauth2ResourceServerCustomizer.jwt().jwtAuthenticationConverter(jwtAuthenticationConverter);
+
+			// 资源服务异常切入点（验证Token异常）
+			oauth2ResourceServerCustomizer.authenticationEntryPoint(serverAuthenticationEntryPoint);
+		});
 
 		// 自定义动态跨域 CORS 配置 过滤器 <code>http.addFilterBefore(过滤器,
 		// SecurityWebFiltersOrder.CORS);</code>
@@ -151,8 +156,15 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 			AuthorizationContext authorizationContext) {
 
 		ServerWebExchange exchange = authorizationContext.getExchange();
+		ServerHttpRequest request = exchange.getRequest();
+		HttpMethod method = request.getMethod();
+		URI uri = request.getURI();
 
-		log.info(exchange.getRequest().getURI().toString());
+		// 日志中放入请求ID
+		String requestId = request.getId();
+		MDC.put(Constant.REQUEST_ID, requestId);
+
+		log.debug("访问：{}：{}", method, uri);
 
 		boolean whiteList = whiteList(exchange);
 		if (whiteList) {
@@ -161,26 +173,10 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 
 		return authentication.map(requestAuthentication -> {
 
-			// 将当前用户名放入日志中
-			String userName = SecurityUtils.getUserName(requestAuthentication);
-			// 将当前用户ID放入日志中
-			String usersId = SecurityUtils.getUsersId(requestAuthentication);
-
-			MDC.put(Constant.NAME, userName);
-			MDC.put(Constant.USERS_ID, usersId);
-
 			// 已通过认证授权
 			if (requestAuthentication.isAuthenticated()) {
-
-				// 查看数据库中是否存在此 授权 Token
-				String tokenValue = SecurityUtils.getTokenValue(requestAuthentication);
-				Integer integer = new JdbcTemplate(dataSource).queryForObject(
-						"SELECT count( 1 ) FROM oauth2_authorization WHERE access_token_value = ?", Integer.class,
-						tokenValue);
-				int result = integer == null ? 0 : integer;
-
-				// 根据数据库中是否存在此 授权 Token 来决定是否放行
-				return new AuthorizationDecision(result > 0);
+				// 放行
+				return new AuthorizationDecision(true);
 			}
 			else {
 				// 未通过认证授权
