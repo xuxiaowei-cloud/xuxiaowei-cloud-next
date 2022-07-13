@@ -23,6 +23,14 @@
 	</properties>
 	<dependencies>
 
+		<!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
+		<dependency>
+			<groupId>cn.hutool</groupId>
+			<artifactId>hutool-all</artifactId>
+			<!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
+			<scope>provided</scope>
+		</dependency>
+
 		<!-- guava -->
 		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 		<dependency>

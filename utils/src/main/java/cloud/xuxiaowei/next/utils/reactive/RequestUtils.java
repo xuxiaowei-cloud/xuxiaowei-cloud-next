@@ -55,6 +55,16 @@ public class RequestUtils {
 	}
 
 	/**
+	 * 获取 Headers Authorization
+	 * @param request 请求
+	 * @return 返回 Headers Authorization
+	 */
+	public static String getAuthorization(ServerHttpRequest request) {
+		HttpHeaders httpHeaders = request.getHeaders();
+		return httpHeaders.getFirst(HttpHeaders.AUTHORIZATION);
+	}
+
+	/**
 	 * 获取标识
 	 * @param request 请求
 	 * @return 返回 标识

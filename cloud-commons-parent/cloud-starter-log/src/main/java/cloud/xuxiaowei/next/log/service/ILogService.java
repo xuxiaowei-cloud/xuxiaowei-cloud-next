@@ -22,17 +22,11 @@ public interface ILogService extends IService<Log> {
 	 * @param requestUri 请求地址
 	 * @param queryString 请求参数
 	 * @param headersMap 请求头
+	 * @param authorization 权限标识
 	 * @param userAgent 浏览器标识
 	 * @param ex 异常
 	 */
-	void saveLog(String hostAddress, String requestId, String sessionId, String method, String requestUri,
-			String queryString, String headersMap, String userAgent, Throwable ex);
-
-	/**
-	 * 根据 主键 设置 创建用户
-	 * @param createUsername 创建用户
-	 * @param logId 主键
-	 */
-	void setCreateUsernameById(String createUsername, String logId);
+	boolean saveLog(String hostAddress, String requestId, String sessionId, String method, String requestUri,
+			String queryString, String headersMap, String authorization, String userAgent, Throwable ex);
 
 }
