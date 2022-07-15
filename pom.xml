@@ -77,8 +77,8 @@
         </spring-security-oauth2-authorization-server-next.version>
 
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/snapshots/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
-        <spring-boot-starter-wechat-miniprogram.version>0.0.1-SNAPSHOT</spring-boot-starter-wechat-miniprogram.version>
+        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
+        <spring-boot-starter-wechat-miniprogram.version>0.0.1-alpha.2</spring-boot-starter-wechat-miniprogram.version>
 
         <!-- MyBatis -->
         <!--
@@ -748,8 +748,8 @@
         </repository>
 
         <repository>
-            <id>oss-s01-snapshots</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+            <id>oss-s01</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/public/</url>
         </repository>
 
         <repository>
