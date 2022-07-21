@@ -3,7 +3,7 @@
 
     <el-aside id="cloud-el-aside">
 
-      <el-menu :default-active="defaultActive" class="el-menu-vertical" :collapse="isCollapse" :router="true"
+      <el-menu :default-active="route.path" class="el-menu-vertical" :collapse="isCollapse" :router="true"
                :unique-opened="true" @open="handleOpen" @close="handleClose" id="cloud-aside-el-menu">
         <el-sub-menu index="1">
           <template #title>
@@ -137,15 +137,12 @@
 <script setup lang="ts">
 import { House, Expand, Fold, Refresh, ArrowDown, Aim, Notebook, User, Setting } from '@element-plus/icons-vue'
 import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import store from '../store'
 import { hasAuthority, hasAnyAuthority } from '../utils/authority'
 import { signout } from '../api/passport'
 
-// 默认激活菜单
-// 当缓存中的默认菜单与路径中不同时，使用路径中对应的菜单
-const hash = location.hash
-const path = hash.split('#')[1].split('?')[0]
-const defaultActive = ref(store.getters.defaultActive === path ? path : path)
+const route = useRoute()
 
 // 是否折叠菜单
 const isCollapse = ref(store.getters.isCollapse)
@@ -160,9 +157,9 @@ const handleClose = (key: number, keyPath: string) => {
   console.log('handleClose：', key, keyPath)
 }
 
-// 默认激活菜单
+// 激活菜单
 const menuItem = (key: any) => {
-  store.commit('setDefaultActive', key.index)
+
 }
 
 // 是否折叠菜单

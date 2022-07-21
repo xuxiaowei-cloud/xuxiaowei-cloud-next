@@ -16,7 +16,6 @@ const store = createStore({
     accessToken: null, // Token
     checkTokenTime: null, // 检查Token时间
     refreshToken: null, // 刷新Token
-    defaultActive: '/', // 获取默认激活菜单
     isCollapse: false // 是否折叠菜单
   },
   getters: {
@@ -68,13 +67,6 @@ const store = createStore({
      */
     refreshToken (state) {
       return state.refreshToken
-    },
-    /**
-     * 获取默认激活菜单
-     * @param state 单一状态树
-     */
-    defaultActive (state) {
-      return state.defaultActive
     },
     /**
      * 是否折叠菜单
@@ -140,14 +132,6 @@ const store = createStore({
      */
     setRefreshToken (state, refreshToken) {
       state.refreshToken = refreshToken
-    },
-    /**
-     * 设置默认激活菜单
-     * @param state 单一状态树
-     * @param defaultActive 默认激活
-     */
-    setDefaultActive (state, defaultActive) {
-      state.defaultActive = defaultActive
     },
     /**
      * 设置是否折叠菜单
