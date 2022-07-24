@@ -52,7 +52,6 @@ class RegisteredClientRepositoryTests {
 		registeredClientBuilder.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE);
 		registeredClientBuilder.authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN);
 		registeredClientBuilder.authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS);
-		registeredClientBuilder.authorizationGrantType(AuthorizationGrantType.IMPLICIT);
 		// 授权成功后重定向地址
 		registeredClientBuilder.redirectUri("http://127.0.0.1:1401/code");
 		// 授权范围
