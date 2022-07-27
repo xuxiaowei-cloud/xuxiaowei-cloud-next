@@ -45,17 +45,14 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, reactive, defineEmits, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { getById, save, updateById, codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
-import { useStore } from 'vuex'
+import settings from '../../../settings'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // TS 未能识别，其实不存在问题
 // @ts-ignore
 import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
-
-// 缓存
-const store = useStore()
 
 const props = defineProps({
   dialogVisible: {
@@ -90,8 +87,8 @@ const publicKey = ref(null)
 
 // 获取识别码与公钥
 codeRsa().then(response => {
-  if (response.code === store.state.settings.okCode) {
-    if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
+    if (response.code === settings.okCode) {
       const data = response.data
       if (data) {
         param.code = data.code
@@ -107,7 +104,7 @@ codeRsa().then(response => {
 const initData = () => {
   if (props.edit && props.usersId) {
     getById(props.usersId).then(response => {
-      if (response.code === store.state.settings.okCode) {
+      if (response.code === settings.okCode) {
         const data = response.data
         if (data) {
           param.usersId = data.usersId
@@ -161,7 +158,7 @@ const cloudSave = () => {
         paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
         save(paramEncryption).then(response => {
           console.log(response)
-          if (response.code === store.state.settings.okCode) {
+          if (response.code === settings.okCode) {
             ElMessage({
               message: response.msg,
               // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
@@ -197,7 +194,7 @@ const cloudUpdate = () => {
       }).then(() => {
         updateById(paramEncryption).then(response => {
           console.log(response)
-          if (response.code === store.state.settings.okCode) {
+          if (response.code === settings.okCode) {
             ElMessage({
               message: response.msg,
               // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000

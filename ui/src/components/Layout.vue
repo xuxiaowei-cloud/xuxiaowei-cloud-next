@@ -5,78 +5,39 @@
 
       <el-menu :default-active="route.path" class="el-menu-vertical" :collapse="isCollapse" :router="true"
                :unique-opened="true" @open="handleOpen" @close="handleClose" id="cloud-aside-el-menu">
-        <el-sub-menu index="1">
-          <template #title>
-            <el-icon>
-              <house/>
-            </el-icon>
-            <span>主页</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/" @click="menuItem">控制台</el-menu-item>
-            <el-menu-item index="/home/homepage1" @click="menuItem">主页一</el-menu-item>
-            <el-menu-item index="/home/homepage2" @click="menuItem">主页二</el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
 
-        <el-sub-menu index="2">
-          <template #title>
-            <el-icon>
-              <notebook/>
-            </el-icon>
-            <span>富文本</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/editor/tui-ui-editor" @click="menuItem">Tui UI Editor</el-menu-item>
-            <el-menu-item index="/editor/wangeditor" @click="menuItem">WangEditor</el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
+        <!-- 使用 template 用于遍历 -->
+        <template v-for="(item, i) in routes">
 
-        <el-sub-menu index="3">
-          <template #title>
-            <el-icon>
-              <user/>
-            </el-icon>
-            <span>个人中心</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item ref="personal" index="/user/personal" @click="menuItem">个人中心</el-menu-item>
-            <el-menu-item ref="security" index="/user/security" @click="menuItem">安全设置</el-menu-item>
-            <el-menu-item ref="account" index="/user/account" @click="menuItem">账户绑定</el-menu-item>
-            <el-menu-item ref="social" index="/user/social" @click="menuItem">社交绑定</el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
+          <!-- 有二级菜单，且二级菜单的个数大于 1 -->
+          <!-- 有多个（大于 1）二级菜单时，index 无意义，只要唯一就行 -->
+          <el-sub-menu :index="i + ''" :key="i" v-if="childrenLength(item.children) > 1 && show(item.children) && subMenuAuthority(item)">
+            <template #title>
+              <el-icon v-if="item.meta?.icon">
+                <component :is="item.meta?.icon"/>
+              </el-icon>
+              <span>{{ item.name }}</span>
+            </template>
 
-        <el-sub-menu index="4" v-if="hasAnyAuthority(['manage_user_read', 'manage_client_read'])">
-          <template #title>
-            <el-icon>
-              <setting/>
-            </el-icon>
-            <span>系统管理</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/manage/user" @click="menuItem">用户管理</el-menu-item>
-            <el-menu-item index="/manage/client" @click="menuItem">客户管理</el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
+            <template v-for="(children, j) in item.children">
+              <el-menu-item :index="children.path" :key="j" @click="menuItem" v-if="show(item.children) && menuItemAuthority(children)">
+                {{ children.name }}
+              </el-menu-item>
+            </template>
+          </el-sub-menu>
 
-        <el-sub-menu index="99"
-                     v-if="hasAnyAuthority(['audit_authorization_read', 'audit_authorization_consent_read'])">
-          <template #title>
-            <el-icon>
-              <aim/>
-            </el-icon>
-            <span>审计</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item v-if="hasAuthority('audit_authorization_read')" index="/audit/authorization" @click="menuItem">
-              授权记录
-            </el-menu-item>
-            <el-menu-item v-if="hasAuthority('audit_authorization_consent_read')" index="/audit/authorization-consent" @click="menuItem">
-              授权同意书
-            </el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
+          <!-- 无二级菜单，或二级菜单的个数小于等于 1 -->
+          <el-menu-item :index="menuItemPath(item)" :key="menuItemPath(item)" @click="menuItem"
+                        v-if="childrenLength(item.children) <= 1 && show(item.children)">
+            <template #title>
+              <el-icon v-if="item.meta?.icon">
+                <component :is="item.meta?.icon"/>
+              </el-icon>
+              <span>{{ item.name }}</span>
+            </template>
+          </el-menu-item>
+
+        </template>
 
       </el-menu>
 
@@ -125,7 +86,18 @@
       </el-header>
       <el-main>
 
-        <router-view/>
+        <el-tabs v-model="editableTabsValue" type="card" class="demo-tabs" @tab-remove="removeTab"
+                 @tab-change="changeTab">
+          <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name"
+                       :closable="item.closable"></el-tab-pane>
+        </el-tabs>
+
+        <router-view v-slot="{ Component }">
+          <keep-alive :exclude="keepAliveExclude">
+            <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive"/>
+          </keep-alive>
+          <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive"/>
+        </router-view>
 
       </el-main>
       <el-footer>Footer</el-footer>
@@ -135,37 +107,179 @@
 </template>
 
 <script setup lang="ts">
-import { House, Expand, Fold, Refresh, ArrowDown, Aim, Notebook, User, Setting } from '@element-plus/icons-vue'
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import store from '../store'
-import { hasAuthority, hasAnyAuthority } from '../utils/authority'
+import { ref, watch } from 'vue'
+import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
+import { useStore } from '../store'
+import { TabPanelName } from 'element-plus'
+import { hasAnyAuthority } from '../utils/authority'
 import { signout } from '../api/passport'
+import { routes } from '../router'
 
 const route = useRoute()
+const router = useRouter()
+
+// 数据转换
+const keepAliveExclude = ref(useStore.getKeepAliveExclude)
+
+// 子菜单个数
+const childrenLength = (children: RouteRecordRaw[] | undefined) => {
+  if (children === undefined) {
+    return 0
+  } else {
+    return children.length
+  }
+}
+
+// 菜单路径
+const menuItemPath = (item: RouteRecordRaw) => {
+  if (item.children === undefined) {
+    return item.path
+  } else {
+    return item.children[0].path
+  }
+}
+
+// 是否显示菜单
+const show = (children: RouteRecordRaw[] | undefined) => {
+  if (children === undefined) {
+    return false
+  }
+  for (const i in children) {
+    if (children[i].meta?.show === false) {
+      return false
+    }
+  }
+  return true
+}
+
+// 一级菜单权限
+const subMenuAuthority = (item: RouteRecordRaw) => {
+  for (const i in item.children) {
+    // @ts-ignore
+    if (hasAnyAuthority(item.children[i].meta?.authority)) {
+      return true
+    }
+  }
+  return false
+}
+
+// 二级菜单权限
+const menuItemAuthority = (item: RouteRecordRaw) => {
+  // @ts-ignore
+  return hasAnyAuthority(item.meta?.authority)
+}
+
+// 标签页：默认选择
+const editableTabsValue = ref('/console')
+
+// activeName 改变时触发
+const changeTab = (name: TabPanelName) => {
+  // 切换标签页时，改变URL
+  location.hash = name.toString()
+}
+
+// 标签页：默认展示
+const editableTabs = ref([
+  {
+    title: '控制台',
+    name: '/console',
+    // 不可关闭
+    closable: false
+  }
+])
+
+// 移除标签页
+const removeTab = (targetName: string) => {
+  const tabs = editableTabs.value
+  let activeName = editableTabsValue.value
+  if (activeName === targetName) {
+    tabs.forEach((tab, index) => {
+      if (tab.name === targetName) {
+        const nextTab = tabs[index + 1] || tabs[index - 1]
+        if (nextTab) {
+          activeName = nextTab.name
+        }
+      }
+    })
+  }
+  editableTabsValue.value = activeName
+  editableTabs.value = tabs.filter((tab) => tab.name !== targetName)
+
+  // 移除标签页时，改变URL
+  location.hash = activeName
+
+  const routeRecords = router.getRoutes()
+  for (const i in routeRecords) {
+    const routeRecord = routeRecords[i]
+    if (routeRecord.path === targetName) {
+      const components = routeRecord.components
+      if (components) {
+        if (components.default) {
+          // 使用 el-tabs 的 @tab-remove 删除 el-tab-pane，需要销毁
+          // @ts-ignore
+          useStore.addKeepAliveExclude(components.default.__name)
+        }
+      }
+    }
+  }
+}
 
 // 是否折叠菜单
-const isCollapse = ref(store.getters.isCollapse)
+const isCollapse = ref(useStore.getIsCollapse)
 // 昵称
-const nickname = ref(store.getters.nickname)
+const nickname = ref(useStore.getNickname)
 
 const handleOpen = (key: number, keyPath: string) => {
-  console.log('handleOpen：', key, keyPath)
+  // console.log('handleOpen：', key, keyPath)
 }
 
 const handleClose = (key: number, keyPath: string) => {
-  console.log('handleClose：', key, keyPath)
+  // console.log('handleClose：', key, keyPath)
 }
 
 // 激活菜单
 const menuItem = (key: any) => {
+// 点击左侧菜单时，标签页跟随变动
+  editableTabsValue.value = key.index
 
+  // 标签页已存在时，跳过
+  for (const i in editableTabs.value) {
+    const value = editableTabs.value[i]
+    if (value.name === key.index) {
+      return
+    }
+  }
+
+  // 标签页不存在时，添加标签页
+  const routeRecords = router.getRoutes()
+  for (const i in routeRecords) {
+    const routeRecord = routeRecords[i]
+    const name = routeRecord.name
+    const path = routeRecord.path
+    if (path === key.index) {
+      editableTabs.value.push({
+        title: name === undefined ? '未知标签页名称' : name.toString(),
+        name: key.index,
+        closable: true // 可关闭标签页
+      })
+    }
+  }
 }
+
+watch(() => route.path, (newValue, oldValue) => {
+  // 方法一：刷新页面时（路由真正加载完成时），选中标签页
+  menuItem({ index: route.path })
+})
+
+router.isReady().then(() => {
+  // 方法二：刷新页面时（路由真正加载完成时），选中标签页
+  menuItem({ index: route.path })
+})
 
 // 是否折叠菜单
 const isCollapseClick = () => {
   isCollapse.value = !isCollapse.value
-  store.commit('setIsCollapse', isCollapse)
+  useStore.setIsCollapse(isCollapse.value)
 }
 
 // 刷新当前页面（局部刷新）
@@ -200,11 +314,9 @@ const handleCommand = (command: any, number: any) => {
   }
 }
 
-onMounted(() => {
-  // 延时获取昵称并显示
-  setTimeout(function () {
-    nickname.value = store.getters.nickname
-  }, 500)
+router.isReady().then(() => {
+  // 获取昵称并显示
+  nickname.value = useStore.getNickname
 })
 
 </script>
@@ -220,8 +332,12 @@ onMounted(() => {
 .el-menu-vertical:not(.el-menu--collapse) {
   /* 宽度 */
   width: 200px;
+}
+
+/* 左侧菜单 */
+.el-menu-vertical {
   /* 最小高度 */
-  min-height: 400px;
+  min-height: 800px;
 }
 
 /* 左侧菜单 */

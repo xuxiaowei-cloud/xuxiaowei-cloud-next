@@ -23,12 +23,9 @@
 <script setup lang="ts">
 import { authorityList, getById, saveAuthorities } from '../../../api/user'
 
-import { defineEmits, defineProps, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
-import { useStore } from 'vuex'
-
-// 缓存
-const store = useStore()
+import settings from '../../../settings'
 
 const props = defineProps({
   dialogVisible: {
@@ -48,7 +45,7 @@ interface Option {
 const authorityData: Option[] = []
 const grantTypes = reactive(authorityData)
 authorityList().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     if (data) {
       for (const i in data) {
@@ -77,7 +74,7 @@ const username = ref(null)
 // 初始化用户数据
 if (props.usersId) {
   getById(props.usersId).then(response => {
-    if (response.code === store.state.settings.okCode) {
+    if (response.code === settings.okCode) {
       const data = response.data
       if (data) {
         username.value = data.username
@@ -104,7 +101,7 @@ const cloudSave = () => {
     username: username.value,
     authorityList: rightValue.value
   }).then(response => {
-    if (response.code === store.state.settings.okCode) {
+    if (response.code === settings.okCode) {
       const data = response.data
       if (data) {
         ElMessage({

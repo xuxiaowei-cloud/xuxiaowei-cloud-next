@@ -4,6 +4,8 @@
 
 <script setup lang="ts">
 
+console.log('HomePage2.vue')
+
 </script>
 
 <style scoped>

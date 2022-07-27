@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineEmits, defineProps, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 import {
   getById,
   save,
@@ -104,14 +104,11 @@ import {
 } from '../../../api/passport/oauth2-registered-client'
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
-import { useStore } from 'vuex'
+import settings from '../../../settings'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // TS 未能识别，其实不存在问题
 // @ts-ignore
 import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
-
-// 缓存
-const store = useStore()
 
 const props = defineProps({
   dialogVisible: {
@@ -135,7 +132,7 @@ interface Option {
 const grantTypeData: Option[] = []
 const grantTypeList = reactive(grantTypeData)
 grantTypeOptions().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     for (const i in data) {
       grantTypeList.push({
@@ -150,7 +147,7 @@ grantTypeOptions().then(response => {
 const authenticationMethodData: Option[] = []
 const authenticationMethodList = reactive(authenticationMethodData)
 authenticationMethodOptions().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     for (const i in data) {
       authenticationMethodList.push({
@@ -165,7 +162,7 @@ authenticationMethodOptions().then(response => {
 const scopeData: Option[] = []
 const scopeList = reactive(scopeData)
 scopeOptions().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     for (const i in data) {
       scopeList.push({
@@ -180,7 +177,7 @@ scopeOptions().then(response => {
 const tokenSigningAlgorithmData: Option[] = []
 const tokenSigningAlgorithmList = reactive(tokenSigningAlgorithmData)
 tokenSigningAlgorithmOptions().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     for (const i in data) {
       tokenSigningAlgorithmList.push({
@@ -195,7 +192,7 @@ tokenSigningAlgorithmOptions().then(response => {
 const tokenSignatureAlgorithmData: Option[] = []
 const tokenSignatureAlgorithmList = reactive(tokenSignatureAlgorithmData)
 tokenSignatureAlgorithmOptions().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     for (const i in data) {
       tokenSignatureAlgorithmList.push({
@@ -210,7 +207,7 @@ tokenSignatureAlgorithmOptions().then(response => {
 const accessTokenFormatData: Option[] = []
 const accessTokenFormatList = reactive(accessTokenFormatData)
 accessTokenFormatOptions().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     for (const i in data) {
       accessTokenFormatList.push({
@@ -256,7 +253,7 @@ const publicKey = ref(null)
 
 // 获取识别码与公钥
 codeRsa().then(response => {
-  if (response.code === store.state.settings.okCode) {
+  if (response.code === settings.okCode) {
     const data = response.data
     if (data) {
       param.code = data.code
@@ -271,7 +268,7 @@ codeRsa().then(response => {
 const initData = () => {
   if (props.edit && props.id) {
     getById(props.id).then(response => {
-      if (response.code === store.state.settings.okCode) {
+      if (response.code === settings.okCode) {
         const data = response.data
         if (data) {
           for (const name in data) {
@@ -328,7 +325,7 @@ const cloudSave = () => {
       }).then(() => {
         save(encryption()).then(response => {
           console.log(response)
-          if (response.code === store.state.settings.okCode) {
+          if (response.code === settings.okCode) {
             ElMessage({
               message: response.msg,
               // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
@@ -361,7 +358,7 @@ const cloudUpdate = () => {
       }).then(() => {
         updateById(encryption()).then(response => {
           console.log(response)
-          if (response.code === store.state.settings.okCode) {
+          if (response.code === settings.okCode) {
             ElMessage({
               message: response.msg,
               // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000

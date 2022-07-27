@@ -15,18 +15,18 @@ import SockJS from 'sockjs-client/dist/sockjs.min'
 // @ts-ignore
 import Stomp from 'stompjs'
 
-import store from '../../store'
+import { useStore } from '../../store'
 
 let stompClient: any = null
 
 const connect = () => {
-  const socket = new SockJS(import.meta.env.VITE_APP_BASE_API + '/websocket/broadcast?access_token=' + store.getters.accessToken)
+  const socket = new SockJS(import.meta.env.VITE_APP_BASE_API + '/websocket/broadcast?access_token=' + useStore.getAccessToken)
   stompClient = Stomp.over(socket)
 
   stompClient.debug = false
 
   stompClient.connect({
-    authorization: 'Bearer ' + store.getters.accessToken
+    authorization: 'Bearer ' + useStore.getAccessToken
   }, function (frame: any) {
     console.log('Stomp SockJS 已连接')
 
@@ -62,7 +62,7 @@ const sendMessage = () => {
   }
 
   stompClient.send('/app/welcome', {
-    authorization: 'Bearer ' + store.getters.accessToken
+    authorization: 'Bearer ' + useStore.getAccessToken
   }, JSON.stringify({
     msg: '你好' + new Date().getTime()
   }))

@@ -84,16 +84,13 @@
 import { page, removeById, removeByIds } from '../../api/user'
 import { hasAnyAuthority, hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
-import { useStore } from 'vuex'
+import settings from '../../settings'
 import useClipboard from 'vue-clipboard3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 // 用户添加、编辑弹窗内容
 import UserDialog from './dialog/UserDialog.vue'
 // 用户权限管理弹窗内容
 import UserAuthorityDialog from './dialog/UserAuthorityDialog.vue'
-
-// 缓存
-const store = useStore()
 
 // 复制
 const { toClipboard } = useClipboard()
@@ -201,7 +198,7 @@ const cloudSearch = () => {
   loading.value = true
   page(param).then(response => {
     console.log(response)
-    if (response.code === store.state.settings.okCode) {
+    if (response.code === settings.okCode) {
       const data = response.data
       tableData.value = data.records
       param.total = data.total
@@ -239,7 +236,7 @@ const cloudRemove = () => {
       type: 'warning'
     }).then(() => {
       removeByIds(usersIds.value).then(response => {
-        if (response.code === store.state.settings.okCode) {
+        if (response.code === settings.okCode) {
           ElMessage({
             message: response.msg,
             // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000
@@ -286,7 +283,7 @@ const deleteUsersId = (e: any) => {
     type: 'warning'
   }).then(() => {
     removeById(e.usersId).then(response => {
-      if (response.code === store.state.settings.okCode) {
+      if (response.code === settings.okCode) {
         ElMessage({
           message: response.msg,
           // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000

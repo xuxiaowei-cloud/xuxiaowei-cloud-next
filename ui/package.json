@@ -39,11 +39,10 @@
     "element-plus",
     "js-cookie",
     "jsencrypt",
+    "pinia",
     "vue",
     "vue-echarts",
     "vue-router",
-    "vuex",
-    "vuex-persistedstate",
     "typescript",
     "vite"
   ],
@@ -58,14 +57,13 @@
     "element-plus": "2.2.10",
     "js-cookie": "3.0.1",
     "jsencrypt": "3.2.1",
+    "pinia": "2.0.17",
     "sockjs-client": "1.6.1",
     "stompjs": "2.3.3",
     "vue": "3.2.37",
     "vue-clipboard3": "2.0.0",
     "vue-echarts": "6.2.3",
-    "vue-router": "4.1.2",
-    "vuex": "4.0.2",
-    "vuex-persistedstate": "4.1.0"
+    "vue-router": "4.1.2"
   },
   "devDependencies": {
     "@tauri-apps/cli": "1.0.5",

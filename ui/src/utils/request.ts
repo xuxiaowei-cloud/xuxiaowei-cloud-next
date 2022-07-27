@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios'
-import store from '../store'
+import { useStore } from '../store'
 import settings from '../settings'
 import { ElMessage } from 'element-plus'
 
@@ -16,7 +16,7 @@ service.interceptors.request.use(
     if (!config.headers) {
       config.headers = {}
     }
-    config.headers.authorization = 'Bearer ' + store.getters.accessToken
+    config.headers.authorization = 'Bearer ' + useStore.getAccessToken
     return config
   },
   error => {
@@ -27,7 +27,7 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    if (settings.state.loginRequiredCode.indexOf(response.data.code) === -1) {
+    if (settings.loginRequiredCode.indexOf(response.data.code) === -1) {
       return response
     } else {
       ElMessage({
@@ -38,7 +38,7 @@ service.interceptors.response.use(
         onClose: () => {
           // 授权成功后重定向页面
           // 重定向页面不包括无权限页面（non-authority）
-          location.href = settings.state.loginPage + '?homePage=' + encodeURIComponent(location.href.replace('non-authority', ''))
+          location.href = settings.loginPage + '?homePage=' + encodeURIComponent(location.href.replace('non-authority', ''))
         }
       })
     }
