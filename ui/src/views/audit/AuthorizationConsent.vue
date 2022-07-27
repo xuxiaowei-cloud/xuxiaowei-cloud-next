@@ -32,11 +32,8 @@
 import { page, removeById, removeByIds, Oauth2AuthorizationConsentPrimaryKey } from '../../api/passport/oauth2-authorization-consent'
 import { hasAuthority } from '../../utils/authority'
 import { reactive, ref } from 'vue'
-import { useStore } from 'vuex'
+import settings from '../../settings'
 import { ElMessage } from 'element-plus'
-
-// 缓存
-const store = useStore()
 
 // 表格数据
 const tableData = ref([])
@@ -62,7 +59,7 @@ const cloudSearch = () => {
   loading.value = true
   page(param).then(response => {
     console.log(response)
-    if (response.code === store.state.settings.okCode) {
+    if (response.code === settings.okCode) {
       const data = response.data
       tableData.value = data.records
       param.total = data.total
@@ -92,7 +89,7 @@ const cloudRemove = () => {
     })
   } else {
     removeByIds(ids).then(response => {
-      if (response.code === store.state.settings.okCode) {
+      if (response.code === settings.okCode) {
         if (response.data) {
           ElMessage({
             message: response.msg,
@@ -141,7 +138,7 @@ const currentChange = (e: number) => {
 // 删除授权Token
 const deletePrimaryKey = (registeredClientId:string, principalName:string) => {
   removeById({ registeredClientId, principalName }).then(response => {
-    if (response.code === store.state.settings.okCode) {
+    if (response.code === settings.okCode) {
       if (response.data) {
         ElMessage({
           message: response.msg,

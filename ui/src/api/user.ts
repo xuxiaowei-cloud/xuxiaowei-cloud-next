@@ -1,5 +1,5 @@
 import request from '../utils/request'
-import store from '../store'
+import { useStore } from '../store'
 import settings from '../settings'
 import { ElMessage } from 'element-plus'
 
@@ -10,15 +10,15 @@ export const info = function () {
   return request.post('/user/info').then(response => {
     console.log('用户信息', response)
     const responseData = response.data
-    if (responseData.code === settings.state.okCode) {
+    if (responseData.code === settings.okCode) {
       const data = responseData.data
       const usersId = data.usersId
       const username = data.username
       const nickname = data.nickname
 
-      store.commit('setUsersId', usersId)
-      store.commit('setUsername', username)
-      store.commit('setNickname', nickname)
+      useStore.setUsersId(usersId)
+      useStore.setUsername(username)
+      useStore.setNickname(nickname)
     } else {
       ElMessage({
         message: responseData.msg,

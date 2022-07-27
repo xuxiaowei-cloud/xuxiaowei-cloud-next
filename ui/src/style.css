@@ -1,0 +1,4 @@
+/*防止 ElMessage 样式无效*/
+@import 'element-plus/theme-chalk/el-message.css';
+/*防止 ElMessageBox 样式无效*/
+@import 'element-plus/theme-chalk/el-message-box.css';

@@ -27,10 +27,10 @@
     "axios",
     "element-plus",
     "jsencrypt",
+    "pinia",
     "vite",
     "vue",
     "vue-router",
-    "vuex",
     "typescript"
   ],
   "dependencies": {
@@ -38,11 +38,10 @@
     "axios": "0.27.2",
     "element-plus": "2.2.10",
     "jsencrypt": "3.2.1",
+    "pinia": "2.0.17",
     "terser": "5.14.2",
     "vue": "3.2.37",
-    "vue-router": "4.1.2",
-    "vuex": "4.0.2",
-    "vuex-persistedstate": "4.1.0"
+    "vue-router": "4.1.2"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "5.30.7",

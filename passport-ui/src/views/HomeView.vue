@@ -53,16 +53,12 @@ import { reactive, ref } from 'vue'
 import { User, Key, Lock, Unlock } from '@element-plus/icons-vue'
 // @ts-ignore
 import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
-
-import { login } from '../api/user'
-
-import { useStore } from 'vuex'
 import { ElMessage } from 'element-plus'
 import { useRoute } from 'vue-router'
+import { login } from '../api/user'
+import settings from '../settings'
 
 const route = useRoute()
-
-const store = useStore()
 
 // 表单中的值
 const cloudForm = reactive({
@@ -113,7 +109,7 @@ const submitCloudForm = () => {
         console.log(response)
         const msg = response.msg
 
-        if (response.code === store.state.settings.okCode) {
+        if (response.code === settings.okCode) {
           ElMessage({
             message: msg,
             // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000

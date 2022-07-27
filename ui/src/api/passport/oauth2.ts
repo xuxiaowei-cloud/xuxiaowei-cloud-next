@@ -1,5 +1,5 @@
 import request from '../../utils/request'
-import store from '../../store'
+import { useStore } from '../../store'
 import { ElMessage } from 'element-plus'
 
 /**
@@ -10,7 +10,7 @@ export const checkToken = function () {
     const responseData = response.data
     if (responseData && responseData.active === true) {
       const authorities = responseData.authorities
-      store.commit('setAuthorities', authorities)
+      useStore.setAuthorities(authorities)
       if (authorities === undefined) {
         ElMessage({
           message: '用户无任何权限',

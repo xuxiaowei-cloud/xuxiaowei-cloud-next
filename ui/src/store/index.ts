@@ -1,160 +1,181 @@
-import { createStore } from 'vuex'
-import createPersistedState from 'vuex-persistedstate'
+import { ref } from 'vue'
 import { LocationQuery, Router } from 'vue-router'
-
+import { defineStore, createPinia } from 'pinia'
 import settings from '../settings'
-
 import { checkToken } from '../api/passport/oauth2'
 import { info } from '../api/user'
 
-const store = createStore({
-  state: { // 单一状态树
-    usersId: null, // 用户主键
-    username: null, // 用户名
-    nickname: null, // 昵称
-    authorities: [], // 权限
-    accessToken: null, // Token
-    checkTokenTime: null, // 检查Token时间
-    refreshToken: null, // 刷新Token
-    isCollapse: false // 是否折叠菜单
-  },
+export const useDefineStore = defineStore('store', {
+  state: () => ({ // 单一状态树
+    usersId: ref<string>(), // 用户主键
+    username: ref<string>(), // 用户名
+    nickname: ref<string>(), // 昵称
+    authorities: ref<string[]>([]), // 权限
+    accessToken: ref<string>(), // Token
+    checkTokenTime: ref<number>(), // 检查Token时间
+    refreshToken: ref<string>(), // 刷新Token
+    isCollapse: ref<boolean>(false), // 是否折叠菜单
+    keepAliveExclude: ref<string[]>([]) // keep-alive 排除页面（组件）名
+  }),
   getters: {
     /**
      * 获取 用户主键
      * @param state 单一状态树
      */
-    usersId (state) {
+    getUsersId (state) {
       return state.usersId
     },
     /**
      * 获取 用户名
      * @param state 单一状态树
      */
-    username (state) {
+    getUsername (state) {
       return state.username
     },
     /**
      * 获取 昵称
      * @param state 单一状态树
      */
-    nickname (state) {
+    getNickname (state) {
       return state.nickname
     },
     /**
      * 获取 权限
      * @param state 单一状态树
      */
-    authorities (state) {
+    getAuthorities (state) {
       return state.authorities
     },
     /**
      * 获取 Token
      * @param state 单一状态树
      */
-    accessToken (state) {
+    getAccessToken (state) {
       return state.accessToken
     },
     /**
      * 获取 检查Token时间
      * @param state 单一状态树
      */
-    checkTokenTime (state) {
-      return state.checkTokenTime
+    getCheckTokenTime (state) {
+      return state.checkTokenTime === undefined ? 0 : state.checkTokenTime
     },
     /**
      * 获取 刷新Token
      * @param state 单一状态树
      */
-    refreshToken (state) {
+    getRefreshToken (state) {
       return state.refreshToken
     },
     /**
      * 是否折叠菜单
      * @param state
      */
-    isCollapse (state) {
+    getIsCollapse (state) {
       return state.isCollapse
-    }
-  },
-  mutations: { // 更改 Vuex 的 store 中的状态的唯一方法是提交 mutation
-    /**
-     * 设置 用户名
-     * @param state 单一状态树
-     * @param usersId Token
-     */
-    setUsersId (state, usersId) {
-      state.usersId = usersId
     },
     /**
-     * 设置 用户名
-     * @param state 单一状态树
-     * @param username 用户名
-     */
-    setUsername (state, username) {
-      state.username = username
-    },
-    /**
-     * 设置 昵称
-     * @param state 单一状态树
-     * @param nickname 用户昵称
-     */
-    setNickname (state, nickname) {
-      state.nickname = nickname
-    },
-    /**
-     * 设置 权限
-     * @param state 单一状态树
-     * @param authorities 权限
-     */
-    setAuthorities (state, authorities) {
-      state.authorities = authorities
-    },
-    /**
-     * 设置 Token
-     * @param state 单一状态树
-     * @param accessToken 授权Token
-     */
-    setAccessToken (state, accessToken) {
-      state.accessToken = accessToken
-    },
-    /**
-     * 设置 检查Token时间
+     * keep-alive 排除页面（组件）名
      * @param state
-     * @param checkTokenTime
      */
-    setCheckTokenTime (state, checkTokenTime) {
-      state.checkTokenTime = checkTokenTime
-    },
-    /**
-     * 设置 刷新Token
-     * @param state 单一状态树
-     * @param refreshToken 刷新Token
-     */
-    setRefreshToken (state, refreshToken) {
-      state.refreshToken = refreshToken
-    },
-    /**
-     * 设置是否折叠菜单
-     * @param state 单一状态树
-     * @param isCollapse 是否折叠菜单
-     */
-    setIsCollapse (state, isCollapse) {
-      state.isCollapse = isCollapse
+    getKeepAliveExclude (state) {
+      return state.keepAliveExclude
     }
   },
   actions: {
-  },
-  modules: {
-    settings
-  },
-  plugins: [
-    createPersistedState({
-      storage: localStorage
-    })
-  ]
+    /**
+     * 设置 用户名
+     * @param usersId Token
+     */
+    setUsersId (usersId:string) {
+      this.usersId = usersId
+    },
+    /**
+     * 设置 用户名
+     * @param username 用户名
+     */
+    setUsername (username:string) {
+      this.username = username
+    },
+    /**
+     * 设置 昵称
+     * @param nickname 用户昵称
+     */
+    setNickname (nickname:string) {
+      this.nickname = nickname
+    },
+    /**
+     * 设置 权限
+     * @param authorities 权限
+     */
+    setAuthorities (authorities:string[]) {
+      this.authorities = authorities
+    },
+    /**
+     * 设置 Token
+     * @param accessToken 授权Token
+     */
+    setAccessToken (accessToken:any) {
+      this.accessToken = accessToken
+    },
+    /**
+     * 设置 检查Token时间
+     * @param checkTokenTime
+     */
+    setCheckTokenTime (checkTokenTime:number) {
+      this.checkTokenTime = checkTokenTime
+    },
+    /**
+     * 设置 刷新Token
+     * @param refreshToken 刷新Token
+     */
+    setRefreshToken (refreshToken:any) {
+      this.refreshToken = refreshToken
+    },
+    /**
+     * 设置是否折叠菜单
+     * @param isCollapse 是否折叠菜单
+     */
+    setIsCollapse (isCollapse:boolean) {
+      this.isCollapse = isCollapse
+    },
+    /**
+     * 添加 keep-alive 排除页面（组件）名
+     * @param keepAliveExclude keep-alive 排除页面（组件）名
+     */
+    addKeepAliveExclude (keepAliveExclude:string) {
+      // @ts-ignore
+      this.keepAliveExclude.push(keepAliveExclude)
+    },
+    /**
+     * 移除 keep-alive 排除
+     * @param keepAliveExclude
+     */
+    removeKeepAliveExclude (keepAliveExclude:string) {
+      this.keepAliveExclude.splice(this.keepAliveExclude.indexOf(keepAliveExclude), 1)
+    }
+  }
 })
 
-export default store
+const useStore = useDefineStore(createPinia())
+
+// 订阅缓存的修改
+useStore.$subscribe((mutation, state) => {
+  // 将缓存的修改放入本地缓存中
+  localStorage.setItem(useStore.$id, JSON.stringify({ ...state }))
+})
+
+// 获取历史缓存
+const useStoreOld = localStorage.getItem(useStore.$id)
+if (useStoreOld) {
+  // 返回已存在的缓存
+  useStore.$state = JSON.parse(useStoreOld)
+}
+
+// 注意，在使用时，不用构造方法，直接调用即可
+export {
+  useStore
+}
 
 /**
  * 参数中的Token缓存
@@ -175,16 +196,16 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
     console.log('获取到URL中的accessToken', accessToken)
     console.log('获取到URL中的refreshToken', refreshToken)
 
-    store.commit('setAccessToken', accessToken)
-    store.commit('setRefreshToken', refreshToken)
+    useStore.setAccessToken(accessToken)
+    useStore.setRefreshToken(refreshToken)
 
-    console.log('已完成store中的accessToken缓存：', store.getters.accessToken)
-    console.log('已完成store中的refreshToken缓存：', store.getters.refreshToken)
+    console.log('已完成store中的accessToken缓存：', useStore.getAccessToken)
+    console.log('已完成store中的refreshToken缓存：', useStore.getRefreshToken)
 
-    // 此次检查Token，不受 settings.state.checkTokenInterval 控制
+    // 此次检查Token，不受 settings.checkTokenInterval 控制
     checkToken().then(response => {
       console.log('完成store中的Token缓存后检查Token', response)
-      store.commit('setCheckTokenTime', new Date().getTime())
+      useStore.setCheckTokenTime(new Date().getTime())
       info().then(() => {})
     })
 
@@ -192,20 +213,20 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
 
     })
   } else {
-    const checkTokenInterval = settings.state.checkTokenInterval
-    console.log(new Date().getTime() - store.getters.checkTokenTime)
+    const checkTokenInterval = settings.checkTokenInterval
+    console.log(new Date().getTime() - useStore.getCheckTokenTime)
 
     if (checkTokenInterval === -1) {
       console.log('路由不检查Token')
     } else if (checkTokenInterval === 0) {
       checkToken().then(response => {
         console.log('检查Token', response)
-        store.commit('setCheckTokenTime', new Date().getTime())
+        useStore.setCheckTokenTime(new Date().getTime())
       })
-    } else if (checkTokenInterval > 0 && new Date().getTime() - store.getters.checkTokenTime > checkTokenInterval) {
+    } else if (checkTokenInterval > 0 && new Date().getTime() - useStore.getCheckTokenTime > checkTokenInterval) {
       checkToken().then(response => {
         console.log('超过检查Token时间间隔后，检查Token结果', response)
-        store.commit('setCheckTokenTime', new Date().getTime())
+        useStore.setCheckTokenTime(new Date().getTime())
       })
     }
   }
