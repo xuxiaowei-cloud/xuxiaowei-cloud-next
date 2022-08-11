@@ -3,7 +3,9 @@ package cloud.xuxiaowei.next.gateway.filter;
 import cloud.xuxiaowei.next.core.properties.CloudCorsProperties;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.reactive.RequestUtils;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -28,7 +30,22 @@ import java.util.List;
  * @since 0.0.1
  */
 @Component
-public class CorsBeforeWebFilter implements WebFilter {
+public class CorsBeforeWebFilter implements WebFilter , Ordered {
+
+	/**
+	 * 最低优先级（最大值）：0
+	 * <p>
+	 * 大于 0 无效
+	 */
+	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 60000;
+
+	@Setter
+	private int order = ORDERED;
+
+	@Override
+	public int getOrder() {
+		return order;
+	}
 
 	private CloudCorsProperties cloudCorsProperties;
 
