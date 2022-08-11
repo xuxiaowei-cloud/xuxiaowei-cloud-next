@@ -239,8 +239,18 @@ const handleClose = (key: number, keyPath: string) => {
 
 // 激活菜单
 const menuItem = (key: any) => {
-// 点击左侧菜单时，标签页跟随变动
+  // 点击左侧菜单时，标签页跟随变动
   editableTabsValue.value = key.index
+
+  if (key.index === '/refresh') {
+    // 如果访问的是刷新页面时，不添加tabs标签页
+    return
+  }
+
+  if (key.index === '/non-authority') {
+    // 如果访问的是无权限页面时，不添加tabs标签页
+    return
+  }
 
   // 标签页已存在时，跳过
   for (const i in editableTabs.value) {
