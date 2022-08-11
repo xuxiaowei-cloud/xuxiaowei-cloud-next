@@ -30,7 +30,7 @@ import java.util.List;
  * @since 0.0.1
  */
 @Component
-public class CorsBeforeWebFilter implements WebFilter , Ordered {
+public class CorsBeforeWebFilter implements WebFilter, Ordered {
 
 	/**
 	 * 最低优先级（最大值）：0
