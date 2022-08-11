@@ -29,12 +29,12 @@
           <!-- 无二级菜单，或二级菜单的个数小于等于 1 -->
           <el-menu-item :index="menuItemPath(item)" :key="menuItemPath(item)" @click="menuItem"
                         v-if="childrenLength(item.children) <= 1 && show(item.children)">
-            <template #title>
+            <el-tooltip class="box-item" effect="dark" :disabled="!isCollapse" :content="item.name" placement="right">
               <el-icon v-if="item.meta?.icon">
                 <component :is="item.meta?.icon"/>
               </el-icon>
-              <span>{{ item.name }}</span>
-            </template>
+            </el-tooltip>
+            <span>{{ item.name }}</span>
           </el-menu-item>
 
         </template>
@@ -239,8 +239,18 @@ const handleClose = (key: number, keyPath: string) => {
 
 // 激活菜单
 const menuItem = (key: any) => {
-// 点击左侧菜单时，标签页跟随变动
+  // 点击左侧菜单时，标签页跟随变动
   editableTabsValue.value = key.index
+
+  if (key.index === '/refresh') {
+    // 如果访问的是刷新页面时，不添加tabs标签页
+    return
+  }
+
+  if (key.index === '/non-authority') {
+    // 如果访问的是无权限页面时，不添加tabs标签页
+    return
+  }
 
   // 标签页已存在时，跳过
   for (const i in editableTabs.value) {
@@ -284,6 +294,22 @@ const isCollapseClick = () => {
 
 // 刷新当前页面（局部刷新）
 const refreshClick = () => {
+  // 无论如何都会销毁组件
+  const routeRecords = router.getRoutes()
+  for (const i in routeRecords) {
+    const routeRecord = routeRecords[i]
+    if (routeRecord.path === location.hash.substring(1, location.hash.length)) {
+      const components = routeRecord.components
+      if (components) {
+        if (components.default) {
+          // 使用 el-tabs 的 @tab-remove 删除 el-tab-pane，需要销毁
+          // @ts-ignore
+          useStore.addKeepAliveExclude(components.default.__name)
+        }
+      }
+    }
+  }
+
   location.hash = '/refresh'
 }
 
