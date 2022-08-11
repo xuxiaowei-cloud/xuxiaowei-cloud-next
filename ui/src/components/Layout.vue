@@ -294,6 +294,22 @@ const isCollapseClick = () => {
 
 // 刷新当前页面（局部刷新）
 const refreshClick = () => {
+  // 无论如何都会销毁组件
+  const routeRecords = router.getRoutes()
+  for (const i in routeRecords) {
+    const routeRecord = routeRecords[i]
+    if (routeRecord.path === location.hash.substring(1, location.hash.length)) {
+      const components = routeRecord.components
+      if (components) {
+        if (components.default) {
+          // 使用 el-tabs 的 @tab-remove 删除 el-tab-pane，需要销毁
+          // @ts-ignore
+          useStore.addKeepAliveExclude(components.default.__name)
+        }
+      }
+    }
+  }
+
   location.hash = '/refresh'
 }
 
