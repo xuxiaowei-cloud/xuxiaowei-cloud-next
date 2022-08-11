@@ -29,12 +29,10 @@
           <!-- 无二级菜单，或二级菜单的个数小于等于 1 -->
           <el-menu-item :index="menuItemPath(item)" :key="menuItemPath(item)" @click="menuItem"
                         v-if="childrenLength(item.children) <= 1 && show(item.children)">
-            <template #title>
-              <el-icon v-if="item.meta?.icon">
-                <component :is="item.meta?.icon"/>
-              </el-icon>
-              <span>{{ item.name }}</span>
-            </template>
+            <el-icon v-if="item.meta?.icon">
+              <component :is="item.meta?.icon"/>
+            </el-icon>
+            <span>{{ item.name }}</span>
           </el-menu-item>
 
         </template>
