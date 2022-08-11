@@ -29,9 +29,11 @@
           <!-- 无二级菜单，或二级菜单的个数小于等于 1 -->
           <el-menu-item :index="menuItemPath(item)" :key="menuItemPath(item)" @click="menuItem"
                         v-if="childrenLength(item.children) <= 1 && show(item.children)">
-            <el-icon v-if="item.meta?.icon">
-              <component :is="item.meta?.icon"/>
-            </el-icon>
+            <el-tooltip class="box-item" effect="dark" :disabled="!isCollapse" :content="item.name" placement="right">
+              <el-icon v-if="item.meta?.icon">
+                <component :is="item.meta?.icon"/>
+              </el-icon>
+            </el-tooltip>
             <span>{{ item.name }}</span>
           </el-menu-item>
 
