@@ -3,7 +3,11 @@
 
     <el-header class="cloud-header">
       <h1>Login</h1>
-      <span>登录服务-徐晓伟微服务</span>
+      <div>登录服务-徐晓伟微服务</div>
+      <br v-if="!cross">
+      <div v-if="!cross" style="color: red;">
+        由于跨域、Session共享、登录成功的授权URL配置，请使用{{ crossDomain }}的子域，如：{{ passportDomain }}，否则将无法登录
+      </div>
     </el-header>
 
     <el-main class="cloud-main">
@@ -57,6 +61,13 @@ import { ElMessage } from 'element-plus'
 import { useRoute } from 'vue-router'
 import { login } from '../api/user'
 import settings from '../settings'
+
+// 跨域
+const crossDomain = ref<string>('example.next.xuxiaowei.cloud')
+// 登录域名
+const passportDomain = ref<string>('passport.example.next.xuxiaowei.cloud')
+// 跨域配置
+const cross = ref<boolean>(location.host.includes(crossDomain.value))
 
 const route = useRoute()
 
