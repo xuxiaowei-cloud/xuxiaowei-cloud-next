@@ -119,7 +119,8 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
 
 		String subject = "登录系统失败";
 		String result = "失败";
-		HandlerUtils.send(usersService, javaMailSender, mailProperties, request, username, subject, result);
+		Runnable runnable = () -> HandlerUtils.send(usersService, javaMailSender, mailProperties, request, username, subject, result);
+		new Thread(runnable).start();
 	}
 
 }
