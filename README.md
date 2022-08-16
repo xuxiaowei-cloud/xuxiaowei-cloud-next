@@ -116,14 +116,13 @@
 ## 相关项目
 
 - xuxiaowei-cloud
-    - 使用 Spring Boot 2.7.x，将仓库地址后面删除 `-next` 即可
-      （全平台仓库同名，包含：
-      [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud)、
-      [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud)、
-      [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud)、
-      [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud)、
-      [GitLink](https://www.gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud)、
-      [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud)）
+    - 使用 Spring Boot 2.7.x，将仓库地址后面删除 `-next` 即可（全平台仓库同名）
+        1. [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud)
+        2. [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud)
+        3. [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud)
+        4. [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud)
+        5. [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud)
+        6. [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud)
 
 ## [脚本](./sh/README.md)
 
