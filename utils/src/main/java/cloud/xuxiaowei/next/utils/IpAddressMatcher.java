@@ -30,8 +30,9 @@ public final class IpAddressMatcher {
 	 * @param ipAddress 请求必须来自的地址或地址范围。
 	 */
 	public IpAddressMatcher(String ipAddress) {
-		if (ipAddress.indexOf('/') > 0) {
-			String[] addressAndMask = StringUtils.split(ipAddress, "/");
+		String separator = "/";
+		if (ipAddress.indexOf(separator) > 0) {
+			String[] addressAndMask = StringUtils.split(ipAddress, separator);
 			assert addressAndMask != null;
 			ipAddress = addressAndMask[0];
 			this.nMaskBits = Integer.parseInt(addressAndMask[1]);

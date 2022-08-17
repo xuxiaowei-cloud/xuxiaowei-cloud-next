@@ -27,7 +27,7 @@ import java.net.URI;
 @Component
 public class ResponseHeadersGlobalFilter implements GlobalFilter, Ordered {
 
-	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 100000;
+	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 1000000;
 
 	private CloudWebSocketProperties cloudWebSocketProperties;
 

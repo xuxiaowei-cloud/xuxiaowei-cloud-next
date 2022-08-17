@@ -47,6 +47,13 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- IOUtils -->
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
         <!-- 提供JSON数据处理所需的包，如：ObjectMapper、JavaTimeModule -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,6 +84,12 @@
             <artifactId>spring-security-core</artifactId>
             <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
             <scope>provided</scope>
+        </dependency>
+
+        <!-- 提供拦截器 HandlerInterceptor -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
         </dependency>
 
         <!-- 提供 AOP -->

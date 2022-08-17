@@ -1,11 +1,13 @@
+cloud.xuxiaowei.next.core.properties.CloudAesProperties
 cloud.xuxiaowei.next.core.properties.CloudBlackListProperties
 cloud.xuxiaowei.next.core.properties.CloudClientProperties
 cloud.xuxiaowei.next.core.properties.CloudCookieProperties
 cloud.xuxiaowei.next.core.properties.CloudCorsProperties
+cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties
 cloud.xuxiaowei.next.core.properties.CloudRememberMeProperties
 cloud.xuxiaowei.next.core.properties.CloudSecurityProperties
 cloud.xuxiaowei.next.core.properties.CloudSessionProperties
+cloud.xuxiaowei.next.core.properties.CloudSignProperties
 cloud.xuxiaowei.next.core.properties.CloudWebServiceProperties
 cloud.xuxiaowei.next.core.properties.CloudWebSocketProperties
 cloud.xuxiaowei.next.core.properties.CloudWhiteListProperties
-cloud.xuxiaowei.next.core.properties.JwkKeyProperties

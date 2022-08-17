@@ -18,6 +18,8 @@ import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 /**
  * JWT {@link OAuth2AuthorizationService}
  *
@@ -28,6 +30,7 @@ import reactor.core.publisher.Mono;
  * @see OAuth2AuthorizationService
  */
 @Component
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class OAuth2AuthorizationServiceReactiveJwtAuthenticationConverter
 		implements Converter<Jwt, Mono<AbstractAuthenticationToken>> {
 
@@ -60,7 +63,7 @@ public class OAuth2AuthorizationServiceReactiveJwtAuthenticationConverter
 		}
 
 		// @formatter:off
-		return this.jwtGrantedAuthoritiesConverter.convert(jwt)
+		return Objects.requireNonNull(this.jwtGrantedAuthoritiesConverter.convert(jwt))
 				.collectList()
 				.map((authorities) -> new JwtAuthenticationToken(jwt, authorities));
 		// @formatter:on

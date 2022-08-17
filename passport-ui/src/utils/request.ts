@@ -1,5 +1,7 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ElMessage } from 'element-plus'
+import CryptoJS from 'crypto-js'
+import settings from '../settings'
 
 // create an axios instance
 const service = axios.create({
@@ -9,18 +11,28 @@ const service = axios.create({
 })
 
 // request interceptor
-service.interceptors.request.use(
-  config => {
+service.interceptors.request.use((config: AxiosRequestConfig) => {
     return config
   },
   error => {
     return error
-  }
-)
+  })
 
 // response interceptor
-service.interceptors.response.use(
-  response => {
+service.interceptors.response.use((response: AxiosResponse) => {
+    // 如果响应头中指定了加密类型（版本）为 v1，将进行数据解密
+    if (response.headers.encrypt === 'v1') {
+      const key = CryptoJS.enc.Utf8.parse(settings.key)
+      const iv = CryptoJS.enc.Latin1.parse(settings.iv)
+      const decrypt = CryptoJS.AES.decrypt(response.data.ciphertext, key, {
+        iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+      })
+      // 解密完成，将解密后的数据放入响应数据的位置
+      response.data = JSON.parse(decrypt.toString(CryptoJS.enc.Utf8))
+    }
+
     return response
   },
   error => {
@@ -59,7 +71,6 @@ service.interceptors.response.use(
       console.log(error)
     }
     return error
-  }
-)
+  })
 
 export default service

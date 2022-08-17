@@ -64,6 +64,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 	 * @param authorization 权限标识
 	 * @param userAgent 浏览器标识
 	 * @param ex 异常
+	 * @return 返回保存结果
 	 */
 	@Override
 	public boolean saveLog(String hostAddress, String requestId, String sessionId, String method, String requestUri,

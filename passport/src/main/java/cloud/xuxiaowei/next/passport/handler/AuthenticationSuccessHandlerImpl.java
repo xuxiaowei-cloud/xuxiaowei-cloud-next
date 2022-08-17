@@ -6,6 +6,7 @@ import cloud.xuxiaowei.next.passport.service.IUsersLoginService;
 import cloud.xuxiaowei.next.passport.utils.HandlerUtils;
 import cloud.xuxiaowei.next.system.service.IUsersService;
 import cloud.xuxiaowei.next.utils.Constant;
+import cloud.xuxiaowei.next.utils.RequestUtils;
 import cloud.xuxiaowei.next.utils.SecurityUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -94,9 +95,14 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 		request.getRequestDispatcher(successForwardUrl).forward(request, response);
 
+		String remoteHost = request.getRemoteHost();
+		String userAgent = RequestUtils.getUserAgent(request);
+
 		String subject = "登录系统成功";
 		String result = "成功";
-		HandlerUtils.send(usersService, javaMailSender, mailProperties, request, userName, subject, result);
+		Runnable runnable = () -> HandlerUtils.send(usersService, javaMailSender, mailProperties, userName, subject,
+				result, remoteHost, userAgent);
+		new Thread(runnable).start();
 	}
 
 }

@@ -1,7 +1,7 @@
 package cloud.xuxiaowei.next.gateway.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudWhiteListProperties;
-import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties;
 import cloud.xuxiaowei.next.gateway.filter.CorsBeforeWebFilter;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.IpAddressMatcher;
@@ -61,7 +61,7 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 
 	private CloudWhiteListProperties cloudWhiteListProperties;
 
-	private JwkKeyProperties jwkKeyProperties;
+	private CloudJwkKeyProperties cloudJwkKeyProperties;
 
 	private OAuth2AuthorizationServiceReactiveJwtAuthenticationConverter jwtAuthenticationConverter;
 
@@ -86,8 +86,8 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 	}
 
 	@Autowired
-	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
-		this.jwkKeyProperties = jwkKeyProperties;
+	public void setJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
+		this.cloudJwkKeyProperties = cloudJwkKeyProperties;
 	}
 
 	@Autowired
@@ -121,7 +121,7 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 
 			// 资源服务配置秘钥
 			// 启用 OAuth2 JWT 资源服务器支持
-			RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
+			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
 			oauth2ResourceServerCustomizer.jwt().publicKey(rsaPublicKey);
 
 			// 检查数据库中是否存在Token

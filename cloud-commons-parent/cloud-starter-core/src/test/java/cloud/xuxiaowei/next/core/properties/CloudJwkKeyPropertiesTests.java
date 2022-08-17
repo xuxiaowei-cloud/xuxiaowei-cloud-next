@@ -15,7 +15,7 @@ import java.security.KeyPair;
  * @since 0.0.1
  */
 @Slf4j
-class JwkKeyPropertiesTests {
+class CloudJwkKeyPropertiesTests {
 
 	/**
 	 * 生成 RSA 密钥对

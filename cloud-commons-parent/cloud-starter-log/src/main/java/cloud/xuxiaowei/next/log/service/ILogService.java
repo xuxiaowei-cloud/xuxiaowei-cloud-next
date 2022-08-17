@@ -25,6 +25,7 @@ public interface ILogService extends IService<Log> {
 	 * @param authorization 权限标识
 	 * @param userAgent 浏览器标识
 	 * @param ex 异常
+	 * @return 返回保存结果
 	 */
 	boolean saveLog(String hostAddress, String requestId, String sessionId, String method, String requestUri,
 			String queryString, String headersMap, String authorization, String userAgent, Throwable ex);

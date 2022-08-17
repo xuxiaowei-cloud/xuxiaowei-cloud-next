@@ -38,13 +38,13 @@ import java.util.List;
  * @since 0.0.1
  */
 @Slf4j
-// @formatter:off
 @ControllerAdvice({
-		"cloud.xuxiaowei.next",
-		"org.springframework.security.oauth2.provider.endpoint",
-		"org.springframework.security.oauth2.provider.request"
-})
+// @formatter:off
+	"cloud.xuxiaowei.next",
+	"org.springframework.security.oauth2.provider.endpoint",
+	"org.springframework.security.oauth2.provider.request"
 // @formatter:on
+})
 public class ControllerAdviceConfiguration {
 
 	/**

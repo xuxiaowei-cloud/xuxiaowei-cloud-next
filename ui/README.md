@@ -102,8 +102,8 @@ npm create vite@latest ui -- --template vue-ts
         - AES
 
 7. 缓存
-   - pinia
-      - 已手动添加缓存持久化，缓存刷新时保留
+    - pinia
+        - 已手动添加缓存持久化，缓存刷新时保留
 
 8. 富文本
     - @toast-ui/editor
@@ -114,11 +114,11 @@ npm create vite@latest ui -- --template vue-ts
     - stompjs
 
 10. [tauri](https://tauri.studio)
-     - [GitHub](https://github.com/tauri-apps/tauri)
-     - @tauri-apps/api
-     - @tauri-apps/cli
-     - 将 [config](config) 文件放在 `cargo` 安装目录下
-     - 如果在运行打包时，下载 `wix3` 失败，可自行下载后，解压到 `src-tauri\WixTools` 文件夹中
+    - [GitHub](https://github.com/tauri-apps/tauri)
+    - @tauri-apps/api
+    - @tauri-apps/cli
+    - 将 [config](config) 文件放在 `cargo` 安装目录下
+    - 如果在运行打包时，下载 `wix3` 失败，可自行下载后，解压到 `src-tauri\WixTools` 文件夹中
 
 ## 依赖地址
 
@@ -162,7 +162,7 @@ npm i @element-plus/icons-vue @tauri-apps/api @toast-ui/editor @wangeditor/edito
 ```
 
 ```
-npm i -D @tauri-apps/cli @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue lint-staged terser typescript unplugin-auto-import unplugin-vue-components vite vue-tsc
+npm i -D @tauri-apps/cli @types/crypto-js @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue lint-staged terser typescript unplugin-auto-import unplugin-vue-components vite vue-tsc
 ```
 
 ## 其他说明

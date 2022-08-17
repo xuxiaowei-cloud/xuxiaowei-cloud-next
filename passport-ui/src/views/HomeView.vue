@@ -3,7 +3,11 @@
 
     <el-header class="cloud-header">
       <h1>Login</h1>
-      <span>登录服务-徐晓伟微服务</span>
+      <div>登录服务-徐晓伟微服务</div>
+      <br v-if="!cross">
+      <div v-if="!cross" style="color: red;">
+        由于跨域、Session共享、登录成功的授权URL配置，请使用{{ crossDomain }}的子域，如：{{ passportDomain }}，否则将无法登录
+      </div>
     </el-header>
 
     <el-main class="cloud-main">
@@ -51,12 +55,18 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { User, Key, Lock, Unlock } from '@element-plus/icons-vue'
-// @ts-ignore
-import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
+import { JSEncrypt } from 'jsencrypt'
 import { ElMessage } from 'element-plus'
 import { useRoute } from 'vue-router'
 import { login } from '../api/user'
 import settings from '../settings'
+
+// 跨域
+const crossDomain = ref<string>('example.next.xuxiaowei.cloud')
+// 登录域名
+const passportDomain = ref<string>('passport.example.next.xuxiaowei.cloud')
+// 跨域配置
+const cross = ref<boolean>(location.host.includes(crossDomain.value))
 
 const route = useRoute()
 
@@ -97,8 +107,16 @@ const submitCloudForm = () => {
         const rsaPublicKeyBase64 = document.head.querySelector('[name=rsa_public_key_base64][content]').content
         // @ts-ignore
         rememberMeParameter = document.head.querySelector('[name=rememberMeParameter][content]').content
-        JsEncrypt.prototype.setPublicKey(rsaPublicKeyBase64)
-        password = JsEncrypt.prototype.encrypt(password)
+
+        const jsEncrypt = new JSEncrypt()
+        jsEncrypt.setPublicKey(rsaPublicKeyBase64)
+        const encrypt = jsEncrypt.encrypt(password)
+        if (encrypt === false) {
+          ElMessage.error('密码加密失败')
+          return
+        }
+
+        password = encrypt
       }
       const redirectUri = route.query.redirectUri
 

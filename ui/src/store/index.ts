@@ -7,6 +7,7 @@ import { info } from '../api/user'
 
 export const useDefineStore = defineStore('store', {
   state: () => ({ // 单一状态树
+    currentTimeMillis: ref<number>(), // 当前时间戳
     usersId: ref<string>(), // 用户主键
     username: ref<string>(), // 用户名
     nickname: ref<string>(), // 昵称
@@ -84,66 +85,73 @@ export const useDefineStore = defineStore('store', {
   },
   actions: {
     /**
+     * 设置 当前时间戳
+     * @param currentTimeMillis 当前时间戳
+     */
+    setCurrentTimeMillis (currentTimeMillis: number) {
+      this.currentTimeMillis = currentTimeMillis
+    },
+    /**
      * 设置 用户名
      * @param usersId Token
      */
-    setUsersId (usersId:string) {
+    setUsersId (usersId: string) {
       this.usersId = usersId
     },
     /**
      * 设置 用户名
      * @param username 用户名
      */
-    setUsername (username:string) {
+    setUsername (username: string) {
       this.username = username
     },
     /**
      * 设置 昵称
      * @param nickname 用户昵称
      */
-    setNickname (nickname:string) {
+    setNickname (nickname: string) {
       this.nickname = nickname
     },
     /**
      * 设置 权限
      * @param authorities 权限
      */
-    setAuthorities (authorities:string[]) {
+    setAuthorities (authorities: string[]) {
       this.authorities = authorities
     },
     /**
      * 设置 Token
      * @param accessToken 授权Token
      */
-    setAccessToken (accessToken:any) {
+    setAccessToken (accessToken: any) {
       this.accessToken = accessToken
     },
     /**
      * 设置 检查Token时间
      * @param checkTokenTime
      */
-    setCheckTokenTime (checkTokenTime:number) {
+    setCheckTokenTime (checkTokenTime: number) {
       this.checkTokenTime = checkTokenTime
     },
     /**
      * 设置 刷新Token
      * @param refreshToken 刷新Token
      */
-    setRefreshToken (refreshToken:any) {
+    setRefreshToken (refreshToken: any) {
       this.refreshToken = refreshToken
     },
     /**
      * 设置是否折叠菜单
      * @param isCollapse 是否折叠菜单
      */
-    setIsCollapse (isCollapse:boolean) {
+    setIsCollapse (isCollapse: boolean) {
       this.isCollapse = isCollapse
     },
     /**
      * 添加 keep-alive 排除页面（组件）名
      * @param keepAliveExclude keep-alive 排除页面（组件）名
      */
-    addKeepAliveExclude (keepAliveExclude:string) {
+    addKeepAliveExclude (keepAliveExclude: string) {
       // @ts-ignore
       this.keepAliveExclude.push(keepAliveExclude)
     },
@@ -151,7 +159,7 @@ export const useDefineStore = defineStore('store', {
      * 移除 keep-alive 排除
      * @param keepAliveExclude
      */
-    removeKeepAliveExclude (keepAliveExclude:string) {
+    removeKeepAliveExclude (keepAliveExclude: string) {
       this.keepAliveExclude.splice(this.keepAliveExclude.indexOf(keepAliveExclude), 1)
     }
   }
@@ -206,7 +214,8 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
     checkToken().then(response => {
       console.log('完成store中的Token缓存后检查Token', response)
       useStore.setCheckTokenTime(new Date().getTime())
-      info().then(() => {})
+      info().then(() => {
+      })
     })
 
     router.push({ path, query }).then(() => {

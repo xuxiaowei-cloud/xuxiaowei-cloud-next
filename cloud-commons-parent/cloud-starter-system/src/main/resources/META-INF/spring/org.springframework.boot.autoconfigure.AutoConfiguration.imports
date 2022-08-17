@@ -1,5 +1,8 @@
 cloud.xuxiaowei.next.system.aspect.ControllerLogAspect
+cloud.xuxiaowei.next.system.configuration.WebMvcConfigurerConfiguration
+cloud.xuxiaowei.next.system.filter.HttpServletRequestInputStreamFilter
 cloud.xuxiaowei.next.system.filter.LogHttpFilter
+cloud.xuxiaowei.next.system.interceptor.EncryptHandlerInterceptor
 cloud.xuxiaowei.next.system.service.impl.AuthoritiesServiceImpl
 cloud.xuxiaowei.next.system.service.impl.AuthorityServiceImpl
 cloud.xuxiaowei.next.system.service.impl.SessionServiceImpl

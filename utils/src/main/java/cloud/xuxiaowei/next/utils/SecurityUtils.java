@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimNames;
 import org.springframework.util.StringUtils;
 
 import java.security.Principal;
@@ -52,6 +53,32 @@ public class SecurityUtils {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * sub - 主题声明标识作为 JWT 主题的主体
+	 * @return 返回 客户ID
+	 */
+	public static String getSub() {
+		SecurityContext context = SecurityContextHolder.getContext();
+		Authentication authentication = context.getAuthentication();
+		if (authentication != null) {
+			Object principal = authentication.getPrincipal();
+			if (principal instanceof Jwt jwt) {
+				Map<String, Object> claims = jwt.getClaims();
+				Object sub = claims.get(JwtClaimNames.SUB);
+				return sub == null ? null : sub.toString();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * sub - 主题声明标识作为 JWT 主题的主体
+	 * @return 返回 客户ID
+	 */
+	public static String getClientId() {
+		return getSub();
 	}
 
 	/**
@@ -161,7 +188,9 @@ public class SecurityUtils {
 		if (StringUtils.hasLength(authorization)) {
 			String[] authorizationSplit = authorization.split("\\.");
 			int length = authorizationSplit.length;
-			if (length >= 2) {
+			// 下标为 1 的是 Payload
+			int len = 2;
+			if (length >= len) {
 				String payloadEncodeStr = authorizationSplit[1];
 				return Base64.decodeStr(payloadEncodeStr);
 			}
@@ -186,7 +215,7 @@ public class SecurityUtils {
 				log.error("{}：转换为JSON异常", payload, e);
 			}
 		}
-		return new HashMap<>();
+		return new HashMap<>(2);
 	}
 
 	/**

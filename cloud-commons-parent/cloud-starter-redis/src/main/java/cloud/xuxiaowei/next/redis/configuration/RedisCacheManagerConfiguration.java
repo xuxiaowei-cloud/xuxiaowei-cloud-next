@@ -95,9 +95,6 @@ public class RedisCacheManagerConfiguration {
 		// 设置连接工厂。
 		template.setConnectionFactory(redisConnectionFactory);
 
-		// 可以使用读写JSON
-		Jackson2JsonRedisSerializer<?> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
-
 		// ObjectMapper 提供了从基本 POJO（普通旧Java对象）或从通用 JSON 树模型（{@link JsonNode}）读取和写入 JSON
 		// 的功能，
 		// 以及执行转换的相关功能。
@@ -140,7 +137,9 @@ public class RedisCacheManagerConfiguration {
 		objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
 				ObjectMapper.DefaultTyping.NON_FINAL);
 
-		jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+		// 可以使用读写JSON
+		Jackson2JsonRedisSerializer<?> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(objectMapper,
+				Object.class);
 
 		// 1
 		template.setValueSerializer(jackson2JsonRedisSerializer);

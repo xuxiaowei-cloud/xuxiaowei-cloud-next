@@ -92,13 +92,14 @@ public class HandlerUtils {
 	 * @param usersService 用户 接口服务
 	 * @param javaMailSender Java 邮件发送者
 	 * @param mailProperties 邮件配置
-	 * @param request 请求
 	 * @param userName 用户名
 	 * @param subject 邮件主题
 	 * @param result 登录结果
+	 * @param remoteHost IP
+	 * @param userAgent 浏览器标识
 	 */
 	public static void send(IUsersService usersService, JavaMailSender javaMailSender, MailProperties mailProperties,
-			HttpServletRequest request, String userName, String subject, String result) {
+			String userName, String subject, String result, String remoteHost, String userAgent) {
 		Users users = usersService.getByUsername(userName);
 		if (users == null) {
 			log.error("错误：用户：{} 登录{}后，未找到用户信息，不可发送邮件！！！", userName, result);
@@ -114,9 +115,6 @@ public class HandlerUtils {
 			log.error("错误：邮箱：{} 未登录{}，不可发送邮件！！！", mailProperties.getUsername(), result);
 			return;
 		}
-
-		String remoteHost = request.getRemoteHost();
-		String userAgent = RequestUtils.getUserAgent(request);
 
 		String now = DateUtils.format(LocalDateTime.now(), DateUtils.DEFAULT_DATE_TIME_FORMAT);
 

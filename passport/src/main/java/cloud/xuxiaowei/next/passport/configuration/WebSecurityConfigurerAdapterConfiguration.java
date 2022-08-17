@@ -2,7 +2,7 @@ package cloud.xuxiaowei.next.passport.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudRememberMeProperties;
 import cloud.xuxiaowei.next.core.properties.CloudSecurityProperties;
-import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -37,7 +37,7 @@ import static cloud.xuxiaowei.next.oauth2.impl.CsrfRequestMatcherImpl.CSRF_REQUE
 @Configuration
 public class WebSecurityConfigurerAdapterConfiguration {
 
-	private JwkKeyProperties jwkKeyProperties;
+	private CloudJwkKeyProperties cloudJwkKeyProperties;
 
 	private AccessDeniedHandler accessDeniedHandler;
 
@@ -56,8 +56,8 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	private AuthenticationFailureHandler authenticationFailureHandler;
 
 	@Autowired
-	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
-		this.jwkKeyProperties = jwkKeyProperties;
+	public void setJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
+		this.cloudJwkKeyProperties = cloudJwkKeyProperties;
 	}
 
 	@Autowired
@@ -122,7 +122,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 
 		// 资源服务配置秘钥
 		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
-			RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
+			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
 			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
 					.withPublicKey(rsaPublicKey);
 			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
