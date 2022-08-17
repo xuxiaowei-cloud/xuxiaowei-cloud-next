@@ -106,9 +106,7 @@ import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import settings from '../../../settings'
 import { ElMessage, ElMessageBox } from 'element-plus'
-// TS 未能识别，其实不存在问题
-// @ts-ignore
-import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
+import { JSEncrypt } from 'jsencrypt'
 
 const props = defineProps({
   dialogVisible: {
@@ -223,7 +221,7 @@ const param = reactive({
   id: null,
   clientId: null,
   clientName: null,
-  clientSecret: null,
+  clientSecret: '',
   clientIdIssuedAt: null,
   clientSecretExpiresAt: null,
   clientAuthenticationMethods: null,
@@ -249,7 +247,7 @@ const param = reactive({
 })
 
 // 公钥
-const publicKey = ref(null)
+const publicKey = ref<string>('')
 
 // 获取识别码与公钥
 codeRsa().then(response => {
@@ -288,7 +286,7 @@ const emit = defineEmits(['dialogVisibleClose'])
 // 初始化数据
 initData()
 
-// 生成随机密码
+// 生成随机密码/凭证
 const passwordGenerate = () => {
   param.clientSecret = randomPassword({
     number: 3,
@@ -302,8 +300,16 @@ const passwordGenerate = () => {
 // 数据处理
 const encryption = () => {
   const paramEncryption = JSON.parse(JSON.stringify(param))
-  JsEncrypt.prototype.setPublicKey(publicKey.value)
-  paramEncryption.clientSecret = JsEncrypt.prototype.encrypt(param.clientSecret)
+
+  const jsEncrypt = new JSEncrypt()
+  jsEncrypt.setPublicKey(publicKey.value)
+  const encrypt = jsEncrypt.encrypt(param.clientSecret)
+  if (encrypt === false) {
+    ElMessage.error('凭证加密失败')
+    return
+  }
+
+  paramEncryption.clientSecret = encrypt
   paramEncryption.authorizationGrantTypes = param.grantTypes.toString()
   paramEncryption.clientAuthenticationMethods = param.authenticationMethods.toString()
   paramEncryption.scopes = param.scopeList.toString()

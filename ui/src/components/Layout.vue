@@ -11,7 +11,8 @@
 
           <!-- 有二级菜单，且二级菜单的个数大于 1 -->
           <!-- 有多个（大于 1）二级菜单时，index 无意义，只要唯一就行 -->
-          <el-sub-menu :index="i + ''" :key="i" v-if="childrenLength(item.children) > 1 && show(item.children) && subMenuAuthority(item)">
+          <el-sub-menu :index="i + ''" :key="i"
+                       v-if="childrenLength(item.children) > 1 && show(item.children) && subMenuAuthority(item)">
             <template #title>
               <el-icon v-if="item.meta?.icon">
                 <component :is="item.meta?.icon"/>
@@ -20,7 +21,8 @@
             </template>
 
             <template v-for="(children, j) in item.children">
-              <el-menu-item :index="children.path" :key="j" @click="menuItem" v-if="show(item.children) && menuItemAuthority(children)">
+              <el-menu-item :index="children.path" :key="j" @click="menuItem"
+                            v-if="show(item.children) && menuItemAuthority(children)">
                 {{ children.name }}
               </el-menu-item>
             </template>
@@ -83,6 +85,10 @@
           </template>
         </el-dropdown>
 
+        <span id="cloud-now">
+          {{nowShow}}
+        </span>
+
       </el-header>
       <el-main>
 
@@ -114,9 +120,53 @@ import { TabPanelName } from 'element-plus'
 import { hasAnyAuthority } from '../utils/authority'
 import { signout } from '../api/passport'
 import { routes } from '../router'
+import { currentTimeMillis } from '../api/gateway'
 
 const route = useRoute()
 const router = useRouter()
+
+// 当前时间
+const now = ref<number>(0)
+// 当前时间：展示
+const nowShow = ref<string>()
+
+// 当前时间戳
+currentTimeMillis().then((response: number) => {
+  now.value = response || new Date().getTime()
+})
+
+// 每五分钟一次，从系统中获取当前时间，无限循环
+setInterval(function () {
+  currentTimeMillis().then((response: number) => {
+    now.value = response || new Date().getTime()
+  })
+}, 1000 * 60 * 5)
+
+watch(() => now.value, (newValue, oldValue) => {
+  // 储存当前时间戳
+  useStore.setCurrentTimeMillis(newValue)
+
+  const nowDate = new Date(newValue)
+  const year = nowDate.getFullYear()
+  const month = nowDate.getMonth() + 1
+  const date = nowDate.getDate()
+
+  let hours = nowDate.getHours().toString()
+  hours = hours.length === 1 ? '0' + hours : hours
+
+  let minutes = nowDate.getMinutes().toString()
+  minutes = minutes.length === 1 ? '0' + minutes : minutes
+
+  let seconds = nowDate.getSeconds().toString()
+  seconds = seconds.length === 1 ? '0' + seconds : seconds
+
+  nowShow.value = `${year}年${month}月${date}日 ${hours}:${minutes}:${seconds}`
+})
+
+// 每秒一次，无限循环
+setInterval(function () {
+  now.value += 1000
+}, 1000)
 
 // 数据转换
 const keepAliveExclude = ref(useStore.getKeepAliveExclude)
@@ -385,6 +435,13 @@ router.isReady().then(() => {
 /* 用户菜单 */
 #cloud-el-header .el-dropdown {
   display: inline;
+}
+
+/* 当前时间 */
+#cloud-now {
+  float: right;
+  margin-right: 20px;
+  color: var(--el-text-color-regular);
 }
 
 /* 用户菜单 */

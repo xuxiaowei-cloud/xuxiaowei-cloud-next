@@ -1,6 +1,7 @@
 package cloud.xuxiaowei.next.user.controller;
 
 import cloud.xuxiaowei.next.system.annotation.ControllerAnnotation;
+import cloud.xuxiaowei.next.system.annotation.EncryptAnnotation;
 import cloud.xuxiaowei.next.system.bo.ManageUsersPageBo;
 import cloud.xuxiaowei.next.system.bo.UsersSaveBo;
 import cloud.xuxiaowei.next.system.bo.UsersUpdateBo;
@@ -9,6 +10,7 @@ import cloud.xuxiaowei.next.system.service.SessionService;
 import cloud.xuxiaowei.next.system.vo.UsersVo;
 import cloud.xuxiaowei.next.utils.AssertUtils;
 import cloud.xuxiaowei.next.utils.Constant;
+import cloud.xuxiaowei.next.utils.Encrypt;
 import cloud.xuxiaowei.next.utils.Response;
 import cloud.xuxiaowei.next.utils.map.ResponseMap;
 import cn.hutool.crypto.asymmetric.RSA;
@@ -115,6 +117,7 @@ public class UserRestController {
 	 * @param manageUsersPageBo 用户分页参数
 	 * @return 返回 分页查询结果
 	 */
+	@EncryptAnnotation(Encrypt.AesVersion.V0)
 	@ControllerAnnotation(description = "分页查询用户")
 	@PreAuthorize("hasAuthority('manage_user_read')")
 	@RequestMapping("/page")

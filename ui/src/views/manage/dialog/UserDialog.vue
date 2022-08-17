@@ -50,9 +50,7 @@ import { getById, save, updateById, codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import settings from '../../../settings'
 import { ElMessage, ElMessageBox } from 'element-plus'
-// TS 未能识别，其实不存在问题
-// @ts-ignore
-import JsEncrypt from 'jsencrypt/bin/jsencrypt.min'
+import { JSEncrypt } from 'jsencrypt'
 
 const props = defineProps({
   dialogVisible: {
@@ -73,7 +71,7 @@ const param = reactive({
   email: null,
   emailValid: false,
   nickname: null,
-  password: null,
+  password: '',
   enabled: true,
   accountNonExpired: true,
   credentialsNonExpired: true,
@@ -83,7 +81,7 @@ const param = reactive({
 })
 
 // 公钥
-const publicKey = ref(null)
+const publicKey = ref<string>('')
 
 // 获取识别码与公钥
 codeRsa().then(response => {
@@ -154,8 +152,15 @@ const cloudSave = () => {
         type: 'warning'
       }).then(() => {
         const paramEncryption = JSON.parse(JSON.stringify(param))
-        JsEncrypt.prototype.setPublicKey(publicKey.value)
-        paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
+
+        const jsEncrypt = new JSEncrypt()
+        jsEncrypt.setPublicKey(publicKey.value)
+        const encrypt = jsEncrypt.encrypt(param.password)
+        if (encrypt === false) {
+          ElMessage.error('密码加密失败')
+          return
+        }
+
         save(paramEncryption).then(response => {
           console.log(response)
           if (response.code === settings.okCode) {
@@ -182,8 +187,16 @@ const cloudSave = () => {
 // 更新
 const cloudUpdate = () => {
   const paramEncryption = JSON.parse(JSON.stringify(param))
-  JsEncrypt.prototype.setPublicKey(publicKey.value)
-  paramEncryption.password = JsEncrypt.prototype.encrypt(param.password)
+
+  const jsEncrypt = new JSEncrypt()
+  jsEncrypt.setPublicKey(publicKey.value)
+  const encrypt = jsEncrypt.encrypt(param.password)
+  if (encrypt === false) {
+    ElMessage.error('密码加密失败')
+    return
+  }
+
+  paramEncryption.password = encrypt
   // @ts-ignore
   cloudFormRef.value.validate((valid: boolean) => {
     if (valid) {

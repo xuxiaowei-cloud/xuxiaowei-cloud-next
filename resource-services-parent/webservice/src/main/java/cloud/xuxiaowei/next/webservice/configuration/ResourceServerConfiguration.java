@@ -1,6 +1,6 @@
 package cloud.xuxiaowei.next.webservice.configuration;
 
-import cloud.xuxiaowei.next.core.properties.JwkKeyProperties;
+import cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +33,7 @@ public class ResourceServerConfiguration {
 
 	private AuthenticationEntryPoint authenticationEntryPoint;
 
-	private JwkKeyProperties jwkKeyProperties;
+	private CloudJwkKeyProperties cloudJwkKeyProperties;
 
 	private RequestMatcher csrfRequestMatcher;
 
@@ -48,8 +48,8 @@ public class ResourceServerConfiguration {
 	}
 
 	@Autowired
-	public void setJwkKeyProperties(JwkKeyProperties jwkKeyProperties) {
-		this.jwkKeyProperties = jwkKeyProperties;
+	public void setJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
+		this.cloudJwkKeyProperties = cloudJwkKeyProperties;
 	}
 
 	@Autowired
@@ -87,7 +87,7 @@ public class ResourceServerConfiguration {
 
 		// 资源服务配置秘钥
 		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
-			RSAPublicKey rsaPublicKey = jwkKeyProperties.rsaPublicKey();
+			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
 			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
 					.withPublicKey(rsaPublicKey);
 			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();

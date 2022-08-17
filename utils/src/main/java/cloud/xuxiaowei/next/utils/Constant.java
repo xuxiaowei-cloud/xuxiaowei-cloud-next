@@ -38,6 +38,31 @@ public class Constant implements Serializable {
 			"=", "+", "[", "{", "]", "}", ";", ":", "'", "\"", ",", "<", ".", ">", "/", "?");
 
 	/**
+	 * 时间戳字段
+	 */
+	public static final String CURRENT_TIME_MILLIS = "currentTimeMillis";
+
+	/**
+	 * HTTP 响应中加密描述的字段
+	 */
+	public static final String ENCRYPT = "encrypt";
+
+	/**
+	 * HTTP 响应中解密描述的字段
+	 */
+	public static final String DECRYPT = "decrypt";
+
+	/**
+	 * HTTP 响应中签名描述的字段
+	 */
+	public static final String SIGN = "sign";
+
+	/**
+	 * 默认值
+	 */
+	public static final String DEFAULT = "default";
+
+	/**
 	 * Token 中传递权限的名称
 	 */
 	public static final String AUTHORITIES = "authorities";

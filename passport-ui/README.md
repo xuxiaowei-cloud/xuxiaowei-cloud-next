@@ -47,21 +47,32 @@ npm create vite@latest passport-ui -- --template vue-ts
     npx eslint --init
     ```
 
-1. [vue-router](https://router.vuejs.org/installation.html)
+2. [vue-router](https://router.vuejs.org/installation.html)
     ```shell
     npm install vue-router
     ```
 
-1. [element-plus](https://element-plus.gitee.io/zh-CN/guide/quickstart.html#%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5)
+3. [element-plus](https://element-plus.gitee.io/zh-CN/guide/quickstart.html#%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5)
     ```shell
     npm i element-plus
     ```
 
-1. [axios](https://www.npmjs.com/package/axios)
+4. [axios](https://www.npmjs.com/package/axios)
+
+5. [terser](https://www.npmjs.com/package/terser)
+    1. [General Changes](https://vitejs.dev/guide/migration.html#general-changes)
+
+```
+npm i @element-plus/icons-vue axios crypto-js element-plus jsencrypt pinia terser vue vue-router
+```
+
+```
+npm i -D @types/crypto-js @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue lint-staged typescript unplugin-auto-import unplugin-vue-components vite vue-tsc
+```
 
 ## 项目说明
 
-- 由于本项目使用了 Session 共享，故：需要访问`example.next.xuxiaowei.cloud`的子域
+- 由于本项目使用了 Session 共享，故：需要访问`example.xuxiaowei.cloud`的子域
     - 否则在使用密码登录失败时，无法获取到登录失败的原因
 
 ## 依赖说明
@@ -73,7 +84,7 @@ npm create vite@latest passport-ui -- --template vue-ts
         - @vitejs/plugin-vue
         - vite
 
-1. lint
+2. lint
     - 开发依赖
         - @vue/cli-plugin-eslint
         - @vue/cli-service
@@ -85,29 +96,28 @@ npm create vite@latest passport-ui -- --template vue-ts
         - eslint-plugin-vue
         - lint-staged
 
-1. 路由
+3. 路由
     - 依赖
         - vue-router
 
-1. http 请求
+4. http 请求
     - 依赖
         - axios
 
-1. element-plus 前端 UI 框架
+5. element-plus 前端 UI 框架
     - 依赖
         - element-plus
     - 开发依赖
         - unplugin-auto-import
         - unplugin-vue-components
 
-1. 加密
+6. 加密
     - jsencrypt
         - RSA
 
-1. 缓存
-    - vuex
-    - vuex-persistedstate
-        - 缓存刷新时保留
+7. 缓存
+    - pinia
+        - 已手动添加缓存持久化，缓存刷新时保留
 
 ## 依赖地址
 
@@ -115,10 +125,9 @@ npm create vite@latest passport-ui -- --template vue-ts
 - [axios](https://www.npmjs.com/package/axios)
 - [element-plus](https://www.npmjs.com/package/element-plus)
 - [jsencrypt](https://www.npmjs.com/package/jsencrypt)
+- [pinia](https://www.npmjs.com/package/pinia)
 - [vue](https://www.npmjs.com/package/vue)
 - [vue-router](https://www.npmjs.com/package/vue-router)
-- [vuex](https://www.npmjs.com/package/vuex)
-- [vuex-persistedstate](https://www.npmjs.com/package/vuex-persistedstate)
 
 - [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin)
 - [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser)
@@ -144,6 +153,26 @@ npm create vite@latest passport-ui -- --template vue-ts
 mvn clean package
 ```
 
-# Vue 3 + Vite
+# Vue 3 + TypeScript + Vite
 
-[setup 文档](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup)
+This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue
+3 `<script setup>` SFCs, check out
+the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+
+## Recommended IDE Setup
+
+- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+## Type Support For `.vue` Imports in TS
+
+Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type
+by default. In most cases this is fine if you don't really care about component prop types outside of templates.
+However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using
+manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+
+1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look
+   for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default,
+   Take Over mode will enable itself if the default TypeScript extension is disabled.
+2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+
+You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).

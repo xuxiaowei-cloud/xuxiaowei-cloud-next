@@ -19,8 +19,8 @@ import java.security.interfaces.RSAPublicKey;
  */
 @Data
 @Component
-@ConfigurationProperties("jwk")
-public class JwkKeyProperties {
+@ConfigurationProperties("cloud.jwk")
+public class CloudJwkKeyProperties {
 
 	/**
 	 * RSA 秘钥对

@@ -73,7 +73,7 @@ public class PasswordEncoderImpl implements PasswordEncoder {
 		Set<String> keySet = parameterMap.keySet();
 		List<String> list = Arrays.asList(OAuth2ParameterNames.CODE, OAuth2ParameterNames.CLIENT_ID,
 				OAuth2ParameterNames.CLIENT_SECRET, OAuth2ParameterNames.REDIRECT_URI, OAuth2ParameterNames.GRANT_TYPE);
-		if (size == 5 && keySet.containsAll(list)) {
+		if (size == list.size() && keySet.containsAll(list)) {
 			log.info("客户密码认证");
 			matches = passwordEncoder.matches(rawPassword, encodedPassword);
 		}
