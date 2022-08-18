@@ -4,12 +4,12 @@
 // import org.springframework.lang.NonNull;
 // import org.springframework.security.authentication.AbstractAuthenticationToken;
 // import org.springframework.security.core.GrantedAuthority;
-// import org.springframework.security.oauth2.core.OAuth2TokenType;
 // import org.springframework.security.oauth2.jwt.Jwt;
 // import org.springframework.security.oauth2.jwt.JwtClaimNames;
 // import org.springframework.security.oauth2.server.authorization.OAuth2Authorization;
 // import
 // org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
+// import org.springframework.security.oauth2.server.authorization.OAuth2TokenType;
 // import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 // import
 // org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
