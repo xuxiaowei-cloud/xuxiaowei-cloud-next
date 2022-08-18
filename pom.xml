@@ -66,19 +66,14 @@
         <!-- OAuth 2.1 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/security/spring-security-oauth2-authorization-server -->
+        <!-- https://repo.spring.io/ui/native/milestone/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://github.com/spring-projects/spring-authorization-server -->
-        <spring-security-oauth2-authorization-server.version>0.3.1</spring-security-oauth2-authorization-server.version>
-
-        <!-- OAuth 2.1 依赖，支持 spring-boot 3.0.0 -->
-        <!-- https://mvnrepository.com/artifact/io.xuxiaowei.security.next/spring-security-oauth2-authorization-server -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/io/xuxiaowei/security/next/spring-security-oauth2-authorization-server/ -->
-        <!-- https://github.com/xuxiaowei-io/spring-security-oauth2-authorization-server -->
-        <spring-security-oauth2-authorization-server-next.version>0.3.1
-        </spring-security-oauth2-authorization-server-next.version>
+        <spring-security-oauth2-authorization-server.version>1.0.0-M1
+        </spring-security-oauth2-authorization-server.version>
 
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
         <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
-        <spring-boot-starter-wechat-miniprogram.version>0.0.1-alpha.2</spring-boot-starter-wechat-miniprogram.version>
+        <spring-boot-starter-wechat-miniprogram.version>0.0.2-alpha.1</spring-boot-starter-wechat-miniprogram.version>
 
         <!-- MyBatis -->
         <!--
@@ -264,18 +259,13 @@
 
             <!-- OAuth 2.1 依赖 -->
             <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
+            <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/security/spring-security-oauth2-authorization-server -->
+            <!-- https://repo.spring.io/ui/native/milestone/org/springframework/security/spring-security-oauth2-authorization-server -->
+            <!-- https://github.com/spring-projects/spring-authorization-server -->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-oauth2-authorization-server</artifactId>
                 <version>${spring-security-oauth2-authorization-server.version}</version>
-            </dependency>
-
-            <!-- OAuth 2.1 依赖 -->
-            <!-- https://mvnrepository.com/artifact/io.xuxiaowei.security.next/spring-security-oauth2-authorization-server -->
-            <dependency>
-                <groupId>io.xuxiaowei.security.next</groupId>
-                <artifactId>spring-security-oauth2-authorization-server</artifactId>
-                <version>${spring-security-oauth2-authorization-server-next.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
