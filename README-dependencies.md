@@ -193,7 +193,7 @@ cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
 │        └──cn.hutool:hutool-all:jar:5.8.5:compile
-│        └──io.xuxiaowei.security.next:spring-security-oauth2-authorization-server:jar:0.3.1:compile
+│        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0-M1:compile
 │        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.0.0-M4:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M4:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M4:compile
@@ -215,7 +215,7 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-loadbalancer:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M4:compile
 │        └──org.springframework.boot:spring-boot-starter-thymeleaf:jar:3.0.0-M4:compile
-│        └──io.xuxiaowei.security.next:spring-security-oauth2-authorization-server:jar:0.3.1:compile
+│        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0-M1:compile
 │        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-wechat-miniprogram:jar:0.0.1-alpha.2:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
 │        └──cn.hutool:hutool-all:jar:5.8.5:compile

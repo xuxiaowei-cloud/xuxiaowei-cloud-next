@@ -108,7 +108,7 @@ public class HandlerUtils {
 
 		String email = users.getEmail();
 		if (!StringUtils.hasText(email)) {
-			log.warn("警号：用户：{} 无邮箱，不可发送邮件！！！", userName);
+			log.warn("警告：用户：{} 无邮箱，不可发送邮件！！！", userName);
 		}
 
 		if (javaMailSender == null) {
