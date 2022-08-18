@@ -162,10 +162,12 @@ cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-validation:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-redis:jar:0.0.1-SNAPSHOT:compile
 │        └──cn.hutool:hutool-all:jar:5.8.5:compile
+│        └──commons-io:commons-io:jar:2.11.0:compile
 │        └──org.springframework.boot:spring-boot-starter-json:jar:3.0.0-M4:provided
 │        └──com.fasterxml.jackson.core:jackson-annotations:jar:2.13.3:provided
 │        └──org.apache.tomcat.embed:tomcat-embed-core:jar:10.0.22:provided
 │        └──org.springframework.security:spring-security-core:jar:6.0.0-M6:provided
+│        └──org.springframework:spring-webmvc:jar:6.0.0-M5:compile
 │        └──org.springframework.boot:spring-boot-starter-aop:jar:3.0.0-M4:compile
 │        └──org.springframework.boot:spring-boot-starter-mail:jar:3.0.0-M4:compile
 │        └──org.springframework.security:spring-security-oauth2-jose:jar:6.0.0-M6:compile
