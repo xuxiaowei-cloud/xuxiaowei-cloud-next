@@ -33,7 +33,7 @@ public class SignoutRestController {
 	private IOauth2AuthorizationService oauth2AuthorizationService;
 
 	@Autowired
-	public void setJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
+	public void setCloudJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
 		this.cloudJwkKeyProperties = cloudJwkKeyProperties;
 	}
 

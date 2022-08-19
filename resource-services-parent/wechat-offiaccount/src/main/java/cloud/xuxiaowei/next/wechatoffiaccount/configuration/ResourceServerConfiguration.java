@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.webservice.configuration;
+package cloud.xuxiaowei.next.wechatoffiaccount.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties;
 import org.springframework.beans.factory.annotation.Autowired;

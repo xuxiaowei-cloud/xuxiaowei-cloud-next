@@ -86,7 +86,7 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 	}
 
 	@Autowired
-	public void setJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
+	public void setCloudJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
 		this.cloudJwkKeyProperties = cloudJwkKeyProperties;
 	}
 
