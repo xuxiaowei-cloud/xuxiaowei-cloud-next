@@ -125,8 +125,8 @@ public class ControllerAdviceConfiguration {
 	//
 	// log.error(String.format("%s：%s", code, msg), exception);
 	//
-	// // 清空 vuex
-	// return ResponseMap.error(code, msg).put("clearVuex", true);
+	// // 清空 pinia
+	// return ResponseMap.error(code, msg).put("clearPinia", true);
 	// }
 
 	/**

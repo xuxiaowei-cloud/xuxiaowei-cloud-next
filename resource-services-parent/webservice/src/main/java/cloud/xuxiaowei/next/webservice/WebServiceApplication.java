@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 程序启动入口
+ * 程序执行入口
  *
  * @author xuxiaowei
  * @since 0.0.1
