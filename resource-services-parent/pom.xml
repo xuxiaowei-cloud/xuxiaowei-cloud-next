@@ -33,6 +33,8 @@
 		<module>websocket</module>
 		<!-- 微信小程序 -->
 		<module>wechat-miniprogram</module>
+		<!-- 微信公众号 -->
+		<module>wechat-offiaccount</module>
 	</modules>
 
 	<dependencies>
