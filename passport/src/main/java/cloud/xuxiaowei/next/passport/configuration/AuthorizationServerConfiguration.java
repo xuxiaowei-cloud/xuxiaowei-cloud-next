@@ -80,7 +80,7 @@ public class AuthorizationServerConfiguration {
 	private IUsersService usersService;
 
 	@Autowired
-	public void setJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
+	public void setCloudJwkKeyProperties(CloudJwkKeyProperties cloudJwkKeyProperties) {
 		this.cloudJwkKeyProperties = cloudJwkKeyProperties;
 	}
 
