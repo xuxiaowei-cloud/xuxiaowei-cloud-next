@@ -82,6 +82,7 @@
          -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
+        <!-- https://oss.sonatype.org/content/repositories/snapshots/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
         <!-- https://github.com/mybatis/spring-boot-starter -->
         <mybatis-spring-boot-starter.version>2.3.0-SNAPSHOT</mybatis-spring-boot-starter.version>
         <!-- MyBatis Plus -->
@@ -139,7 +140,7 @@
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/fastjson -->
         <!-- https://github.com/alibaba/fastjson -->
-        <fastjson.version>2.0.11</fastjson.version>
+        <fastjson.version>2.0.12</fastjson.version>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
@@ -154,7 +155,7 @@
         <!-- https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-miniapp -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/github/binarywang/weixin-java-miniapp -->
         <!-- https://github.com/Wechat-Group/WxJava -->
-        <weixin-java.version>4.3.0</weixin-java.version>
+        <weixin-java.version>4.4.0</weixin-java.version>
 
         <!-- https://mvnrepository.com/artifact/com.xuxueli/xxl-job-core -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/xuxueli/xxl-job-core -->
@@ -166,10 +167,10 @@
 
         <!-- https://nodejs.org/dist/ -->
         <!-- http://mirrors.aliyun.com/nodejs-release/ -->
-        <node.version>v16.15.1</node.version>
+        <node.version>v16.17.0</node.version>
         <!-- https://www.npmjs.com/package/npm -->
         <!-- https://npmmirror.com/package/npm -->
-        <npm.version>8.12.1</npm.version>
+        <npm.version>8.15.0</npm.version>
         <!-- https://www.npmjs.com/package/yarn -->
         <!-- https://npmmirror.com/package/yarn -->
         <yarn.version>v1.22.19</yarn.version>
@@ -187,13 +188,13 @@
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
-        <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+        <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
         <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
-        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
         <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
         <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->

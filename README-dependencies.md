@@ -282,7 +282,7 @@ cloud.xuxiaowei.next:webservice:jar:0.0.1-SNAPSHOT
 
 cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-websocket:jar:3.0.0-M4:compile
-│        └──com.alibaba:fastjson:jar:2.0.11:compile
+│        └──com.alibaba:fastjson:jar:2.0.12:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M4:compile
@@ -295,7 +295,7 @@ cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:wechat-miniprogram:jar:0.0.1-SNAPSHOT
-│        └──com.github.binarywang:wx-java-miniapp-spring-boot-starter:jar:4.3.0:compile
+│        └──com.github.binarywang:wx-java-miniapp-spring-boot-starter:jar:4.4.0:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-M4:compile
