@@ -53,6 +53,12 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
+        <dependency>
+            <groupId>com.github.bingoohuang</groupId>
+            <artifactId>patchca</artifactId>
+        </dependency>
+
         <!-- OAuth 2.1 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/security/spring-security-oauth2-authorization-server -->

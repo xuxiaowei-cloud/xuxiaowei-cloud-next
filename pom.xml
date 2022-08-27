@@ -161,6 +161,10 @@
         <!-- https://github.com/xuxueli/xxl-job -->
         <xxl-job-core.version>2.3.1</xxl-job-core.version>
 
+        <!-- 图片验证码 -->
+        <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
+        <patchca.version>0.0.1</patchca.version>
+
         <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
         <httpspi-servlet.version>4.0.0</httpspi-servlet.version>
 
@@ -393,6 +397,13 @@
                 <groupId>com.xuxueli</groupId>
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job-core.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
+            <dependency>
+                <groupId>com.github.bingoohuang</groupId>
+                <artifactId>patchca</artifactId>
+                <version>${patchca.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->

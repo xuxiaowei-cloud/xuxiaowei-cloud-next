@@ -4,6 +4,7 @@ cloud.xuxiaowei.next.core.properties.CloudClientProperties
 cloud.xuxiaowei.next.core.properties.CloudCookieProperties
 cloud.xuxiaowei.next.core.properties.CloudCorsProperties
 cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties
+cloud.xuxiaowei.next.core.properties.CloudPatchcaProperties
 cloud.xuxiaowei.next.core.properties.CloudRememberMeProperties
 cloud.xuxiaowei.next.core.properties.CloudSecurityProperties
 cloud.xuxiaowei.next.core.properties.CloudSessionProperties
