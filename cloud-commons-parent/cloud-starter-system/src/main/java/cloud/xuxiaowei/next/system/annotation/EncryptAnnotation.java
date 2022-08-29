@@ -23,7 +23,7 @@ public @interface EncryptAnnotation {
 	/**
 	 * 客户 AES 加密注解
 	 */
-	ClientIdEncryptAnnotation[] client() default {};
+	ClientId[] client() default {};
 
 	/**
 	 * 客户 AES 加密注解
@@ -31,7 +31,7 @@ public @interface EncryptAnnotation {
 	 * @author xuxiaowei
 	 * @since 0.0.1
 	 */
-	@interface ClientIdEncryptAnnotation {
+	@interface ClientId {
 
 		/**
 		 * 客户ID

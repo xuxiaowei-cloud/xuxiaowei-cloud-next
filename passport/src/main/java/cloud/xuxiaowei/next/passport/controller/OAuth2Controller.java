@@ -34,7 +34,7 @@ public class OAuth2Controller {
 	 * @return 返回 检查 Token 结果
 	 */
 	@EncryptAnnotation(value = Encrypt.AesVersion.V0,
-			client = { @EncryptAnnotation.ClientIdEncryptAnnotation(cloudId = "xuxiaowei_client_wechat_miniprogram_id",
+			client = { @EncryptAnnotation.ClientId(cloudId = "xuxiaowei_client_wechat_miniprogram_id",
 					value = Encrypt.AesVersion.V1) })
 	@ControllerAnnotation(description = "检查 Token")
 	@RequestMapping("/check_token")
