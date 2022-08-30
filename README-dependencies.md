@@ -86,7 +86,7 @@ cloud.xuxiaowei.next.commons:cloud-starter-loadbalancer:jar:0.0.1-SNAPSHOT
 cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT
 │        └──org.mybatis.spring.boot:mybatis-spring-boot-starter:jar:2.3.0-SNAPSHOT:compile
 │        └──com.baomidou:mybatis-plus-boot-starter:jar:3.5.2:compile
-│        └──com.baomidou:dynamic-datasource-spring-boot-starter:jar:3.5.1:compile
+│        └──com.baomidou:dynamic-datasource-spring-boot-starter:jar:3.5.2:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
 │        └──com.baomidou:mybatis-plus-generator:jar:3.5.3:test
 │        └──org.springframework.boot:spring-boot-starter-velocity:jar:1.4.7.RELEASE:test
@@ -193,6 +193,7 @@ cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
 │        └──cn.hutool:hutool-all:jar:5.8.5:compile
+│        └──com.github.bingoohuang:patchca:jar:0.0.1:compile
 │        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0-M1:compile
 │        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.0.0-M4:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M4:compile

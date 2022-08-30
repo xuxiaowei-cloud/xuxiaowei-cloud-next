@@ -32,27 +32,27 @@ public class CloudPatchcaProperties {
 	private String characters = "23456789abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
 
 	/**
-     * 最多字符串个数
+	 * 最多字符串个数
 	 */
 	private int maxLength = 5;
 
-    /**
-     * 最少字符串个数
+	/**
+	 * 最少字符串个数
 	 */
 	private int minLength = 3;
 
 	/**
-     * 图片宽度
+	 * 图片宽度
 	 */
 	private int width = 150;
 
-    /**
-     * 图片高度
+	/**
+	 * 图片高度
 	 */
 	private int height = 50;
 
 	/**
-     * 字体最小值
+	 * 字体最小值
 	 */
 	private int minSize = 25;
 
