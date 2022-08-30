@@ -36,7 +36,7 @@ public @interface EncryptAnnotation {
 		/**
 		 * 客户ID
 		 */
-		String cloudId();
+		String clientId();
 
 		/**
 		 * 加密方式（版本）

@@ -54,7 +54,7 @@ public class EncryptHandlerInterceptor implements HandlerInterceptor {
 				for (EncryptAnnotation.ClientId clientIdEncryptAnnotation : clients) {
 					// 遍历接口的客户配置
 
-					if (clientId.equals(clientIdEncryptAnnotation.cloudId())) {
+					if (clientId.equals(clientIdEncryptAnnotation.clientId())) {
 						// 匹配接口的客户配置是否与当前用户相同
 						// 如果相同，将匹配的客户配置返回
 						aesVersion = clientIdEncryptAnnotation.value();
