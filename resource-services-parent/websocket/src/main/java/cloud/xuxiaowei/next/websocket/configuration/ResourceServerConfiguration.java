@@ -95,11 +95,6 @@ public class ResourceServerConfiguration {
 			oauth2ResourceServer.decoder(nimbusJwtDecoder);
 		});
 
-		// 支持使用 URI 查询参数传输访问令牌
-		DefaultBearerTokenResolver bearerTokenResolver = new DefaultBearerTokenResolver();
-		bearerTokenResolver.setAllowUriQueryParameter(true);
-		http.oauth2ResourceServer().bearerTokenResolver(bearerTokenResolver);
-
 		// 异常处理
 		http.exceptionHandling(exceptionHandlingCustomizer -> {
 			exceptionHandlingCustomizer
