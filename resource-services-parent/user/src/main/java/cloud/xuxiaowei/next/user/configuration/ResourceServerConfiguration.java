@@ -78,6 +78,8 @@ public class ResourceServerConfiguration {
 					.antMatchers("/actuator/**").permitAll()
 					// 放行错误地址
 					.antMatchers("/error").permitAll()
+					// 图片验证码
+					.antMatchers("/patchca").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});

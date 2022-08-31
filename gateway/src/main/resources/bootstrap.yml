@@ -263,6 +263,10 @@ cloud:
           - /oauth2/token
           # 退出登录
           - /signout
+      - name: user
+        path-list:
+          # 图片验证码
+          - /patchca
       - name: webservice
         path-list:
           - /cxf/**
