@@ -1,34 +1,28 @@
-package cloud.xuxiaowei.next.gateway.filter;
+package cloud.xuxiaowei.next.user.controller;
 
 import cloud.xuxiaowei.next.core.properties.CloudPatchcaProperties;
+import cloud.xuxiaowei.next.utils.Constant;
+import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
 import com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService;
 import com.github.bingoohuang.patchca.filter.predefined.*;
 import com.github.bingoohuang.patchca.font.RandomFontFactory;
-import com.github.bingoohuang.patchca.service.Captcha;
+import com.github.bingoohuang.patchca.utils.encoder.EncoderHelper;
 import com.github.bingoohuang.patchca.word.RandomWordFactory;
-import lombok.Setter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Ordered;
-import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
-import reactor.core.publisher.Mono;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URI;
+import java.time.Duration;
 import java.util.Random;
 
 /**
@@ -38,10 +32,9 @@ import java.util.Random;
  * @since 0.0.1
  */
 @Slf4j
-@Component
-public class PatchcaWebFilter implements WebFilter, Ordered {
-
-	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 100000;
+@Controller
+@RequestMapping("/patchca")
+public class PatchcaController {
 
 	/**
 	 * 全自动区分计算机和人类的图灵测试服务
@@ -55,40 +48,80 @@ public class PatchcaWebFilter implements WebFilter, Ordered {
 
 	private CloudPatchcaProperties cloudPatchcaProperties;
 
+	private StringRedisTemplate stringRedisTemplate;
+
 	@Autowired
 	public void setCloudPatchcaProperties(CloudPatchcaProperties cloudPatchcaProperties) {
 		this.cloudPatchcaProperties = cloudPatchcaProperties;
 	}
 
-	@Setter
-	private int order = ORDERED;
-
-	@Override
-	public int getOrder() {
-		return order;
+	@Autowired
+	public void setStringRedisTemplate(StringRedisTemplate stringRedisTemplate) {
+		this.stringRedisTemplate = stringRedisTemplate;
 	}
 
-	@NotNull
-	@Override
-	public Mono<Void> filter(@NotNull ServerWebExchange exchange, @NotNull WebFilterChain chain) {
-
-		ServerHttpRequest request = exchange.getRequest();
-		URI uri = request.getURI();
-		String path = uri.getPath();
-
-		final String patchca = cloudPatchcaProperties.getUrl();
-
-		if (patchca.equals(path)) {
-			ServerHttpResponse response = exchange.getResponse();
-			try {
-				return responsePatchca(response);
-			}
-			catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+	/**
+	 * 图片验证码
+	 * @param request 请求
+	 * @param response 响应
+	 */
+	@RequestMapping()
+	public void index(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			responsePatchca(request, response);
 		}
+		catch (IOException e) {
+			log.error("生成图片验证码异常：", e);
+			throw new CloudRuntimeException("生成图片验证码异常");
+		}
+	}
 
-		return chain.filter(exchange);
+	/**
+	 * 获取全自动区分计算机和人类的图灵测试对应的字符串
+	 */
+	private void responsePatchca(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		init();
+
+		// @formatter:off
+		switch (RANDOM.nextInt(5)) {
+			case 0:
+				// 摆动波纹
+				CS.setFilterFactory(new WobbleRippleFilterFactory());
+				break;
+			case 1:
+				// 大理石纹波
+				CS.setFilterFactory(new MarbleRippleFilterFactory());
+				break;
+			case 2:
+				// 双纹波
+				CS.setFilterFactory(new DoubleRippleFilterFactory());
+				break;
+			case 3:
+				// 曲线波纹
+				CS.setFilterFactory(new CurvesRippleFilterFactory(CS.getColorFactory()));
+				break;
+			case 4:
+				// 漫反射纹波
+				CS.setFilterFactory(new DiffuseRippleFilterFactory());
+				break;
+			default:
+		}
+		// @formatter:on
+
+		// 设置全自动区分计算机和人类的图灵测试的响应
+		setPngHeaders(response);
+
+		HttpSession session = request.getSession();
+		String sessionId = session.getId();
+
+		// 图片验证码的字符串
+		// 响应图片
+		String challenge = EncoderHelper.getChallangeAndWriteImage(CS, "png", response.getOutputStream());
+		log.info("图片验证码：{}", challenge);
+
+		// 储存图片验证码
+		redisStore(sessionId, challenge);
 	}
 
 	private void init() {
@@ -152,65 +185,27 @@ public class PatchcaWebFilter implements WebFilter, Ordered {
 	}
 
 	/**
-	 * 获取全自动区分计算机和人类的图灵测试对应的字符串
+	 * 储存
+	 * @param sessionId Session ID
+	 * @param challenge 图片验证码的文字内容
 	 */
-	private Mono<Void> responsePatchca(ServerHttpResponse response) throws IOException {
+	private void redisStore(String sessionId, String challenge) {
 
-		init();
+		String key = Constant.PATCHCA + ":" + sessionId;
 
-		switch (RANDOM.nextInt(5)) {
-			case 0:
-				// 摆动波纹
-				CS.setFilterFactory(new WobbleRippleFilterFactory());
-				break;
-			case 1:
-				// 大理石纹波
-				CS.setFilterFactory(new MarbleRippleFilterFactory());
-				break;
-			case 2:
-				// 双纹波
-				CS.setFilterFactory(new DoubleRippleFilterFactory());
-				break;
-			case 3:
-				// 曲线波纹
-				CS.setFilterFactory(new CurvesRippleFilterFactory(CS.getColorFactory()));
-				break;
-			case 4:
-				// 漫反射纹波
-				CS.setFilterFactory(new DiffuseRippleFilterFactory());
-				break;
-			default:
-		}
-
-		// 设置全自动区分计算机和人类的图灵测试的响应
-		HttpHeaders headers = response.getHeaders();
-		setPngHeaders(headers);
-
-		Captcha captcha = CS.getCaptcha();
-		BufferedImage bufferedImage = captcha.getImage();
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-		ImageIO.write(bufferedImage, "png", outputStream);
-
-		// 图片验证码的字符串
-		String challenge = captcha.getChallenge();
-		log.info("图片验证码：{}", challenge);
-
-		byte[] bytes = outputStream.toByteArray();
-
-		DataBuffer dataBuffer = response.bufferFactory().wrap(bytes);
-		return response.writeWith(Mono.just(dataBuffer));
+		// 将图片验证码放入Redis中
+		stringRedisTemplate.opsForValue().set(key, challenge, Duration.ofMinutes(cloudPatchcaProperties.getMinutes()));
 	}
 
 	/**
 	 * 设置全自动区分计算机和人类的图灵测试的响应
 	 * <p>
 	 * 禁止全自动区分计算机和人类的图灵测试缓存
-	 * @param headers 响应头
+	 * @param response 响应
 	 */
-	public static void setPngHeaders(HttpHeaders headers) {
+	public static void setPngHeaders(HttpServletResponse response) {
 		// 发送到客户端的响应的内容类型
-		headers.setContentType(MediaType.IMAGE_PNG);
+		response.setContentType(MediaType.IMAGE_PNG_VALUE);
 
 		// 设置具有给定名称和值的响应标头。
 		// 如果已设置标头，则新值将覆盖前一个标头。
@@ -221,8 +216,8 @@ public class PatchcaWebFilter implements WebFilter, Ordered {
 		// no-cache：必须先与服务器确认返回的响应是否被更改，然后才能使用该响应来满足后续对同一个网址的请求。
 		// 因此，如果存在合适的验证令牌 (ETag)，no-cache 会发起往返通信来验证缓存的响应，如果资源未被更改，可以避免下载。
 		// no-store：所有内容都不会被缓存到缓存或 Internet 临时文件中
-		headers.setCacheControl(CacheControl.noCache());
-		headers.setPragma(CacheControl.noCache().getHeaderValue());
+		response.setHeader(HttpHeaders.CACHE_CONTROL, CacheControl.noCache().getHeaderValue());
+		response.setHeader(HttpHeaders.PRAGMA, CacheControl.noCache().getHeaderValue());
 
 		// 时间戳
 		long time = System.currentTimeMillis();
@@ -232,11 +227,11 @@ public class PatchcaWebFilter implements WebFilter, Ordered {
 		// 如果已设置标头，则新值将覆盖前一个标头。
 		// Last-Modified：在浏览器第一次请求某一个URL时，服务器端的返回状态会是200，内容是客户端请求的资源，
 		// 同时有一个Last-Modified的属性标记此文件在服务器端最后被修改的时间。
-		headers.setLastModified(time);
-		headers.setDate(HttpHeaders.DATE, time);
+		response.setHeader(HttpHeaders.LAST_MODIFIED, time + "");
+		response.setHeader(HttpHeaders.DATE, time + "");
 		// Expires：Expires是RFC 2616（HTTP/1.0）协议中和网页缓存相关字段。
 		// 用来控制缓存的失效日期，要注意的是，HTTP/1.0有一个功能比较弱的缓存控制机制：Pragma，使用HTTP/1.0的缓存将忽略Expires和Cache-Control头。
-		headers.setExpires(time);
+		response.setHeader(HttpHeaders.EXPIRES, time + "");
 	}
 
 }

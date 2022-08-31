@@ -28,6 +28,12 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
+		<dependency>
+			<groupId>com.github.bingoohuang</groupId>
+			<artifactId>patchca</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<licenses>

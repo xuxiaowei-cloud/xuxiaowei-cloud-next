@@ -148,8 +148,8 @@ public class Constant implements Serializable {
 	public static final String PRIVATE_KEY = "privateKey";
 
 	/**
-	 * 日志主键
+	 * 图片验证码
 	 */
-	public static final String LOG_ID = "logId";
+	public static final String PATCHCA = "patchca";
 
 }

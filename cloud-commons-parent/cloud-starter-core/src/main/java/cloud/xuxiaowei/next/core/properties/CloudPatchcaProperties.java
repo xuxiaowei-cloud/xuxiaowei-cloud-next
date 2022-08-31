@@ -61,4 +61,9 @@ public class CloudPatchcaProperties {
 	 */
 	private int maxSize = 35;
 
+	/**
+	 * 有效时间，分钟
+	 */
+	private long minutes = 5;
+
 }
