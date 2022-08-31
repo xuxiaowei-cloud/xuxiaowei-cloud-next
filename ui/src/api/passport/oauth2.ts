@@ -1,5 +1,4 @@
 import request from '../../utils/request'
-import { useStore } from '../../store'
 import { ElMessage } from 'element-plus'
 
 /**
@@ -10,7 +9,6 @@ export const checkToken = function () {
     const responseData = response.data
     if (responseData && responseData.active === true) {
       const authorities = responseData.authorities
-      useStore.setAuthorities(authorities)
       if (authorities === undefined) {
         ElMessage({
           message: '用户无任何权限',

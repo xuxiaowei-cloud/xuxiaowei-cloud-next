@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { LocationQuery, Router } from 'vue-router'
-import { defineStore, createPinia } from 'pinia'
+import { createPinia, defineStore } from 'pinia'
+import { ElMessage } from 'element-plus/es'
 import settings from '../settings'
 import { checkToken } from '../api/passport/oauth2'
 import { info } from '../api/user'
@@ -13,6 +14,7 @@ export const useDefineStore = defineStore('store', {
     nickname: ref<string>(), // 昵称
     authorities: ref<string[]>([]), // 权限
     accessToken: ref<string>(), // Token
+    payload: ref<string>(), // 有效载荷
     checkTokenTime: ref<number>(), // 检查Token时间
     refreshToken: ref<string>(), // 刷新Token
     isCollapse: ref<boolean>(false), // 是否折叠菜单
@@ -127,6 +129,13 @@ export const useDefineStore = defineStore('store', {
       this.accessToken = accessToken
     },
     /**
+     * 设置 有效载荷
+     * @param payload 有效载荷
+     */
+    setPayload (payload: string) {
+      this.payload = payload
+    },
+    /**
      * 设置 检查Token时间
      * @param checkTokenTime
      */
@@ -203,6 +212,27 @@ export const queryToken = function (path: string, query: LocationQuery, router: 
 
     console.log('获取到URL中的accessToken', accessToken)
     console.log('获取到URL中的refreshToken', refreshToken)
+
+    if (accessToken != null) {
+      if (typeof accessToken === 'string') {
+        const tokenSplit = accessToken.split('.')
+        if (tokenSplit.length >= 2) {
+          try {
+            const payload = JSON.parse(window.atob(tokenSplit[1]))
+            const authorities = payload.authorities
+            console.log('payload', payload)
+            console.log('authorities', authorities)
+            useStore.setPayload(payload)
+            useStore.setAuthorities(authorities)
+          } catch (e) {
+            console.error('解密payload时异常', e)
+            ElMessage.error('解密payload时异常')
+          }
+        } else {
+          ElMessage.error('未找到payload')
+        }
+      }
+    }
 
     useStore.setAccessToken(accessToken)
     useStore.setRefreshToken(refreshToken)
