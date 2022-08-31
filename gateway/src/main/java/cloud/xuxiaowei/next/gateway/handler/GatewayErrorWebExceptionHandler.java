@@ -1,6 +1,6 @@
 package cloud.xuxiaowei.next.gateway.handler;
 
-import cloud.xuxiaowei.next.gateway.filter.LogGlobalFilter;
+import cloud.xuxiaowei.next.gateway.filter.web.LogWebFilter;
 import cloud.xuxiaowei.next.log.service.ILogService;
 import cloud.xuxiaowei.next.utils.*;
 import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
@@ -185,7 +185,7 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
 		}
 
 		// 保存日志
-		LogGlobalFilter.log(logService, remoteAddress, request, requestId, ex);
+		LogWebFilter.log(logService, remoteAddress, request, requestId, ex);
 
 		MediaType contentType = request.getHeaders().getContentType();
 

@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.gateway.filter;
+package cloud.xuxiaowei.next.gateway.filter.web;
 
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.Response;
@@ -36,7 +36,7 @@ public class CurrentTimeMillisWebFilter implements WebFilter, Ordered {
 	 * <p>
 	 * 大于 0 无效
 	 */
-	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 1040000;
+	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 70000;
 
 	@Setter
 	private int order = ORDERED;

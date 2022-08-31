@@ -2,6 +2,7 @@ package cloud.xuxiaowei.next.utils;
 
 import cn.hutool.core.codec.Base64;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
@@ -203,19 +204,42 @@ public class SecurityUtils {
 	 * @param authorization 授权信息
 	 * @return payload
 	 */
-	public static Map<?, ?> getPayloadMap(String authorization) {
+	public static Map<String, ?> getPayloadMap(String authorization) {
 		String payload = getPayload(authorization);
 		if (StringUtils.hasLength(payload)) {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.registerModule(new JavaTimeModule());
 			try {
-				return objectMapper.readValue(payload, Map.class);
+				return objectMapper.readValue(payload, new TypeReference<Map<String, Object>>() {
+				});
 			}
 			catch (JsonProcessingException e) {
 				log.error("{}：转换为JSON异常", payload, e);
 			}
 		}
 		return new HashMap<>(2);
+	}
+
+	/**
+	 * 根据 authorization 获取 payload
+	 * @param authorization 授权信息
+	 * @return payload
+	 */
+	public static Map<String, String> getPayloadStringMap(String authorization) {
+		Map<String, ?> payloadMap = getPayloadMap(authorization);
+		Map<String, String> map = new HashMap<>(8);
+		for (Map.Entry<String, ?> entry : payloadMap.entrySet()) {
+			String key = entry.getKey();
+			Object value = entry.getValue();
+			if (value == null) {
+				map.put(key, null);
+			}
+			else {
+				// 此处待优化
+				map.put(key, value.toString());
+			}
+		}
+		return map;
 	}
 
 	/**

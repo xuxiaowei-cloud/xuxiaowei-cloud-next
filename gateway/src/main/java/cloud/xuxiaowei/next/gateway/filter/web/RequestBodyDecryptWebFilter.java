@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.gateway.filter;
+package cloud.xuxiaowei.next.gateway.filter.web;
 
 import cloud.xuxiaowei.next.core.properties.CloudAesProperties;
 import cloud.xuxiaowei.next.utils.CodeEnums;
@@ -6,8 +6,6 @@ import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.Encrypt;
 import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
 import cn.hutool.crypto.symmetric.AES;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -35,7 +33,6 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 
 import static org.springframework.security.oauth2.core.OAuth2TokenIntrospectionClaimNames.CLIENT_ID;
 
@@ -50,14 +47,19 @@ import static org.springframework.security.oauth2.core.OAuth2TokenIntrospectionC
  */
 @Slf4j
 @Component
-public class BodyDecryptWebFilter implements WebFilter, Ordered {
+public class RequestBodyDecryptWebFilter implements WebFilter, Ordered {
 
 	/**
 	 * 最低优先级（最大值）：0
 	 * <p>
 	 * 大于 0 无效
 	 */
-	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 1030000;
+	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 90000;
+
+	/**
+	 * 时间戳长度
+	 */
+	private static final int CURRENT_TIME_MILLIS_LENGTH = (System.currentTimeMillis() + "").length();
 
 	private CloudAesProperties cloudAesProperties;
 
@@ -130,7 +132,7 @@ public class BodyDecryptWebFilter implements WebFilter, Ordered {
 		HttpHeaders headers = request.getHeaders();
 
 		// 请求体
-		byte[] bytes = exchange.getAttribute(BodyDecryptBeforeWebFilter.BODY_DECRYPT_BYTES);
+		byte[] bytes = exchange.getAttribute(RequestBodyDecryptBeforeWebFilter.BODY_DECRYPT_BYTES);
 
 		if (bytes == null) {
 			// 请求体 null 时，不处理
@@ -249,10 +251,12 @@ public class BodyDecryptWebFilter implements WebFilter, Ordered {
 			String decryptStr = new String(decrypt);
 
 			// 检查 时间戳
-			checkCurrentTimeMillis(objectMapper, decryptStr);
+			String content = checkCurrentTimeMillis(decryptStr);
 
 			log.debug("解密后 body：{}", decryptStr);
-			return decrypt;
+			log.debug("向后传递的 body：{}", content);
+
+			return content.getBytes();
 		}
 		else {
 			throw new CloudRuntimeException(CodeEnums.ERROR.code, "解密密文不能为空", Encrypt.CIPHERTEXT);
@@ -302,29 +306,35 @@ public class BodyDecryptWebFilter implements WebFilter, Ordered {
 	/**
 	 * 检查 时间戳
 	 */
-	private void checkCurrentTimeMillis(ObjectMapper objectMapper, String decryptStr) {
-		Map<String, Object> map;
-		try {
-			map = objectMapper.readValue(decryptStr, new TypeReference<Map<String, Object>>() {
-			});
-		}
-		catch (JsonProcessingException e) {
-			throw new CloudRuntimeException(CodeEnums.ERROR.code, "密文解密后转Map异常", Encrypt.CIPHERTEXT, e.getMessage());
-		}
+	private String checkCurrentTimeMillis(String decryptStr) {
+		if (StringUtils.hasText(decryptStr)) {
+			if (decryptStr.length() < CURRENT_TIME_MILLIS_LENGTH) {
+				throw new CloudRuntimeException(CodeEnums.ERROR.code, "解密字符串时间戳长度不合法", Constant.CURRENT_TIME_MILLIS);
+			}
 
-		Object currentTimeMillisObj = map.get(Constant.CURRENT_TIME_MILLIS);
-		if (currentTimeMillisObj instanceof Long) {
-			long currentTimeMillis = (long) currentTimeMillisObj;
+			String substring = decryptStr.substring(0, CURRENT_TIME_MILLIS_LENGTH);
+			long currentTimeMillis;
+			try {
+				currentTimeMillis = Long.parseLong(substring);
+			}
+			catch (Exception e) {
+				log.error("解密字符串时间戳类型不合法", e);
+				throw new CloudRuntimeException(CodeEnums.ERROR.code, "解密字符串时间戳类型不合法", Constant.CURRENT_TIME_MILLIS);
+			}
+
 			long time = Math.abs(System.currentTimeMillis() - currentTimeMillis);
 
 			// noinspection AlibabaUndefineMagicConstant
 			if (time > cloudAesProperties.getTime() * 1000) {
-				throw new CloudRuntimeException(CodeEnums.ERROR.code, "时间戳不合法", Constant.CURRENT_TIME_MILLIS);
+				throw new CloudRuntimeException(CodeEnums.ERROR.code, "解密字符串时间戳不合法", Constant.CURRENT_TIME_MILLIS);
 			}
+
 		}
 		else {
-			throw new CloudRuntimeException(CodeEnums.ERROR.code, "时间戳格式不合法", Constant.CURRENT_TIME_MILLIS);
+			throw new CloudRuntimeException(CodeEnums.ERROR.code, "解密字符串不能为空", Constant.CURRENT_TIME_MILLIS);
 		}
+
+		return decryptStr.substring(CURRENT_TIME_MILLIS_LENGTH);
 	}
 
 }

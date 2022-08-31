@@ -1,10 +1,12 @@
-package cloud.xuxiaowei.next.gateway.filter;
+package cloud.xuxiaowei.next.gateway.filter.global;
 
 import cloud.xuxiaowei.next.core.properties.CloudAesProperties;
 import cloud.xuxiaowei.next.core.properties.CloudSignProperties;
+import cloud.xuxiaowei.next.gateway.filter.web.LogWebFilter;
 import cloud.xuxiaowei.next.utils.CodeEnums;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.Encrypt;
+import cloud.xuxiaowei.next.utils.ServiceEnums;
 import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.crypto.SecureUtil;
@@ -25,16 +27,19 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
+import org.springframework.lang.NonNull;
 import org.springframework.security.oauth2.core.OAuth2TokenIntrospectionClaimNames;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.util.annotation.NonNull;
 
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -46,14 +51,14 @@ import java.util.List;
  */
 @Slf4j
 @Component
-public class BodyEncryptionGlobalFilter implements GlobalFilter, Ordered {
+public class ResponseBodyEncryptionGlobalFilter implements GlobalFilter, Ordered {
 
 	/**
 	 * 最低优先级（最大值）：0
 	 * <p>
 	 * 大于 0 无效
 	 */
-	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 1010000;
+	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 10000;
 
 	private CloudAesProperties cloudAesProperties;
 
@@ -80,13 +85,31 @@ public class BodyEncryptionGlobalFilter implements GlobalFilter, Ordered {
 	@Override
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
+		ServerHttpRequest request = exchange.getRequest();
 		ServerHttpResponse response = exchange.getResponse();
+
+		// 当前访问的路径
+		URI uri = request.getURI();
+		String path = uri.getPath();
+
+		// 匹配
+		AntPathMatcher antPathMatcher = new AntPathMatcher();
+		// 匹配：是否为WebSocket服务路径
+		boolean matchActuator = antPathMatcher.match(String.format("/%s/**", ServiceEnums.WEBSOCKET.service), path);
+
+		if (matchActuator) {
+			// WebSocket 不加密
+			return chain.filter(exchange);
+		}
 
 		ServerHttpResponseDecorator decorator = new ServerHttpResponseDecorator(response) {
 
 			@NonNull
 			@Override
 			public Mono<Void> writeWith(@NonNull Publisher<? extends DataBuffer> body) {
+
+				// 这里必须设置，不然以下日志无用户信息
+				LogWebFilter.log(request);
 
 				HttpHeaders headers = response.getHeaders();
 				MediaType contentType = headers.getContentType();
@@ -130,22 +153,24 @@ public class BodyEncryptionGlobalFilter implements GlobalFilter, Ordered {
 							return v1(response, keyBytes, ivBytes, body);
 						}
 						else {
+							// @formatter:off
 							switch (version) {
-								case V0:
-									// 加密方式（版本）为 V0 时，即：不加密
-									return response.writeWith(body);
 								case V1:
-									// 加密方式（版本）为 V1 时，使用 V1，与未匹配时，采用相同的方式
+									// 加密方式（版本）为 V1 时，使用 V1
+									return v1(response, keyBytes, ivBytes, body);
+								case V0:
+									// 加密方式（版本）为 V0 时，即：不加密，与未匹配时，采用相同的方式
 									// 故：此处使用 switch case 的穿透效果
 								default:
-									// 未匹配到时，使用加密方式（版本）为 V1
-									return v1(response, keyBytes, ivBytes, body);
+									// 未匹配到时，使用加密方式（版本）为 V0
+									return response.writeWith(body);
 							}
+							// @formatter:on
 						}
 					}
 					else {
-						// 不存在：响应中的加密方式（版本），使用默认加密方式（版本），即：V1
-						return v1(response, keyBytes, ivBytes, body);
+						// 不存在：响应中的加密方式（版本），使用默认加密方式（版本），即：V0，不加密
+						return response.writeWith(body);
 					}
 				}
 

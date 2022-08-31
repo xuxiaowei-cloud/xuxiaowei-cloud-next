@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.gateway.filter;
+package cloud.xuxiaowei.next.gateway.filter.web;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-public class BodyDecryptBeforeWebFilter implements WebFilter, Ordered {
+public class RequestBodyDecryptBeforeWebFilter implements WebFilter, Ordered {
 
 	public static final String BODY_DECRYPT_BYTES = "bodyDecryptBytes";
 
@@ -33,7 +33,7 @@ public class BodyDecryptBeforeWebFilter implements WebFilter, Ordered {
 	 * <p>
 	 * 大于 0 无效
 	 */
-	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 1020000;
+	public static final int ORDERED = Ordered.HIGHEST_PRECEDENCE + 80000;
 
 	@Setter
 	private int order = ORDERED;

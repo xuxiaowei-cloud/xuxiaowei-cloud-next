@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.gateway.filter;
+package cloud.xuxiaowei.next.gateway.filter.web;
 
 import cloud.xuxiaowei.next.core.properties.CloudCorsProperties;
 import cloud.xuxiaowei.next.utils.Constant;
