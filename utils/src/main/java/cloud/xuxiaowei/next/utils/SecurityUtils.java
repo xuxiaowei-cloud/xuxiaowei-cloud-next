@@ -1,5 +1,6 @@
 package cloud.xuxiaowei.next.utils;
 
+import cloud.xuxiaowei.next.utils.exception.CloudRuntimeException;
 import cn.hutool.core.codec.Base64;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -145,7 +146,7 @@ public class SecurityUtils {
 	 * 获取 用户ID
 	 * @return 返回 用户ID
 	 */
-	public static String getUsersId() {
+	public static Long getUsersId() {
 		SecurityContext context = SecurityContextHolder.getContext();
 		Authentication authentication = context.getAuthentication();
 		return getUsersId(authentication);
@@ -156,7 +157,7 @@ public class SecurityUtils {
 	 * @param authentication 验证
 	 * @return 返回 用户ID
 	 */
-	public static String getUsersId(Authentication authentication) {
+	public static Long getUsersId(Authentication authentication) {
 		if (authentication != null) {
 			Object principal = authentication.getPrincipal();
 			if (principal instanceof Jwt jwt) {
@@ -171,13 +172,19 @@ public class SecurityUtils {
 	 * @param jwt Jwt
 	 * @return 返回 用户ID
 	 */
-	public static String getUsersId(Jwt jwt) {
+	public static Long getUsersId(Jwt jwt) {
 		Map<String, Object> claims = jwt.getClaims();
 		Object usersId = claims.get(Constant.USERS_ID);
 		if (usersId == null) {
 			return null;
 		}
-		return usersId.toString();
+		try {
+			return Long.valueOf(usersId.toString());
+		}
+		catch (Exception e) {
+			log.error("用户ID：" + usersId + " 处理成 Long 时异常", e);
+			throw new CloudRuntimeException("用户ID：" + usersId + "不合法");
+		}
 	}
 
 	/**

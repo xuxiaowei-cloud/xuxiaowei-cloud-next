@@ -62,13 +62,13 @@ public class WxMaUsers implements Serializable {
 	 * 创建人，不为空
 	 */
 	@TableField(fill = FieldFill.INSERT)
-	private String createUsername;
+	private String createUsersId;
 
 	/**
 	 * 更新人，未更新时为空
 	 */
 	@TableField(fill = FieldFill.UPDATE)
-	private String updateUsername;
+	private String updateUsersId;
 
 	/**
 	 * 创建者IP，不为空

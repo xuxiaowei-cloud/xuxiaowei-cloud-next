@@ -51,10 +51,10 @@ public class OAuth2AuthorizationServiceReactiveJwtAuthenticationConverter
 		// 将当前用户名放入日志中
 		String userName = SecurityUtils.getUserName(jwt);
 		// 将当前用户ID放入日志中
-		String usersId = SecurityUtils.getUsersId(jwt);
+		Long usersId = SecurityUtils.getUsersId(jwt);
 
 		MDC.put(Constant.NAME, userName);
-		MDC.put(Constant.USERS_ID, usersId);
+		MDC.put(Constant.USERS_ID, String.valueOf(usersId));
 
 		String tokenValue = jwt.getTokenValue();
 		OAuth2Authorization authorization = authorizationService.findByToken(tokenValue, OAuth2TokenType.ACCESS_TOKEN);

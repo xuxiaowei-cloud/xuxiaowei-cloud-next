@@ -233,7 +233,15 @@ public class AuthorizationServerConfiguration {
 				// 放入用户ID
 				Users users = usersService.getByUsername(name);
 				if (users != null) {
-					claims.claim(Constant.USERS_ID, users.getUsersId());
+					// The class with java.lang.Long and name of java.lang.Long is not in
+					// the allowlist.
+					// If you believe this class is safe to deserialize, please provide an
+					// explicit mapping using Jackson annotations or by providing a Mixin.
+					// If the serialization is only done by a trusted source, you can also
+					// enable default typing.
+					// See https://github.com/spring-projects/spring-security/issues/4370
+					// for details
+					claims.claim(Constant.USERS_ID, users.getUsersId() + "");
 				}
 
 				// 用户权限

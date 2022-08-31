@@ -82,10 +82,10 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 		// 将当前用户名放入日志中
 		String userName = SecurityUtils.getUserName(authentication);
 		// 将当前用户ID放入日志中
-		String usersId = SecurityUtils.getUsersId(authentication);
+		Long usersId = SecurityUtils.getUsersId(authentication);
 
 		MDC.put(Constant.NAME, userName);
-		MDC.put(Constant.USERS_ID, usersId);
+		MDC.put(Constant.USERS_ID, String.valueOf(usersId));
 
 		UsersLogin usersLogin = HandlerUtils.usersLogin(userName, true, request, null);
 		usersLoginService.save(usersLogin);

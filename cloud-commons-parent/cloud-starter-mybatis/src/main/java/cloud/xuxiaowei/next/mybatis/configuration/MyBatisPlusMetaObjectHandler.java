@@ -23,7 +23,7 @@ public class MyBatisPlusMetaObjectHandler implements MetaObjectHandler {
 	public void insertFill(MetaObject metaObject) {
 
 		strictInsertFill(metaObject, "createDate", LocalDateTime.class, LocalDateTime.now());
-		strictInsertFill(metaObject, "createUsername", String.class, username());
+		strictInsertFill(metaObject, "createUsersId", String.class, username());
 		strictInsertFill(metaObject, "createIp", String.class, ip());
 	}
 
@@ -31,7 +31,7 @@ public class MyBatisPlusMetaObjectHandler implements MetaObjectHandler {
 	public void updateFill(MetaObject metaObject) {
 
 		strictUpdateFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now());
-		strictUpdateFill(metaObject, "updateUsername", String.class, username());
+		strictUpdateFill(metaObject, "updateUsersId", String.class, username());
 		strictUpdateFill(metaObject, "updateIp", String.class, ip());
 	}
 

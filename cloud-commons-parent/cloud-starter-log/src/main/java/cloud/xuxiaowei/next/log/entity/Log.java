@@ -168,13 +168,13 @@ public class Log implements Serializable {
 	 * <p>
 	 * 日志表中的创建者，不使用 MyBatis Plus 自动填充，而是在保存时进行设置
 	 */
-	private String createUsername;
+	private String createUsersId;
 
 	/**
 	 * 更新人，未更新时为空
 	 */
 	@TableField(fill = FieldFill.UPDATE)
-	private String updateUsername;
+	private String updateUsersId;
 
 	/**
 	 * 创建者IP，不为空

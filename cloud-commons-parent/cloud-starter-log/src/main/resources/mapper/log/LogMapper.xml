@@ -31,8 +31,8 @@
         <result column="remark" property="remark" />
         <result column="create_date" property="createDate" />
         <result column="update_date" property="updateDate" />
-        <result column="create_username" property="createUsername" />
-        <result column="update_username" property="updateUsername" />
+        <result column="create_username" property="createUsersId" />
+        <result column="update_username" property="updateUsersId" />
         <result column="create_ip" property="createIp" />
         <result column="update_ip" property="updateIp" />
         <result column="hostname" property="hostname" />
