@@ -1,6 +1,12 @@
 [source.crates-io]
-registry = "https://github.com/rust-lang/crates.io-index"
-replace-with = 'tuna'
+# registry = "https://github.com/rust-lang/crates.io-index"
+replace-with = 'rsproxy'
+
+[source.rsproxy]
+registry = "https://rsproxy.cn/crates.io-index"
+
+[registries.rsproxy]
+index = "https://rsproxy.cn/crates.io-index"
 
 # 清华大学
 [source.tuna]
@@ -9,6 +15,9 @@ registry = "https://mirrors.tuna.tsinghua.edu.cn/git/crates.io-index.git"
 # 中国科学技术大学
 [source.ustc]
 registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+
+[net]
+git-fetch-with-cli = true
 
 # 设置代理
 [http]
