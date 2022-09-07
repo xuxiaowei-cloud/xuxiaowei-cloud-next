@@ -53,3 +53,9 @@
         sudo ufw allow 8300
         sudo ufw allow 8500
         ```
+
+- Windows 启动
+
+```shell
+consul.exe agent -dev
+```
