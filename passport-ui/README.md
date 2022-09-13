@@ -63,7 +63,8 @@ npm create vite@latest passport-ui -- --template vue-ts
     1. [General Changes](https://vitejs.dev/guide/migration.html#general-changes)
 
 ```
-npm i @element-plus/icons-vue axios crypto-js element-plus jsencrypt pinia terser vue vue-router
+npm i vue
+npm i @element-plus/icons-vue axios crypto-js element-plus jsencrypt pinia terser vue-router
 ```
 
 ```

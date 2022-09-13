@@ -158,7 +158,8 @@ npm create vite@latest ui -- --template vue-ts
 - [vue-tsc](https://www.npmjs.com/package/vue-tsc)
 
 ```
-npm i @element-plus/icons-vue @tauri-apps/api @toast-ui/editor @wangeditor/editor-for-vue@5 axios crypto-js echarts element-plus js-cookie jsencrypt pinia sockjs-client stompjs vue vue-clipboard3 vue-echarts vue-router
+npm i vue
+npm i @element-plus/icons-vue @tauri-apps/api @toast-ui/editor @wangeditor/editor-for-vue@5 axios crypto-js echarts element-plus js-cookie jsencrypt pinia sockjs-client stompjs vue-clipboard3 vue-echarts vue-router
 ```
 
 ```
