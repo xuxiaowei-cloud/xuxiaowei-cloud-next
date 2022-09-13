@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 0.0.1
  */
 @Configuration
-@EnableFeignClients("cloud.xuxiaowei")
+@EnableFeignClients("cloud.xuxiaowei.next")
 public class OpenfeignConfiguration {
 
 }
