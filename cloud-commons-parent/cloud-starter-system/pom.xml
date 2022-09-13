@@ -38,7 +38,7 @@
         <!-- Redis 组件 -->
         <dependency>
             <groupId>cloud.xuxiaowei.next.commons</groupId>
-            <artifactId>cloud-starter-redis</artifactId>
+            <artifactId>cloud-starter-session-redis</artifactId>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
@@ -47,7 +47,7 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
-        <!-- IOUtils -->
+        <!-- 提供：IOUtils -->
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>

@@ -30,7 +30,7 @@ public class SessionServiceImpl implements SessionService {
 
 	private HttpSession session;
 
-	private RedisTemplate<String, String> redisTemplate;
+	private RedisTemplate<String, Object> redisTemplate;
 
 	private StringRedisTemplate stringRedisTemplate;
 
@@ -42,7 +42,7 @@ public class SessionServiceImpl implements SessionService {
 	}
 
 	@Autowired
-	public void setRedisTemplate(RedisTemplate<String, String> redisTemplate) {
+	public void setRedisTemplate(RedisTemplate<String, Object> redisTemplate) {
 		this.redisTemplate = redisTemplate;
 	}
 

@@ -1,9 +1,9 @@
 package cloud.xuxiaowei.next.session.configuration;
 
+import cloud.xuxiaowei.next.redis.configuration.RedisCacheManagerConfiguration;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration;
@@ -15,6 +15,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.RedisHt
  * @since 0.0.1
  */
 @Configuration
+@Import(RedisCacheManagerConfiguration.class)
 @EnableRedisHttpSession
 public class SessionRedisSerializerConfiguration {
 
