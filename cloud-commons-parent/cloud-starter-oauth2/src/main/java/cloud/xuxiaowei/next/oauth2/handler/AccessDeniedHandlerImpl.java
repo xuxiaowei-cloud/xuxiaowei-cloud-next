@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.csrf.InvalidCsrfTokenException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -27,9 +28,16 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-		log.error("访问被拒绝异常：", accessDeniedException);
+		Response<?> error;
 
-		Response<?> error = Response.error(CodeEnums.T00002.code, CodeEnums.T00002.msg);
+		if (accessDeniedException instanceof InvalidCsrfTokenException) {
+			log.error("无效的 Csrf 令牌异常：", accessDeniedException);
+			error = Response.error(CodeEnums.A20005.code, CodeEnums.A20005.msg);
+		}
+		else {
+			log.error("访问被拒绝异常：", accessDeniedException);
+			error = Response.error(CodeEnums.T00002.code, CodeEnums.T00002.msg);
+		}
 
 		ResponseUtils.response(response, error);
 	}
