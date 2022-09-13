@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import { queryToken } from '../store'
 import { hasAnyAuthority } from '../utils/authority'
+import settings from '../settings'
 import Layout from '../components/Layout.vue'
 
 import ConsoleView from '../views/home/ConsoleView.vue'
@@ -252,6 +253,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   console.log(to)
+
+  // 动态显示页面title
+  if (to.name) {
+    document.title = `${to.name.toString() + ' - ' + settings.title}`
+  } else {
+    document.title = settings.title
+  }
+
   queryToken(to.path, to.query, router)
   const meta = to.meta
   const authority = meta.authority

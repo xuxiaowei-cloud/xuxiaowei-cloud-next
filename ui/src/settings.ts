@@ -2,6 +2,12 @@
  * 设置
  */
 const settings = {
+
+  /**
+   * title
+   */
+  title: '徐晓伟微服务',
+
   /**
    * 正常代码
    */
