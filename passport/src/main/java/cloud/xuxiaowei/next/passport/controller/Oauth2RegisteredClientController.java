@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
 import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
@@ -80,13 +81,15 @@ public class Oauth2RegisteredClientController {
 	@ControllerAnnotation(description = "客户端身份验证方法选项")
 	public Response<?> authenticationMethodOptions(HttpServletRequest request, HttpServletResponse response) {
 		List<OptionVo> list = new ArrayList<>();
-		list.add(new OptionVo("basic", "basic"));
-		list.add(new OptionVo("client_secret_basic", "client_secret_basic"));
-		list.add(new OptionVo("post", "post"));
-		list.add(new OptionVo("client_secret_post", "client_secret_post"));
-		list.add(new OptionVo("client_secret_jwt", "client_secret_jwt"));
-		list.add(new OptionVo("private_key_jwt", "private_key_jwt"));
-		list.add(new OptionVo("none", "none"));
+		list.add(new OptionVo(ClientAuthenticationMethod.CLIENT_SECRET_BASIC.getValue(),
+				ClientAuthenticationMethod.CLIENT_SECRET_BASIC.getValue()));
+		list.add(new OptionVo(ClientAuthenticationMethod.CLIENT_SECRET_POST.getValue(),
+				ClientAuthenticationMethod.CLIENT_SECRET_POST.getValue()));
+		list.add(new OptionVo(ClientAuthenticationMethod.CLIENT_SECRET_JWT.getValue(),
+				ClientAuthenticationMethod.CLIENT_SECRET_JWT.getValue()));
+		list.add(new OptionVo(ClientAuthenticationMethod.PRIVATE_KEY_JWT.getValue(),
+				ClientAuthenticationMethod.PRIVATE_KEY_JWT.getValue()));
+		list.add(new OptionVo(ClientAuthenticationMethod.NONE.getValue(), ClientAuthenticationMethod.NONE.getValue()));
 		return Response.ok(list);
 	}
 
