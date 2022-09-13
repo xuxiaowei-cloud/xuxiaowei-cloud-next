@@ -1,10 +1,13 @@
 package cloud.xuxiaowei.next.passport.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 
 /**
  * <p>
@@ -119,12 +122,14 @@ public class UsersLogin implements Serializable {
 	/**
 	 * 创建时间，不为空，数据库自动生成
 	 */
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
 	@TableField(fill = FieldFill.INSERT)
 	private LocalDateTime createDate;
 
 	/**
 	 * 更新时间，未更新时为空
 	 */
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
 	@TableField(fill = FieldFill.UPDATE)
 	private LocalDateTime updateDate;
 

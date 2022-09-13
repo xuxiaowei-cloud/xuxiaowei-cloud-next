@@ -3,10 +3,13 @@ package cloud.xuxiaowei.next.passport.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 
 /**
  * <p>
@@ -31,10 +34,12 @@ public class Oauth2RegisteredClient implements Serializable {
 
 	private String clientId;
 
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
 	private LocalDateTime clientIdIssuedAt;
 
 	private String clientSecret;
 
+	@JsonFormat(pattern = DEFAULT_DATE_TIME_FORMAT)
 	private LocalDateTime clientSecretExpiresAt;
 
 	private String clientName;
