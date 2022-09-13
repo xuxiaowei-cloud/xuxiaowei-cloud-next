@@ -28,7 +28,7 @@ spring:
       port: ${consul_xuxiaowei_cloud_port:8500}
 
 ---
-# 以下配置可放入 nacos 中
+# 以下配置可放入 配置中心 中
 
 #
 # 日志 配置
