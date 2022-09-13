@@ -1,5 +1,9 @@
 import { createApp } from 'vue'
 import './style.css'
+
+// https://github.com/unocss/unocss/#vite
+import 'uno.css'
+
 import App from './App.vue'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import router from './router'

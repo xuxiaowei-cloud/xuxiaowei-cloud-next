@@ -7,6 +7,9 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // @ts-ignore
 import { resolve } from 'path'
 
+// https://github.com/unocss/unocss/#vite
+import Unocss from 'unocss/vite'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -16,7 +19,8 @@ export default defineConfig({
     }),
     Components({
       resolvers: [ElementPlusResolver()]
-    })
+    }),
+    Unocss({ /* options */ })
   ],
   resolve: {
     alias: {
