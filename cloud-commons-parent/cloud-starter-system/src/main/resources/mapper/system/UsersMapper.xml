@@ -104,7 +104,7 @@
             u.users_id = #{usersId} AND u.deleted = 0
     </select>
 
-    <!-- 根据 用户名 查询用户信息及权限 -->
+    <!-- 根据 用户名 查询用户信息、性别、区域地址及权限 -->
     <select id="getByUsername" resultMap="BaseResultMap">
         SELECT
             <include refid="users_authorities"/>,
