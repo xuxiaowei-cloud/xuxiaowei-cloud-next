@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-form :model="param" ref="cloudFormRef" label-position="left" label-width="200px" id="cloud-el-form">
+    <el-form :model="param" ref="cloudFormRef" label-position="left" label-width="210px" id="cloud-el-form">
       <el-form-item label="id" v-if="props.edit">
         <el-input v-model="param.id" disabled/>
       </el-form-item>
@@ -72,6 +72,10 @@
         <el-select v-model="param.accessTokenFormat" placeholder="Select accessTokenFormat" style="width: 100%">
           <el-option v-for="item in accessTokenFormatList" :key="item.value" :label="item.label" :value="item.value"/>
         </el-select>
+      </el-form-item>
+      <el-form-item label="authorizationCodeTimeToLive" prop="authorizationCodeTimeToLive"
+                    :rules="[{ required: true, message: 'authorizationCodeTimeToLive is required' }]">
+        <el-input v-model="param.authorizationCodeTimeToLive" type="number"/>
       </el-form-item>
       <el-form-item label="accessTokenTimeToLive" prop="accessTokenTimeToLive"
                     :rules="[{ required: true, message: 'accessTokenTimeToLive is required' }]">
@@ -240,6 +244,7 @@ const param = reactive({
   reuseRefreshTokens: null,
   tokenSignatureAlgorithm: null,
   accessTokenFormat: null,
+  authorizationCodeTimeToLive: null,
   accessTokenTimeToLive: null,
   refreshTokenTimeToLive: null,
   // 识别码

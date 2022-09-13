@@ -129,6 +129,7 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			});
 			TokenSettings.Builder builder = TokenSettings.withSettings(map);
 			TokenSettings build = builder.build();
+			this.authorizationCodeTimeToLive = build.getAuthorizationCodeTimeToLive().getSeconds();
 			this.accessTokenTimeToLive = build.getAccessTokenTimeToLive().getSeconds();
 			this.refreshTokenTimeToLive = build.getRefreshTokenTimeToLive().getSeconds();
 			OAuth2TokenFormat accessTokenFormat = build.getAccessTokenFormat();
@@ -150,6 +151,8 @@ public class Oauth2RegisteredClientVo implements Serializable {
 	}
 
 	private String tokenSignatureAlgorithm;
+
+	private long authorizationCodeTimeToLive;
 
 	private long accessTokenTimeToLive;
 

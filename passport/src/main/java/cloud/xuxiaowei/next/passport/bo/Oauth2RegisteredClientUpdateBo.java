@@ -60,6 +60,9 @@ public class Oauth2RegisteredClientUpdateBo implements Serializable {
 	@NotNull(message = "requireAuthorizationConsent 不能为空")
 	private Boolean requireAuthorizationConsent;
 
+	@NotNull(message = "authorizationCodeTimeToLive 不能为空")
+	private Long authorizationCodeTimeToLive;
+
 	@NotNull(message = "accessTokenTimeToLive 不能为空")
 	private Long accessTokenTimeToLive;
 

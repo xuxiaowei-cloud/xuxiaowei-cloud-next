@@ -75,6 +75,9 @@
             <el-form-item label="tokenSettings">
               <el-input v-model="props.row.tokenSettings" class="cloud-el-expand-input" type="textarea" disabled rows="5"/>
             </el-form-item>
+            <el-form-item label="authorizationCodeTimeToLive">
+              <el-input v-model="props.row.authorizationCodeTimeToLive" class="cloud-el-expand-input" disabled/>
+            </el-form-item>
             <el-form-item label="accessTokenTimeToLive">
               <el-input v-model="props.row.accessTokenTimeToLive" class="cloud-el-expand-input" disabled/>
             </el-form-item>
