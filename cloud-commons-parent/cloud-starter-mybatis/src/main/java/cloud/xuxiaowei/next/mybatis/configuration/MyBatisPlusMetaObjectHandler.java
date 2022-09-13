@@ -1,11 +1,13 @@
 package cloud.xuxiaowei.next.mybatis.configuration;
 
 import cloud.xuxiaowei.next.utils.Constant;
+import cloud.xuxiaowei.next.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.reflection.MetaObject;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +25,7 @@ public class MyBatisPlusMetaObjectHandler implements MetaObjectHandler {
 	public void insertFill(MetaObject metaObject) {
 
 		strictInsertFill(metaObject, "createDate", LocalDateTime.class, LocalDateTime.now());
-		strictInsertFill(metaObject, "createUsersId", String.class, username());
+		strictInsertFill(metaObject, "createUsersId", String.class, usersId());
 		strictInsertFill(metaObject, "createIp", String.class, ip());
 	}
 
@@ -31,13 +33,20 @@ public class MyBatisPlusMetaObjectHandler implements MetaObjectHandler {
 	public void updateFill(MetaObject metaObject) {
 
 		strictUpdateFill(metaObject, "updateDate", LocalDateTime.class, LocalDateTime.now());
-		strictUpdateFill(metaObject, "updateUsersId", String.class, username());
+		strictUpdateFill(metaObject, "updateUsersId", String.class, usersId());
 		strictUpdateFill(metaObject, "updateIp", String.class, ip());
 	}
 
-	private String username() {
-		String username = MDC.get(Constant.NAME);
-		return username == null ? "" : username;
+	private String usersId() {
+		Long usersId = SecurityUtils.getUsersId();
+		String name = SecurityUtils.getUserName();
+		if (usersId != null) {
+			return usersId + "";
+		}
+		else if (StringUtils.hasText(name)) {
+			return name;
+		}
+		return "";
 	}
 
 	private String ip() {
