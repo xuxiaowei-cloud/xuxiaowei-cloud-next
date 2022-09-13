@@ -41,7 +41,7 @@
               </el-form-item>
             </div>
           </el-form>
-          <div v-else style="text-align: center;">
+          <div v-else class="text-center">
             <span>暂无权限</span>
           </div>
         </template>

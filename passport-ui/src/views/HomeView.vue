@@ -1,11 +1,13 @@
 <template>
   <el-container>
 
-    <el-header class="cloud-header">
+    <!-- 高度自动，原 el-header、el-footer 均为固定高度 -->
+    <!-- 上下左右外边距 -->
+    <el-header class="cloud-header m-20px">
       <h1>Login</h1>
       <div>登录服务-徐晓伟微服务</div>
       <br v-if="!cross">
-      <div v-if="!cross" style="color: red;">
+      <div v-if="!cross" class="color-red">
         由于跨域、Session共享、登录成功的授权URL配置，请使用{{ crossDomain }}的子域，如：{{ passportDomain }}，否则将无法登录
       </div>
     </el-header>
@@ -43,7 +45,9 @@
 
     </el-main>
 
-    <el-footer class="cloud-footer">
+    <!-- 高度自动，原 el-header、el-footer 均为固定高度 -->
+    <!-- 上下左右外边距 -->
+    <el-footer class="cloud-footer h-auto m-20px">
       <span>&copy;&nbsp;2022</span>&nbsp;
       <a target="_blank" href="http://xuxiaowei.com.cn">徐晓伟工作室</a>&nbsp;
       <a target="_blank" href="http://beian.miit.gov.cn">鲁ICP备19009036号</a>
@@ -153,8 +157,6 @@ const submitCloudForm = () => {
 
 .cloud-header,
 .cloud-footer {
-  /* 上下左右外边距 */
-  margin: 20px;
   /* 高度自动，原 el-header、el-footer 均为固定高度 */
   height: auto;
 }

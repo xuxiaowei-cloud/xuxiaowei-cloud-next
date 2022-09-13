@@ -1,8 +1,7 @@
 <template>
-  <div style="text-align: center" id="cloud-transfer">
+  <div class="text-center" id="cloud-transfer">
     <!-- :left-default-checked="[2, 3]" :right-default-checked="[1]" -->
-    <el-transfer v-model="rightValue" style="text-align: left; display: inline-block" filterable
-                 :titles="['系统权限', '用户权限']"
+    <el-transfer v-model="rightValue" class="text-left inline-block" filterable :titles="['系统权限', '用户权限']"
                  :button-texts="['删除', '添加']" :data="data" @change="handleChange"
                  :format="{ noChecked: '${total}', hasChecked: '${checked}/${total}',}">
       <template #default="{ option }">
