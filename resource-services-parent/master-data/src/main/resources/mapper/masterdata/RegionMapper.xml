@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.xuxiaowei.next.masterdata.mapper.RegionMapper">
+
+    <!-- 分页搜索公共部分 -->
+    <sql id="page_common">
+        FROM
+            province_handle ph /*省*/
+                JOIN city_handle ch /*市*/ ON ph.province_code = ch.province_code
+                JOIN county_handle c /*区/县*/ ON ch.city_code = c.city_code
+                JOIN town_handle th /*镇*/ ON th.county_code = c.county_code
+                JOIN village_handle vh /*居委会*/ ON th.town_code = vh.town_code
+        WHERE 1 = 1
+            <if test="regionPageBo.type == true">
+                <if test="regionPageBo.provinceCode != null">
+                    AND ph.province_code = #{regionPageBo.provinceCode}
+                </if>
+                <if test="regionPageBo.cityCode != null">
+                    AND ch.city_code = #{regionPageBo.cityCode}
+                </if>
+                <if test="regionPageBo.countyCode != null">
+                    AND c.county_code = #{regionPageBo.countyCode}
+                </if>
+                <if test="regionPageBo.townCode != null">
+                    AND th.town_code = #{regionPageBo.townCode}
+                </if>
+                <if test="regionPageBo.villageCode != null">
+                    AND vh.village_code = #{regionPageBo.villageCode}
+                </if>
+            </if>
+            <if test="regionPageBo.type != true">
+                <if test="regionPageBo.provinceCode != null">
+                    AND ph.province_code LIKE CONCAT('%', #{regionPageBo.provinceCode}, '%')
+                </if>
+                <if test="regionPageBo.provinceName != null">
+                    AND ph.province_name LIKE CONCAT('%', #{regionPageBo.provinceName}, '%')
+                </if>
+                <if test="regionPageBo.cityCode != null">
+                    AND ch.city_code LIKE CONCAT('%', #{regionPageBo.cityCode}, '%')
+                </if>
+                <if test="regionPageBo.cityName != null">
+                    AND ch.city_name LIKE CONCAT('%', #{regionPageBo.cityName}, '%')
+                </if>
+                <if test="regionPageBo.countyCode != null">
+                    AND c.county_code LIKE CONCAT('%', #{regionPageBo.countyCode}, '%')
+                </if>
+                <if test="regionPageBo.countyName != null">
+                    AND c.county_name LIKE CONCAT('%', #{regionPageBo.countyName}, '%')
+                </if>
+                <if test="regionPageBo.townCode != null">
+                    AND th.town_code LIKE CONCAT('%', #{regionPageBo.townCode}, '%')
+                </if>
+                <if test="regionPageBo.townName != null">
+                    AND th.town_name LIKE CONCAT('%', #{regionPageBo.townName}, '%')
+                </if>
+                <if test="regionPageBo.villageCode != null">
+                    AND vh.village_code LIKE CONCAT('%', #{regionPageBo.villageCode}, '%')
+                </if>
+                <if test="regionPageBo.villageName != null">
+                    AND vh.village_name LIKE CONCAT('%', #{regionPageBo.villageName}, '%')
+                </if>
+            </if>
+    </sql>
+
+    <!-- 分页查询条数 -->
+    <select id="pageCount" resultType="java.lang.Long">
+        SELECT count(1)
+        <include refid="page_common"/>
+    </select>
+
+    <!-- 分页查询数据 -->
+    <select id="page" resultType="cloud.xuxiaowei.next.masterdata.vo.RegionPageVo">
+        SELECT
+            ph.`year`,
+            ph.province_code,
+            ph.province_name,
+            ch.city_code,
+            ch.city_name,
+            c.county_code,
+            c.county_name,
+            th.town_code,
+            th.town_name,
+            vh.village_code,
+            vh.village_name,
+            vh.village_type_code
+        <include refid="page_common"/>
+        LIMIT ${(regionPageBo.current - 1) * regionPageBo.size}, ${regionPageBo.size}
+    </select>
+
+</mapper>

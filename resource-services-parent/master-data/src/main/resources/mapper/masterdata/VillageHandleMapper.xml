@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cloud.xuxiaowei.next.masterdata.mapper.VillageHandleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cloud.xuxiaowei.next.masterdata.entity.VillageHandle">
+        <result column="town_code" property="townCode" />
+        <result column="village_code" property="villageCode" />
+        <result column="village_name" property="villageName" />
+        <result column="village_type_code" property="villageTypeCode" />
+    </resultMap>
+
+</mapper>

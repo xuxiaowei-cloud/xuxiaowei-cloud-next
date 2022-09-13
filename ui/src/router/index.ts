@@ -70,6 +70,40 @@ export const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
+    name: '主数据',
+    path: '',
+    component: Layout,
+    meta: {
+      icon: 'Tickets'
+    },
+    children: [
+      {
+        path: '/master-data/dict',
+        name: '字典',
+        meta: {
+          authority: ['dict_read']
+        },
+        component: () => import('../views/master-data/Dict.vue')
+      },
+      {
+        path: '/master-data/dict-data',
+        name: '字典数据',
+        meta: {
+          authority: ['dict_read']
+        },
+        component: () => import('../views/master-data/DictData.vue')
+      },
+      {
+        path: '/master-data/region',
+        name: '行政区域',
+        meta: {
+          authority: ['region_read']
+        },
+        component: () => import('../views/master-data/Region.vue')
+      }
+    ]
+  },
+  {
     name: '个人中心',
     path: '',
     component: Layout,

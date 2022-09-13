@@ -34,6 +34,11 @@ public enum ServiceEnums {
 	CANAL("canal", "阿里巴巴 MySQL binlog 增量订阅、消费服务"),
 
 	/**
+	 * 主数据服务
+	 */
+	MASTER_DATA("master-data", "主数据服务"),
+
+	/**
 	 * 用户服务
 	 */
 	USER("user", "用户服务"),

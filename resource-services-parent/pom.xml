@@ -25,6 +25,8 @@
 	<modules>
 		<!-- 阿里巴巴 MySQL binlog 增量订阅、消费服务 -->
 		<module>canal</module>
+		<!-- 主数据服务 -->
+		<module>master-data</module>
 		<!-- 用户服务 -->
 		<module>user</module>
 		<!-- WebService 服务 -->

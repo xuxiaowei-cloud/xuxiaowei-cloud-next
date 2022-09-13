@@ -40,6 +40,11 @@ INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_da
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (24, 'xuxiaowei', 'audit_authorization_delete', '2022-06-18 15:25:36', NULL);
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (25, 'xuxiaowei', 'audit_authorization_consent_delete', '2022-06-18 15:59:06', NULL);
 INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (26, 'xuxiaowei', 'audit_authorization_consent_read', '2022-06-18 15:59:16', NULL);
+INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (27, 'xuxiaowei', 'region_read', '2022-08-20 02:49:04', NULL);
+INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (28, 'xuxiaowei', 'dict_delete', '2022-08-23 10:47:05', NULL);
+INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (29, 'xuxiaowei', 'dict_edit', '2022-08-23 10:47:15', NULL);
+INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (30, 'xuxiaowei', 'dict_read', '2022-08-23 10:47:24', NULL);
+INSERT INTO `authorities` (`authorities_id`, `username`, `authority`, `create_date`, `update_date`) VALUES (31, 'xuxiaowei', 'dict_add', '2022-08-23 22:08:18', NULL);
 
 -- ----------------------------
 -- Records of authority
@@ -49,6 +54,10 @@ INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_co
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_delete', '删除授权记录');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('audit_authorization_read', '查看授权记录');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('clientId_token_delete', '客户Token 删除权限');
+INSERT INTO `authority` (`authority`, `explain`) VALUES ('dict_add', '添加字典权限');
+INSERT INTO `authority` (`authority`, `explain`) VALUES ('dict_delete', '删除字典权限');
+INSERT INTO `authority` (`authority`, `explain`) VALUES ('dict_edit', '修改字典权限');
+INSERT INTO `authority` (`authority`, `explain`) VALUES ('dict_read', '查看字典权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_client_add', '管理客户 添加权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_client_delete', '管理客户 删除权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_client_edit', '管理客户 修改权限');
@@ -59,12 +68,25 @@ INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_user_delete', '
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_user_edit', '管理用户 修改权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('manage_user_read', '管理用户 查询权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('username_token_delete', '用户Token 删除权限');
+INSERT INTO `authority` (`authority`, `explain`) VALUES ('region_read', '查看省市区县镇居委会权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('user_authorities', '查看用户权限');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('user_details', '查看用户详情');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('user_info', '查看用户信息');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('user_oauth2_oauth2Request', '查看 oauth2 用户请求');
 INSERT INTO `authority` (`authority`, `explain`) VALUES ('user_oauth2_userAuthentication', '查看 oauth2 用户身份验证');
 
+-- ----------------------------
+-- Records of dict
+-- ----------------------------
+INSERT INTO `dict` VALUES ('sex', '性别', 3606, 'GB/T 2261.1-2003', 'https://openstd.samr.gov.cn/bzgk/gb/newGbInfo?hcno=0FC942D542BC6EE3C707B2647EF81CD8', NULL, '1', '2022-08-23 09:18:44', '127.0.0.1', NULL, NULL, NULL, 0);
+
+-- ----------------------------
+-- Records of dict_data
+-- ----------------------------
+INSERT INTO `dict_data` (`dict_code`, `dict_data_code`, `dict_data_label`, `dict_data_sort`, `dict_data_explain`, `external_code_one`, `external_label_one`, `remark`, `create_users_id`, `create_date`, `create_ip`, `update_users_id`, `update_date`, `update_ip`, `deleted`) VALUES ('sex', '0', '未知', 0, '未知的性别', NULL, NULL, NULL, '1', '2022-08-23 09:22:46', '127.0.0.1', NULL, NULL, NULL, 0);
+INSERT INTO `dict_data` (`dict_code`, `dict_data_code`, `dict_data_label`, `dict_data_sort`, `dict_data_explain`, `external_code_one`, `external_label_one`, `remark`, `create_users_id`, `create_date`, `create_ip`, `update_users_id`, `update_date`, `update_ip`, `deleted`) VALUES ('sex', '1', '男', 1, '男性', NULL, NULL, NULL, '1', '2022-08-23 09:22:46', '127.0.0.1', NULL, NULL, NULL, 0);
+INSERT INTO `dict_data` (`dict_code`, `dict_data_code`, `dict_data_label`, `dict_data_sort`, `dict_data_explain`, `external_code_one`, `external_label_one`, `remark`, `create_users_id`, `create_date`, `create_ip`, `update_users_id`, `update_date`, `update_ip`, `deleted`) VALUES ('sex', '2', '女', 2, '女性', NULL, NULL, NULL, '1', '2022-08-23 09:22:46', '127.0.0.1', NULL, NULL, NULL, 0);
+INSERT INTO `dict_data` (`dict_code`, `dict_data_code`, `dict_data_label`, `dict_data_sort`, `dict_data_explain`, `external_code_one`, `external_label_one`, `remark`, `create_users_id`, `create_date`, `create_ip`, `update_users_id`, `update_date`, `update_ip`, `deleted`) VALUES ('sex', '9', '未说明', 3, '未说明的性别', NULL, NULL, NULL, '1', '2022-08-23 09:23:50', '127.0.0.1', NULL, NULL, NULL, 0);
 
 -- ----------------------------
 -- Records of oauth2_authorization
