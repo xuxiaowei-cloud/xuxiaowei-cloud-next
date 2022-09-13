@@ -91,6 +91,8 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { JSEncrypt } from 'jsencrypt'
 import {
   getById,
   save,
@@ -105,8 +107,6 @@ import {
 import { codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import settings from '../../../settings'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { JSEncrypt } from 'jsencrypt'
 
 const props = defineProps({
   dialogVisible: {
@@ -221,7 +221,7 @@ const param = reactive({
   id: null,
   clientId: null,
   clientName: null,
-  clientSecret: '',
+  clientSecret: null,
   clientIdIssuedAt: null,
   clientSecretExpiresAt: null,
   clientAuthenticationMethods: null,
@@ -303,13 +303,16 @@ const encryption = () => {
 
   const jsEncrypt = new JSEncrypt()
   jsEncrypt.setPublicKey(publicKey.value)
-  const encrypt = jsEncrypt.encrypt(param.clientSecret)
-  if (encrypt === false) {
-    ElMessage.error('凭证加密失败')
-    return
+  if (param.clientSecret != null && param.clientSecret !== '') {
+    const encrypt = jsEncrypt.encrypt(param.clientSecret)
+    if (encrypt === false) {
+      ElMessage.error('凭证加密失败')
+      return
+    }
+
+    paramEncryption.clientSecret = encrypt
   }
 
-  paramEncryption.clientSecret = encrypt
   paramEncryption.authorizationGrantTypes = param.grantTypes.toString()
   paramEncryption.clientAuthenticationMethods = param.authenticationMethods.toString()
   paramEncryption.scopes = param.scopeList.toString()

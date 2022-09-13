@@ -46,11 +46,11 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { JSEncrypt } from 'jsencrypt'
 import { getById, save, updateById, codeRsa } from '../../../api/user'
 import { randomPassword } from '../../../utils/generate'
 import settings from '../../../settings'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import { JSEncrypt } from 'jsencrypt'
 
 const props = defineProps({
   dialogVisible: {
@@ -71,7 +71,7 @@ const param = reactive({
   email: null,
   emailValid: false,
   nickname: null,
-  password: '',
+  password: null,
   enabled: true,
   accountNonExpired: true,
   credentialsNonExpired: true,
@@ -155,10 +155,14 @@ const cloudSave = () => {
 
         const jsEncrypt = new JSEncrypt()
         jsEncrypt.setPublicKey(publicKey.value)
-        const encrypt = jsEncrypt.encrypt(param.password)
-        if (encrypt === false) {
-          ElMessage.error('密码加密失败')
-          return
+        if (param.password != null && param.password !== '') {
+          const encrypt = jsEncrypt.encrypt(param.password)
+          if (encrypt === false) {
+            ElMessage.error('密码加密失败')
+            return
+          }
+
+          paramEncryption.password = encrypt
         }
 
         save(paramEncryption).then(response => {
@@ -190,13 +194,16 @@ const cloudUpdate = () => {
 
   const jsEncrypt = new JSEncrypt()
   jsEncrypt.setPublicKey(publicKey.value)
-  const encrypt = jsEncrypt.encrypt(param.password)
-  if (encrypt === false) {
-    ElMessage.error('密码加密失败')
-    return
+  if (param.password != null && param.password !== '') {
+    const encrypt = jsEncrypt.encrypt(param.password)
+    if (encrypt === false) {
+      ElMessage.error('密码加密失败')
+      return
+    }
+
+    paramEncryption.password = encrypt
   }
 
-  paramEncryption.password = encrypt
   // @ts-ignore
   cloudFormRef.value.validate((valid: boolean) => {
     if (valid) {
