@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_FORMAT;
 import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_TIME_FORMAT;
 
 /**
@@ -44,6 +46,67 @@ public class UsersVo implements Serializable {
 	 * 昵称，不能为空，唯一键：uk__users__nickname
 	 */
 	private String nickname;
+
+	/**
+	 * 性别，取表：dict_data.dict_code = 'sex'
+	 */
+	private String sex;
+
+	/**
+	 * 性别展示
+	 */
+	private String sexLabel;
+
+	/**
+	 * 性别说明
+	 */
+	private String sexExplain;
+
+	/**
+	 * 生日
+	 */
+	@JsonFormat(pattern = DEFAULT_DATE_FORMAT)
+	private LocalDate birthday;
+
+	/**
+	 * 省代码，取表：province_handle.province_code
+	 */
+	private Integer provinceCode;
+
+	private String provinceName;
+
+	/**
+	 * 市代码，取表：city_handle.city_code
+	 */
+	private Integer cityCode;
+
+	private String cityName;
+
+	/**
+	 * 区/县代码，取表：county_handle.county_code
+	 */
+	private Integer countyCode;
+
+	private String countyName;
+
+	/**
+	 * 镇代码，取表：town_handle.town_code
+	 */
+	private Integer townCode;
+
+	private String townName;
+
+	/**
+	 * 居委会代码，取表：village_handle.town_code
+	 */
+	private Long villageCode;
+
+	private String villageName;
+
+	/**
+	 * 详细地址
+	 */
+	private String detailAddress;
 
 	/**
 	 * 是否启用，不能为空

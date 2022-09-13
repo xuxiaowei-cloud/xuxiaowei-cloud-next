@@ -1,13 +1,15 @@
 package cloud.xuxiaowei.next.system.bo;
 
-import cloud.xuxiaowei.next.system.annotation.UsersIdAnnotation;
-import jakarta.validation.constraints.Email;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+
+import static cloud.xuxiaowei.next.utils.DateUtils.DEFAULT_DATE_FORMAT;
 
 /**
  * 用户表
@@ -21,25 +23,6 @@ public class UsersUpdateBo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 用户主键，自增
-	 */
-	@UsersIdAnnotation
-	@NotNull(message = "用户主键 不能为空")
-	private Long usersId;
-
-	/**
-	 * 邮箱，唯一键：uk__users__email
-	 */
-	@Email(message = "邮箱 不合法")
-	private String email;
-
-	/**
-	 * 邮箱是否验证，不为空，默认值：0
-	 */
-	@NotNull(message = "邮箱是否验证 不能为空")
-	private Boolean emailValid;
-
-	/**
 	 * 昵称，不能为空，唯一键：uk__users__nickname
 	 */
 	@Length(min = 2, max = 10, message = "昵称 长度限制：2-10")
@@ -47,38 +30,46 @@ public class UsersUpdateBo implements Serializable {
 	private String nickname;
 
 	/**
-	 * 密码，不能为空
+	 * 性别，取表：dict_data.dict_code = 'sex'
 	 */
-	private String password;
+	@NotEmpty(message = "性别 不能为空")
+	private String sex;
 
 	/**
-	 * 用户识别码
+	 * 生日
 	 */
-	@NotEmpty(message = "用户识别码 不能为空")
-	private String code;
+	@NotNull(message = "生日 不能为空")
+	@JsonFormat(pattern = DEFAULT_DATE_FORMAT)
+	private LocalDate birthday;
 
 	/**
-	 * 是否启用，不能为空
+	 * 省代码，取表：province_handle.province_code
 	 */
-	@NotNull(message = "是否启用 不能为空")
-	private Boolean enabled;
+	private Integer provinceCode;
 
 	/**
-	 * 帐户未过期，不能为空
+	 * 市代码，取表：city_handle.city_code
 	 */
-	@NotNull(message = "帐户未过期 不能为空")
-	private Boolean accountNonExpired;
+	private Integer cityCode;
 
 	/**
-	 * 凭证未过期，不能为空
+	 * 区/县代码，取表：county_handle.county_code
 	 */
-	@NotNull(message = "凭证未过期 不能为空")
-	private Boolean credentialsNonExpired;
+	private Integer countyCode;
 
 	/**
-	 * 帐户未锁定，不能为空
+	 * 镇代码，取表：town_handle.town_code
 	 */
-	@NotNull(message = "帐户未锁定 不能为空")
-	private Boolean accountNonLocked;
+	private Integer townCode;
+
+	/**
+	 * 居委会代码，取表：village_handle.town_code
+	 */
+	private Long villageCode;
+
+	/**
+	 * 详细地址
+	 */
+	private String detailAddress;
 
 }

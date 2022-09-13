@@ -1,13 +1,55 @@
-import request from '../utils/request'
+import request, { AjaxResponse } from '../utils/request'
 import { useStore } from '../store'
 import settings from '../settings'
 import { ElMessage } from 'element-plus'
+import { AxiosResponse } from 'axios'
+
+/**
+ * 权限
+ */
+export interface AuthorityVo {
+  authority: String;
+  explain: String;
+}
+
+/**
+ * 用户信息
+ */
+export interface UsersVo {
+  usersId: number; // 用户主键
+  username: string; // 用户名
+  email: string; // 邮箱
+  emailValid: Boolean; // 邮箱是否验证
+  nickname: string; // 昵称
+  sex: string;
+  sexLabel: string;
+  sexExplain: string;
+  birthday: string;
+  provinceCode: number | string;
+  provinceName: string;
+  cityCode: number | string;
+  cityName: string;
+  countyCode: number | string;
+  countyName: string;
+  townCode: number | string;
+  townName: string;
+  villageCode: number | string;
+  villageName: string;
+  detailAddress: string;
+  enabled: Boolean;
+  accountNonExpired: Boolean;
+  credentialsNonExpired: Boolean;
+  accountNonLocked: Boolean;
+  createDate: string;
+  updateDate: string;
+  authorityList: Array<AuthorityVo>;
+}
 
 /**
  * 用户信息
  */
 export const info = function () {
-  return request.post('/user/info').then(response => {
+  return request.post('/user/info').then((response: AxiosResponse<AjaxResponse<UsersVo>>) : AjaxResponse<UsersVo> => {
     console.log('用户信息', response)
     const responseData = response.data
     if (responseData.code === settings.okCode) {
@@ -27,6 +69,7 @@ export const info = function () {
         type: 'error'
       })
     }
+    return response.data
   })
 }
 
@@ -76,6 +119,16 @@ export const getById = function (usersId: number) {
  */
 export const save = function (data: any) {
   return request.post('/user/save', data).then(response => {
+    return response.data
+  })
+}
+
+/**
+ * 更新用户
+ * @param data 用户
+ */
+export const update = function (data: any) {
+  return request.post('/user/update', data).then(response => {
     return response.data
   })
 }

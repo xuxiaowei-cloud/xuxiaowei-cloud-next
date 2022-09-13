@@ -10,6 +10,21 @@
         <result column="email_valid" property="emailValid" />
         <result column="nickname" property="nickname" />
         <result column="password" property="password" />
+        <result column="sex" property="sex" />
+        <result column="sex_label" property="sexLabel" />
+        <result column="sex_explain" property="sexExplain" />
+        <result column="birthday" property="birthday" />
+        <result column="province_code" property="provinceCode" />
+        <result column="province_name" property="provinceName" />
+        <result column="city_code" property="cityCode" />
+        <result column="city_name" property="cityName" />
+        <result column="county_code" property="countyCode" />
+        <result column="county_name" property="countyName" />
+        <result column="town_code" property="townCode" />
+        <result column="town_name" property="townName" />
+        <result column="village_code" property="villageCode" />
+        <result column="village_name" property="villageName" />
+        <result column="detail_address" property="detailAddress" />
         <result column="enabled" property="enabled" />
         <result column="account_non_expired" property="accountNonExpired" />
         <result column="credentials_non_expired" property="credentialsNonExpired" />
@@ -92,11 +107,24 @@
     <!-- 根据 用户名 查询用户信息及权限 -->
     <select id="getByUsername" resultMap="BaseResultMap">
         SELECT
-            <include refid="users_authorities"/>
+            <include refid="users_authorities"/>,
+            dd.dict_data_label AS sex_label,
+            dd.dict_data_explain AS sex_explain,
+            ph.province_name,
+            cih.city_name,
+            coh.county_name,
+            th.town_name,
+            vh.village_name
         FROM
             users AS u
             LEFT JOIN authorities AS a ON u.username = a.username
-            LEFT JOIN authority as ay ON ay.authority = a.authority
+            LEFT JOIN authority AS ay ON ay.authority = a.authority
+            LEFT JOIN dict_data AS dd ON dd.dict_data_code = u.sex AND dd.dict_code = 'sex'
+            LEFT JOIN province_handle AS ph ON ph.province_code = u.province_code
+            LEFT JOIN city_handle AS cih ON cih.city_code = u.city_code
+            LEFT JOIN county_handle AS coh ON coh.county_code = u.county_code
+            LEFT JOIN town_handle AS th ON th.town_code = u.town_code
+            LEFT JOIN village_handle AS vh ON vh.village_code = u.village_code
         WHERE
             u.username = #{username} AND u.deleted = 0
     </select>

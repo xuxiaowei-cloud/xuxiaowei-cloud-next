@@ -6,6 +6,18 @@ import { useStore } from '../store'
 import settings from '../settings'
 import { decrypt, encrypt } from './aes'
 
+/**
+ * Ajax 返回值
+ */
+export interface AjaxResponse<T> {
+  code: string;
+  data: T;
+  explain: string;
+  field: string;
+  msg: string;
+  requestId: string;
+}
+
 // create an axios instance
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API, // BASE URL

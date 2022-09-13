@@ -3,6 +3,7 @@ package cloud.xuxiaowei.next.system.service;
 import cloud.xuxiaowei.next.system.bo.ManageUsersPageBo;
 import cloud.xuxiaowei.next.system.bo.UsersSaveBo;
 import cloud.xuxiaowei.next.system.bo.UsersUpdateBo;
+import cloud.xuxiaowei.next.system.bo.UsersUpdateByIdBo;
 import cloud.xuxiaowei.next.system.entity.Users;
 import cloud.xuxiaowei.next.system.vo.UsersVo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -67,9 +68,9 @@ public interface IUsersService extends IService<Users> {
 	Users getLogicByNickname(String nickname);
 
 	/**
-	 * 根据 用户名 查询用户信息及权限
+	 * 根据 用户名 查询用户信息、性别、区域地址及权限
 	 * @param username 用户名
-	 * @return 返回 用户信息及权限
+	 * @return 返回 用户信息、性别、区域地址及权限
 	 */
 	UsersVo getUsersVoByUsername(String username);
 
@@ -96,7 +97,14 @@ public interface IUsersService extends IService<Users> {
 
 	/**
 	 * 更新用户
-	 * @param usersUpdateBo 用户
+	 * @param usersUpdateByIdBo 用户
+	 * @return 返回 更新结果
+	 */
+	boolean updateByUsersUpdateByIdBo(UsersUpdateByIdBo usersUpdateByIdBo);
+
+	/**
+	 * 根据当前操作人更新用户
+	 * @param usersUpdateBo 用户表
 	 * @return 返回 更新结果
 	 */
 	boolean updateByUsersUpdateBo(UsersUpdateBo usersUpdateBo);

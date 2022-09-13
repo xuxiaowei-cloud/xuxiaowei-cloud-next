@@ -9,7 +9,7 @@ import { info } from '../api/user'
 export const useDefineStore = defineStore('store', {
   state: () => ({ // 单一状态树
     currentTimeMillis: ref<number>(), // 当前时间戳
-    usersId: ref<string>(), // 用户主键
+    usersId: ref<number>(), // 用户主键
     username: ref<string>(), // 用户名
     nickname: ref<string>(), // 昵称
     authorities: ref<string[]>([]), // 权限
@@ -82,7 +82,16 @@ export const useDefineStore = defineStore('store', {
      * @param state
      */
     getKeepAliveExclude (state) {
-      return state.keepAliveExclude
+      // 删除空值
+      const tmp = ref<string[]>([])
+      for(const i in state.keepAliveExclude) {
+        const exclude = state.keepAliveExclude[i]
+        if (exclude !== null) {
+          tmp.value.push(exclude)
+        }
+      }
+      state.keepAliveExclude = tmp.value
+      return tmp
     }
   },
   actions: {
@@ -97,7 +106,7 @@ export const useDefineStore = defineStore('store', {
      * 设置 用户名
      * @param usersId Token
      */
-    setUsersId (usersId: string) {
+    setUsersId (usersId: number) {
       this.usersId = usersId
     },
     /**
