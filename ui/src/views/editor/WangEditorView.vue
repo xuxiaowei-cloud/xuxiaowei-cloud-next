@@ -1,36 +1,46 @@
 <template>
-  <div id="toolbar-container"></div>
-  <div id="editor-container"></div>
+  <div style="border: 1px solid #ccc">
+    <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode"/>
+    <Editor style="height: 500px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig" :mode="mode"
+            @onCreated="handleCreated"/>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import '@wangeditor/editor/dist/css/style.css'
-import { createEditor, createToolbar, IEditorConfig, IDomEditor } from '@wangeditor/editor'
+// 参考：https://www.wangeditor.com/v5/for-frame.html#vue3
+// 示例：https://github.com/wangfupeng1988/vue3-wangeditor-demo
+import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
+const mode = ref('default') // 或 'simple'
+
+// 编辑器实例，必须用 shallowRef
+const editorRef = shallowRef()
+
+// 内容 HTML
+const valueHtml = ref('<p>hello</p>')
+
+// 模拟 ajax 异步获取内容
 onMounted(() => {
-  const editorConfig: Partial<IEditorConfig> = {}
-  editorConfig.placeholder = '请输入内容'
-  editorConfig.onChange = (editor: IDomEditor) => {
-    // 当编辑器选区、内容变化时，即触发
-    console.log('content', editor.children)
-    console.log('html', editor.getHtml())
-  }
-
-  // 创建编辑器
-  const editor = createEditor({
-    selector: '#editor-container',
-    config: editorConfig,
-    mode: 'default' // 或 'simple' 参考下文
-  })
-
-  // 创建工具栏
-  createToolbar({
-    editor,
-    selector: '#toolbar-container',
-    mode: 'default' // 或 'simple' 参考下文
-  })
+  setTimeout(() => {
+    valueHtml.value = '<p>模拟 Ajax 异步设置内容</p>'
+  }, 1000)
 })
+
+const toolbarConfig = {}
+const editorConfig = { placeholder: '请输入内容...' }
+
+// 组件销毁时，也及时销毁编辑器
+onBeforeUnmount(() => {
+  const editor = editorRef.value
+  if (editor == null) return
+  editor.destroy()
+})
+
+const handleCreated = (editor: any) => {
+  editorRef.value = editor // 记录 editor 实例，重要！
+}
 
 </script>
 
