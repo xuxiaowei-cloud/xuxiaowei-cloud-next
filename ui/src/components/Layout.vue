@@ -30,7 +30,7 @@
 
           <!-- 无二级菜单，或二级菜单的个数小于等于 1 -->
           <el-menu-item :index="menuItemPath(item)" :key="menuItemPath(item)" @click="menuItem"
-                        v-if="childrenLength(item.children) <= 1 && show(item.children)">
+                        v-if="childrenLength(item.children) <= 1 && show(item.children) && menuItemsAuthority(item.children)">
             <el-tooltip class="box-item" effect="dark" :disabled="!isCollapse" :content="item.name" placement="right">
               <el-icon v-if="item.meta?.icon">
                 <component :is="item.meta?.icon"/>
@@ -217,6 +217,21 @@ const subMenuAuthority = (item: RouteRecordRaw) => {
 const menuItemAuthority = (item: RouteRecordRaw) => {
   // @ts-ignore
   return hasAnyAuthority(item.meta?.authority)
+}
+// 二级菜单权限
+const menuItemsAuthority = (items: RouteRecordRaw[] | undefined) => {
+  if (items === undefined) {
+    return false
+  }
+  for (const i in items) {
+    const item = items[i]
+    // @ts-ignore
+    const has = hasAnyAuthority(item.meta?.authority)
+    if(has) {
+      return has
+    }
+  }
+  return false
 }
 
 // 标签页：默认选择
