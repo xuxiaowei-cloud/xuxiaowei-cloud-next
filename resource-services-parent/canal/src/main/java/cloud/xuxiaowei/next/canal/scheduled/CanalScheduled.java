@@ -265,9 +265,18 @@ public class CanalScheduled {
 				sql.append("'").append(executeTimeFormat).append("'").append(",");
 
 				List<CanalEntry.Column> oldColumnList = rowData.getBeforeColumnsList();
-				Map<String, String> map = new HashMap<>(16);
+				Map<String, Object> map = new HashMap<>(16);
 				for (CanalEntry.Column column : oldColumnList) {
-					map.put(column.getName(), column.getValue());
+					String name = column.getName();
+					String value = column.getValue();
+					try {
+						@SuppressWarnings("rawtypes")
+						Map readValue = objectMapper.readValue(value, Map.class);
+						map.put(name, readValue);
+					}
+					catch (Exception e) {
+						map.put(name, value);
+					}
 				}
 				String value = objectMapper.writeValueAsString(map);
 				// 更新之前
