@@ -30,44 +30,47 @@ public class EncryptHandlerInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
 			@NonNull Object handler) throws Exception {
-		HandlerMethod handlerMethod = (HandlerMethod) handler;
-		Method method = handlerMethod.getMethod();
+		if (handler instanceof HandlerMethod) {
+			HandlerMethod handlerMethod = (HandlerMethod) handler;
 
-		// 判断是否存在加密注解
-		boolean annotationPresent = method.isAnnotationPresent(EncryptAnnotation.class);
+			Method method = handlerMethod.getMethod();
 
-		EncryptAnnotation encryptAnnotation = method.getAnnotation(EncryptAnnotation.class);
-		if (annotationPresent) {
+			// 判断是否存在加密注解
+			boolean annotationPresent = method.isAnnotationPresent(EncryptAnnotation.class);
 
-			// 接口的客户配置
-			EncryptAnnotation.ClientId[] clients = encryptAnnotation.client();
+			EncryptAnnotation encryptAnnotation = method.getAnnotation(EncryptAnnotation.class);
+			if (annotationPresent) {
 
-			// 当前调用的客户ID
-			String clientId = SecurityUtils.getClientId();
+				// 接口的客户配置
+				EncryptAnnotation.ClientId[] clients = encryptAnnotation.client();
 
-			// 默认配置
-			Encrypt.AesVersion aesVersion = encryptAnnotation.value();
+				// 当前调用的客户ID
+				String clientId = SecurityUtils.getClientId();
 
-			if (StringUtils.hasText(clientId)) {
-				// 存在客户ID，使用接口中指定客户的配置
+				// 默认配置
+				Encrypt.AesVersion aesVersion = encryptAnnotation.value();
 
-				for (EncryptAnnotation.ClientId clientIdEncryptAnnotation : clients) {
-					// 遍历接口的客户配置
+				if (StringUtils.hasText(clientId)) {
+					// 存在客户ID，使用接口中指定客户的配置
 
-					if (clientId.equals(clientIdEncryptAnnotation.clientId())) {
-						// 匹配接口的客户配置是否与当前用户相同
-						// 如果相同，将匹配的客户配置返回
-						aesVersion = clientIdEncryptAnnotation.value();
+					for (EncryptAnnotation.ClientId clientIdEncryptAnnotation : clients) {
+						// 遍历接口的客户配置
 
-						// 如果该接口匹配到了当前客户对应的客户配置，将当前客户ID放入响应头中
-						response.setHeader(OAuth2TokenIntrospectionClaimNames.CLIENT_ID, clientId);
+						if (clientId.equals(clientIdEncryptAnnotation.clientId())) {
+							// 匹配接口的客户配置是否与当前用户相同
+							// 如果相同，将匹配的客户配置返回
+							aesVersion = clientIdEncryptAnnotation.value();
+
+							// 如果该接口匹配到了当前客户对应的客户配置，将当前客户ID放入响应头中
+							response.setHeader(OAuth2TokenIntrospectionClaimNames.CLIENT_ID, clientId);
+						}
 					}
+
 				}
 
+				// 将加密注解放入响应头中
+				response.setHeader(Constant.ENCRYPT, aesVersion.version);
 			}
-
-			// 将加密注解放入响应头中
-			response.setHeader(Constant.ENCRYPT, aesVersion.version);
 		}
 
 		return true;
