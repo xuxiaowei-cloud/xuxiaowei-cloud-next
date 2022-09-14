@@ -40,6 +40,12 @@
             <artifactId>spring-session-data-redis</artifactId>
         </dependency>
 
+        <!-- 提供 Web、Security 序列化与反序列化 -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency>
+
         <!-- 只为正常生成 javadoc 文档 -->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>

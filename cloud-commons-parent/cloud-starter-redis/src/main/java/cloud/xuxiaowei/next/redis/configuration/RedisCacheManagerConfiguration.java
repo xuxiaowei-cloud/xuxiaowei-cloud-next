@@ -1,8 +1,6 @@
 package cloud.xuxiaowei.next.redis.configuration;
 
 import cloud.xuxiaowei.next.utils.DateUtils;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,7 +11,6 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
-import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -142,14 +139,6 @@ public class RedisCacheManagerConfiguration {
 
 		// 用于注册可以扩展该映射器提供的功能的模块的方法; 例如，通过添加自定义序列化程序和反序列化程序的提供程序。
 		objectMapper.registerModule(javaTimeModule);
-
-		objectMapper.registerModule(new ParameterNamesModule());
-
-		objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-
-		// 序列化时带全限定名
-		objectMapper.activateDefaultTyping(objectMapper.getPolymorphicTypeValidator(),
-				ObjectMapper.DefaultTyping.EVERYTHING);
 
 		return objectMapper;
 	}
