@@ -22,7 +22,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.RedisHt
  */
 @Configuration
 @Import(RedisCacheManagerConfiguration.class)
-@EnableRedisHttpSession
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60 * 60 * 12)
 public class SessionRedisSerializerConfiguration {
 
 	/**
