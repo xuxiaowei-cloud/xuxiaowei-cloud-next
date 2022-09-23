@@ -25,7 +25,7 @@
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-parent -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-starter-parent -->
-        <spring-boot.version>3.0.0-M3</spring-boot.version>
+        <spring-boot.version>3.0.0-M5</spring-boot.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
