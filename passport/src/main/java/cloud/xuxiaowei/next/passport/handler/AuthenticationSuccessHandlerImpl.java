@@ -100,9 +100,14 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
 
 		String subject = "登录系统成功";
 		String result = "成功";
-		Runnable runnable = () -> HandlerUtils.send(usersService, javaMailSender, mailProperties, userName, subject,
-				result, remoteHost, userAgent);
-		new Thread(runnable).start();
+		try {
+			Runnable runnable = () -> HandlerUtils.send(usersService, javaMailSender, mailProperties, userName, subject,
+					result, remoteHost, userAgent);
+			new Thread(runnable).start();
+		}
+		catch (Exception e) {
+			log.error("登录系统成功，发送邮件异常", e);
+		}
 	}
 
 }
