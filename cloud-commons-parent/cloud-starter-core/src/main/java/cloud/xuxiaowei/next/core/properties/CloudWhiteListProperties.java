@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Data
 @Component
-//@RefreshScope
+@RefreshScope
 @ConfigurationProperties("cloud.white-list")
 public class CloudWhiteListProperties {
 

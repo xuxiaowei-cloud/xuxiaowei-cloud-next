@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Data
 @Component
-//@RefreshScope
+@RefreshScope
 @ConfigurationProperties("cloud.session")
 public class CloudSessionProperties {
 

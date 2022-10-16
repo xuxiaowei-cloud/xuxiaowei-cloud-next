@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-//@RefreshScope
+@RefreshScope
 @ConfigurationProperties("cloud.client")
 public class CloudClientProperties {
 
