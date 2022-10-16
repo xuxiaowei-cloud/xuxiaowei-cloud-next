@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Data
 @Component
-@RefreshScope
+//@RefreshScope
 @ConfigurationProperties("cloud.aes")
 public class CloudAesProperties {
 

@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Data
 @Component
-@RefreshScope
+//@RefreshScope
 @ConfigurationProperties("cloud.black-list")
 public class CloudBlackListProperties {
 

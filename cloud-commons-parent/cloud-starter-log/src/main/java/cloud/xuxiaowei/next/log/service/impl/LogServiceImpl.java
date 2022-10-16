@@ -34,7 +34,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 
 	private ConfigurableEnvironment environment;
 
-	private ConsulDiscoveryProperties consulDiscoveryProperties;
+//	private ConsulDiscoveryProperties consulDiscoveryProperties;
 
 	private ServerProperties serverProperties;
 
@@ -43,10 +43,10 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 		this.environment = environment;
 	}
 
-	@Autowired
-	public void setConsulDiscoveryProperties(ConsulDiscoveryProperties consulDiscoveryProperties) {
-		this.consulDiscoveryProperties = consulDiscoveryProperties;
-	}
+//	@Autowired
+//	public void setConsulDiscoveryProperties(ConsulDiscoveryProperties consulDiscoveryProperties) {
+//		this.consulDiscoveryProperties = consulDiscoveryProperties;
+//	}
 
 	@Autowired
 	public void setServerProperties(ServerProperties serverProperties) {
@@ -72,8 +72,8 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 			String queryString, String headersMap, String authorization, String userAgent, Throwable ex) {
 
 		String module = environment.getProperty("spring.application.name");
-		String ipAddress = consulDiscoveryProperties.getIpAddress();
-		String hostname = consulDiscoveryProperties.getHostname();
+//		String ipAddress = consulDiscoveryProperties.getIpAddress();
+//		String hostname = consulDiscoveryProperties.getHostname();
 		Integer port = serverProperties.getPort();
 
 		String payload = SecurityUtils.getPayload(authorization);
@@ -124,8 +124,8 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 		log.setException(ex == null ? null : ExceptionUtils.getStackTrace(ex));
 		log.setCreateUsersId(createUsersId);
 		log.setCreateIp(hostAddress);
-		log.setHostname(hostname);
-		log.setIpAddress(ipAddress);
+//		log.setHostname(hostname);
+//		log.setIpAddress(ipAddress);
 		log.setPort(port);
 		log.setCreateDate(LocalDateTime.now());
 

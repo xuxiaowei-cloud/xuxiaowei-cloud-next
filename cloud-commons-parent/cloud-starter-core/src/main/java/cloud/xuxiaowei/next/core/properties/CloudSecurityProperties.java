@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Data
 @Component
-@RefreshScope
+//@RefreshScope
 @ConfigurationProperties("cloud.security")
 public class CloudSecurityProperties {
 

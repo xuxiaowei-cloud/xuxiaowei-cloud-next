@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@RefreshScope
+//@RefreshScope
 @ConfigurationProperties("cloud.remember-me")
 public class CloudRememberMeProperties {
 

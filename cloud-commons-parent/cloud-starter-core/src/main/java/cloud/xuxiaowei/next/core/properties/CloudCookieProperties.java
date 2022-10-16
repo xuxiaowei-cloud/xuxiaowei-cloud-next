@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@RefreshScope
+//@RefreshScope
 @ConfigurationProperties("cloud.cookie")
 public class CloudCookieProperties {
 
