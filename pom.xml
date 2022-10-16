@@ -40,7 +40,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.0-M4</spring-boot.version>
+        <spring-boot.version>3.0.0-M5</spring-boot.version>
 
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
@@ -55,7 +55,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/cloud/spring-cloud-alibaba-dependencies -->
         <!-- https://github.com/alibaba/spring-cloud-alibaba -->
         <!-- https://github.com/spring-cloud/spring-cloud-consul -->
-        <spring-cloud.version>2022.0.0-M4</spring-cloud.version>
+        <spring-cloud.version>2022.0.0-M5</spring-cloud.version>
 
         <!-- 监控（管理）依赖 -->
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->

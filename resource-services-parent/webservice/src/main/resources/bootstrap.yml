@@ -154,11 +154,12 @@ mybatis-plus:
 
 # Redis 配置
 spring:
-  redis:
-    database: ${redis_xuxiaowei_cloud_database:1}
-    password: ${redis_xuxiaowei_cloud_password:xuxiaowei.com.cn}
-    host: ${redis_xuxiaowei_cloud_host:redis.example.next.xuxiaowei.cloud}
-    port: ${redis_xuxiaowei_cloud_port:6379}
+  data:
+    redis:
+      database: ${redis_xuxiaowei_cloud_database:1}
+      password: ${redis_xuxiaowei_cloud_password:xuxiaowei.com.cn}
+      host: ${redis_xuxiaowei_cloud_host:redis.example.next.xuxiaowei.cloud}
+      port: ${redis_xuxiaowei_cloud_port:6379}
 
 ---
 
