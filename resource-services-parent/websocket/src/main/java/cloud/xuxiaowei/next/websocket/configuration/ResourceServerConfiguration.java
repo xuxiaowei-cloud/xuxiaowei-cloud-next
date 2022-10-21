@@ -61,7 +61,7 @@ public class ResourceServerConfiguration {
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/favicon.ico");
+		return (web) -> web.ignoring().requestMatchers("/favicon.ico");
 	}
 
 	/**
@@ -76,9 +76,9 @@ public class ResourceServerConfiguration {
 		http.authorizeHttpRequests((authorize) -> {
 			authorize
 					// 放行端点
-					.antMatchers("/actuator/**").permitAll()
+					.requestMatchers("/actuator/**").permitAll()
 					// 放行错误地址
-					.antMatchers("/error").permitAll()
+					.requestMatchers("/error").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});

@@ -105,9 +105,9 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> {
-			web.ignoring().antMatchers("/favicon.ico");
-			web.ignoring().antMatchers("/**/**.js");
-			web.ignoring().antMatchers("/**/**.css");
+			web.ignoring().requestMatchers("/favicon.ico");
+			web.ignoring().requestMatchers("/*/*.js");
+			web.ignoring().requestMatchers("/*/*.css");
 		};
 	}
 
@@ -145,17 +145,17 @@ public class WebSecurityConfigurerAdapterConfiguration {
 		http.authorizeHttpRequests((authorize) -> {
 			authorize
 					// 放行端点
-					.antMatchers("/actuator/**").permitAll()
+					.requestMatchers("/actuator/**").permitAll()
 					// 放行授权路径
-					.antMatchers("/oauth2/authorize").permitAll()
+					.requestMatchers("/oauth2/authorize").permitAll()
 					// 放行检查Token
-					.antMatchers("/oauth2/check_token").permitAll()
+					.requestMatchers("/oauth2/check_token").permitAll()
 					// 放行Token
-					.antMatchers("/oauth2/token").permitAll()
+					.requestMatchers("/oauth2/token").permitAll()
 					// 注销登录放行
-					.antMatchers("/signout").permitAll()
+					.requestMatchers("/signout").permitAll()
 					// 放行错误地址
-					.antMatchers("/error").permitAll()
+					.requestMatchers("/error").permitAll()
 					// 其他路径均需要授权
 					.anyRequest().authenticated();
 		});
