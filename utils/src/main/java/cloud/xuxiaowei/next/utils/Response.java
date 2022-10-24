@@ -62,7 +62,7 @@ public class Response<T> implements Serializable {
 	}
 
 	public static <T> Response<?> ok(T data, String msg) {
-		Response<T> response = new Response<>(CodeEnums.OK.code, CodeEnums.OK.msg);
+		Response<T> response = new Response<>(CodeEnums.OK.code, msg);
 		response.setData(data);
 		return response;
 	}
