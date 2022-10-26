@@ -7,7 +7,13 @@ stages:
 # package
 package:
   stage: package
+  image: maven:3.6.3-openjdk-17
   script:
+    - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
+    - echo $GPG_FILE
+    - gpg --import $GPG_FILE
+    - SETTINGS_FILE=/usr/share/maven/conf/settings.xml
+    - echo $SETTINGS_FILE
     - git --version
     - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     - echo 当前分支：$CI_COMMIT_BRANCH
@@ -18,7 +24,6 @@ package:
     - echo 提交标记名称。仅在标签的管道中可用：$CI_COMMIT_TAG
     - echo 主分支：$CI_DEFAULT_BRANCH
     - echo 项目路径：$CI_PROJECT_DIR
-    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
     - echo 单个执行器中构建执行的唯一ID：$CI_CONCURRENT_ID
     - echo 单个执行器和项目中构建执行的唯一ID：$CI_CONCURRENT_PROJECT_ID
     - echo 作业是否手动启动：$CI_JOB_MANUAL
@@ -51,8 +56,7 @@ package:
     - echo GitLab实例URL的主机，没有协议或端口：$CI_SERVER_HOST
     - echo 项目的HTTP（S）地址：$CI_PROJECT_URL
     - echo 克隆Git存储库的URL：$CI_REPOSITORY_URL
-    - wget --version
-    - mvn clean -e -U package source:jar javadoc:jar install -Pgpg -DskipTests && PACKAGE_FLAG=1
+    - mvn clean -e -U package source:jar javadoc:jar install -Pgpg -DskipTests -s settings.xml && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
   artifacts:
     name: package
@@ -66,8 +70,6 @@ package:
       - "*/*/target/*.jar"
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
-  tags:
-    - s3
   only:
     - main
 
