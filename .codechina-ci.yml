@@ -66,8 +66,6 @@ package:
       - "*/*/target/*.jar"
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
-  tags:
-    - s3
   only:
     - main
 
