@@ -824,6 +824,18 @@
             <url>https://s01.oss.sonatype.org/content/repositories/public/</url>
         </repository>
 
+        <!-- https://developer.aliyun.com/mvn/guide -->
+        <repository>
+            <id>spring</id>
+            <url>https://maven.aliyun.com/repository/spring</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
