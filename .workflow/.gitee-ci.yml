@@ -25,7 +25,7 @@ stages:
         jdkVersion: '17'
         mavenVersion: 3.6.3
         commands:
-          - mvn package source:jar javadoc:jar install -DskipTests
+          - mvn package source:jar javadoc:jar install -DskipTests -s settings.xml
         artifacts:
           - name: BUILD_ARTIFACT
             path:
@@ -40,31 +40,7 @@ stages:
               - resource-services-parent/wechat-miniprogram/target/wechat-miniprogram-0.0.1-SNAPSHOT.jar
               - ui/target/ui-0.0.1-SNAPSHOT.jar
               - xxl-job-admin/target/xxl-job-admin-0.0.1-SNAPSHOT.jar
-        settings:
-          - isRelease: true
-            isSnapshot: true
-            certificate: aliyun-central
-          - isRelease: true
-            isSnapshot: true
-            certificate: repo1
-          - isRelease: true
-            isSnapshot: true
-            certificate: oss-snapshots
-          - isRelease: true
-            isSnapshot: true
-            certificate: oss-s01-snapshots
-          - isRelease: true
-            isSnapshot: true
-            certificate: grails
-          - isRelease: true
-            isSnapshot: true
-            certificate: aliyun-spring
-          - isRelease: true
-            isSnapshot: true
-            certificate: spring-milestones
-        caches:
-          - ~/.m2
-          - ~/.npm
+        settings: []
         notify:
           - certificate: 4e5ec310-df02-013a-96ba-36d61e738f05
             events:
