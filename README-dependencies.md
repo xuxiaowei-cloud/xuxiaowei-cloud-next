@@ -9,11 +9,11 @@ cloud.xuxiaowei.next:admin-server:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M5:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M5:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.0-RC1:compile
-│        └──de.codecentric:spring-boot-admin-starter-server:jar:3.0.0-M4:compile
+│        └──de.codecentric:spring-boot-admin-starter-server:jar:3.0.0-M5:compile
 
 
 cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
-│        └──cn.hutool:hutool-all:jar:5.8.8:provided
+│        └──cn.hutool:hutool-all:jar:5.8.9:provided
 │        └──com.google.guava:guava:jar:31.1-jre:provided
 │        └──com.fasterxml.jackson.core:jackson-databind:jar:2.14.0-rc2:provided
 │        └──com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.14.0-rc2:provided
@@ -37,7 +37,7 @@ cloud.xuxiaowei.next:cloud-commons-parent:pom:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT
-│        └──cn.hutool:hutool-all:jar:5.8.8:provided
+│        └──cn.hutool:hutool-all:jar:5.8.9:provided
 │        └──org.springframework.cloud:spring-cloud-context:jar:4.0.0-M5:provided
 │        └──org.springframework:spring-web:jar:6.0.0-RC2:provided
 │        └──org.apache.tomcat.embed:tomcat-embed-core:jar:10.0.27:provided
@@ -163,7 +163,7 @@ cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-log:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-validation:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-session-redis:jar:0.0.1-SNAPSHOT:compile
-│        └──cn.hutool:hutool-all:jar:5.8.8:compile
+│        └──cn.hutool:hutool-all:jar:5.8.9:compile
 │        └──commons-io:commons-io:jar:2.11.0:compile
 │        └──org.springframework.boot:spring-boot-starter-json:jar:3.0.0-RC1:provided
 │        └──com.fasterxml.jackson.core:jackson-annotations:jar:2.14.0-rc2:provided
@@ -195,8 +195,8 @@ cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-redis:jar:0.0.1-SNAPSHOT:compile
-│        └──cn.hutool:hutool-all:jar:5.8.8:compile
-│        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0-M2:compile
+│        └──cn.hutool:hutool-all:jar:5.8.9:compile
+│        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0-RC1:compile
 │        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.0.0-M5:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M5:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M5:compile
@@ -218,10 +218,10 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-loadbalancer:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.0-RC1:compile
 │        └──org.springframework.boot:spring-boot-starter-thymeleaf:jar:3.0.0-RC1:compile
-│        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0-M2:compile
+│        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0-RC1:compile
 │        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-wechat-miniprogram:jar:0.1.0-SNAPSHOT:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
-│        └──cn.hutool:hutool-all:jar:5.8.8:compile
+│        └──cn.hutool:hutool-all:jar:5.8.9:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-config:jar:4.0.0-M5:compile
 │        └──org.springframework.cloud:spring-cloud-starter-consul-discovery:jar:4.0.0-M5:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0-M5:compile
