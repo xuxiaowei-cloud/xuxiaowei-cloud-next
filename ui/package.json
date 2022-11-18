@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "description": "徐晓伟微服务UI",
   "scripts": {
+    "pre": "npm install --registry https://registry.npmmirror.com || npm install --registry https://registry.npmjs.org",
     "dev": "vite --host --port 1001",
     "dev:example": "vite --host example.next.xuxiaowei.cloud --port 1001",
     "dev:test": "vite --host --port 1001 --mode test",
