@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "description": "登录服务UI",
   "scripts": {
+    "pre": "npm install --registry https://registry.npmmirror.com || npm install --registry https://registry.npmjs.org",
     "dev": "vite --host --port 1411",
     "dev:example": "vite --host passport.example.next.xuxiaowei.cloud --port 1411",
     "build": "vue-tsc --noEmit && vite build",

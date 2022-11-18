@@ -40,7 +40,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.0-RC1</spring-boot.version>
+        <spring-boot.version>3.0.0-RC2</spring-boot.version>
 
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
@@ -55,7 +55,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/cloud/spring-cloud-alibaba-dependencies -->
         <!-- https://github.com/alibaba/spring-cloud-alibaba -->
         <!-- https://github.com/spring-cloud/spring-cloud-consul -->
-        <spring-cloud.version>2022.0.0-M5</spring-cloud.version>
+        <spring-cloud.version>2022.0.0-RC1</spring-cloud.version>
 
         <!-- 监控（管理）依赖 -->
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
@@ -68,7 +68,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://github.com/spring-projects/spring-authorization-server -->
-        <spring-security-oauth2-authorization-server.version>1.0.0-M2
+        <spring-security-oauth2-authorization-server.version>1.0.0-RC1
         </spring-security-oauth2-authorization-server.version>
 
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
@@ -86,6 +86,9 @@
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-qq-connect -->
         <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-qq-connect/ -->
         <spring-boot-starter-qq-connect.version>0.1.0-SNAPSHOT</spring-boot-starter-qq-connect.version>
+        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-weibo -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-weibo/ -->
+        <spring-boot-starter-weibo.version>0.1.0-SNAPSHOT</spring-boot-starter-weibo.version>
 
         <!-- MyBatis -->
         <!--
@@ -152,7 +155,7 @@
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/fastjson -->
         <!-- https://github.com/alibaba/fastjson -->
-        <fastjson.version>2.0.15</fastjson.version>
+        <fastjson.version>2.0.18</fastjson.version>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
@@ -178,6 +181,7 @@
 
         <!-- 图片验证码 -->
         <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
+        <!-- https://repo1.maven.org/maven2/com/github/bingoohuang/patchca/ -->
         <patchca.version>0.0.1</patchca.version>
 
         <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
@@ -185,10 +189,10 @@
 
         <!-- https://nodejs.org/dist/ -->
         <!-- http://mirrors.aliyun.com/nodejs-release/ -->
-        <node.version>v16.17.0</node.version>
+        <node.version>v16.18.1</node.version>
         <!-- https://www.npmjs.com/package/npm -->
         <!-- https://npmmirror.com/package/npm -->
-        <npm.version>8.15.0</npm.version>
+        <npm.version>9.1.1</npm.version>
         <!-- https://www.npmjs.com/package/yarn -->
         <!-- https://npmmirror.com/package/yarn -->
         <yarn.version>v1.22.19</yarn.version>
@@ -321,6 +325,13 @@
                 <groupId>cn.com.xuxiaowei.boot.next</groupId>
                 <artifactId>spring-boot-starter-qq-connect</artifactId>
                 <version>${spring-boot-starter-qq-connect.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-weibo -->
+            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-weibo/ -->
+            <dependency>
+                <groupId>cn.com.xuxiaowei.boot.next</groupId>
+                <artifactId>spring-boot-starter-weibo</artifactId>
+                <version>${spring-boot-starter-weibo.version}</version>
             </dependency>
 
             <!-- MyBatis -->

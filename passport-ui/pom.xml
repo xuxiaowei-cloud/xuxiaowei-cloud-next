@@ -131,7 +131,8 @@
                         </goals>
                         <phase>generate-resources</phase>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>run pre</arguments>
+                            <!--<arguments>install</arguments>-->
                         </configuration>
                     </execution>
                     <execution>
