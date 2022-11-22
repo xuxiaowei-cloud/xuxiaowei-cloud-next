@@ -55,7 +55,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/cloud/spring-cloud-alibaba-dependencies -->
         <!-- https://github.com/alibaba/spring-cloud-alibaba -->
         <!-- https://github.com/spring-cloud/spring-cloud-consul -->
-        <spring-cloud.version>2022.0.0-RC1</spring-cloud.version>
+        <spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
 
         <!-- 监控（管理）依赖 -->
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
