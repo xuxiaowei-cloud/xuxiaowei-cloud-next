@@ -1,4 +1,3 @@
 cloud.xuxiaowei.next.mybatis.configuration.MybatisPlusConfiguration
 cloud.xuxiaowei.next.mybatis.configuration.MyBatisPlusMetaObjectHandler
 com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration
-com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration
