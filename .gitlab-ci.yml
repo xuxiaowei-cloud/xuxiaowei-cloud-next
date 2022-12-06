@@ -80,5 +80,8 @@ package:
       - "*/*/target/*.jar"
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
-  only:
-    - main
+  rules:
+    # PR 到 main 分支时预执行
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    # PR 合并到 main 后执行
+    - if: $CI_COMMIT_BRANCH == "main"
