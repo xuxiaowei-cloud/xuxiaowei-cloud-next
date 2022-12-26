@@ -15,6 +15,14 @@
 <p></p>
 
 <div align="center" style="text-align: center;">
+    <a target="_blank" href="https://work.weixin.qq.com/gm/75cfc47d6a341047e4b6aca7389bdfa8">
+        <img alt="企业微信群" src="static/企业微信群.jpg" height="100"/>
+    </a>
+</div>
+
+<p></p>
+
+<div align="center" style="text-align: center;">
   基于 JDK 17、Spring Boot 3.0.0、OAuth 2.1、Vite 3、Vue 3、Element Plus 的微服务
 </div>
 
@@ -93,11 +101,15 @@
   </a>
 
   <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/blob/main/pom.xml">
-    <img alt="Spring Boot" src="https://img.shields.io/static/v1?logo=Spring Boot&message=3.0.0&color=blue">
+    <img alt="Spring Boot" src="https://img.shields.io/static/v1?logo=Spring Boot&message=3.0.1&color=blue">
   </a>
 
   <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/blob/main/pom.xml">
-    <img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.0-RC1&color=blue">
+    <img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.0&color=blue">
+  </a>
+
+  <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud/blob/main/pom.xml">
+    <img alt="Alibaba Cloud" src="https://img.shields.io/static/v1?logo=Alibaba Cloud&message=2022.0.0.0-RC1&color=blue">
   </a>
 
   <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/blob/main/pom.xml">
@@ -106,6 +118,10 @@
 
   <a target="_blank" href="https://github.com/alibaba/dragonwell17/releases/tag/dragonwell-17.0.3.0.3%2B7_jdk-17.0.3-ga">
     <img alt="JDK" src="https://img.shields.io/badge/JDK-17.0.3-blue.svg"/>
+  </a>
+
+  <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud/blob/main/pom.xml">
+    <img alt="Redis" src="https://img.shields.io/static/v1?logo=Redis&message=6.2.6&color=blue">
   </a>
 
   <a target="_blank" href="https://www.apache.org/licenses/LICENSE-2.0">

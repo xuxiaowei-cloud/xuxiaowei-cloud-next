@@ -6,11 +6,11 @@ import cloud.xuxiaowei.next.log.service.ILogService;
 import cloud.xuxiaowei.next.utils.Constant;
 import cloud.xuxiaowei.next.utils.SecurityUtils;
 import cloud.xuxiaowei.next.utils.exception.ExceptionUtils;
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.cloud.consul.discovery.ConsulDiscoveryProperties;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -34,7 +34,7 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 
 	private ConfigurableEnvironment environment;
 
-	private ConsulDiscoveryProperties consulDiscoveryProperties;
+	private NacosDiscoveryProperties nacosDiscoveryProperties;
 
 	private ServerProperties serverProperties;
 
@@ -44,8 +44,8 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 	}
 
 	@Autowired
-	public void setConsulDiscoveryProperties(ConsulDiscoveryProperties consulDiscoveryProperties) {
-		this.consulDiscoveryProperties = consulDiscoveryProperties;
+	public void setNacosDiscoveryProperties(NacosDiscoveryProperties nacosDiscoveryProperties) {
+		this.nacosDiscoveryProperties = nacosDiscoveryProperties;
 	}
 
 	@Autowired
@@ -72,8 +72,9 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 			String queryString, String headersMap, String authorization, String userAgent, Throwable ex) {
 
 		String module = environment.getProperty("spring.application.name");
-		String ipAddress = consulDiscoveryProperties.getIpAddress();
-		String hostname = consulDiscoveryProperties.getHostname();
+
+		String ip = nacosDiscoveryProperties.getIp();
+
 		Integer port = serverProperties.getPort();
 
 		String payload = SecurityUtils.getPayload(authorization);
@@ -124,8 +125,8 @@ public class LogServiceImpl extends ServiceImpl<LogMapper, Log> implements ILogS
 		log.setException(ex == null ? null : ExceptionUtils.getStackTrace(ex));
 		log.setCreateUsersId(createUsersId);
 		log.setCreateIp(hostAddress);
-		log.setHostname(hostname);
-		log.setIpAddress(ipAddress);
+		log.setHostname(null);
+		log.setIpAddress(ip);
 		log.setPort(port);
 		log.setCreateDate(LocalDateTime.now());
 

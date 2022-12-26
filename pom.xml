@@ -40,7 +40,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.0</spring-boot.version>
+        <spring-boot.version>3.0.1</spring-boot.version>
 
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
@@ -50,18 +50,19 @@
         <!-- https://github.com/spring-cloud/spring-cloud-gateway -->
         <!-- https://github.com/spring-cloud/spring-cloud-openfeign -->
         <!-- https://github.com/spring-cloud/spring-cloud-circuitbreaker -->
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
+
         <!-- Alibaba Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/cloud/spring-cloud-alibaba-dependencies -->
         <!-- https://github.com/alibaba/spring-cloud-alibaba -->
-        <!-- https://github.com/spring-cloud/spring-cloud-consul -->
-        <spring-cloud.version>2022.0.0-RC2</spring-cloud.version>
+        <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
 
         <!-- 监控（管理）依赖 -->
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/de/codecentric/spring-boot-admin-dependencies -->
         <!-- https://github.com/codecentric/spring-boot-admin -->
-        <spring-boot-admin.version>3.0.0-M5</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.0-M8</spring-boot-admin.version>
 
         <!-- OAuth 2.1 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
@@ -99,7 +100,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/snapshots/org/mybatis/spring/boot/mybatis-spring-boot-starter/ -->
         <!-- https://github.com/mybatis/spring-boot-starter -->
-        <mybatis-spring-boot-starter.version>3.0.0</mybatis-spring-boot-starter.version>
+        <mybatis-spring-boot-starter.version>3.0.1</mybatis-spring-boot-starter.version>
         <!-- MyBatis Plus -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-boot-starter -->
@@ -118,7 +119,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/dynamic-datasource-spring-boot-starter -->
         <!-- https://github.com/baomidou/dynamic-datasource-spring-boot-starter -->
-        <dynamic-datasource-spring-boot-starter.version>3.6.0</dynamic-datasource-spring-boot-starter.version>
+        <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-extension -->
         <!-- https://github.com/baomidou/mybatis-plus -->
@@ -155,12 +156,12 @@
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/fastjson -->
         <!-- https://github.com/alibaba/fastjson -->
-        <fastjson.version>2.0.18</fastjson.version>
+        <fastjson.version>2.0.21</fastjson.version>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
         <!-- https://github.com/dromara/hutool -->
-        <hutool-all.version>5.8.9</hutool-all.version>
+        <hutool-all.version>5.8.10</hutool-all.version>
 
         <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/dom4j/dom4j -->
@@ -268,6 +269,14 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- Alibaba Cloud 依赖控制 -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -755,6 +764,17 @@
         </profile>
 
         <profile>
+            <!-- 使用 -Ptencentyun 激活腾讯云仓库下载依赖 -->
+            <id>tencentyun</id>
+            <repositories>
+                <repository>
+                    <id>tencentyun</id>
+                    <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
+                </repository>
+            </repositories>
+        </profile>
+
+        <profile>
             <!-- 使用 -Pgpg 激活此构建进行文件签名 -->
             <id>gpg</id>
             <build>
@@ -833,27 +853,6 @@
         <repository>
             <id>oss-s01</id>
             <url>https://s01.oss.sonatype.org/content/repositories/public/</url>
-        </repository>
-
-        <!-- https://developer.aliyun.com/mvn/guide -->
-        <repository>
-            <id>spring</id>
-            <url>https://maven.aliyun.com/repository/spring</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
         </repository>
 
     </repositories>
