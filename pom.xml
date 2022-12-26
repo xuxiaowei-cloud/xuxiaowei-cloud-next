@@ -92,10 +92,6 @@
         <spring-boot-starter-weibo.version>0.1.0-SNAPSHOT</spring-boot-starter-weibo.version>
 
         <!-- MyBatis -->
-        <!--
-            使用快照版，解决打包后出现不存在 org.springframework.core.NestedIOException 的异常
-            移除 org.springframework.core.NestedIOException 议题：https://github.com/mybatis/spring/pull/663
-         -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/mybatis/spring/boot/mybatis-spring-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/snapshots/org/mybatis/spring/boot/mybatis-spring-boot-starter/ -->
