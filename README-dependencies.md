@@ -14,7 +14,7 @@ cloud.xuxiaowei.next:admin-server:jar:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
-│        └──cn.hutool:hutool-all:jar:5.8.10:provided
+│        └──cn.hutool:hutool-all:jar:5.8.11:provided
 │        └──com.google.guava:guava:jar:31.1-jre:provided
 │        └──com.fasterxml.jackson.core:jackson-databind:jar:2.14.1:provided
 │        └──com.fasterxml.jackson.datatype:jackson-datatype-jsr310:jar:2.14.1:provided
@@ -38,7 +38,7 @@ cloud.xuxiaowei.next:cloud-commons-parent:pom:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT
-│        └──cn.hutool:hutool-all:jar:5.8.10:provided
+│        └──cn.hutool:hutool-all:jar:5.8.11:provided
 │        └──org.springframework.cloud:spring-cloud-context:jar:4.0.0:provided
 │        └──org.springframework:spring-web:jar:6.0.3:provided
 │        └──org.apache.tomcat.embed:tomcat-embed-core:jar:10.1.4:provided
@@ -86,7 +86,7 @@ cloud.xuxiaowei.next.commons:cloud-starter-loadbalancer:jar:0.0.1-SNAPSHOT
 
 cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT
 │        └──org.mybatis.spring.boot:mybatis-spring-boot-starter:jar:3.0.1:compile
-│        └──com.baomidou:mybatis-plus-boot-starter:jar:3.5.2:compile
+│        └──com.baomidou:mybatis-plus-boot-starter:jar:3.5.3:compile
 │        └──com.baomidou:dynamic-datasource-spring-boot-starter:jar:3.6.1:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
 │        └──com.baomidou:mybatis-plus-generator:jar:3.5.3:test
@@ -94,7 +94,7 @@ cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.0.1:compile
 │        └──com.mysql:mysql-connector-j:jar:8.0.31:runtime
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.1:test
-│        └──com.baomidou:mybatis-plus-extension:jar:3.5.2:compile
+│        └──com.baomidou:mybatis-plus-extension:jar:3.5.3:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.1:compile
 │        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
@@ -163,7 +163,7 @@ cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-log:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-validation:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-session-redis:jar:0.0.1-SNAPSHOT:compile
-│        └──cn.hutool:hutool-all:jar:5.8.10:compile
+│        └──cn.hutool:hutool-all:jar:5.8.11:compile
 │        └──commons-io:commons-io:jar:2.11.0:compile
 │        └──org.springframework.boot:spring-boot-starter-json:jar:3.0.1:provided
 │        └──com.fasterxml.jackson.core:jackson-annotations:jar:2.14.1:provided
@@ -195,7 +195,7 @@ cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-redis:jar:0.0.1-SNAPSHOT:compile
-│        └──cn.hutool:hutool-all:jar:5.8.10:compile
+│        └──cn.hutool:hutool-all:jar:5.8.11:compile
 │        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.0.1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
@@ -221,7 +221,7 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0:compile
 │        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-wechat-miniprogram:jar:0.1.0-SNAPSHOT:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
-│        └──cn.hutool:hutool-all:jar:5.8.10:compile
+│        └──cn.hutool:hutool-all:jar:5.8.11:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.0:compile

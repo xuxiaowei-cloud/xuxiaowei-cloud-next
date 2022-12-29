@@ -101,7 +101,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-boot-starter -->
         <!-- https://github.com/baomidou/mybatis-plus -->
-        <mybatis-plus-boot-starter.version>3.5.2</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.3</mybatis-plus-boot-starter.version>
         <!-- MyBatis Plus Generator -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-generator -->
@@ -119,7 +119,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-extension -->
         <!-- https://github.com/baomidou/mybatis-plus -->
-        <mybatis-plus-extension.version>3.5.2</mybatis-plus-extension.version>
+        <mybatis-plus-extension.version>3.5.3</mybatis-plus-extension.version>
         <!-- SQL 性能分析 -->
         <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
         <!-- https://oss.sonatype.org/content/repositories/public/p6spy/p6spy -->
@@ -157,7 +157,7 @@
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
         <!-- https://github.com/dromara/hutool -->
-        <hutool-all.version>5.8.10</hutool-all.version>
+        <hutool-all.version>5.8.11</hutool-all.version>
 
         <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/dom4j/dom4j -->
