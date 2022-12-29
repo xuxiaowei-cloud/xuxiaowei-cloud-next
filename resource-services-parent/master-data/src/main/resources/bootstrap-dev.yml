@@ -1,0 +1,10 @@
+#
+# Nacos 极速上线
+spring:
+  cloud:
+    nacos:
+      discovery:
+        metadata:
+          preserved.heart.beat.interval: 1000
+          preserved.heart.beat.timeout: 3000
+          preserved.ip.delete.timeout: 3000

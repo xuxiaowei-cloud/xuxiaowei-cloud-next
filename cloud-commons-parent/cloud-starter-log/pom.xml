@@ -35,18 +35,10 @@
             <artifactId>cloud-starter-mybatis</artifactId>
         </dependency>
 
-        <!-- 仅为了提供：ConsulDiscoveryProperties -->
+        <!-- 仅为了提供：NacosDiscoveryProperties -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-consul-discovery</artifactId>
-        </dependency>
-
-        <!-- 提供JSON数据处理所需的包，如：JsonFormat -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <!-- 依赖传递性：https://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html -->
-            <scope>provided</scope>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
 
         <dependency>

@@ -23,9 +23,30 @@ spring:
         - VMware.*
         # 忽略 VirtualBox 虚拟机网卡
         - VirtualBox.*
-    consul:
-      host: ${consul_xuxiaowei_cloud_host:consul.example.next.xuxiaowei.cloud}
-      port: ${consul_xuxiaowei_cloud_port:8500}
+    #
+    # Nacos-配置
+    nacos:
+      # 服务发现
+      discovery:
+        # 服务发现地址
+        server-addr: ${nacos_xuxiaowei_cloud_addr:nacos.example.xuxiaowei.cloud:8848}
+        # 命名空间
+        namespace:
+        # 自定义注册IP（为空时使用程序自动获取本机IP）
+        ip: ${wechat_miniprogram_ip:}
+      # 服务配置
+      config:
+        # 配置文件后缀名
+        file-extension: yml
+        # 配置服务器地址
+        server-addr: ${nacos_xuxiaowei_cloud_addr:nacos.example.xuxiaowei.cloud:8848}
+        # 命名空间
+        namespace:
+        # 共享配置
+        shared-configs:
+          - dataId: xuxiaowei.${spring.cloud.nacos.config.file-extension}
+            # 是否支持刷新
+            refresh: true
 
 #
 # 日志 配置
@@ -35,7 +56,7 @@ logging:
   level:
     # 在微服务中，直接使用 `web: debug` 无效
     # web: debug
-    # org.springframework.web: debug
+    org.springframework.web: debug
     # 包：日志等级
     cloud.xuxiaowei: debug
   # 日志文件
@@ -163,7 +184,6 @@ spring:
 
 #
 # JWK 配置
-#
 cloud:
   jwk:
     rsa:

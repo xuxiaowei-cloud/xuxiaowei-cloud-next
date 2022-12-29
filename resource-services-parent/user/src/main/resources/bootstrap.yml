@@ -23,9 +23,30 @@ spring:
         - VMware.*
         # 忽略 VirtualBox 虚拟机网卡
         - VirtualBox.*
-    consul:
-      host: ${consul_xuxiaowei_cloud_host:consul.example.next.xuxiaowei.cloud}
-      port: ${consul_xuxiaowei_cloud_port:8500}
+    #
+    # Nacos-配置
+    nacos:
+      # 服务发现
+      discovery:
+        # 服务发现地址
+        server-addr: ${nacos_xuxiaowei_cloud_addr:nacos.example.xuxiaowei.cloud:8848}
+        # 命名空间
+        namespace:
+        # 自定义注册IP（为空时使用程序自动获取本机IP）
+        ip: ${user_ip:}
+      # 服务配置
+      config:
+        # 配置文件后缀名
+        file-extension: yml
+        # 配置服务器地址
+        server-addr: ${nacos_xuxiaowei_cloud_addr:nacos.example.xuxiaowei.cloud:8848}
+        # 命名空间
+        namespace:
+        # 共享配置
+        shared-configs:
+          - dataId: xuxiaowei.${spring.cloud.nacos.config.file-extension}
+            # 是否支持刷新
+            refresh: true
 
 #
 # 日志 配置
@@ -35,7 +56,7 @@ logging:
   level:
     # 在微服务中，直接使用 `web: debug` 无效
     # web: debug
-    # org.springframework.web: debug
+    org.springframework.web: debug
     # 包：日志等级
     cloud.xuxiaowei: debug
   # 日志文件
@@ -161,9 +182,40 @@ spring:
 
 ---
 
+## QQ邮箱
+## 不推荐使用：
+## 1：无法撤销授权码，即使关闭后重开，之前的授权码一样可以使用
+## 2：不稳定
+#spring:
+#  # [QQ邮箱-如何使用IMAP服务？](https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=331)
+#  mail:
+#    host: smtp.qq.com
+#    username: ${qq_mail_username:}
+#    password: ${qq_mail_password:}
+#    port: ${qq_mail_port:587}
+#    default-encoding: UTF-8
+#    properties:
+#      "[mail.smtp.socketFactoryClass]": javax.net.ssl.SSLSocketFactory
+#      "[mail.debug]": ${qq_mail_debug:true}
+
+# Microsoft Office 365
+spring:
+  # [在 Exchange Online 中启用或禁用经过身份验证的客户端 SMTP 提交 (SMTP AUTH)](https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/authenticated-client-smtp-submission)
+  mail:
+    host: smtp.office365.com
+    username: ${microsoft_office_365_mail_username:}
+    password: ${microsoft_office_365_mail_password:}
+    port: ${microsoft_office_365_mail_port:587}
+    default-encoding: UTF-8
+    properties:
+      # com.sun.mail.smtp.SMTPSendFailedException: 451 5.7.3 STARTTLS is required to send mail [SG2PR04CA0180.apcprd04.prod.outlook.com]
+      "[mail.smtp.starttls.enable]": true
+      "[mail.debug]": ${microsoft_office_365_mail_debug:true}
+
+---
+
 #
 # JWK 配置
-#
 cloud:
   jwk:
     rsa:
