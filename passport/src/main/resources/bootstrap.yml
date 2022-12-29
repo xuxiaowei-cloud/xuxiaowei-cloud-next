@@ -23,12 +23,35 @@ spring:
         - VMware.*
         # 忽略 VirtualBox 虚拟机网卡
         - VirtualBox.*
-    consul:
-      host: ${consul_xuxiaowei_cloud_host:consul.example.next.xuxiaowei.cloud}
-      port: ${consul_xuxiaowei_cloud_port:8500}
+    #
+    # Nacos 配置
+    nacos:
+      # 服务发现
+      discovery:
+        # 服务发现地址
+        server-addr: ${nacos_xuxiaowei_cloud_addr:nacos.example.xuxiaowei.cloud:8848}
+        # 命名空间
+        namespace:
+        # 自定义注册IP（为空时使用程序自动获取本机IP）
+        ip: ${passport_ip:}
+      # 服务配置
+      config:
+        # 配置文件后缀名
+        file-extension: yml
+        # 配置服务器地址
+        server-addr: ${nacos_xuxiaowei_cloud_addr:nacos.example.xuxiaowei.cloud:8848}
+        # 命名空间
+        namespace:
+        # 共享配置
+        shared-configs:
+          - dataId: xuxiaowei.${spring.cloud.nacos.config.file-extension}
+            # 是否支持刷新
+            refresh: true
+
 
 ---
-# 以下配置可放入 配置中心 中
+# 以下配置可放入 nacos 中
+
 
 #
 # 日志 配置
@@ -38,7 +61,7 @@ logging:
   level:
     # 在微服务中，直接使用 `web: debug` 无效
     # web: debug
-    # org.springframework.web: debug
+    org.springframework.web: debug
     # 包：日志等级
     cloud.xuxiaowei: debug
   # 日志文件
@@ -90,12 +113,9 @@ management:
       exposure:
         include: '*'
 
----
-
-#
 # 数据库配置
-#
 spring:
+  # 数据库
   datasource:
     dynamic:
       # 设置默认的数据源或者数据源组，默认值即为 master
@@ -154,6 +174,14 @@ mybatis-plus:
 
 ---
 
+# Thymeleaf 配置
+spring:
+  thymeleaf:
+    # 是否启用模板缓存。
+    cache: false
+
+---
+
 # Redis 配置
 spring:
   data:
@@ -162,6 +190,46 @@ spring:
       password: ${redis_xuxiaowei_cloud_password:xuxiaowei.com.cn}
       host: ${redis_xuxiaowei_cloud_host:redis.example.next.xuxiaowei.cloud}
       port: ${redis_xuxiaowei_cloud_port:6379}
+---
+
+# 记住我配置
+cloud:
+  remember-me:
+    key: xuxiaowei.com.cn
+    remember-me-cookie-domain: example.next.xuxiaowei.cloud
+
+---
+
+## QQ邮箱
+## 不推荐使用：
+## 1：无法撤销授权码，即使关闭后重开，之前的授权码一样可以使用
+## 2：不稳定
+#spring:
+#  # [QQ邮箱-如何使用IMAP服务？](https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=331)
+#  mail:
+#    host: smtp.qq.com
+#    username: ${qq_mail_username:}
+#    password: ${qq_mail_password:}
+#    port: ${qq_mail_port:587}
+#    default-encoding: UTF-8
+#    properties:
+#      "[mail.smtp.socketFactoryClass]": javax.net.ssl.SSLSocketFactory
+#      "[mail.debug]": ${qq_mail_debug:true}
+
+# Microsoft Office 365
+spring:
+  # [在 Exchange Online 中启用或禁用经过身份验证的客户端 SMTP 提交 (SMTP AUTH)](https://learn.microsoft.com/en-us/exchange/clients-and-mobile-in-exchange-online/authenticated-client-smtp-submission)
+  mail:
+    host: smtp.office365.com
+    username: ${microsoft_office_365_mail_username:}
+    password: ${microsoft_office_365_mail_password:}
+    port: ${microsoft_office_365_mail_port:587}
+    default-encoding: UTF-8
+    properties:
+      # com.sun.mail.smtp.SMTPSendFailedException: 451 5.7.3 STARTTLS is required to send mail [SG2PR04CA0180.apcprd04.prod.outlook.com]
+      "[mail.smtp.starttls.enable]": true
+      "[mail.debug]": ${microsoft_office_365_mail_debug:true}
+
 
 #
 # JWK 配置
@@ -174,20 +242,6 @@ cloud:
       private-key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC9QRluemhgJJW943z+Hei4AORfWXn+qlL+9pW5Yw4ylVtaqJXKysvvHw1XSLQ0oF/5R9rRokExi2xEZOwo4a/i6XChQIwOLNnjvEJRUxHokJubepV6N4rkZY9q2tEU9ZfAgvkbieThmSkSEVSfSp4nAQ8bvRA3FkM0lUipsMrQJE5mJ93/tETL1JCMixBtWNSYLYnT0hcTgUrdgMiW1Q4kt/sBKeQhvlqX8h6UosiShhqIjgmPDr/MrZBfA1o7vgVI4hvEMz/KLGuS4Cu2yuotvGPD8EyVbmkuC5N9t5ehtuZL63UyAh8KZbJ7kZcKy65L4r9ESUua8G1P6jXFk0GjAgMBAAECggEACYT7Qv/cPS3J7G3DbULS4GKHGja1eLZXi2Sa3mLZpXi2yiYdtsAhpusAcEoDanxAp5jSLGZFcjkJnp0W9e14O+kzFaFaCiJ+aUKgcVfE2FZhxV3So/2kOl3Ta3QLPUsnMXNFFXoHrcNW+gYuI/8MWnjmqiYF6Udw5PW3XHW8leCPSTL+XREhXvr42WbUdVJx5D0T1Kzxby3RhyM+sOfgnj0ItXeqcAnci7x/KyO7uN3lBYmn7uVluYdh08oB1sJ1/+FZy6CAmW3gR11HhpdSgJcdxmcK53Viv0LAM6zCR3o6YJePD/BB7vDS79OXNJwOX78iQ88demZLQWl8c7KOmQKBgQC//OuOnc9RjRaYqsrr2zPqDNpgw6lS3zSpao/oc1Q0asTH/QGFY/8E9ZYakMotultk2SzwaDUDk0MBxQlIMJUsz1pQHG1JvjESQ33wFyjUW1EGHp9d5EgdQ+QFB3Pnr1M+rSOT8lkMjkvkNsy1TADUSRpDXTQHtmVD91ecvxsR+wKBgQD8WtjdLnJBAtdMTlduh0eS7n8l+dmfz94lWs6QX0GEuHZyExPqHyVyyYje4kQ/8BOThVBJmzwAkbSJnjjY3dKf/aN3jagzUwp53nbcE0cj7Hbokx6WC49aHV7GOe1VxHQ1DLX3uxytICIzy4D3oRtOg2xXfEYNEKHdTXzTQS2meQKBgF9c2QChIH6Ij0XL6DmZS0MhmUNhTPTuC/FvDgZPau8SbaZM5PmF/wFOn32Yl+R44bbJLUpI6LRa7Hivj3m9MAvu/xQ12o87mpJQ1fhw+IXqyec5RL3Vi4CF3XgmCIt3iejjBX4SbesPr2CvW6VeGDdaDGKTpCmEju5gqLMiNecLAoGBAIBJHp2yEtsBurlLyh6iHryPCYwgq4UWgvOyaffytLfnni73i9Qk6UClOzMzC0cFoK4Jw3rns2UGrSSYjoWQnpY+tm78UFlnCZhSg1H1auDUQM6Sm6XjUoiZDajvobtMF1cwkwDQ2g8YmsqB1ZoNCHitTtJalrHllqON1LsAE1jhAoGAUNxiVF4GUu4DrW7Dpbdpocme1b5oj9jDaYXnkRBFYnlrX9vNGy2ctYEWHEIW7LFy374aGVgXFikkRjVxehCuoO+qt2wN/fQScFnQvMOjdRAnpInvCjoi5NfIBtKAU/Co7TgR6ogAFGh2NvTZYUmj9JoQ1Pd6v+1Qrm9Zsqz+vRE=
 
 
----
-
-# 邮件
-spring:
-  # [QQ邮箱-如何使用IMAP服务？](https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=331)
-  mail:
-    host: smtp.qq.com
-    username: ${qq_mail_username:}
-    password: ${qq_mail_password:}
-    port: ${qq_mail_port:587}
-    default-encoding: UTF-8
-    properties:
-      "[mail.smtp.socketFactoryClass]": javax.net.ssl.SSLSocketFactory
-      "[mail.debug]": ${qq_mail_debug:true}
 
 ---
 

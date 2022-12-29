@@ -1,3 +1,2 @@
 cloud.xuxiaowei.next.mybatis.configuration.MybatisPlusConfiguration
 cloud.xuxiaowei.next.mybatis.configuration.MyBatisPlusMetaObjectHandler
-com.baomidou.mybatisplus.autoconfigure.MybatisPlusAutoConfiguration

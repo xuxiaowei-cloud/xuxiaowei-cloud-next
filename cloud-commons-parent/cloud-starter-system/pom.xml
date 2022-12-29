@@ -35,7 +35,7 @@
             <artifactId>cloud-starter-validation</artifactId>
         </dependency>
 
-        <!-- Redis 组件 -->
+        <!-- Session Redis 组件 -->
         <dependency>
             <groupId>cloud.xuxiaowei.next.commons</groupId>
             <artifactId>cloud-starter-session-redis</artifactId>
