@@ -116,7 +116,7 @@
 import { ref, watch } from 'vue'
 import { RouteRecordRaw, useRoute, useRouter } from 'vue-router'
 import { useStore } from '../store'
-import { TabPanelName } from 'element-plus'
+import { TabPaneName } from 'element-plus'
 import { hasAnyAuthority } from '../utils/authority'
 import { signout } from '../api/passport'
 import { routes } from '../router'
@@ -238,7 +238,7 @@ const menuItemsAuthority = (items: RouteRecordRaw[] | undefined) => {
 const editableTabsValue = ref('/console')
 
 // activeName 改变时触发
-const changeTab = (name: TabPanelName) => {
+const changeTab = (name: TabPaneName) => {
   // 切换标签页时，改变URL
   location.hash = name.toString()
 }

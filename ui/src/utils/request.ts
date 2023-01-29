@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios'
 import { ElMessage } from 'element-plus'
 import { JSEncrypt } from 'jsencrypt'
 import CryptoJS from 'crypto-js'
@@ -26,10 +26,7 @@ const service = axios.create({
 })
 
 // request interceptor
-service.interceptors.request.use((config: AxiosRequestConfig) => {
-  if (!config.headers) {
-    config.headers = {}
-  }
+service.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   config.headers.authorization = 'Bearer ' + useStore.getAccessToken
 
   if (config.method === 'post' || config.method === 'POST') { // POST 请求加密
@@ -49,7 +46,7 @@ error => {
 })
 
 // response interceptor
-service.interceptors.response.use((response: AxiosResponse) => {
+service.interceptors.response.use((response: any) => {
   const data = response.data
   // 如果响应头中指定了加密类型（版本）为 v1，将进行数据解密
   if (response.headers.encrypt === 'v1') {
@@ -90,7 +87,7 @@ service.interceptors.response.use((response: AxiosResponse) => {
 error => {
   const message = error.message
   if (error instanceof AxiosError) {
-    if (message === 'timeout of ' + error.config.timeout + 'ms exceeded') {
+    if (message === 'timeout of ' + error.config?.timeout + 'ms exceeded') {
       ElMessage({
         message: '请求超时，请重试',
         // 显示时间，单位为毫秒。设为 0 则不会自动关闭，类型：number，默认值：3000

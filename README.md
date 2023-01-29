@@ -1,4 +1,4 @@
-<div align="center" style="text-align: center;">
+ <div align="center" style="text-align: center;">
     <h1>xuxiaowei-cloud-next</h1>
     <h3>徐晓伟微服务-next</h3>
     <a target="_blank" href="https://github.com/996icu/996.ICU/blob/master/LICENSE">
@@ -101,11 +101,11 @@
   </a>
 
   <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/blob/main/pom.xml">
-    <img alt="Spring Boot" src="https://img.shields.io/static/v1?logo=Spring Boot&message=3.0.1&color=blue">
+    <img alt="Spring Boot" src="https://img.shields.io/static/v1?logo=Spring Boot&message=3.0.2&color=blue">
   </a>
 
   <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/blob/main/pom.xml">
-    <img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.0&color=blue">
+    <img alt="Spring Cloud" src="https://img.shields.io/static/v1?label=Spring Cloud&message=2022.0.1&color=blue">
   </a>
 
   <a target="_blank" href="https://github.com/xuxiaowei-cloud/xuxiaowei-cloud/blob/main/pom.xml">
