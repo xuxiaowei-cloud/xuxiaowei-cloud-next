@@ -25,7 +25,7 @@ stages:
         jdkVersion: '17'
         mavenVersion: 3.6.3
         commands:
-          - mvn package source:jar javadoc:jar install -DskipTests -s settings.xml
+          - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings.xml
         artifacts:
           - name: BUILD_ARTIFACT
             path:
