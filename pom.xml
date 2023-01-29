@@ -40,7 +40,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.1</spring-boot.version>
+        <spring-boot.version>3.0.2</spring-boot.version>
 
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
@@ -50,7 +50,7 @@
         <!-- https://github.com/spring-cloud/spring-cloud-gateway -->
         <!-- https://github.com/spring-cloud/spring-cloud-openfeign -->
         <!-- https://github.com/spring-cloud/spring-cloud-circuitbreaker -->
-        <spring-cloud.version>2022.0.0</spring-cloud.version>
+        <spring-cloud.version>2022.0.1</spring-cloud.version>
 
         <!-- Alibaba Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
@@ -62,7 +62,7 @@
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/de/codecentric/spring-boot-admin-dependencies -->
         <!-- https://github.com/codecentric/spring-boot-admin -->
-        <spring-boot-admin.version>3.0.0-M8</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
 
         <!-- OAuth 2.1 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
@@ -90,6 +90,12 @@
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-weibo -->
         <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-weibo/ -->
         <spring-boot-starter-weibo.version>0.1.0-SNAPSHOT</spring-boot-starter-weibo.version>
+        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-gitlab -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-gitlab/ -->
+        <spring-boot-starter-gitlab.version>0.1.0-SNAPSHOT</spring-boot-starter-gitlab.version>
+        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-work -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-work/ -->
+        <spring-boot-starter-wechat-work.version>0.1.0-SNAPSHOT</spring-boot-starter-wechat-work.version>
 
         <!-- MyBatis -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
@@ -101,12 +107,12 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-boot-starter -->
         <!-- https://github.com/baomidou/mybatis-plus -->
-        <mybatis-plus-boot-starter.version>3.5.3</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.3.1</mybatis-plus-boot-starter.version>
         <!-- MyBatis Plus Generator -->
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-generator -->
         <!-- https://github.com/baomidou/generator -->
-        <mybatis-plus-generator.version>3.5.3</mybatis-plus-generator.version>
+        <mybatis-plus-generator.version>3.5.3.1</mybatis-plus-generator.version>
         <!-- Velocity -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-velocity -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-velocity -->
@@ -119,7 +125,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-extension -->
         <!-- https://github.com/baomidou/mybatis-plus -->
-        <mybatis-plus-extension.version>3.5.3</mybatis-plus-extension.version>
+        <mybatis-plus-extension.version>3.5.3.1</mybatis-plus-extension.version>
         <!-- SQL 性能分析 -->
         <!-- https://mvnrepository.com/artifact/p6spy/p6spy -->
         <!-- https://oss.sonatype.org/content/repositories/public/p6spy/p6spy -->
@@ -152,7 +158,7 @@
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/fastjson -->
         <!-- https://github.com/alibaba/fastjson -->
-        <fastjson.version>2.0.21</fastjson.version>
+        <fastjson.version>2.0.23</fastjson.version>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
@@ -337,6 +343,20 @@
                 <groupId>cn.com.xuxiaowei.boot.next</groupId>
                 <artifactId>spring-boot-starter-weibo</artifactId>
                 <version>${spring-boot-starter-weibo.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-gitlab -->
+            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-gitlab/ -->
+            <dependency>
+                <groupId>cn.com.xuxiaowei.boot.next</groupId>
+                <artifactId>spring-boot-starter-gitlab</artifactId>
+                <version>${spring-boot-starter-gitlab.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-work -->
+            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-work/ -->
+            <dependency>
+                <groupId>cn.com.xuxiaowei.boot.next</groupId>
+                <artifactId>spring-boot-starter-wechat-work</artifactId>
+                <version>${spring-boot-starter-wechat-work.version}</version>
             </dependency>
 
             <!-- MyBatis -->
