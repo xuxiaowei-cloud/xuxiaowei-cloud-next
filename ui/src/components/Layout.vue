@@ -78,8 +78,8 @@
             <el-dropdown-menu>
               <el-dropdown-item command="personal">个人中心</el-dropdown-item>
               <el-dropdown-item command="security">安全设置</el-dropdown-item>
-              <el-dropdown-item command="account">账户绑定</el-dropdown-item>
               <el-dropdown-item command="social">社交绑定</el-dropdown-item>
+              <el-dropdown-item command="password">密码设置</el-dropdown-item>
               <el-dropdown-item command="signout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -378,29 +378,24 @@ const refreshClick = () => {
   location.hash = '/refresh'
 }
 
-const personal = ref()
-const security = ref()
-const account = ref()
-const social = ref()
-
 // 用户菜单
-const handleCommand = (command: any, number: any) => {
-  console.log(command, number)
+const handleCommand = (command: any, e: any) => {
+  console.log(command, e)
   switch (command) {
     case 'signout':
       signout()
       break
     case 'personal':
-      personal.value.handleClick()
+      location.hash = '/user/personal'
       break
     case 'security':
-      security.value.handleClick()
-      break
-    case 'account':
-      account.value.handleClick()
+      location.hash = '/user/security'
       break
     case 'social':
-      social.value.handleClick()
+      location.hash = '/user/social'
+      break
+    case 'password':
+      location.hash = '/user/password'
       break
   }
 }
