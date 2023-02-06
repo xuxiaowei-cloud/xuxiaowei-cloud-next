@@ -72,30 +72,9 @@
         <spring-security-oauth2-authorization-server.version>1.0.0
         </spring-security-oauth2-authorization-server.version>
 
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
-        <spring-boot-starter-wechat-miniprogram.version>0.1.0-SNAPSHOT</spring-boot-starter-wechat-miniprogram.version>
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-offiaccount -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-offiaccount/ -->
-        <spring-boot-starter-wechat-offiaccount.version>0.1.0-SNAPSHOT</spring-boot-starter-wechat-offiaccount.version>
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-oplatform -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-oplatform/ -->
-        <spring-boot-starter-wechat-oplatform.version>0.1.0-SNAPSHOT</spring-boot-starter-wechat-oplatform.version>
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-gitee -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-gitee/ -->
-        <spring-boot-starter-gitee.version>0.1.0-SNAPSHOT</spring-boot-starter-gitee.version>
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-qq-connect -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-qq-connect/ -->
-        <spring-boot-starter-qq-connect.version>0.1.0-SNAPSHOT</spring-boot-starter-qq-connect.version>
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-weibo -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-weibo/ -->
-        <spring-boot-starter-weibo.version>0.1.0-SNAPSHOT</spring-boot-starter-weibo.version>
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-gitlab -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-gitlab/ -->
-        <spring-boot-starter-gitlab.version>0.1.0-SNAPSHOT</spring-boot-starter-gitlab.version>
-        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-work -->
-        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-work/ -->
-        <spring-boot-starter-wechat-work.version>0.1.0-SNAPSHOT</spring-boot-starter-wechat-work.version>
+        <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-oauth2 -->
+        <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-oauth2/ -->
+        <spring-boot-starter-oauth2.version>0.1.0-SNAPSHOT</spring-boot-starter-oauth2.version>
 
         <!-- MyBatis -->
         <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
@@ -302,61 +281,12 @@
                 <version>${spring-security-oauth2-authorization-server.version}</version>
             </dependency>
 
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-miniprogram -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-miniprogram/ -->
+            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-oauth2 -->
+            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-oauth2/ -->
             <dependency>
                 <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-wechat-miniprogram</artifactId>
-                <version>${spring-boot-starter-wechat-miniprogram.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-offiaccount -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-offiaccount/ -->
-            <dependency>
-                <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-wechat-offiaccount</artifactId>
-                <version>${spring-boot-starter-wechat-offiaccount.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-oplatform -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-oplatform/ -->
-            <dependency>
-                <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-wechat-oplatform</artifactId>
-                <version>${spring-boot-starter-wechat-oplatform.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-gitee -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-gitee/ -->
-            <dependency>
-                <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-gitee</artifactId>
-                <version>${spring-boot-starter-gitee.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-gitee -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-gitee/ -->
-            <dependency>
-                <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-qq-connect</artifactId>
-                <version>${spring-boot-starter-qq-connect.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-weibo -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-weibo/ -->
-            <dependency>
-                <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-weibo</artifactId>
-                <version>${spring-boot-starter-weibo.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-gitlab -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-gitlab/ -->
-            <dependency>
-                <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-gitlab</artifactId>
-                <version>${spring-boot-starter-gitlab.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-wechat-work -->
-            <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-wechat-work/ -->
-            <dependency>
-                <groupId>cn.com.xuxiaowei.boot.next</groupId>
-                <artifactId>spring-boot-starter-wechat-work</artifactId>
-                <version>${spring-boot-starter-wechat-work.version}</version>
+                <artifactId>spring-boot-starter-oauth2</artifactId>
+                <version>${spring-boot-starter-oauth2.version}</version>
             </dependency>
 
             <!-- MyBatis -->
@@ -464,6 +394,7 @@
                 <artifactId>dom4j</artifactId>
                 <version>${dom4j.version}</version>
             </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-miniapp-spring-boot-starter -->
             <dependency>
                 <groupId>com.github.binarywang</groupId>
