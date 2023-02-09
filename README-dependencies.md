@@ -219,14 +219,7 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──org.springframework.boot:spring-boot-starter-thymeleaf:jar:3.0.2:compile
 │        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-wechat-miniprogram:jar:0.1.0-SNAPSHOT:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-wechat-offiaccount:jar:0.1.0-SNAPSHOT:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-wechat-oplatform:jar:0.1.0-SNAPSHOT:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-gitee:jar:0.1.0-SNAPSHOT:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-qq-connect:jar:0.1.0-SNAPSHOT:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-weibo:jar:0.1.0-SNAPSHOT:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-gitlab:jar:0.1.0-SNAPSHOT:compile
-│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-wechat-work:jar:0.1.0-SNAPSHOT:compile
+│        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-oauth2:jar:0.1.0-SNAPSHOT:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
 │        └──cn.hutool:hutool-all:jar:5.8.11:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
