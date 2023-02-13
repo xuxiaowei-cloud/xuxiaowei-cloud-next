@@ -257,6 +257,18 @@ cloud.xuxiaowei.next:canal:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.2:test
 
 
+cloud.xuxiaowei.next:file:jar:0.0.1-SNAPSHOT
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
+│        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.0.2:compile
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.2:compile
+│        └──org.projectlombok:lombok:jar:1.18.24:compile
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.2:test
+
+
 cloud.xuxiaowei.next:master-data:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
