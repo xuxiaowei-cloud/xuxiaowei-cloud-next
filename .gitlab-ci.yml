@@ -1,13 +1,37 @@
 stages:
+  - murphysec
   - package
 
-cache:
-  paths:
-    - .m2/repository
-    - passport-ui/node
-    - passport-ui/node_modules
-    - ui/node
-    - ui/node_modules
+# murphysec
+murphysec:
+  variables:
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  stage: package
+  # Docker 镜像开源地址：https://gitee.com/xuxiaowei-com-cn/murphysec
+  image: xuxiaoweicomcn/murphysec:v3.0.1-maven-3.6.3-openjdk-17
+  script:
+    # murphysec 文档：https://www.murphysec.com/docs/guides/scan-scene/cli.html
+    - murphysec auth login $murphysec_token
+    - murphysec scan . --log-level info --write-log-to murphysec.log --json --task-id $task_id
+  cache:
+    paths:
+      - .m2/repository
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
+  artifacts:
+    name: murphysec
+    paths:
+      - murphysec.log
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
+  rules:
+    # PR 到 main 分支时预执行
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    # PR 合并到 main 后执行
+    - if: $CI_COMMIT_BRANCH == "main"
 
 #
 # package
@@ -18,14 +42,17 @@ package:
   stage: package
   image: maven:3.6.3-openjdk-17
   script:
-    - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
     - echo $GPG_FILE
     - gpg --import $GPG_FILE
-    - SETTINGS_FILE=`find / -name settings.xml`
+    # - SETTINGS_FILE=`find / -name settings.xml`
+    - SETTINGS_FILE=/usr/share/maven/conf/settings.xml
     - echo $SETTINGS_FILE
     - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>&#" $SETTINGS_FILE
     - git --version
     - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
     - echo 当前分支：$CI_COMMIT_BRANCH
     - echo 分支上存在的上一个最新提交：$CI_COMMIT_BEFORE_SHA
     - echo 分支上存在的上一个最新提交前八个字符：$CI_COMMIT_SHORT_SHA
@@ -68,6 +95,13 @@ package:
     - echo 克隆Git存储库的URL：$CI_REPOSITORY_URL
     - mvn clean -e -U package source:jar javadoc:jar install -Pgpg -DskipTests && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
+  cache:
+    paths:
+      - .m2/repository
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
   artifacts:
     name: package
     paths:
@@ -80,6 +114,7 @@ package:
       - "*/*/target/*.jar"
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
+      - ui/dist
   rules:
     # PR 到 main 分支时预执行
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
