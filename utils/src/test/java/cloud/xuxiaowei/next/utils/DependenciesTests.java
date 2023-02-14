@@ -12,7 +12,7 @@ import java.io.IOException;
  * <p>
  * 1. mvn clean install
  * <p>
- * 2. <code>mvn dependency:tree &lt; D:/tree.txt</code>
+ * 2. <code>mvn dependency:tree > D:/tree.txt</code>
  * <p>
  * 3. 运行 {@link #main()}
  *
