@@ -3,6 +3,7 @@ package cloud.xuxiaowei.next.passport.configuration;
 import cloud.xuxiaowei.next.core.properties.CloudRememberMeProperties;
 import cloud.xuxiaowei.next.core.properties.CloudSecurityProperties;
 import cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties;
+import org.springdoc.core.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -108,6 +109,8 @@ public class WebSecurityConfigurerAdapterConfiguration {
 			web.ignoring().requestMatchers("/favicon.ico");
 			web.ignoring().requestMatchers("/*/*.js");
 			web.ignoring().requestMatchers("/*/*.css");
+			web.ignoring().requestMatchers(Constants.SWAGGER_UI_PREFIX + "/**");
+			web.ignoring().requestMatchers(Constants.DEFAULT_API_DOCS_URL + "/**");
 		};
 	}
 

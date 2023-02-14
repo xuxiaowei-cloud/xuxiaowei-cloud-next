@@ -175,6 +175,27 @@
         <!-- https://repo1.maven.org/maven2/com/aliyun/alibabacloud-dysmsapi20170525/ -->
         <alibabacloud-dysmsapi20170525.version>2.0.22</alibabacloud-dysmsapi20170525.version>
 
+
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-javadoc -->
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-security -->
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-webflux-ui -->
+        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-ui/ -->
+        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-javadoc/ -->
+        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-security/ -->
+        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-webflux-ui/ -->
+        <springdoc.version>1.6.14</springdoc.version>
+        <!-- 2.x 分支中的 org.springdoc:springdoc-openapi-starter-webmvc-ui 与 1.x 版本中的 org.springdoc:springdoc-openapi-ui 雷同 -->
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+        <springdoc-webmvc.version>2.0.2</springdoc-webmvc.version>
+        <!-- 2.x 分支中的 org.springdoc:springdoc-openapi-starter-webmvc-ui 与 1.x 版本中的 org.springdoc:springdoc-openapi-ui 雷同 -->
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+        <springdoc-webflux.version>2.0.2</springdoc-webflux.version>
+        <!-- https://mvnrepository.com/artifact/com.github.therapi/therapi-runtime-javadoc -->
+        <!-- https://repo1.maven.org/maven2/com/github/therapi/therapi-runtime-javadoc/ -->
+        <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
+
+
         <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
         <httpspi-servlet.version>4.0.0</httpspi-servlet.version>
 
@@ -445,6 +466,33 @@
                 <artifactId>alibabacloud-dysmsapi20170525</artifactId>
                 <version>${alibabacloud-dysmsapi20170525.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-webmvc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+                <version>${springdoc-webflux.version}</version>
+            </dependency>
+            <!-- https://springdoc.org/#javadoc-support -->
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-javadoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-javadoc</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-security -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-security</artifactId>
+                <version>${springdoc.version}</version>
+            </dependency>
+
 
             <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
             <dependency>

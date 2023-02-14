@@ -1,6 +1,7 @@
 package cloud.xuxiaowei.next.masterdata.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties;
+import org.springdoc.core.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -60,7 +61,11 @@ public class ResourceServerConfiguration {
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().requestMatchers("/favicon.ico");
+		return (web) -> {
+			web.ignoring().requestMatchers("/favicon.ico");
+			web.ignoring().requestMatchers(Constants.SWAGGER_UI_PREFIX + "/**");
+			web.ignoring().requestMatchers(Constants.DEFAULT_API_DOCS_URL + "/**");
+		};
 	}
 
 	/**
