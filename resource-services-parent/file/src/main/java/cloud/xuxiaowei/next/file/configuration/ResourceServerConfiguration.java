@@ -1,4 +1,4 @@
-package cloud.xuxiaowei.next.masterdata.configuration;
+package cloud.xuxiaowei.next.file.configuration;
 
 import cloud.xuxiaowei.next.core.properties.CloudJwkKeyProperties;
 import org.springdoc.core.utils.Constants;

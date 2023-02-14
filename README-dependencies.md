@@ -195,6 +195,7 @@ cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-redis:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webflux-ui:jar:2.0.2:compile
 │        └──cn.hutool:hutool-all:jar:5.8.11:compile
 │        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.0.2:compile
@@ -216,6 +217,9 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-session-redis:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-loadbalancer:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──org.springframework.boot:spring-boot-starter-thymeleaf:jar:3.0.2:compile
 │        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.0.0:compile
@@ -233,6 +237,9 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 cloud.xuxiaowei.next:resource-services-parent:pom:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
@@ -249,6 +256,24 @@ cloud.xuxiaowei.next:canal:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
+│        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.0.2:compile
+│        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.0.2:compile
+│        └──org.projectlombok:lombok:jar:1.18.24:compile
+│        └──org.springframework.boot:spring-boot-starter-test:jar:3.0.2:test
+
+
+cloud.xuxiaowei.next:file:jar:0.0.1-SNAPSHOT
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
+│        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
+│        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.0.2:compile
@@ -260,6 +285,9 @@ cloud.xuxiaowei.next:canal:jar:0.0.1-SNAPSHOT
 cloud.xuxiaowei.next:master-data:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
@@ -274,6 +302,9 @@ cloud.xuxiaowei.next:user:jar:0.0.1-SNAPSHOT
 │        └──com.github.bingoohuang:patchca:jar:0.0.1:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
@@ -288,6 +319,9 @@ cloud.xuxiaowei.next:webservice:jar:0.0.1-SNAPSHOT
 │        └──com.sun.xml.ws:httpspi-servlet:jar:4.0.0:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
@@ -302,6 +336,9 @@ cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
 │        └──com.alibaba:fastjson:jar:2.0.23:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
@@ -315,6 +352,9 @@ cloud.xuxiaowei.next:wechat-miniprogram:jar:0.0.1-SNAPSHOT
 │        └──com.github.binarywang:wx-java-miniapp-spring-boot-starter:jar:4.4.0:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile
@@ -327,6 +367,9 @@ cloud.xuxiaowei.next:wechat-miniprogram:jar:0.0.1-SNAPSHOT
 cloud.xuxiaowei.next:wechat-offiaccount:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
+│        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.0.2:compile
+│        └──org.springdoc:springdoc-openapi-javadoc:jar:1.6.14:compile
+│        └──org.springdoc:springdoc-openapi-security:jar:1.6.14:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.2:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC1:compile
 │        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC1:compile

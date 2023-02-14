@@ -9,13 +9,13 @@
         <relativePath>../pom.xml</relativePath> <!-- lookup parent from repository -->
     </parent>
     <groupId>cloud.xuxiaowei.next</groupId>
-    <artifactId>master-data</artifactId>
+    <artifactId>file</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>master-data</name>
-    <description>主数据服务</description>
+    <name>file</name>
+    <description>文件服务</description>
     <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
-    <inceptionYear>2022</inceptionYear>
+    <inceptionYear>2023</inceptionYear>
 
     <properties>
         <java.version>17</java.version>
@@ -45,7 +45,7 @@
 
     <scm>
         <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
-        <connection>scm:git:https://git@github.com/xuxiaowei-cloud/xuxiaowei-cloud.git</connection>
+        <connection>scm:git:https://git@github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git</connection>
         <developerConnection>http://xuxiaowei.com.cn</developerConnection>
     </scm>
 
