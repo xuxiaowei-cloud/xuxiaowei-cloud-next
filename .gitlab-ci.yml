@@ -95,6 +95,42 @@ package:
     - echo 克隆Git存储库的URL：$CI_REPOSITORY_URL
     - mvn clean -e -U package source:jar javadoc:jar install -Pgpg -DskipTests && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
+    # 执行 Docker 的 GitLab 实例 URL 的主机
+    - EXECUTE_DOCKER_SERVER_HOST=xuxiaowei
+    # GitLab 实例 URL 的主机 是否包含可以执行 Docker 命令的主机名
+    # 主要是在自建 GitLab 中，根据当前的域名判断，打包完成后将打包结果构建成 Docker 镜像并推送到 Docker 私服中，方便后期使用（如：k8s）
+    # 相关资料：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s
+    - if [[ $CI_SERVER_HOST =~ $EXECUTE_DOCKER_SERVER_HOST ]];
+      then
+      mvn -pl admin-server docker:build;
+      mvn -pl admin-server docker:push;
+      mvn -pl gateway docker:build;
+      mvn -pl gateway docker:push;
+      mvn -pl passport docker:build;
+      mvn -pl passport docker:push;
+      mvn -pl resource-services-parent/canal docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/canal docker:push;
+      mvn -pl resource-services-parent/file docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/file docker:push;
+      mvn -pl resource-services-parent/master-data docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/master-data docker:push;
+      mvn -pl resource-services-parent/user docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/user docker:push;
+      mvn -pl resource-services-parent/webservice docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/webservice docker:push;
+      mvn -pl resource-services-parent/websocket docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/websocket docker:push;
+      mvn -pl resource-services-parent/wechat-miniprogram docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/wechat-miniprogram docker:push;
+      mvn -pl resource-services-parent/wechat-offiaccount docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl resource-services-parent/wechat-offiaccount docker:push;
+      mvn -pl ui docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl ui docker:push;
+      mvn -pl xxl-job-admin docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
+      mvn -pl xxl-job-admin docker:push;
+      else
+      echo '不执行 Docker 相关命令';
+      fi
   cache:
     paths:
       - .m2/repository
