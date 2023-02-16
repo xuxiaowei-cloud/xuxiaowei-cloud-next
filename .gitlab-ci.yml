@@ -102,11 +102,11 @@ package:
     # 相关资料：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s
     - if [[ $CI_SERVER_HOST =~ $EXECUTE_DOCKER_SERVER_HOST ]];
       then
-      mvn -pl admin-server docker:build;
+      mvn -pl admin-server docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
       mvn -pl admin-server docker:push;
-      mvn -pl gateway docker:build;
+      mvn -pl gateway docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
       mvn -pl gateway docker:push;
-      mvn -pl passport docker:build;
+      mvn -pl passport docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
       mvn -pl passport docker:push;
       mvn -pl resource-services-parent/canal docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID;
       mvn -pl resource-services-parent/canal docker:push;
