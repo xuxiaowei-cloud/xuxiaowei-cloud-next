@@ -177,20 +177,10 @@
 
 
         <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-javadoc -->
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-security -->
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-webflux-ui -->
-        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-starter-webmvc-ui/ -->
-        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-javadoc/ -->
-        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-security/ -->
-        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-webflux-ui/ -->
-        <springdoc.version>1.6.14</springdoc.version>
-        <!-- 2.x 分支中的 org.springdoc:springdoc-openapi-starter-webmvc-ui 与 1.x 版本中的 org.springdoc:springdoc-openapi-ui 雷同 -->
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
-        <springdoc-webmvc.version>2.0.2</springdoc-webmvc.version>
-        <!-- 2.x 分支中的 org.springdoc:springdoc-openapi-starter-webmvc-ui 与 1.x 版本中的 org.springdoc:springdoc-openapi-ui 雷同 -->
-        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
-        <springdoc-webflux.version>2.0.2</springdoc-webflux.version>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
+        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-starter-webmvc-ui -->
+        <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-starter-webflux-ui -->
+        <springdoc-openapi-starter.version>2.0.2</springdoc-openapi-starter.version>
         <!-- https://mvnrepository.com/artifact/com.github.therapi/therapi-runtime-javadoc -->
         <!-- https://repo1.maven.org/maven2/com/github/therapi/therapi-runtime-javadoc/ -->
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
@@ -483,26 +473,13 @@
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>${springdoc-webmvc.version}</version>
+                <version>${springdoc-openapi-starter.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
-                <version>${springdoc-webflux.version}</version>
-            </dependency>
-            <!-- https://springdoc.org/#javadoc-support -->
-            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-javadoc -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-javadoc</artifactId>
-                <version>${springdoc.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-security -->
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-security</artifactId>
-                <version>${springdoc.version}</version>
+                <version>${springdoc-openapi-starter.version}</version>
             </dependency>
 
 
