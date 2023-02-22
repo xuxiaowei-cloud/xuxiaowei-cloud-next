@@ -18,7 +18,7 @@
 
         <!-- https://mvnrepository.com/artifact/io.spring.javaformat/spring-javaformat-maven-plugin -->
         <!-- https://github.com/spring-io/spring-javaformat/ -->
-        <spring-javaformat-maven-plugin.version>0.0.34</spring-javaformat-maven-plugin.version>
+        <spring-javaformat-maven-plugin.version>0.0.37</spring-javaformat-maven-plugin.version>
 
         <!-- 打包时跳过单元测试 -->
         <skipTests>true</skipTests>
