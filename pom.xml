@@ -788,8 +788,8 @@
                         <image>
                             <!--
                                 镜像名称：在版本后面增加了两个数字，用于储存历史记录、快速恢复容器，不需要者请注释掉此 image
-                                CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/pipelines/${CI_PIPELINE_ID}
-                                CI_JOB_ID：代表作业ID，用于确定作业的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/jobs/${CI_JOB_ID}
+                                CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines/${CI_PIPELINE_ID}
+                                CI_JOB_ID：代表作业ID，用于确定作业的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/jobs/${CI_JOB_ID}
                                 在 GitLab Runner 中执行时，需要使用 -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID 来激活配置
                              -->
                             <name>
