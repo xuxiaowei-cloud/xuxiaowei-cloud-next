@@ -42,8 +42,10 @@ public class OAuth2Controller {
 			Authentication authentication) {
 		Map<String, Object> map = new HashMap<>(4);
 		if (authentication != null) {
-			Set<String> authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-					.collect(Collectors.toSet());
+			Set<String> authorities = authentication.getAuthorities()
+				.stream()
+				.map(GrantedAuthority::getAuthority)
+				.collect(Collectors.toSet());
 			map.put("authorities", authorities);
 			map.put("active", true);
 		}

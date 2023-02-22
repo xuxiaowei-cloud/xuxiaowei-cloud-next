@@ -61,7 +61,7 @@ public class SignoutRestController {
 		RSA rsa = new RSA(null, cloudJwkKeyProperties.rsaPublicKey());
 
 		NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
-				.withPublicKey((RSAPublicKey) rsa.getPublicKey());
+			.withPublicKey((RSAPublicKey) rsa.getPublicKey());
 		NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
 
 		try {

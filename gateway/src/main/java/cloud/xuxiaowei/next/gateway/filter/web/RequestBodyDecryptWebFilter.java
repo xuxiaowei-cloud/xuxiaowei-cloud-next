@@ -219,8 +219,8 @@ public class RequestBodyDecryptWebFilter implements WebFilter, Ordered {
 		// 设置解密方式（版本）
 		response.getHeaders().set(Constant.DECRYPT, aesVersion.version);
 		// 设置解密秘钥、偏移量（如果为 default，代表使用默认秘钥、偏移量）
-		response.getHeaders().set(OAuth2TokenIntrospectionClaimNames.CLIENT_ID,
-				clientId == null ? Constant.DEFAULT : clientId);
+		response.getHeaders()
+			.set(OAuth2TokenIntrospectionClaimNames.CLIENT_ID, clientId == null ? Constant.DEFAULT : clientId);
 
 		log.debug("解密前 body：{}", new String(bytes));
 

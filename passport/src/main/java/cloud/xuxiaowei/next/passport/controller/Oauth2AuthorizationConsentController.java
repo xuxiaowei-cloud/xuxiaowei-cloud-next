@@ -58,7 +58,7 @@ public class Oauth2AuthorizationConsentController {
 			@Valid @RequestBody Oauth2AuthorizationConsentPageBo oauth2AuthorizationConsentPageBo) {
 
 		IPage<Oauth2AuthorizationConsent> page = oauth2AuthorizationConsentService
-				.pageByOauth2AuthorizationConsentPageBo(oauth2AuthorizationConsentPageBo);
+			.pageByOauth2AuthorizationConsentPageBo(oauth2AuthorizationConsentPageBo);
 
 		return Response.ok(page);
 	}
@@ -77,7 +77,7 @@ public class Oauth2AuthorizationConsentController {
 			@RequestBody Oauth2AuthorizationConsentPrimaryKey oauth2AuthorizationConsentPrimaryKey) {
 
 		boolean removeByPrimaryKey = oauth2AuthorizationConsentService
-				.removeByPrimaryKey(oauth2AuthorizationConsentPrimaryKey);
+			.removeByPrimaryKey(oauth2AuthorizationConsentPrimaryKey);
 
 		return Response.ok(removeByPrimaryKey);
 	}
@@ -98,7 +98,7 @@ public class Oauth2AuthorizationConsentController {
 		AssertUtils.sizeNonNull(oauth2AuthorizationConsentPrimaryKeys, 1, 50, "非法数据长度");
 
 		boolean removeByIds = oauth2AuthorizationConsentService
-				.removeByPrimaryKeys(oauth2AuthorizationConsentPrimaryKeys);
+			.removeByPrimaryKeys(oauth2AuthorizationConsentPrimaryKeys);
 
 		return Response.ok(removeByIds);
 	}

@@ -79,8 +79,9 @@ public class CorsBeforeWebFilter implements WebFilter, Ordered {
 		}
 		else {
 			// 允许跨域时携带授权信息
-			response.getHeaders().addAll(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
-					request.getHeaders().getAccessControlRequestHeaders());
+			response.getHeaders()
+				.addAll(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS,
+						request.getHeaders().getAccessControlRequestHeaders());
 
 			// 此处为了防止网关调用服务时，服务不存在，导致跨域问题
 			HttpMethod method = request.getMethod();

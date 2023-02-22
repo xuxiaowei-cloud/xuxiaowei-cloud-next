@@ -57,7 +57,7 @@ public class Oauth2AuthorizationController {
 			@Valid @RequestBody Oauth2AuthorizationPageBo oauth2AuthorizationPageBo) {
 
 		IPage<Oauth2AuthorizationVo> page = oauth2AuthorizationService
-				.pageByOauth2AuthorizationPageBo(oauth2AuthorizationPageBo);
+			.pageByOauth2AuthorizationPageBo(oauth2AuthorizationPageBo);
 
 		return Response.ok(page);
 	}

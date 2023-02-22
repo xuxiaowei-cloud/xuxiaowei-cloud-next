@@ -102,8 +102,10 @@ class MyBatisPlusGeneratorTests {
 		DataSource dataSource = values[dataSourceNum];
 
 		DataSourceConfig.Builder dataSourceConfig = new DataSourceConfig.Builder(dataSource.url, dataSource.username,
-				dataSource.password).dbQuery(new MySqlQuery()).typeConvert(new MySqlTypeConvert())
-						.keyWordsHandler(new MySqlKeyWordsHandler());
+				dataSource.password)
+			.dbQuery(new MySqlQuery())
+			.typeConvert(new MySqlTypeConvert())
+			.keyWordsHandler(new MySqlKeyWordsHandler());
 
 		String userDir = System.getProperty("user.dir");
 		String fileSeparator = System.getProperty("file.separator");
@@ -143,43 +145,46 @@ class MyBatisPlusGeneratorTests {
 		System.out.println("xml 输出目录：" + xmlDir);
 
 		FastAutoGenerator.create(dataSourceConfig)
-				// 全局配置
-				.globalConfig((scanner, builder) -> {
-					builder.author(scanner.apply("请输入作者名称？"));
+			// 全局配置
+			.globalConfig((scanner, builder) -> {
+				builder.author(scanner.apply("请输入作者名称？"));
 
-					// 禁止打开输出目录
-					builder.disableOpenDir();
-					// 输出目录
-					builder.outputDir(javaDir);
-				})
-				// 包配置
-				.packageConfig((scanner, builder) -> {
-					builder.parent(packageName);
+				// 禁止打开输出目录
+				builder.disableOpenDir();
+				// 输出目录
+				builder.outputDir(javaDir);
+			})
+			// 包配置
+			.packageConfig((scanner, builder) -> {
+				builder.parent(packageName);
 
-					builder.pathInfo(Collections.singletonMap(OutputFile.xml, xmlDir));
-				})
-				// 策略配置
-				.strategyConfig((scanner, builder) -> builder
-						.addInclude(getTables(scanner.apply("请输入表名，多个英文逗号分隔？所有输入 all"))).controllerBuilder()
-						// 开启生成@RestController控制器
-						.enableRestStyle()
-						// 开启驼峰转连字符
-						.enableHyphenStyle().mapperBuilder()
-						// 开启baseResultMap
-						.enableBaseResultMap().entityBuilder()
-						// 开启lombok模型
-						.enableLombok()
-						.addTableFills(new Column("create_date", FieldFill.INSERT),
-								new Column("update_date", FieldFill.UPDATE),
-								new Column("create_username", FieldFill.INSERT),
-								new Column("update_username", FieldFill.UPDATE),
-								new Column("create_ip", FieldFill.INSERT), new Column("update_ip", FieldFill.UPDATE))
-						.logicDeleteColumnName("deleted").build())
-				/*
-				 * 模板引擎配置，默认 Velocity 可选模板引擎 Beetl 或 Freemarker .templateEngine(new
-				 * BeetlTemplateEngine()) .templateEngine(new FreemarkerTemplateEngine())
-				 */
-				.execute();
+				builder.pathInfo(Collections.singletonMap(OutputFile.xml, xmlDir));
+			})
+			// 策略配置
+			.strategyConfig((scanner, builder) -> builder
+				.addInclude(getTables(scanner.apply("请输入表名，多个英文逗号分隔？所有输入 all")))
+				.controllerBuilder()
+				// 开启生成@RestController控制器
+				.enableRestStyle()
+				// 开启驼峰转连字符
+				.enableHyphenStyle()
+				.mapperBuilder()
+				// 开启baseResultMap
+				.enableBaseResultMap()
+				.entityBuilder()
+				// 开启lombok模型
+				.enableLombok()
+				.addTableFills(new Column("create_date", FieldFill.INSERT), new Column("update_date", FieldFill.UPDATE),
+						new Column("create_username", FieldFill.INSERT),
+						new Column("update_username", FieldFill.UPDATE), new Column("create_ip", FieldFill.INSERT),
+						new Column("update_ip", FieldFill.UPDATE))
+				.logicDeleteColumnName("deleted")
+				.build())
+			/*
+			 * 模板引擎配置，默认 Velocity 可选模板引擎 Beetl 或 Freemarker .templateEngine(new
+			 * BeetlTemplateEngine()) .templateEngine(new FreemarkerTemplateEngine())
+			 */
+			.execute();
 	}
 
 	@Data

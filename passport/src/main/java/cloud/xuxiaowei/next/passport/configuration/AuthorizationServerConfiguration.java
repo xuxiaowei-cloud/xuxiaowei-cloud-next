@@ -124,8 +124,8 @@ public class AuthorizationServerConfiguration {
 
 		OAuth2AuthorizationServerConfigurer authorizationServerConfigurer = new OAuth2AuthorizationServerConfigurer();
 		authorizationServerConfigurer
-				.authorizationEndpoint(authorizationEndpointCustomizer -> authorizationEndpointCustomizer
-						.consentPage(cloudClientProperties.getConsentPage()));
+			.authorizationEndpoint(authorizationEndpointCustomizer -> authorizationEndpointCustomizer
+				.consentPage(cloudClientProperties.getConsentPage()));
 
 		RequestMatcher endpointsMatcher = authorizationServerConfigurer.getEndpointsMatcher();
 
@@ -138,18 +138,18 @@ public class AuthorizationServerConfiguration {
 
 		// 自定义客户授权
 		authorizationServerConfigurer.tokenEndpoint(tokenEndpointCustomizer -> tokenEndpointCustomizer
-				.accessTokenRequestConverter(new DelegatingAuthenticationConverter(Arrays.asList(
-						// 新增：微信 OAuth2 用于验证授权授予的 {@link
-						// OAuth2WeChatMiniProgramAuthenticationToken}
-						new OAuth2WeChatMiniProgramAuthenticationConverter(),
-						// 默认值：OAuth2 授权码认证转换器
-						new OAuth2AuthorizationCodeAuthenticationConverter(),
-						// 默认值：OAuth2 刷新令牌认证转换器
-						new OAuth2RefreshTokenAuthenticationConverter(),
-						// 默认值：OAuth2 客户端凭据身份验证转换器
-						new OAuth2ClientCredentialsAuthenticationConverter())))
-				// 用于处理失败的身份验证尝试的策略。
-				.errorResponseHandler(new AccessTokenAuthenticationFailureHandlerImpl()));
+			.accessTokenRequestConverter(new DelegatingAuthenticationConverter(Arrays.asList(
+					// 新增：微信 OAuth2 用于验证授权授予的 {@link
+					// OAuth2WeChatMiniProgramAuthenticationToken}
+					new OAuth2WeChatMiniProgramAuthenticationConverter(),
+					// 默认值：OAuth2 授权码认证转换器
+					new OAuth2AuthorizationCodeAuthenticationConverter(),
+					// 默认值：OAuth2 刷新令牌认证转换器
+					new OAuth2RefreshTokenAuthenticationConverter(),
+					// 默认值：OAuth2 客户端凭据身份验证转换器
+					new OAuth2ClientCredentialsAuthenticationConverter())))
+			// 用于处理失败的身份验证尝试的策略。
+			.errorResponseHandler(new AccessTokenAuthenticationFailureHandlerImpl()));
 
 		// 微信小程序 OAuth2 身份验证提供程序
 		new OAuth2WeChatMiniProgramAuthenticationProvider(http);
@@ -245,8 +245,10 @@ public class AuthorizationServerConfiguration {
 				}
 
 				// 用户权限
-				Set<String> authorities = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority)
-						.collect(Collectors.toSet());
+				Set<String> authorities = principal.getAuthorities()
+					.stream()
+					.map(GrantedAuthority::getAuthority)
+					.collect(Collectors.toSet());
 
 				// 客户权限
 				Set<String> authorizedScopes = context.getAuthorizedScopes();

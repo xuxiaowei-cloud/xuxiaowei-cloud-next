@@ -39,8 +39,11 @@ public class UserDetailsServiceTests {
 	 */
 	@Test
 	void createUser() {
-		UserDetails userDetails = User.withDefaultPasswordEncoder().username("user").password("password")
-				.authorities("user_info").build();
+		UserDetails userDetails = User.withDefaultPasswordEncoder()
+			.username("user")
+			.password("password")
+			.authorities("user_info")
+			.build();
 		jdbcUserDetailsManager.createUser(userDetails);
 	}
 

@@ -154,8 +154,11 @@ public class CodeRestController {
 			@RequestParam(OAuth2ParameterNames.ERROR_URI) String errorUri,
 			@RequestParam(OAuth2ParameterNames.STATE) String state) {
 
-		return ResponseMap.error().put("error", error).put("error_description", errorDescription)
-				.put("error_uri", errorUri).put("state", state);
+		return ResponseMap.error()
+			.put("error", error)
+			.put("error_description", errorDescription)
+			.put("error_uri", errorUri)
+			.put("state", state);
 	}
 
 }

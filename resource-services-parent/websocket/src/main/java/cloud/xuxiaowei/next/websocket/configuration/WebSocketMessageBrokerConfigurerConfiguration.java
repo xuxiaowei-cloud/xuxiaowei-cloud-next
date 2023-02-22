@@ -81,9 +81,11 @@ public class WebSocketMessageBrokerConfigurerConfiguration implements WebSocketM
 		// 注册“/toAll”端点，启用SockJS后备选项，以便在 toAll 不可用时可以使用备用传输。
 		// SockJS 客户端将尝试连接到“/toAll”并使用可用的最佳传输（toAll，xhr-streaming，xhr-polling等）。
 		// 启用 SockJS 后备选项。
-		registry.addEndpoint(cloudWebSocketProperties.getEndpointPaths()).addInterceptors(handshakeInterceptor)
-				// 跨域配置，未配置将返回HTTP代码403
-				.setAllowedOrigins(cloudWebSocketProperties.getAllowedOrigins()).withSockJS();
+		registry.addEndpoint(cloudWebSocketProperties.getEndpointPaths())
+			.addInterceptors(handshakeInterceptor)
+			// 跨域配置，未配置将返回HTTP代码403
+			.setAllowedOrigins(cloudWebSocketProperties.getAllowedOrigins())
+			.withSockJS();
 
 	}
 

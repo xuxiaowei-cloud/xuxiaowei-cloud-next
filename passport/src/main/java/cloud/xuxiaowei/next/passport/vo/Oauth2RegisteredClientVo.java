@@ -92,7 +92,7 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			this.jwkSetUrl = build.getJwkSetUrl();
 
 			List<String> tokenEndpointAuthenticationSigningAlgorithmList = build
-					.getSetting(ConfigurationSettingNames.Client.TOKEN_ENDPOINT_AUTHENTICATION_SIGNING_ALGORITHM);
+				.getSetting(ConfigurationSettingNames.Client.TOKEN_ENDPOINT_AUTHENTICATION_SIGNING_ALGORITHM);
 			if (tokenEndpointAuthenticationSigningAlgorithmList != null
 					&& tokenEndpointAuthenticationSigningAlgorithmList.size() > 0) {
 				String algorithmClasses = tokenEndpointAuthenticationSigningAlgorithmList.get(0);
@@ -139,7 +139,7 @@ public class Oauth2RegisteredClientVo implements Serializable {
 			this.reuseRefreshTokens = build.getSetting(ConfigurationSettingNames.Token.REUSE_REFRESH_TOKENS);
 
 			SignatureAlgorithm signatureAlgorithm = build
-					.getSetting(ConfigurationSettingNames.Token.ID_TOKEN_SIGNATURE_ALGORITHM);
+				.getSetting(ConfigurationSettingNames.Token.ID_TOKEN_SIGNATURE_ALGORITHM);
 			if (signatureAlgorithm != null) {
 				this.tokenSignatureAlgorithm = signatureAlgorithm.getClass().getName() + ALGORITHM_SPLIT
 						+ signatureAlgorithm.getName();

@@ -74,12 +74,15 @@ public class ResourceServerConfiguration {
 		// 路径权限控制
 		http.authorizeHttpRequests((authorize) -> {
 			authorize
-					// 放行端点
-					.requestMatchers("/actuator/**").permitAll()
-					// 放行错误地址
-					.requestMatchers("/error").permitAll()
-					// 其他路径均需要授权
-					.anyRequest().authenticated();
+				// 放行端点
+				.requestMatchers("/actuator/**")
+				.permitAll()
+				// 放行错误地址
+				.requestMatchers("/error")
+				.permitAll()
+				// 其他路径均需要授权
+				.anyRequest()
+				.authenticated();
 		});
 
 		// 禁用 form 登录
@@ -89,7 +92,7 @@ public class ResourceServerConfiguration {
 		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
 			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
 			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
-					.withPublicKey(rsaPublicKey);
+				.withPublicKey(rsaPublicKey);
 			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
 			oauth2ResourceServer.decoder(nimbusJwtDecoder);
 		});
@@ -97,10 +100,10 @@ public class ResourceServerConfiguration {
 		// 异常处理
 		http.exceptionHandling(exceptionHandlingCustomizer -> {
 			exceptionHandlingCustomizer
-					// 访问被拒绝处理程序
-					.accessDeniedHandler(accessDeniedHandler)
-					// 身份验证入口点
-					.authenticationEntryPoint(authenticationEntryPoint);
+				// 访问被拒绝处理程序
+				.accessDeniedHandler(accessDeniedHandler)
+				// 身份验证入口点
+				.authenticationEntryPoint(authenticationEntryPoint);
 		});
 
 		// CSRF 配置

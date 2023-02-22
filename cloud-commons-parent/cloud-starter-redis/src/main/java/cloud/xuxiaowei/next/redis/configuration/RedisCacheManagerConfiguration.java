@@ -60,14 +60,14 @@ public class RedisCacheManagerConfiguration {
 
 		// 序列化对
 		RedisSerializationContext.SerializationPair<?> serializationPair = RedisSerializationContext.SerializationPair
-				.fromSerializer(valueSerializer);
+			.fromSerializer(valueSerializer);
 
 		// 获取默认缓存配置
 		RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
 
 		// 设置序列化
 		RedisCacheConfiguration redisCacheConfigurationSerialize = redisCacheConfiguration
-				.serializeValuesWith(serializationPair);
+			.serializeValuesWith(serializationPair);
 
 		// 创建并返回 Redis 缓存管理
 		return new RedisCacheManager(redisCacheWriter, redisCacheConfigurationSerialize);

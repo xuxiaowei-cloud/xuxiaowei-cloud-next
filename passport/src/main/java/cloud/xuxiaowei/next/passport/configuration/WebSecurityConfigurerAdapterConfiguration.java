@@ -127,7 +127,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
 			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
 			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
-					.withPublicKey(rsaPublicKey);
+				.withPublicKey(rsaPublicKey);
 			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
 			oauth2ResourceServer.decoder(nimbusJwtDecoder);
 		});
@@ -135,10 +135,10 @@ public class WebSecurityConfigurerAdapterConfiguration {
 		// 异常处理
 		http.exceptionHandling(exceptionHandlingCustomizer -> {
 			exceptionHandlingCustomizer
-					// 访问被拒绝处理程序
-					.accessDeniedHandler(accessDeniedHandler)
-					// 身份验证入口点
-					.authenticationEntryPoint(authenticationEntryPoint);
+				// 访问被拒绝处理程序
+				.accessDeniedHandler(accessDeniedHandler)
+				// 身份验证入口点
+				.authenticationEntryPoint(authenticationEntryPoint);
 		});
 
 		// 用于检索用户进行身份验证的实例
@@ -147,47 +147,54 @@ public class WebSecurityConfigurerAdapterConfiguration {
 		// 路径权限控制
 		http.authorizeHttpRequests((authorize) -> {
 			authorize
-					// 放行端点
-					.requestMatchers("/actuator/**").permitAll()
-					// 放行授权路径
-					.requestMatchers("/oauth2/authorize").permitAll()
-					// 放行检查Token
-					.requestMatchers("/oauth2/check_token").permitAll()
-					// 放行Token
-					.requestMatchers("/oauth2/token").permitAll()
-					// 注销登录放行
-					.requestMatchers("/signout").permitAll()
-					// 放行错误地址
-					.requestMatchers("/error").permitAll()
-					// 其他路径均需要授权
-					.anyRequest().authenticated();
+				// 放行端点
+				.requestMatchers("/actuator/**")
+				.permitAll()
+				// 放行授权路径
+				.requestMatchers("/oauth2/authorize")
+				.permitAll()
+				// 放行检查Token
+				.requestMatchers("/oauth2/check_token")
+				.permitAll()
+				// 放行Token
+				.requestMatchers("/oauth2/token")
+				.permitAll()
+				// 注销登录放行
+				.requestMatchers("/signout")
+				.permitAll()
+				// 放行错误地址
+				.requestMatchers("/error")
+				.permitAll()
+				// 其他路径均需要授权
+				.anyRequest()
+				.authenticated();
 		});
 
 		http.formLogin(formLogin -> formLogin
-				// 登录页面地址
-				.loginPage(cloudSecurityProperties.getLoginPageUrl())
-				// 登录请求地址
-				.loginProcessingUrl(cloudSecurityProperties.getLoginProcessingUrl())
-				// 身份验证失败处理程序
-				.failureHandler(authenticationFailureHandler)
-				// 登录成功后的处理，重定向到某个地址
-				.successHandler(authenticationSuccessHandler)
-				// 已上地址，允许任何人访问
-				.permitAll());
+			// 登录页面地址
+			.loginPage(cloudSecurityProperties.getLoginPageUrl())
+			// 登录请求地址
+			.loginProcessingUrl(cloudSecurityProperties.getLoginProcessingUrl())
+			// 身份验证失败处理程序
+			.failureHandler(authenticationFailureHandler)
+			// 登录成功后的处理，重定向到某个地址
+			.successHandler(authenticationSuccessHandler)
+			// 已上地址，允许任何人访问
+			.permitAll());
 
 		http.rememberMe(rememberMe -> rememberMe
-				// 查询用户
-				.userDetailsService(userDetailsService)
-				// 记住我参数名
-				.rememberMeParameter(cloudRememberMeProperties.getRememberMeParameter())
-				// 记住我 Cookie 名
-				.rememberMeCookieName(cloudRememberMeProperties.getRememberMeCookieName())
-				// 记住我域名
-				.rememberMeCookieDomain(cloudRememberMeProperties.getRememberMeCookieDomain())
-				// 秘钥
-				.key(cloudRememberMeProperties.getKey())
-				// 记住我 Token 有效时间
-				.tokenValiditySeconds(cloudRememberMeProperties.getTokenValiditySeconds()));
+			// 查询用户
+			.userDetailsService(userDetailsService)
+			// 记住我参数名
+			.rememberMeParameter(cloudRememberMeProperties.getRememberMeParameter())
+			// 记住我 Cookie 名
+			.rememberMeCookieName(cloudRememberMeProperties.getRememberMeCookieName())
+			// 记住我域名
+			.rememberMeCookieDomain(cloudRememberMeProperties.getRememberMeCookieDomain())
+			// 秘钥
+			.key(cloudRememberMeProperties.getKey())
+			// 记住我 Token 有效时间
+			.tokenValiditySeconds(cloudRememberMeProperties.getTokenValiditySeconds()));
 
 		// CSRF 配置
 		http.csrf().requireCsrfProtectionMatcher(csrfRequestMatcher);

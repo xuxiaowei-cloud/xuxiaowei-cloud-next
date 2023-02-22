@@ -184,9 +184,9 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 				return new AuthorizationDecision(false);
 			}
 		})
-				// 无认证授权
-				// 拒绝放行
-				.defaultIfEmpty(new AuthorizationDecision(false));
+			// 无认证授权
+			// 拒绝放行
+			.defaultIfEmpty(new AuthorizationDecision(false));
 	}
 
 	/**
