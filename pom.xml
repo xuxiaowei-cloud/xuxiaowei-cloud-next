@@ -15,7 +15,6 @@
 
     <properties>
         <java.version>17</java.version>
-
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
 
@@ -40,7 +39,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.2</spring-boot.version>
+        <spring-boot.version>3.0.3</spring-boot.version>
 
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
@@ -137,7 +136,7 @@
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/fastjson -->
         <!-- https://github.com/alibaba/fastjson -->
-        <fastjson.version>2.0.23</fastjson.version>
+        <fastjson.version>2.0.24</fastjson.version>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
@@ -813,7 +812,7 @@
             <id>aliyun</id>
             <repositories>
                 <repository>
-                    <id>aliyun</id>
+                    <id>aliyun-pom</id>
                     <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
                 </repository>
             </repositories>
@@ -824,7 +823,7 @@
             <id>tencentyun</id>
             <repositories>
                 <repository>
-                    <id>tencentyun</id>
+                    <id>tencentyun-pom</id>
                     <url>https://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
                 </repository>
             </repositories>
@@ -900,15 +899,27 @@
 
     <repositories>
 
-        <!-- 如果使用浏览器访问时，需要添加域名才有结果 -->
+        <!-- 如果使用浏览器访问时，需要添加 groupId 才显示内容 -->
         <repository>
-            <id>oss</id>
-            <url>https://oss.sonatype.org/content/repositories/public/</url>
+            <id>oss-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
 
         <repository>
-            <id>oss-s01</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/public/</url>
+            <id>oss-s01-snapshots</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
 
     </repositories>
