@@ -40,7 +40,6 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
         <spring-boot.version>3.0.3</spring-boot.version>
-
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/cloud/spring-cloud-dependencies -->
@@ -50,13 +49,11 @@
         <!-- https://github.com/spring-cloud/spring-cloud-openfeign -->
         <!-- https://github.com/spring-cloud/spring-cloud-circuitbreaker -->
         <spring-cloud.version>2022.0.1</spring-cloud.version>
-
         <!-- Alibaba Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/com.alibaba.cloud/spring-cloud-alibaba-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/cloud/spring-cloud-alibaba-dependencies -->
         <!-- https://github.com/alibaba/spring-cloud-alibaba -->
         <spring-cloud-alibaba.version>2022.0.0.0-RC1</spring-cloud-alibaba.version>
-
         <!-- 监控（管理）依赖 -->
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/de/codecentric/spring-boot-admin-dependencies -->
@@ -786,13 +783,11 @@
                         </image>
                         <image>
                             <!--
-                                镜像名称：在版本后面增加了两个数字，用于储存历史记录、快速恢复容器，不需要者请注释掉此 image
+                                镜像名称：在版本后面增加了数字，用于储存历史记录、快速恢复容器（也可使用k8s滚动发布进行恢复）、k8s更改镜像中使用（用于发布），不需要者请注释掉此 image
                                 CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines/${CI_PIPELINE_ID}
-                                CI_JOB_ID：代表作业ID，用于确定作业的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/jobs/${CI_JOB_ID}
-                                在 GitLab Runner 中执行时，需要使用 -DCI_PIPELINE_ID=$CI_PIPELINE_ID -DCI_JOB_ID=$CI_JOB_ID 来激活配置
                              -->
                             <name>
-                                ${docker.registry}/${project.groupId}/${project.artifactId}:${project.version}-${CI_PIPELINE_ID}-${CI_JOB_ID}
+                                ${docker.registry}/${project.groupId}/${project.artifactId}:${project.version}-${CI_PIPELINE_ID}
                             </name>
                             <build>
                                 <dockerFile>${project.basedir}/Dockerfile</dockerFile>
