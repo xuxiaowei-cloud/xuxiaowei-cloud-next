@@ -1,0 +1,101 @@
+# 创建命名空间  ：kubectl create namespace xuxiaowei-cloud
+# 创建 pod    ：kubectl apply -f webservice-deployment.yaml
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 查看 pod 描述：kubectl -n xuxiaowei-cloud-next describe pod pod名称
+# 进入 pod    ：kubectl -n xuxiaowei-cloud-next exec -it pod名称 bash
+# 编辑 pod    ：kubectl -n xuxiaowei-cloud-next edit deployment webservice-deployment
+# 删除 pod    ：kubectl -n xuxiaowei-cloud-next delete deployment webservice-deployment
+
+# https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: webservice-next-data-volume
+  namespace: xuxiaowei-cloud-next
+spec:
+  capacity:
+    storage: 10Gi
+  # https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/#access-modes
+  accessModes:
+    - ReadWriteMany
+  # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/#nfs
+  nfs:
+    # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
+    # 需要存在此文件夹
+    path: /nfs/next/webservice/data
+    # 填写你的 NFS（Network File System，网络文件系统） 地址
+    server: 192.168.0.12
+
+---
+
+# https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webservice-deployment
+  namespace: xuxiaowei-cloud-next
+spec:
+  selector:
+    matchLabels:
+      app: webservice
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webservice
+    spec:
+      containers:
+        - name: webservice
+          image: registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT
+          env:
+            - name: nacos_xuxiaowei_cloud_addr
+              value: nacos-service
+            - name: mysql_xuxiaowei_cloud
+              value: mysql-service
+            - name: redis_xuxiaowei_cloud_host
+              value: redis-service
+          ports:
+            - containerPort: 1901
+            - containerPort: 9005
+          volumeMounts:
+            # 时区
+            - name: time-zone
+              mountPath: /etc/localtime
+            # 引用卷的名称
+            - name: webservice-next-data-volume
+              # Admin Server 数据目录
+              mountPath: /logs
+      # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/
+      volumes:
+        # 时区
+        - name: time-zone
+          hostPath:
+            path: /etc/localtime
+        - name: webservice-next-data-volume
+          nfs:
+            # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
+            path: /nfs/next/webservice/data
+            server: 192.168.0.12
+
+---
+
+# 创建 Service（不能指定 nodePort） ：kubectl -n xuxiaowei-cloud-next expose deployment webservice-deployment --type=NodePort --name=webservice-service
+# 编辑 Service                    ：kubectl -n xuxiaowei-cloud-next edit service webservice-service
+# 删除 Service                    ：kubectl -n xuxiaowei-cloud-next delete service webservice-service
+# 查看 pod、Service               ：kubectl -n xuxiaowei-cloud-next get pod,svc -o wide
+
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: webservice-service
+  namespace: xuxiaowei-cloud-next
+spec:
+  ports:
+    - nodePort: 30911
+      port: 1901
+      protocol: TCP
+      targetPort: 1901
+  selector:
+    app: webservice
+  type: NodePort

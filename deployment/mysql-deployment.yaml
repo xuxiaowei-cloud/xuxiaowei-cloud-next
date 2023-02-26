@@ -1,0 +1,164 @@
+# 创建命名空间  ：kubectl create namespace xuxiaowei-cloud-next
+# 创建 pod    ：kubectl apply -f mysql-deployment.yaml
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 查看 pod 描述：kubectl -n xuxiaowei-cloud-next describe pod pod名称
+# 进入 pod    ：kubectl -n xuxiaowei-cloud-next exec -it pod名称 bash
+# 编辑 pod    ：kubectl -n xuxiaowei-cloud-next edit deployment mysql-deployment
+# 删除 pod    ：kubectl -n xuxiaowei-cloud-next delete deployment mysql-deployment
+
+# https://kubernetes.io/zh-cn/docs/concepts/configuration/configmap/
+# 查看 描述 ：kubectl -n xuxiaowei-cloud-next describe configmap mysql-next-config-map
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-next-config-map
+  namespace: xuxiaowei-cloud-next
+data:
+  mysql.cnf: |
+    [mysqld]
+    # 最大连接数
+    max_connections=1000
+    
+    # 以下内容未启动，使用的是启动参数
+    # log_bin = mysql-bin
+    # server_id = 1
+    # expire_logs_days：已过时，推荐使用 binlog_expire_logs_seconds
+    # MySQL 二进制日志过期时间，单位秒，60 * 60 * 24 * 14 = 1209600
+    # binlog_expire_logs_seconds = 1209600
+    # character_set_server = utf8mb4"
+    # collation_server = utf8mb4_general_ci"
+    # 开启行级日志
+    # binlog_format=ROW
+
+---
+
+# https://kubernetes.io/zh-cn/docs/concepts/configuration/secret/
+#
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-next-password
+  namespace: xuxiaowei-cloud-next
+type: Opaque
+data:
+  # xuxiaowei.com.cn 计算 base64 之后为 eHV4aWFvd2VpLmNvbS5jbg==
+  password: eHV4aWFvd2VpLmNvbS5jbg==
+
+---
+
+# https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mysql-next-data-volume
+  namespace: xuxiaowei-cloud-next
+spec:
+  capacity:
+    storage: 10Gi
+  # https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/#access-modes
+  accessModes:
+    - ReadWriteMany
+  # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/#nfs
+  nfs:
+    # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
+    # 需要存在此文件夹
+    path: /nfs/next/mysql/data
+    # 填写你的 NFS（Network File System，网络文件系统） 地址
+    server: 192.168.0.12
+
+---
+
+# https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  namespace: xuxiaowei-cloud-next
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  # 此处使用一个副本（多副本时仅有一个副本正常运行，其他副本读取文件时显示被占用）
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          # https://hub.docker.com/_/mysql
+          image: mysql:8.0.32
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-next-password
+                  key: password
+                  # 此值为默认值；意味着 "mysql-next-password" 必须存在且包含名为 "password" 的主键
+                  optional: false
+          ports:
+            - containerPort: 3306
+          args:
+            # 创建容器时的参数
+            - "--log-bin=mysql-bin"
+            - "--server-id=1"
+            # expire_logs_days：已过时，推荐使用 binlog_expire_logs_seconds
+            # MySQL 二进制日志过期时间，单位秒，60 * 60 * 24 * 14 = 1209600
+            - "--binlog_expire_logs_seconds=1209600"
+            - "--character-set-server=utf8mb4"
+            - "--collation-server=utf8mb4_general_ci"
+            # 开启行级日志
+            - "--binlog-format=ROW"
+          volumeMounts:
+            # 时区
+            - name: time-zone
+              mountPath: /etc/localtime
+            # 引用卷的名称
+            - name: mysql-next-config-volume
+              # 挂载到容器的目录
+              # 用于配置 MySQL
+              mountPath: /etc/mysql/conf.d/
+            - name: mysql-next-data-volume
+              # MySQL 数据目录
+              mountPath: /var/lib/mysql
+      # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/
+      volumes:
+        # 时区
+        - name: time-zone
+          hostPath:
+            path: /etc/localtime
+        - name: mysql-next-config-volume
+          configMap:
+            name: mysql-next-config-map
+            items:
+              - key: mysql.cnf
+                path: mysql.cnf
+        - name: mysql-next-data-volume
+          nfs:
+            # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
+            path: /nfs/next/mysql/data
+            server: 192.168.0.12
+
+---
+
+# 创建 Service（不能指定 nodePort） ：kubectl -n xuxiaowei-cloud-next expose deployment mysql-deployment --type=NodePort --name=mysql-service
+# 编辑 Service                    ：kubectl -n xuxiaowei-cloud-next edit service mysql-service
+# 删除 Service                    ：kubectl -n xuxiaowei-cloud-next delete service mysql-service
+# 查看 pod、Service               ：kubectl -n xuxiaowei-cloud-next get pod,svc -o wide
+
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: xuxiaowei-cloud-next
+spec:
+  ports:
+    - nodePort: 31306
+      port: 3306
+      protocol: TCP
+      targetPort: 3306
+  selector:
+    app: mysql
+  type: NodePort

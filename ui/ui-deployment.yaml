@@ -1,0 +1,54 @@
+# 创建命名空间  ：kubectl create namespace xuxiaowei-cloud
+# 创建 pod    ：kubectl apply -f ui-deployment.yaml
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 查看 pod 描述：kubectl -n xuxiaowei-cloud-next describe pod pod名称
+# 进入 pod    ：kubectl -n xuxiaowei-cloud-next exec -it pod名称 bash
+# 编辑 pod    ：kubectl -n xuxiaowei-cloud-next edit deployment ui-deployment
+# 删除 pod    ：kubectl -n xuxiaowei-cloud-next delete deployment ui-deployment
+
+---
+
+# https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-deployment
+  namespace: xuxiaowei-cloud-next
+spec:
+  selector:
+    matchLabels:
+      app: ui
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      containers:
+        - name: ui
+          image: registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT
+          ports:
+            - containerPort: 80
+
+---
+
+# 创建 Service（不能指定 nodePort） ：kubectl -n xuxiaowei-cloud-next expose deployment ui-deployment --type=NodePort --name=ui-service
+# 编辑 Service                    ：kubectl -n xuxiaowei-cloud-next edit service ui-service
+# 删除 Service                    ：kubectl -n xuxiaowei-cloud-next delete service ui-service
+# 查看 pod、Service               ：kubectl -n xuxiaowei-cloud-next get pod,svc -o wide
+
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui-service
+  namespace: xuxiaowei-cloud-next
+spec:
+  ports:
+    - nodePort: 31180
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: ui
+  type: NodePort

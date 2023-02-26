@@ -1,0 +1,102 @@
+# 创建命名空间  ：kubectl create namespace xuxiaowei-cloud-next
+# 创建 pod    ：kubectl apply -f redis-deployment.yaml
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 查看 pod 描述：kubectl -n xuxiaowei-cloud-next describe pod pod名称
+# 进入 pod    ：kubectl -n xuxiaowei-cloud-next exec -it pod名称 bash
+# 编辑 pod    ：kubectl -n xuxiaowei-cloud-next edit deployment redis-deployment
+# 删除 pod    ：kubectl -n xuxiaowei-cloud-next delete deployment redis-deployment
+
+# https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: redis-next-data-volume
+  namespace: xuxiaowei-cloud-next
+spec:
+  capacity:
+    storage: 10Gi
+  # https://kubernetes.io/zh-cn/docs/concepts/storage/persistent-volumes/#access-modes
+  accessModes:
+    - ReadWriteMany
+  # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/#nfs
+  nfs:
+    # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
+    # 需要存在此文件夹
+    path: /nfs/next/redis/data
+    # 填写你的 NFS（Network File System，网络文件系统） 地址
+    server: 192.168.0.12
+
+---
+
+# https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: xuxiaowei-cloud-next
+spec:
+  selector:
+    matchLabels:
+      app: redis
+  # 此处使用一个副本（多副本时数据同步存在问题）
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          # https://hub.docker.com/_/redis
+          image: redis:7.0.8
+          ports:
+            - containerPort: 6379
+          command:
+            - "redis-server"
+          args:
+            # https://hub.docker.com/_/redis
+            # 设置密码
+            - "--requirepass xuxiaowei.com.cn"
+            # AOF
+            - "--appendonly yes"
+          volumeMounts:
+            # 时区
+            - name: time-zone
+              mountPath: /etc/localtime
+            - name: redis-next-data-volume
+              # redis 数据目录
+              mountPath: /data
+      # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/
+      volumes:
+        # 时区
+        - name: time-zone
+          hostPath:
+            path: /etc/localtime
+        - name: redis-next-data-volume
+          nfs:
+            # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
+            path: /nfs/next/redis/data
+            server: 192.168.0.12
+
+---
+
+# 创建 Service（不能指定 nodePort） ：kubectl -n xuxiaowei-cloud-next expose deployment redis-deployment --type=NodePort --name=redis-service
+# 编辑 Service                    ：kubectl -n xuxiaowei-cloud-next edit service redis-service
+# 删除 Service                    ：kubectl -n xuxiaowei-cloud-next delete service redis-service
+# 查看 pod、Service               ：kubectl -n xuxiaowei-cloud-next get pod,svc -o wide
+
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: xuxiaowei-cloud-next
+spec:
+  ports:
+    - nodePort: 31379
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+  selector:
+    app: redis
+  type: NodePort

@@ -1,10 +1,10 @@
 
 # 阿里云对象存储
 oss:
-  stage: s3-service
+  stage: shell-service
   image: maven:3.6.3-openjdk-17
   needs:
-    - job: s3-package
+    - job: shell-package
       artifacts: true
   script:
     - wget https://gosspublic.alicdn.com/ossutil/1.7.13/ossutil64
@@ -17,14 +17,14 @@ oss:
     - chmod 755 oss.sh
     - "./oss.sh"
   only:
-    - s3
+    - shell
 
 # 腾讯云对象存储
 cos:
-  stage: s3-service
+  stage: shell-service
   image: maven:3.6.3-openjdk-17
   needs:
-    - job: s3-package
+    - job: shell-package
       artifacts: true
   script:
     - wget https://cosbrowser.cloud.tencent.com/software/coscli/coscli-linux
@@ -34,14 +34,14 @@ cos:
     - chmod 755 cos.sh
     - "./cos.sh"
   only:
-    - s3
+    - shell
 
 # 华为云对象存储
 obs:
-  stage: s3-service
+  stage: shell-service
   image: maven:3.6.3-openjdk-17
   needs:
-    - job: s3-package
+    - job: shell-package
       artifacts: true
   script:
     - wget https://obs-community.obs.cn-north-1.myhuaweicloud.com/obsutil/current/obsutil_linux_amd64.tar.gz
@@ -54,14 +54,14 @@ obs:
     - chmod 755 obs.sh
     - "./obs.sh"
   only:
-    - s3
+    - shell
 
 # 百度云对象存储
 bos:
-  stage: s3-service
+  stage: shell-service
   image: maven:3.6.3-openjdk-17
   needs:
-    - job: s3-package
+    - job: shell-package
       artifacts: true
   script:
     - wget https://bce-doc-on.bj.bcebos.com/bce-documentation/BOS/linux-bcecmd-0.3.3.zip
@@ -71,4 +71,4 @@ bos:
     - chmod 755 bos.sh
     - "./bos.sh"
   only:
-    - s3
+    - shell

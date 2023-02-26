@@ -1,8 +1,13 @@
+# 此流水线为 gitcode.net 专用
+
 stages:
   - murphysec
   - package
-  - s3-package
-  - s3-service
+  # 使用 shell 执行器
+  - shell-package
+  - shell-service
+  # 使用 docker 执行器
+  - docker-package
 
 # murphysec
 murphysec:
@@ -32,14 +37,16 @@ murphysec:
 #
 # package
 package:
+  variables:
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
   stage: package
   image: maven:3.6.3-openjdk-17
   script:
-    - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
-    - echo $GPG_FILE
-    - gpg --import $GPG_FILE
-    - SETTINGS_FILE=/usr/share/maven/conf/settings.xml
-    - echo $SETTINGS_FILE
+    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    # - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
+    # - echo $GPG_FILE
+    # - gpg --import $GPG_FILE
     - git --version
     - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
@@ -83,7 +90,51 @@ package:
     - echo GitLab实例URL的主机，没有协议或端口：$CI_SERVER_HOST
     - echo 项目的HTTP（S）地址：$CI_PROJECT_URL
     - echo 克隆Git存储库的URL：$CI_REPOSITORY_URL
-    - mvn clean -e -U package source:jar javadoc:jar install -Paliyun -Pgpg -DskipTests -s settings.xml && PACKAGE_FLAG=1
+    # 配置 Maven 仓库的密码，用于上传 Maven
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings.xml
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings-private.xml
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings.xml && PACKAGE_FLAG=1
+    - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
+  # 产物超过 1000M，取消产物上传，节省时间
+  #  artifacts:
+  #    name: package
+  #    paths:
+  #      - target/*.jar
+  #      - target/*.asc
+  #      - target/*.pom
+  #      - "*/target/*.jar"
+  #      - "*/target/*.asc"
+  #      - "*/target/*.pom"
+  #      - "*/*/target/*.jar"
+  #      - "*/*/target/*.asc"
+  #      - "*/*/target/*.pom"
+  #      - ui/dist
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
+  rules:
+    # PR 到 main 分支时预执行
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    # PR 合并到 main 后执行
+    - if: $CI_COMMIT_BRANCH == "main"
+
+#
+# 使用 shell 执行器 打包
+shell-package:
+  stage: shell-package
+  script:
+    # 只能导入一次，否则会报错（开发者自己导入，或者不使用 gpg）
+    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    # - echo $GPG_FILE
+    # - gpg --import $GPG_FILE
+    - git --version
+    - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 主分支：$CI_DEFAULT_BRANCH
+    - echo 项目路径：$CI_PROJECT_DIR
+    # 在 Shell 执行器中，如果手动导入 gpg，可使用参数 -Pgpg
+    # 在 Shell 执行器中，不指定 settings.xml，可使用系统默认
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings.xml && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
   artifacts:
     name: package
@@ -98,34 +149,47 @@ package:
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
       - ui/dist
-  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
-  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
-    # PR 到 main 分支时预执行
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
-    # PR 合并到 main 后执行
-    - if: $CI_COMMIT_BRANCH == "main"
+    # 仅在 shell 分支中执行
+    # 此处禁用 gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
+    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitcode.net'
+  tags:
+    # 仅在 tags 名称为 shell 的执行器上执行
+    - shell
 
 #
-# s3 打包
-s3-package:
-  stage: s3-package
+# 使用 docker 执行器 打包
+docker-package:
+  variables:
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  stage: docker-package
+  image: maven:3.6.3-openjdk-17
   script:
+    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    # - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
+    # - echo $GPG_FILE
+    # - gpg --import $GPG_FILE
     - git --version
     - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
     - echo 当前分支：$CI_COMMIT_BRANCH
     - echo 主分支：$CI_DEFAULT_BRANCH
     - echo 项目路径：$CI_PROJECT_DIR
-    - JAVA_HOME=/software/dragonwell-17.0.3.0.3+7-GA
-    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests && PACKAGE_FLAG=1
+    # 配置 Maven 仓库的密码，用于上传 Maven
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings.xml
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings-private.xml
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings.xml && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
   cache:
     paths:
+      - .m2/repository
       - passport-ui/node/
       - passport-ui/node_modules/
       - ui/node/
       - ui/node_modules/
   artifacts:
+    name: package
     paths:
       - target/*.jar
       - target/*.asc
@@ -137,15 +201,18 @@ s3-package:
       - "*/*/target/*.asc"
       - "*/*/target/*.pom"
       - ui/dist
+  rules:
+    # 仅在 docker 分支中执行
+    # 此处禁用 gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
+    - if: $CI_COMMIT_BRANCH == "docker" && $CI_SERVER_HOST != 'gitcode.net'
   tags:
-    - s3
-  only:
-    - s3
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
 
 # 嵌入
 include:
   # 对象储存
   # 已禁用，有需要时才开放此内容
   # - /upload.yml
-  # 服务部署
-  - /service.yml
+  # 使用 shell 执行器 部署服务
+  - /shell-service.yml

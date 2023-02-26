@@ -1,0 +1,64 @@
+# 此文件仅为测试文件，暂不参与项目实施
+# 创建命名空间  ：kubectl create namespace xuxiaowei-cloud-next
+# 创建 pod    ：kubectl apply -f nginx-deployment.yaml
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 进入 pod    ：kubectl -n xuxiaowei-cloud-next exec -it pod名称 bash
+# 编辑 pod    ：kubectl -n xuxiaowei-cloud-next edit deployment nginx-deployment
+# 删除 pod    ：kubectl -n xuxiaowei-cloud-next delete deployment nginx-deployment
+
+# https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: xuxiaowei-cloud-next
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          # https://hub.docker.com/_/nginx
+          image: nginx:1.23.3
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            # 时区
+            - name: time-zone
+              mountPath: /etc/localtime
+      # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/
+      volumes:
+        # 时区
+        - name: time-zone
+          hostPath:
+            path: /etc/localtime
+
+---
+
+# 创建 Service（不能指定 nodePort） ：kubectl -n xuxiaowei-cloud-next expose deployment nginx-deployment --type=NodePort --name=nginx-service
+# 编辑 Service                    ：kubectl -n xuxiaowei-cloud-next edit service nginx-service
+# 删除 Service                    ：kubectl -n xuxiaowei-cloud-next delete service nginx-service
+# 查看 pod、Service               ：kubectl -n xuxiaowei-cloud-next get pod,svc -o wide
+
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: xuxiaowei-cloud-next
+spec:
+  ports:
+    - nodePort: 31080
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: nginx
+  type: NodePort

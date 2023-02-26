@@ -1,0 +1,112 @@
+# 创建命名空间  ：kubectl create namespace xuxiaowei-cloud-next
+# 创建 pod    ：kubectl apply -f nacos-deployment.yaml
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 进入 pod    ：kubectl -n xuxiaowei-cloud-next exec -it pod名称 bash
+# 编辑 pod    ：kubectl -n xuxiaowei-cloud-next edit deployment nacos-deployment
+# 删除 pod    ：kubectl -n xuxiaowei-cloud-next delete deployment nacos-deployment
+
+
+# https://kubernetes.io/zh-cn/docs/concepts/configuration/secret/
+#
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-next-password
+  namespace: xuxiaowei-cloud-next
+type: Opaque
+data:
+  # xuxiaowei.com.cn 计算 base64 之后为 eHV4aWFvd2VpLmNvbS5jbg==
+  password: eHV4aWFvd2VpLmNvbS5jbg==
+
+---
+
+# https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nacos-deployment
+  namespace: xuxiaowei-cloud-next
+spec:
+  selector:
+    matchLabels:
+      app: nacos
+  # 此处使用一个副本（多副本服务可能无法注册）
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nacos
+    spec:
+      containers:
+        - name: nacos
+          # https://hub.docker.com/r/nacos/nacos-server
+          # [GitHub](https://github.com/alibaba/nacos/blob/develop/distribution/conf/nacos-mysql.sql)
+          # [GitCode 镜像仓库](https://gitcode.net/mirrors/alibaba/nacos/-/blob/develop/distribution/conf/mysql-schema.sql)
+          # [Gitee 镜像仓库](https://gitee.com/mirrors/Nacos/blob/develop/distribution/conf/mysql-schema.sql)
+          image: nacos/nacos-server:v2.2.0
+          env:
+            - name: MODE
+              value: standalone
+            - name: SPRING_DATASOURCE_PLATFORM
+              value: mysql
+            - name: MYSQL_SERVICE_HOST
+              # 使用 MySQL Service 名称
+              value: mysql-service
+            - name: MYSQL_SERVICE_PORT
+              value: "3306"
+            - name: MYSQL_SERVICE_DB_NAME
+              value: nacos_config
+            - name: MYSQL_SERVICE_DB_PARAM
+              value: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+            - name: MYSQL_SERVICE_USER
+              value: root
+            - name: MYSQL_SERVICE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-next-password
+                  key: password
+                  # 此值为默认值；意味着 "mysql-next-password" 必须存在且包含名为 "password" 的主键
+                  optional: false
+          ports:
+            - containerPort: 8848
+            - containerPort: 9848
+          volumeMounts:
+            # 时区
+            - name: time-zone
+              mountPath: /etc/localtime
+      # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/
+      volumes:
+        # 时区
+        - name: time-zone
+          hostPath:
+            path: /etc/localtime
+
+---
+
+# 创建 Service（不能指定 nodePort） ：kubectl -n xuxiaowei-cloud-next expose deployment nacos-deployment --type=NodePort --name=nacos-service
+# 编辑 Service                    ：kubectl -n xuxiaowei-cloud-next edit service nacos-service
+# 删除 Service                    ：kubectl -n xuxiaowei-cloud-next delete service nacos-service
+# 查看 pod、Service               ：kubectl -n xuxiaowei-cloud-next get pod,svc -o wide
+
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: nacos-service
+  namespace: xuxiaowei-cloud-next
+spec:
+  ports:
+    - name: "8848"
+      nodePort: 30048
+      port: 8848
+      protocol: TCP
+      targetPort: 8848
+    - name: "9848"
+      nodePort: 31148
+      port: 9848
+      protocol: TCP
+      targetPort: 9848
+  selector:
+    app: nacos
+  type: NodePort
