@@ -140,8 +140,6 @@
         5. [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud)
         6. [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud)
 
-## [脚本](./sh/README.md)
-
 ## [代码格式规范 spring-javaformat](https://github.com/spring-io/spring-javaformat)
 
 - IntelliJ IDEA
@@ -156,6 +154,96 @@
   ```shell
   mvn spring-javaformat:apply
   ```
+
+## [阿里云盘分享](https://www.aliyundrive.com/s/QaUy1DQRkV4)
+
+## [语雀文档](https://www.yuque.com/xuxiaowei-com-cn)
+
+1. [GitLab、kubernetes（k8s）、私库等](https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s)
+
+## 依赖版本对比
+
+- [依赖分析](./README-dependencies.md)
+
+### 用户名与密码
+
+| 账户名       | 密码  | 启用  |
+|-----------|-----|-----|
+| xuxiaowei | 123 | 1   |
+
+### 其他服务
+
+| 名称               | 地址                                                  | 账户名   | 密码        |
+|------------------|-----------------------------------------------------|-------|-----------|
+| XXL Job          | http://127.0.0.1:5101/xxl-job-admin                 | admin | 123456    |
+| Swagger          | http://127.0.0.1:1101/webjars/swagger-ui/index.html |       |           |
+| docker 守护程序的 URL | http://host.docker.example.xuxiaowei.cloud:2375     |       |           |
+| docker 私库 URL    | registry.docker.example.xuxiaowei.cloud             | admin | xuxiaowei |
+
+### [Linux 脚本说明](./sh)
+
+### [SQL](./sql)
+
+## 仓库与分支？
+
+1. 使用了哪六个仓库？
+    1. [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    2. [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    3. [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    4. [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    5. [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    6. [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+
+2. 上述六个仓库以哪个为准？其余仓库何时同步？
+    1. 以 [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 为准
+    2. 其余仓库每日同步
+
+3. 各个仓库的作用？
+    1. [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 供国内用户访问、提问、下载资源、Gitee Go流水线
+    2. [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 2022-06-06 之前使用 GitLab
+       的 [CICD 流水线](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines)
+       自动构建资源（`.jar`、`.jar.asc`、`.pom`、`.pom.asc`、`-javadoc.jar`、`-javadoc.jar.asc`、`-sources.jar`、`-sources.jar.asc`），
+       自动将资源发布（目前仅[打包](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/blob/main/.gitlab-ci.yml)
+       ，未发布）到 [中央仓库](https://s01.oss.sonatype.org/content/repositories/releases/cloud/xuxiaowei/next)
+    3. [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next) 2022-06-06
+       之后用于替换 [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+       的 [CICD 流水线](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines) ，
+       [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next) 流水线配额 `2000` 分钟（已申请到内侧资格）
+    4. [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+       使用 [CodeQL](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/actions/workflows/codeql-analysis.yml)
+       每日扫描项目中的 `main` 分支是否存在漏洞
+    5. [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud-next) 国内备份仓库
+    6. [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 国内备份仓库
+
+4. 各分支的作用？
+    1. `main`
+        - 主分支
+        - 不可推送，只能合并
+        - 用于 GitLab Runner 的 kubernetes（k8s） 类型的执行器执行 CI/CD
+        - 使用 kubernetes（k8s） 编译代码打包
+        - 使用 kubernetes（k8s） 将打包后的jar包制作成docker镜像
+        - 使用 kubernetes（k8s） 进行发布
+    2. `xuxiaowei`开头的分支
+        - 个人分支，按功能`PR`到主分支`main`
+    3. `shell`
+        - 用于 GitLab Runner 的 shell 类型的执行器执行 CI/CD
+        - 使用 shell 命令编译代码打包
+        - 使用 shell 命令创建 Linux service 服务进行发布
+    4. `docker`
+        - 用于 GitLab Runner 的 docker 类型的执行器执行 CI/CD
+        - 使用 docker 编译代码打包
+        - 使用 docker 将打包后的jar包制作成docker镜像
+        - 使用 docker 进行发布
+    5. `pages`
+        - 文档分支
+    6. `consul`
+        - 历史版本分支，使用 consul 作为注册与配置中心，后续不再维护（主分支使用 nacos 作为注册与配置中心）
+    7. 此处未说明的分支，请勿使用
+    8. 已上包含 CI/CD 的分支
+        1. 分支内的各阶段，可交替使用，如：使用 docker 编译代码打包、使用 docker 将打包后的jar包制作成docker镜像，使用
+           kubernetes（k8s） 进行发布。如何选择请使用者自行组合。
+        2. 这些分支代码相同，CI/CD 根据分支名进行触发，即：想使用某个分支的某些执行器执行 CI/CD，就将代码 `PR`
+           （推荐使用PR，方便一键回滚代码、将回滚的内容进行恢复） 到指定的分支。
 
 ## 参考文档
 
