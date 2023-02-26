@@ -1,4 +1,4 @@
-FROM xuxiaoweicomcn/dragonwell8:8.13.14-Standard
+FROM xuxiaoweicomcn/dragonwell17:17.0.6.0.6.9
 
 WORKDIR /home
 
