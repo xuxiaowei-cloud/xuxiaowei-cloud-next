@@ -157,30 +157,12 @@ under the License.
     </mirror>
      -->
 
-    <!-- 腾讯云 Maven 镜像：https://mirrors.cloud.tencent.com/help/maven.html -->
+    <!-- 自建 Maven 私库：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install -->
     <mirror>
-      <id>tencentyun-setting</id>
-      <!--
-        仅代理 central、jcenter 仓库，可使用 * 代理所有仓库
-        central：https://repo1.maven.org/maven2/
-        jcenter：http://jcenter.bintray.com/
-      -->
-      <mirrorOf>central,jcenter</mirrorOf>
-      <name>tencentyun</name>
-      <url>http://mirrors.cloud.tencent.com/nexus/repository/maven-public/</url>
-    </mirror>
-
-    <!-- 腾讯云 Maven 镜像：https://developer.aliyun.com/mvn/guide -->
-    <mirror>
-      <id>aliyunmaven-setting</id>
-      <!--
-        仅代理 central、jcenter 仓库，可使用 * 代理所有仓库
-        central：https://repo1.maven.org/maven2/
-        jcenter：http://jcenter.bintray.com/
-      -->
-      <mirrorOf>central,jcenter</mirrorOf>
-      <name>阿里云公共仓库</name>
-      <url>https://maven.aliyun.com/repository/public</url>
+      <id>maven-public-settings-private</id>
+      <mirrorOf>*</mirrorOf>
+      <name>maven-public</name>
+      <url>http://nexus.xuxiaowei.com:8081/repository/maven-public/</url>
     </mirror>
 
   </mirrors>
