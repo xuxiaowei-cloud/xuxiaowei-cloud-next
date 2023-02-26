@@ -12,15 +12,14 @@ murphysec:
   image: xuxiaoweicomcn/murphysec:v3.0.1-maven-3.6.3-openjdk-17
   script:
     # murphysec 文档：https://www.murphysec.com/docs/guides/scan-scene/cli.html
+    - murphysec -v
     - murphysec auth login $murphysec_token
     - murphysec scan . --log-level info --write-log-to murphysec.log --json --task-id $task_id
+  # https://docs.gitlab.cn/jh/ci/yaml/index.html#cache
   cache:
+    key: murphysec
     paths:
       - .m2/repository
-      - passport-ui/node/
-      - passport-ui/node_modules/
-      - ui/node/
-      - ui/node_modules/
   artifacts:
     name: murphysec
     paths:
