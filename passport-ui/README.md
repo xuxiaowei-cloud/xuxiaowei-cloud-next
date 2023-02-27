@@ -73,7 +73,7 @@ npm i -D @types/crypto-js @typescript-eslint/eslint-plugin @typescript-eslint/pa
 
 ## 项目说明
 
-- 由于本项目使用了 Session 共享，故：需要访问`example.xuxiaowei.cloud`的子域
+- 由于本项目使用了 Session 共享，故：需要访问`example.next.xuxiaowei.cloud`的子域
     - 否则在使用密码登录失败时，无法获取到登录失败的原因
 
 ## 依赖说明
