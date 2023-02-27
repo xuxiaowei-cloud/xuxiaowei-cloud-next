@@ -163,7 +163,130 @@
 
 ## 依赖版本对比
 
+### 后端
+
+| 依赖                          | 本项目版本           | 新版                                                                                                                                                                                                                                                        | 说明                                                                                                                             |
+|-----------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
+| spring-boot                 | v3.0.3          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3.&metadataUrl=https://s01.oss.sonatype.org/content/repositories/releases/org/springframework/boot/spring-boot-dependencies/maven-metadata.xml">                        | 限制 Spring Boot 3.x，<a href="https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud">点击查看 Spring Boot 2.7.x 的项目</a>                  |
+| spring-cloud                | v2022.0.1       | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2022&metadataUrl=https://s01.oss.sonatype.org/content/repositories/releases/org/springframework/cloud/spring-cloud-dependencies/maven-metadata.xml">                    | 限制 Spring Boot 3.x                                                                                                             |
+| spring-cloud-alibaba        | v2022.0.0.0-RC1 | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2022&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/alibaba/cloud/spring-cloud-alibaba-dependencies/maven-metadata.xml">                        | 限制 Spring Boot 3.x，<a href="https://github.com/alibaba/spring-cloud-alibaba/blob/2022.x/README-zh.md">Spring Cloud Alibaba</a> |
+| spring-boot-admin           | v3.0.0          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3.&metadataUrl=https://oss.sonatype.org/content/repositories/releases/de/codecentric/spring-boot-admin-dependencies/maven-metadata.xml">                                | 限制 Spring Boot 3.x                                                                                                             |
+| spring-authorization-server | v1.0.1          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=1.&metadataUrl=https://s01.oss.sonatype.org/content/repositories/releases/org/springframework/security/spring-security-oauth2-authorization-server/maven-metadata.xml"> | 限制 Spring Boot 3.x                                                                                                             |
+| mybatis                     | v3.0.1          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3.&metadataUrl=https://oss.sonatype.org/content/repositories/releases/org/mybatis/spring/boot/mybatis-spring-boot-starter/maven-metadata.xml">                          | 限制 Spring Boot 3.x，指 mybatis-spring-boot-starter                                                                               |
+| mybatis-plus                | v3.5.3.1        | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/baomidou/mybatis-plus-boot-starter/maven-metadata.xml">                                                        |                                                                                                                                |
+| dynamic-datasource          | v3.6.1          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/baomidou/dynamic-datasource-spring-boot-starter/maven-metadata.xml">                                           | 指 dynamic-datasource-spring-boot-starter                                                                                       |
+| guava                       | v31.1-jre       | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/google/guava/guava/maven-metadata.xml">                                                                        |                                                                                                                                |
+| fastjson                    | v2.0.24         | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/alibaba/fastjson/maven-metadata.xml">                                                                          | 使用的是不带英文后缀的版本                                                                                                                  |
+| hutool                      | v5.8.12         | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/cn/hutool/hutool-all/maven-metadata.xml">                                                                          |                                                                                                                                |
+
+### 前端
+
+| 依赖                               | 本项目版本  | 新版                                                                        | 说明  |
+|----------------------------------|--------|---------------------------------------------------------------------------|-----|
+| @element-plus/icons-vue          | 2.0.10 | <img src="https://img.shields.io/npm/v/@element-plus/icons-vue">          |     |
+| @tauri-apps/api                  | 1.2.0  | <img src="https://img.shields.io/npm/v/@tauri-apps/api">                  |     |
+| @toast-ui/editor                 | 3.2.2  | <img src="https://img.shields.io/npm/v/@toast-ui/editor">                 |     |
+| @wangeditor/editor-for-vue       | 5.1.12 | <img src="https://img.shields.io/npm/v/@wangeditor/editor-for-vue/next">  |     |
+| axios                            | 1.3.4  | <img src="https://img.shields.io/npm/v/axios">                            |     |
+| crypto-js                        | 4.1.1  | <img src="https://img.shields.io/npm/v/crypto-js">                        |     |
+| echarts                          | 5.4.1  | <img src="https://img.shields.io/npm/v/echarts">                          |     |
+| element-plus                     | 2.2.32 | <img src="https://img.shields.io/npm/v/element-plus">                     |     |
+| js-cookie                        | 3.0.1  | <img src="https://img.shields.io/npm/v/js-cookie">                        |     |
+| jsencrypt                        | 3.3.1  | <img src="https://img.shields.io/npm/v/jsencrypt">                        |     |
+| pinia                            | 2.0.32 | <img src="https://img.shields.io/npm/v/pinia">                            |     |
+| sockjs-client                    | 1.6.1  | <img src="https://img.shields.io/npm/v/sockjs-client">                    |     |
+| stompjs                          | 2.3.3  | <img src="https://img.shields.io/npm/v/stompjs">                          |     |
+| vue                              | 3.2.47 | <img src="https://img.shields.io/npm/v/vue">                              |     |
+| vue-clipboard3                   | 2.0.0  | <img src="https://img.shields.io/npm/v/vue-clipboard3">                   |     |
+| vue-echarts                      | 6.5.4  | <img src="https://img.shields.io/npm/v/vue-echarts">                      |     |
+| vue-router                       | 4.1.6  | <img src="https://img.shields.io/npm/v/vue-router">                       |     |
+|                                  |        |                                                                           |     |
+| @tauri-apps/cli                  | 1.2.3  | <img src="https://img.shields.io/npm/v/@tauri-apps/cli">                  |     |
+| @types/crypto-js                 | 4.1.1  | <img src="https://img.shields.io/npm/v/@types/crypto-js">                 |     |
+| @typescript-eslint/eslint-plugin | 5.53.0 | <img src="https://img.shields.io/npm/v/@typescript-eslint/eslint-plugin"> |     |
+| @typescript-eslint/parser        | 5.53.0 | <img src="https://img.shields.io/npm/v/@typescript-eslint/parser">        |     |
+| @vitejs/plugin-vue               | 4.0.0  | <img src="https://img.shields.io/npm/v/@vitejs/plugin-vue">               |     |
+| eslint                           | 8.34.0 | <img src="https://img.shields.io/npm/v/eslint">                           |     |
+| eslint-config-standard           | 17.0.0 | <img src="https://img.shields.io/npm/v/eslint-config-standard">           |     |
+| eslint-plugin-import             | 2.27.5 | <img src="https://img.shields.io/npm/v/eslint-plugin-import">             |     |
+| eslint-plugin-n                  | 15.6.1 | <img src="https://img.shields.io/npm/v/eslint-plugin-n">                  |     |
+| eslint-plugin-promise            | 6.1.1  | <img src="https://img.shields.io/npm/v/eslint-plugin-promise">            |     |
+| eslint-plugin-vue                | 9.9.0  | <img src="https://img.shields.io/npm/v/eslint-plugin-vue">                |     |
+| lint-staged                      | 13.1.2 | <img src="https://img.shields.io/npm/v/lint-staged">                      |     |
+| terser                           | 5.16.5 | <img src="https://img.shields.io/npm/v/terser">                           |     |
+| typescript                       | 4.9.5  | <img src="https://img.shields.io/npm/v/typescript">                       |     |
+| unocss                           | 0.50.1 | <img src="https://img.shields.io/npm/v/unocss">                           |     |
+| unplugin-auto-import             | 0.15.0 | <img src="https://img.shields.io/npm/v/unplugin-auto-import">             |     |
+| unplugin-vue-components          | 0.24.0 | <img src="https://img.shields.io/npm/v/unplugin-vue-components">          |     |
+| vite                             | 4.1.4  | <img src="https://img.shields.io/npm/v/vite">                             |     |
+| vue-tsc                          | 1.2.0  | <img src="https://img.shields.io/npm/v/vue-tsc">                          |     |
+
+## 模块
+
 - [依赖分析](./README-dependencies.md)
+
+```
+cloud.xuxiaowei
+├──xuxiaowei-cloud-starter-parent           // 微服务父模块
+│    └──gateway                             // 网关服务
+│    └──admin-server                        // 监控（管理）服务
+│    └──passport-ui                         // 登录服务UI
+│    └──passport                            // 登录服务
+│    └──ui                                  // UI
+│    └──resource-services-parent            // 资源服务父模块
+│        └──canal                           // 阿里巴巴 MySQL binlog 增量订阅、消费服务
+│        └──file                            // 文件服务
+│        └──master-data                     // 主数据服务
+│        └──user                            // 用户服务
+│        └──websocket                       // WebSocket 服务
+│        └──webservice                      // WebService 服务
+│        └──wechat-miniprogram              // 微信小程序服务
+│        └──wechat-offiaccount              // 微信公众号服务
+│    └──utils                               // 工具类
+│    └──cloud-commons-parent                // 微服务公共组件父模块
+│        └──cloud-starter-core              // 核心组件
+│        └──cloud-starter-idempotent        // 幂等组件
+│        └──cloud-starter-loadbalancer      // 负载均衡组件
+│        └──cloud-starter-log               // 日志组件
+│        └──cloud-starter-mybatis           // MyBatis 组件
+│        └──cloud-starter-oauth2            // OAuth2 组件
+│        └──cloud-starter-openfeign         // OpenFeign 组件
+│        └──cloud-starter-redis             // Redis 组件
+│        └──cloud-starter-session-redis     // Session Redis 组件
+│        └──cloud-starter-validation        // 验证组件
+│    └──xxl-job-admin                       // XXL JOB Admin
+│    └──example-parent                      // 示例模块（独立模块）
+│        └──oauth2-client                   // OAuth 2.0 客户端（独立服务）
+```
+
+### 端口
+
+| 模块                 | 模块名称                        | 域名（虚拟）                                      | 端口    |
+|--------------------|-----------------------------|---------------------------------------------|-------|
+| Nacos              | 注册、配置中心                     | nacos.example.next.xuxiaowei.cloud          | 8848  |
+| MySQL              | 数据库                         | mysql.example.next.xuxiaowei.cloud          | 3306  |
+| Redis              | 数据库                         | redis.example.next.xuxiaowei.cloud          | 6379  |
+| canal-deployer     | 阿里巴巴 MySQL binlog 增量订阅&消费组件 | canal-deployer.example.next.xuxiaowei.cloud | 11111 |
+| sentinel-dashboard | 流控防护组件                      |                                             | 22222 |
+|                    |                             |                                             |       |
+| ui                 | UI                          | example.next.xuxiaowei.cloud                | 1001  |
+| gateway            | 网关                          | gateway.example.next.xuxiaowei.cloud        | 1101  |
+| admin-server       | 监控（管理）                      | admin-server.example.next.xuxiaowei.cloud   | 1201  |
+| passport           | 登录                          | passport.example.next.xuxiaowei.cloud       | 1401  |
+| passport-ui        | 登录UI                        | passport.example.next.xuxiaowei.cloud       | 1411  |
+| canal              | 阿里巴巴 MySQL binlog 增量订阅、消费服务 |                                             | 1601  |
+| user               | 用户服务                        |                                             | 1701  |
+| websocket          | WebSocket 服务                |                                             | 1801  |
+| webservice         | WebService 服务               |                                             | 1901  |
+| wechat-miniprogram | 微信小程序服务                     |                                             | 2001  |
+| wechat-offiaccount | 微信公众号服务                     |                                             | 2101  |
+| master-data        | 主数据服务                       |                                             | 2201  |
+| file               | 文件服务                        |                                             | 2301  |
+| xxl-job-admin      | XXL Job Admin               |                                             | 5101  |
+|                    |                             |                                             |       |
+| oauth2-client      | OAuth 2.0 客户端（独立服务）         |                                             | 10001 |
+
+- 流控防护限流端口
 
 ### 用户名与密码
 
