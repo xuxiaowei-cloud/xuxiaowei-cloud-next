@@ -38,7 +38,7 @@ public class IndexController {
 	 * @param model 页面中的值
 	 * @return 返回 主页
 	 */
-	@RequestMapping
+	@RequestMapping(value = { "/", "/index" })
 	public String index(HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
 
 		String rememberMeParameter = cloudRememberMeProperties.getRememberMeParameter();
