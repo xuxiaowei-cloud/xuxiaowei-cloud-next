@@ -109,6 +109,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 			web.ignoring().requestMatchers("/favicon.ico");
 			web.ignoring().requestMatchers("/*/*.js");
 			web.ignoring().requestMatchers("/*/*.css");
+			web.ignoring().requestMatchers("/*/*.png");
 			web.ignoring().requestMatchers(Constants.SWAGGER_UI_PREFIX + "/**");
 			web.ignoring().requestMatchers(Constants.DEFAULT_API_DOCS_URL + "/**");
 		};
@@ -147,6 +148,9 @@ public class WebSecurityConfigurerAdapterConfiguration {
 		// 路径权限控制
 		http.authorizeHttpRequests((authorize) -> {
 			authorize
+				//
+				.requestMatchers("/index")
+				.permitAll()
 				// 放行端点
 				.requestMatchers("/actuator/**")
 				.permitAll()
