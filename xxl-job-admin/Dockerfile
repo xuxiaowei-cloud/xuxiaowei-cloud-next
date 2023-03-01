@@ -1,4 +1,4 @@
-FROM xuxiaoweicomcn/dragonwell17:17.0.6.0.6.9
+FROM alibabadragonwell/dragonwell:17-anolis
 
 WORKDIR /home
 
