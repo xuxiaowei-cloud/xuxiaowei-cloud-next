@@ -22,7 +22,7 @@ export interface AjaxResponse<T> {
 const service = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API, // BASE URL
   withCredentials: true, // 携带 Cookie
-  timeout: 5000 // 请求超时
+  timeout: 60000 // 请求超时
 })
 
 // request interceptor
