@@ -39,7 +39,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.3</spring-boot.version>
+        <spring-boot.version>3.0.4</spring-boot.version>
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/cloud/spring-cloud-dependencies -->
@@ -138,7 +138,7 @@
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
         <!-- https://github.com/dromara/hutool -->
-        <hutool-all.version>5.8.12</hutool-all.version>
+        <hutool-all.version>5.8.13</hutool-all.version>
 
         <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/dom4j/dom4j -->
