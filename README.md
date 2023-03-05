@@ -16,7 +16,7 @@
 
 <div align="center" style="text-align: center;">
     <a target="_blank" href="https://work.weixin.qq.com/gm/75cfc47d6a341047e4b6aca7389bdfa8">
-        <img alt="企业微信群" src="static/wechat-work.jpg" height="100"/>
+        <img alt="企业微信群" src="docs/static/wechat-work.jpg" height="100"/>
     </a>
 </div>
 
@@ -226,7 +226,7 @@
 
 ## 模块
 
-- [依赖分析](./README-dependencies.md)
+- [依赖分析](./docs/README-dependencies.md)
 
 ```
 cloud.xuxiaowei
@@ -306,9 +306,9 @@ cloud.xuxiaowei
 | docker 守护程序的 URL | http://host.docker.example.xuxiaowei.cloud:2375     |       |           |
 | docker 私库 URL    | registry.docker.example.xuxiaowei.cloud             | admin | xuxiaowei |
 
-### [Linux 脚本说明](./sh)
+### [Linux 脚本说明](./docs/sh)
 
-### [SQL](./sql)
+### [SQL](./docs/sql)
 
 ## 仓库与分支？
 
@@ -386,8 +386,8 @@ cloud.xuxiaowei
 
 ## 鸣谢
 
-1. 感谢 [![jetbrains](./static/jetbrains.ico)](https://www.jetbrains.com/)
-   提供开发工具 [![IDEA](./static/idea.png)](https://www.jetbrains.com/idea) 的免费授权
+1. 感谢 [![jetbrains](./docs/static/jetbrains.ico)](https://www.jetbrains.com/)
+   提供开发工具 [![IDEA](./docs/static/idea.png)](https://www.jetbrains.com/idea) 的免费授权
 
 ## Stargazers over time
 
