@@ -26,6 +26,7 @@ stages:
         mavenVersion: 3.6.3
         commands:
           - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings.xml
+          - rm -rf ~/.m2/repository/cloud/xuxiaowei
         settings: []
         caches:
           - ~/.m2
