@@ -16,14 +16,17 @@
 
 <div align="center" style="text-align: center;">
     <a target="_blank" href="https://work.weixin.qq.com/gm/75cfc47d6a341047e4b6aca7389bdfa8">
-        <img alt="企业微信群" src="static/wechat-work.jpg" height="100"/>
+        <img alt="企业微信群" src="docs/static/wechat-work.jpg" height="100"/>
     </a>
 </div>
 
 <p></p>
 
 <div align="center" style="text-align: center;">
-  基于 JDK 17、Spring Boot 3.x.x、OAuth 2.1、Vite 4、Vue 3、Element Plus 的微服务
+    <div>基于 JDK 17、Spring Boot 3.x.x、OAuth 2.1、Vite 4、Vue 3、Element Plus 的微服务。</div>
+    <div>支持支付宝、钉钉、码云、GitHub、GitLab、QQ、微信、企业微信、微博等第三方登录。</div>
+    <div>包含基于 GitLab Runner 的 kubernetes（k8s）、Docker、Shell 等执行器执行 CI/CD 流水线进行自动构建、制作 Docker 镜像、发布。</div>
+    <div>永久免费开源。</div>
 </div>
 
 <p></p>
@@ -167,7 +170,7 @@
 
 | 依赖                          | 本项目版本           | 新版                                                                                                                                                                                                                                                        | 说明                                                                                                                             |
 |-----------------------------|-----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------|
-| spring-boot                 | v3.0.3          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3.&metadataUrl=https://s01.oss.sonatype.org/content/repositories/releases/org/springframework/boot/spring-boot-dependencies/maven-metadata.xml">                        | 限制 Spring Boot 3.x，<a href="https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud">点击查看 Spring Boot 2.7.x 的项目</a>                  |
+| spring-boot                 | v3.0.4          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3.&metadataUrl=https://s01.oss.sonatype.org/content/repositories/releases/org/springframework/boot/spring-boot-dependencies/maven-metadata.xml">                        | 限制 Spring Boot 3.x，<a href="https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud">点击查看 Spring Boot 2.7.x 的项目</a>                  |
 | spring-cloud                | v2022.0.1       | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2022&metadataUrl=https://s01.oss.sonatype.org/content/repositories/releases/org/springframework/cloud/spring-cloud-dependencies/maven-metadata.xml">                    | 限制 Spring Boot 3.x                                                                                                             |
 | spring-cloud-alibaba        | v2022.0.0.0-RC1 | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=2022&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/alibaba/cloud/spring-cloud-alibaba-dependencies/maven-metadata.xml">                        | 限制 Spring Boot 3.x，<a href="https://github.com/alibaba/spring-cloud-alibaba/blob/2022.x/README-zh.md">Spring Cloud Alibaba</a> |
 | spring-boot-admin           | v3.0.0          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&versionPrefix=3.&metadataUrl=https://oss.sonatype.org/content/repositories/releases/de/codecentric/spring-boot-admin-dependencies/maven-metadata.xml">                                | 限制 Spring Boot 3.x                                                                                                             |
@@ -177,53 +180,53 @@
 | dynamic-datasource          | v3.6.1          | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/baomidou/dynamic-datasource-spring-boot-starter/maven-metadata.xml">                                           | 指 dynamic-datasource-spring-boot-starter                                                                                       |
 | guava                       | v31.1-jre       | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/google/guava/guava/maven-metadata.xml">                                                                        |                                                                                                                                |
 | fastjson                    | v2.0.24         | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/com/alibaba/fastjson/maven-metadata.xml">                                                                          | 使用的是不带英文后缀的版本                                                                                                                  |
-| hutool                      | v5.8.12         | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/cn/hutool/hutool-all/maven-metadata.xml">                                                                          |                                                                                                                                |
+| hutool                      | v5.8.13         | <img src="https://img.shields.io/maven-metadata/v?label=&color=blue&metadataUrl=https://oss.sonatype.org/content/repositories/releases/cn/hutool/hutool-all/maven-metadata.xml">                                                                          |                                                                                                                                |
 
 ### 前端
 
-| 依赖                               | 本项目版本  | 新版                                                                        | 说明  |
-|----------------------------------|--------|---------------------------------------------------------------------------|-----|
-| @element-plus/icons-vue          | 2.0.10 | <img src="https://img.shields.io/npm/v/@element-plus/icons-vue">          |     |
-| @tauri-apps/api                  | 1.2.0  | <img src="https://img.shields.io/npm/v/@tauri-apps/api">                  |     |
-| @toast-ui/editor                 | 3.2.2  | <img src="https://img.shields.io/npm/v/@toast-ui/editor">                 |     |
-| @wangeditor/editor-for-vue       | 5.1.12 | <img src="https://img.shields.io/npm/v/@wangeditor/editor-for-vue/next">  |     |
-| axios                            | 1.3.4  | <img src="https://img.shields.io/npm/v/axios">                            |     |
-| crypto-js                        | 4.1.1  | <img src="https://img.shields.io/npm/v/crypto-js">                        |     |
-| echarts                          | 5.4.1  | <img src="https://img.shields.io/npm/v/echarts">                          |     |
-| element-plus                     | 2.2.32 | <img src="https://img.shields.io/npm/v/element-plus">                     |     |
-| js-cookie                        | 3.0.1  | <img src="https://img.shields.io/npm/v/js-cookie">                        |     |
-| jsencrypt                        | 3.3.1  | <img src="https://img.shields.io/npm/v/jsencrypt">                        |     |
-| pinia                            | 2.0.32 | <img src="https://img.shields.io/npm/v/pinia">                            |     |
-| sockjs-client                    | 1.6.1  | <img src="https://img.shields.io/npm/v/sockjs-client">                    |     |
-| stompjs                          | 2.3.3  | <img src="https://img.shields.io/npm/v/stompjs">                          |     |
-| vue                              | 3.2.47 | <img src="https://img.shields.io/npm/v/vue">                              |     |
-| vue-clipboard3                   | 2.0.0  | <img src="https://img.shields.io/npm/v/vue-clipboard3">                   |     |
-| vue-echarts                      | 6.5.4  | <img src="https://img.shields.io/npm/v/vue-echarts">                      |     |
-| vue-router                       | 4.1.6  | <img src="https://img.shields.io/npm/v/vue-router">                       |     |
-|                                  |        |                                                                           |     |
-| @tauri-apps/cli                  | 1.2.3  | <img src="https://img.shields.io/npm/v/@tauri-apps/cli">                  |     |
-| @types/crypto-js                 | 4.1.1  | <img src="https://img.shields.io/npm/v/@types/crypto-js">                 |     |
-| @typescript-eslint/eslint-plugin | 5.53.0 | <img src="https://img.shields.io/npm/v/@typescript-eslint/eslint-plugin"> |     |
-| @typescript-eslint/parser        | 5.53.0 | <img src="https://img.shields.io/npm/v/@typescript-eslint/parser">        |     |
-| @vitejs/plugin-vue               | 4.0.0  | <img src="https://img.shields.io/npm/v/@vitejs/plugin-vue">               |     |
-| eslint                           | 8.34.0 | <img src="https://img.shields.io/npm/v/eslint">                           |     |
-| eslint-config-standard           | 17.0.0 | <img src="https://img.shields.io/npm/v/eslint-config-standard">           |     |
-| eslint-plugin-import             | 2.27.5 | <img src="https://img.shields.io/npm/v/eslint-plugin-import">             |     |
-| eslint-plugin-n                  | 15.6.1 | <img src="https://img.shields.io/npm/v/eslint-plugin-n">                  |     |
-| eslint-plugin-promise            | 6.1.1  | <img src="https://img.shields.io/npm/v/eslint-plugin-promise">            |     |
-| eslint-plugin-vue                | 9.9.0  | <img src="https://img.shields.io/npm/v/eslint-plugin-vue">                |     |
-| lint-staged                      | 13.1.2 | <img src="https://img.shields.io/npm/v/lint-staged">                      |     |
-| terser                           | 5.16.5 | <img src="https://img.shields.io/npm/v/terser">                           |     |
-| typescript                       | 4.9.5  | <img src="https://img.shields.io/npm/v/typescript">                       |     |
-| unocss                           | 0.50.1 | <img src="https://img.shields.io/npm/v/unocss">                           |     |
-| unplugin-auto-import             | 0.15.0 | <img src="https://img.shields.io/npm/v/unplugin-auto-import">             |     |
-| unplugin-vue-components          | 0.24.0 | <img src="https://img.shields.io/npm/v/unplugin-vue-components">          |     |
-| vite                             | 4.1.4  | <img src="https://img.shields.io/npm/v/vite">                             |     |
-| vue-tsc                          | 1.2.0  | <img src="https://img.shields.io/npm/v/vue-tsc">                          |     |
+| 依赖                               | 本项目版本  | 新版                                                                          | 说明  |
+|----------------------------------|--------|-----------------------------------------------------------------------------|-----|
+| @element-plus/icons-vue          | 2.1.0  | <img src="https://img.shields.io/npm/v/@element-plus/icons-vue">            |     |
+| @tauri-apps/api                  | 1.2.0  | <img src="https://img.shields.io/npm/v/@tauri-apps/api">                    |     |
+| @toast-ui/editor                 | 3.2.2  | <img src="https://img.shields.io/npm/v/@toast-ui/editor">                   |     |
+| @wangeditor/editor-for-vue       | 5.1.12 | <img src="https://img.shields.io/npm/v/@wangeditor/editor-for-vue/next">    |     |
+| axios                            | 1.3.4  | <img src="https://img.shields.io/npm/v/axios">                              |     |
+| crypto-js                        | 4.1.1  | <img src="https://img.shields.io/npm/v/crypto-js">                          |     |
+| echarts                          | 5.4.1  | <img src="https://img.shields.io/npm/v/echarts">                            |     |
+| element-plus                     | 2.2.33 | <img src="https://img.shields.io/npm/v/element-plus">                       |     |
+| js-cookie                        | 3.0.1  | <img src="https://img.shields.io/npm/v/js-cookie">                          |     |
+| jsencrypt                        | 3.3.2  | <img src="https://img.shields.io/npm/v/jsencrypt">                          |     |
+| pinia                            | 2.0.32 | <img src="https://img.shields.io/npm/v/pinia">                              |     |
+| sockjs-client                    | 1.6.1  | <img src="https://img.shields.io/npm/v/sockjs-client">                      |     |
+| stompjs                          | 2.3.3  | <img src="https://img.shields.io/npm/v/stompjs">                            |     |
+| vue                              | 3.2.47 | <img src="https://img.shields.io/npm/v/vue">                                |     |
+| vue-clipboard3                   | 2.0.0  | <img src="https://img.shields.io/npm/v/vue-clipboard3">                     |     |
+| vue-echarts                      | 6.5.4  | <img src="https://img.shields.io/npm/v/vue-echarts">                        |     |
+| vue-router                       | 4.1.6  | <img src="https://img.shields.io/npm/v/vue-router">                         |     |
+|                                  |        |                                                                             |     |
+| @tauri-apps/cli                  | 1.2.3  | <img src="https://img.shields.io/npm/v/@tauri-apps/cli">                    |     |
+| @types/crypto-js                 | 4.1.1  | <img src="https://img.shields.io/npm/v/@types/crypto-js">                   |     |
+| @typescript-eslint/eslint-plugin | 5.54.0 | <img src="https://img.shields.io/npm/v/@typescript-eslint/eslint-plugin">   |     |
+| @typescript-eslint/parser        | 5.54.0 | <img src="https://img.shields.io/npm/v/@typescript-eslint/parser">          |     |
+| @vitejs/plugin-vue               | 4.0.0  | <img src="https://img.shields.io/npm/v/@vitejs/plugin-vue">                 |     |
+| eslint                           | 8.35.0 | <img src="https://img.shields.io/npm/v/eslint">                             |     |
+| eslint-config-standard           | 17.0.0 | <img src="https://img.shields.io/npm/v/eslint-config-standard">             |     |
+| eslint-plugin-import             | 2.27.5 | <img src="https://img.shields.io/npm/v/eslint-plugin-import">               |     |
+| eslint-plugin-n                  | 15.6.1 | <img src="https://img.shields.io/npm/v/eslint-plugin-n">                    |     |
+| eslint-plugin-promise            | 6.1.1  | <img src="https://img.shields.io/npm/v/eslint-plugin-promise">              |     |
+| eslint-plugin-vue                | 9.9.0  | <img src="https://img.shields.io/npm/v/eslint-plugin-vue">                  |     |
+| lint-staged                      | 13.1.2 | <img src="https://img.shields.io/npm/v/lint-staged">                        |     |
+| terser                           | 5.16.5 | <img src="https://img.shields.io/npm/v/terser">                             |     |
+| typescript                       | 4.9.5  | <img src="https://img.shields.io/npm/v/typescript">                         |     |
+| unocss                           | 0.50.3 | <img src="https://img.shields.io/npm/v/unocss?color=blue">                  |     |
+| unplugin-auto-import             | 0.15.0 | <img src="https://img.shields.io/npm/v/unplugin-auto-import?color=blue">    |     |
+| unplugin-vue-components          | 0.24.0 | <img src="https://img.shields.io/npm/v/unplugin-vue-components?color=blue"> |     |
+| vite                             | 4.1.4  | <img src="https://img.shields.io/npm/v/vite">                               |     |
+| vue-tsc                          | 1.2.0  | <img src="https://img.shields.io/npm/v/vue-tsc">                            |     |
 
 ## 模块
 
-- [依赖分析](./README-dependencies.md)
+- [依赖分析](./docs/README-dependencies.md)
 
 ```
 cloud.xuxiaowei
@@ -303,42 +306,101 @@ cloud.xuxiaowei
 | docker 守护程序的 URL | http://host.docker.example.xuxiaowei.cloud:2375     |       |           |
 | docker 私库 URL    | registry.docker.example.xuxiaowei.cloud             | admin | xuxiaowei |
 
-### [Linux 脚本说明](./sh)
+### 权限
 
-### [SQL](./sql)
+| 账户名       | 权限                                 | 说明               |
+|-----------|------------------------------------|------------------|
+| xuxiaowei | audit_authorization_consent_delete | 删除授权同意书          |
+| xuxiaowei | audit_authorization_consent_read   | 查看授权同意书          |
+| xuxiaowei | audit_authorization_delete         | 删除授权记录           |
+| xuxiaowei | audit_authorization_read           | 查看授权记录           |
+| xuxiaowei | clientId_token_delete              | 客户Token 删除权限     |
+| xuxiaowei | dict_add                           | 添加字典权限           |
+| xuxiaowei | dict_delete                        | 删除字典权限           |
+| xuxiaowei | dict_edit                          | 修改字典权限           |
+| xuxiaowei | dict_read                          | 查看字典权限           |
+| xuxiaowei | manage_client_add                  | 管理客户 添加权限        |
+| xuxiaowei | manage_client_delete               | 管理客户 删除权限        |
+| xuxiaowei | manage_client_edit                 | 管理客户 修改权限        |
+| xuxiaowei | manage_client_read                 | 管理客户 读取权限        |
+| xuxiaowei | manage_user_add                    | 管理用户 查询权限        |
+| xuxiaowei | manage_user_authority              | 管理用户 授权权限        |
+| xuxiaowei | manage_user_delete                 | 管理用户 删除权限        |
+| xuxiaowei | manage_user_edit                   | 管理用户 修改权限        |
+| xuxiaowei | manage_user_read                   | 管理用户 查询权限        |
+| xuxiaowei | region_read                        | 查看省市区县镇居委会权限     |
+| xuxiaowei | username_token_delete              | 用户Token 删除权限     |
+| xuxiaowei | user_authorities                   | 查看用户权限           |
+| xuxiaowei | user_details                       | 查看用户详情           |
+| xuxiaowei | user_info                          | 查看用户信息           |
+| xuxiaowei | user_oauth2_oauth2Request          | 查看 oauth2 用户请求   |
+| xuxiaowei | user_oauth2_userAuthentication     | 查看 oauth2 用户身份验证 |
+
+### 客户ID与秘钥
+
+| 字段           | id  | client_id                                    | client_id_issued_at | client_secret                                    | client_secret_expires_at | client_authentication_methods          | authorization_grant_types                                    | redirect_uris                                                                                                                                        | scopes                  | require-authorization-consent | authorization-code-time-to-live | access-token-time-to-live | refresh-token-time-to-live | 
+|--------------|-----|----------------------------------------------|---------------------|--------------------------------------------------|--------------------------|----------------------------------------|--------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------|-------------------------------|---------------------------------|---------------------------|----------------------------|
+| 说明           | 主键  | 客户ID                                         | 客户ID发布时间            | 客户秘钥                                             | 客户秘钥过期时间                 | 授权认证方法                                 | 授权类型                                                         | 授权码重定向地址                                                                                                                                             | 范围                      | 是否需要客户授权同意                    | 授权code有效时间                      | 授权Token有效时间               | 刷新Token有效时间                |
+| 网站使用         | 1   | xuxiaowei_client_id                          | 2022-05-30 17:17:41 | xuxiaowei_client_secret                          |                          | client_secret_post,client_secret_basic | refresh_token,implicit,client_credentials,authorization_code | http://127.0.0.1:1401/code,http://gateway.example.next.xuxiaowei.cloud:1101/passport/code,https://gateway.example.next.xuxiaowei.cloud/passport/code | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 微信小程序使用      | 2   | xuxiaowei_client_wechat_miniprogram_id       | 2022-05-30 17:17:41 | xuxiaowei_client_wechat_miniprogram_secret       |                          | client_secret_post,client_secret_basic | refresh_token,wechat_miniprogram                             |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 微信公众号使用      | 3   | xuxiaowei_client_wechat_offiaccount_id       | 2022-05-30 17:17:41 | xuxiaowei_client_wechat_offiaccount_secret       |                          | client_secret_post,client_secret_basic | refresh_token,wechat_offiaccount                             |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 微信扫码使用       | 4   | xuxiaowei_client_wechat_oplatform_id         | 2022-05-30 17:17:41 | xuxiaowei_client_wechat_oplatform_secret         |                          | client_secret_post,client_secret_basic | refresh_token,wechat_oplatform_website                       |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 码云Gitee使用    | 5   | xuxiaowei_client_gitee_id                    | 2022-05-30 17:17:41 | xuxiaowei_client_gitee_secret                    |                          | client_secret_post,client_secret_basic | refresh_token,gitee                                          |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| QQ扫码使用       | 6   | xuxiaowei_client_qq_website_id               | 2022-05-30 17:17:41 | xuxiaowei_client_qq_website_secret               |                          | client_secret_post,client_secret_basic | refresh_token,qq_website                                     |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 微博扫码使用       | 7   | xuxiaowei_client_weibo_id                    | 2022-05-30 17:17:41 | xuxiaowei_client_weibo_secret                    |                          | client_secret_post,client_secret_basic | refresh_token,weibo_website                                  |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| gitlab使用     | 8   | xuxiaowei_client_gitlab_id                   | 2022-05-30 17:17:41 | xuxiaowei_client_gitlab_secret                   |                          | client_secret_post,client_secret_basic | refresh_token,gitlab                                         |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 企业微信扫码使用     | 9   | xuxiaowei_client_wechat_work_website_id      | 2022-05-30 17:17:41 | xuxiaowei_client_wechat_work_website_secret      |                          | client_secret_post,client_secret_basic | refresh_token,wechat_work_website                            |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| github使用     | 10  | xuxiaowei_client_github_id                   | 2022-05-30 17:17:41 | xuxiaowei_client_github_secret                   |                          | client_secret_post,client_secret_basic | refresh_token,github                                         |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 钉钉dingtalk使用 | 11  | xuxiaowei_client_dingtalk_id                 | 2022-05-30 17:17:41 | xuxiaowei_client_dingtalk_secret                 |                          | client_secret_post,client_secret_basic | refresh_token,dingtalk                                       |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| QQ小程序使用      | 12  | xuxiaowei_client_qq_miniprogram_id           | 2022-05-30 17:17:41 | xuxiaowei_client_qq_miniprogram_secret           |                          | client_secret_post,client_secret_basic | refresh_token,qq_miniprogram                                 |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 支付宝小程序使用     | 13  | xuxiaowei_client_alipay_miniprogram_id       | 2022-05-30 17:17:41 | xuxiaowei_client_alipay_miniprogram_secret       |                          | client_secret_post,client_secret_basic | refresh_token,alipay_miniprogram                             |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+| 支付宝网站应用使用    | 14  | xuxiaowei_client_alipay_oplatform_website_id | 2022-05-30 17:17:41 | xuxiaowei_client_alipay_oplatform_website_secret |                          | client_secret_post,client_secret_basic | refresh_token,alipay_oplatform_website                       |                                                                                                                                                      | snsapi_base,snsapi_info | false                         | 300                             | 43200                     | 2592000                    |
+
+- authorization_grant_types
+    - 授权码模式 authorization_code
+    - 刷新Token权限 refresh_token
+    - 客户端凭证模式 client_credentials
+    - 密码模式 password
+    - 简化模式 implicit
+    - 微信小程序（个人开发适配 OAuth 2.1、微信小程序的授权方式） wechat_miniprogram
+    - 微信公众号（个人开发适配 OAuth 2.1、微信公众号的授权方式） wechat_offiaccount
+    - 微信扫码（个人开发适配 OAuth 2.1、微信扫码的授权方式） wechat_oplatform_website
+    - 码云（个人开发适配 OAuth 2.1、码云的授权方式） gitee
+    - QQ扫码（个人开发适配 OAuth 2.1、QQ扫码的授权方式） qq_website
+    - 微博扫码（个人开发适配 OAuth 2.1、微博扫码的授权方式） weibo_website
+    - gitlab授权（个人开发适配 OAuth 2.1、gitlab的授权方式） gitlab
+    - 企业微信扫码（个人开发适配 OAuth 2.1、企业微信扫码的授权方式） wechat_work_website
+    - github授权（个人开发适配 OAuth 2.1、gitlab的授权方式） github
+    - 钉钉dingtalk扫码（个人开发适配 OAuth 2.1、钉钉dingtalk扫码的授权方式） dingtalk
+    - 支付宝小程序（个人开发适配 OAuth 2.1、支付宝小程序的授权方式） alipay_miniprogram
+    - 支付宝网站应用（个人开发适配 OAuth 2.1、支付宝网站应用的授权方式） alipay_oplatform_website
 
 ## 仓库与分支？
 
 1. 使用了哪六个仓库？
-    1. [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
-    2. [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next)
-    3. [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
-    4. [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
-    5. [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud-next)
-    6. [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    1. [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    2. [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    3. [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    4. [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    5. [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
+    6. [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud-next)
 
 2. 上述六个仓库以哪个为准？其余仓库何时同步？
-    1. 以 [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 为准
+    1. 以 [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 为准
     2. 其余仓库每日同步
 
 3. 各个仓库的作用？
-    1. [Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 供国内用户访问、提问、下载资源、Gitee Go流水线
-    2. [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 2022-06-06 之前使用 GitLab
-       的 [CICD 流水线](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines)
-       自动构建资源（`.jar`、`.jar.asc`、`.pom`、`.pom.asc`、`-javadoc.jar`、`-javadoc.jar.asc`、`-sources.jar`、`-sources.jar.asc`），
-       自动将资源发布（目前仅[打包](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/blob/main/.gitlab-ci.yml)
-       ，未发布）到 [中央仓库](https://s01.oss.sonatype.org/content/repositories/releases/cloud/xuxiaowei/next)
-    3. [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next) 2022-06-06
-       之后用于替换 [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
-       的 [CICD 流水线](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines) ，
-       [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next) 流水线配额 `2000` 分钟（已申请到内侧资格）
-    4. [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next)
-       使用 [CodeQL](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next/actions/workflows/codeql-analysis.yml)
-       每日扫描项目中的 `main` 分支是否存在漏洞
-    5. [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud-next) 国内备份仓库
-    6. [JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next) 国内备份仓库
 
-4. 各分支的作用？
+| 仓库地址                                                                   | 作用                                                                          | 说明                                                                                                                                                     |
+|------------------------------------------------------------------------|-----------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [极狐 JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next) | 供国内用户访问、提问、下载资源、GitLab Runner CI/CD 流水线打包/制作Docker镜像、Kubernetes(k8s) 发布项目使用 | 开源项目 [免费使用 GitLab Runner](https://forum.gitlab.cn/t/topic/1527)                                                                                        |
+| [码云 Gitee](https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next)     | 国内备份仓库                                                                      | 由于技术栈（项目使用 GitLab Runner CI/CD 流水线测试与发布）及不可抗力的因素，将来会关闭 Gitee 的 issues，并将历史数据迁移到 [极狐 JiHuLab](https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next) |
+| [GitLab](https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next)      | 国外备份仓库，国外流水线测试                                                              | 免费额度 `400` 分钟，每月后期可能由于免费额度用完而失败                                                                                                                        |
+| [GitCode](https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next)    | 国内备份仓库，国内流水线测试                                                              | 流水线配额 `2000` 分钟，申请内侧资格                                                                                                                                 |
+| [GitHub](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next)      | 国外备份仓库                                                                      | 使用 [CodeQL](https://github.com/xuxiaowei-cloud/xuxiaowei-cloud/actions/workflows/codeql.yml) 每日扫描项目中的 `main` 分支是否存在漏洞                                  |
+| [GitLink](https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud-next) | 国内备份仓库                                                                      |                                                                                                                                                        |
+
+1. 各分支的作用？
     1. `main`
         - 主分支
         - 不可推送，只能合并
@@ -368,23 +430,10 @@ cloud.xuxiaowei
         2. 这些分支代码相同，CI/CD 根据分支名进行触发，即：想使用某个分支的某些执行器执行 CI/CD，就将代码 `PR`
            （推荐使用PR，方便一键回滚代码、将回滚的内容进行恢复） 到指定的分支。
 
-## 参考文档
-
-- [Spring Boot 2.7.0 现已推出](https://spring.io/blog/2022/05/19/spring-boot-2-7-0-available-now)
-- [Spring-Boot-2.7 对自动配置的更改](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-2.7-Release-Notes#changes-to-auto-configuration)
-- [将用户权限作为声明传播`Jwt`是一种自定义行为](https://github.com/spring-projects/spring-authorization-server/issues/181#issuecomment-756913042)
-    - [自定义 Jwt 声明和标头需要更灵活 议题](https://github.com/spring-projects/spring-authorization-server/issues/199)
-    - [自定义 Jwt 声明和标头官方示例代码](https://github.com/spring-projects/spring-authorization-server/blob/a30a1692b28915947a001f1e2a6d1e41a550eaa7/oauth2-authorization-server/src/test/java/org/springframework/security/config/annotation/web/configurers/oauth2/server/authorization/OidcTests.java#L264)
-- [OAuth 2.0 资源服务器 JWT - 6.0.0-M3](https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html)
-    - [手动提取权限-6.0.0-M3](https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-authorization-extraction)
-    - [重命名声明](https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/jwt.html#oauth2resourceserver-jwt-claimsetmapping-rename)
-- [OAuth 2.0 不记名令牌 - 6.0.0-M3](https://docs.spring.io/spring-security/reference/6.0.0-M3/servlet/oauth2/resource-server/bearer-tokens.html)
-- [npm-cache](https://docs.npmjs.com/cli/v8/commands/npm-cache)
-
 ## 鸣谢
 
-1. 感谢 [![jetbrains](./static/jetbrains.ico)](https://www.jetbrains.com/)
-   提供开发工具 [![IDEA](./static/idea.png)](https://www.jetbrains.com/idea) 的免费授权
+1. 感谢 [![jetbrains](./docs/static/jetbrains.ico)](https://www.jetbrains.com/)
+   提供开发工具 [![IDEA](./docs/static/idea.png)](https://www.jetbrains.com/idea) 的免费授权
 
 ## Stargazers over time
 
