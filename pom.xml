@@ -58,7 +58,7 @@
         <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/de/codecentric/spring-boot-admin-dependencies -->
         <!-- https://github.com/codecentric/spring-boot-admin -->
-        <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
+        <spring-boot-admin.version>3.0.1</spring-boot-admin.version>
 
         <!-- OAuth 2.1 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-oauth2-authorization-server -->
@@ -138,12 +138,12 @@
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
         <!-- https://github.com/dromara/hutool -->
-        <hutool-all.version>5.8.13</hutool-all.version>
+        <hutool-all.version>5.8.15</hutool-all.version>
 
         <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/dom4j/dom4j -->
         <!-- https://github.com/dom4j/dom4j -->
-        <dom4j.version>2.1.3</dom4j.version>
+        <dom4j.version>2.1.4</dom4j.version>
 
         <!-- https://mvnrepository.com/artifact/com.github.binarywang/weixin-java-miniapp -->
         <!-- https://mvnrepository.com/artifact/com.github.binarywang/wx-java-mp-spring-boot-starter -->
@@ -165,7 +165,7 @@
         <!-- 阿里云 短信服务 升级版 SDK Java：https://next.api.aliyun.com/api-tools/sdk/Dysmsapi?language=java-tea -->
         <!-- https://mvnrepository.com/artifact/com.aliyun/dysmsapi20170525 -->
         <!-- https://repo1.maven.org/maven2/com/aliyun/dysmsapi20170525 -->
-        <dysmsapi20170525.version>2.0.22</dysmsapi20170525.version>
+        <dysmsapi20170525.version>2.0.23</dysmsapi20170525.version>
         <!-- 阿里云 短信服务 升级版 SDK Java（异步）：https://next.api.aliyun.com/api-tools/sdk/Dysmsapi?language=java-async-tea -->
         <!-- https://mvnrepository.com/artifact/com.aliyun/alibabacloud-dysmsapi20170525 -->
         <!-- https://repo1.maven.org/maven2/com/aliyun/alibabacloud-dysmsapi20170525/ -->
@@ -176,7 +176,7 @@
         <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webflux-ui -->
         <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-starter-webmvc-ui -->
         <!-- https://repo1.maven.org/maven2/org/springdoc/springdoc-openapi-starter-webflux-ui -->
-        <springdoc-openapi-starter.version>2.0.2</springdoc-openapi-starter.version>
+        <springdoc-openapi-starter.version>2.0.3</springdoc-openapi-starter.version>
         <!-- https://mvnrepository.com/artifact/com.github.therapi/therapi-runtime-javadoc -->
         <!-- https://repo1.maven.org/maven2/com/github/therapi/therapi-runtime-javadoc/ -->
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
@@ -210,7 +210,7 @@
         <docker.registry>registry.docker.example.xuxiaowei.cloud</docker.registry>
         <!-- docker 上传时的用户名 -->
         <docker.username>admin</docker.username>
-        <!-- docker 上传时的密码 -->
+        <!-- docker 上传时的密码，请使用：-Ddocker.password=xxx 来指定真实密码，请勿将真实密码写在此处 -->
         <docker.password>xuxiaowei</docker.password>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
@@ -224,9 +224,9 @@
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
         <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.26</lombok.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
         <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
         <!-- https://mvnrepository.com/artifact/com.github.eirslett/frontend-maven-plugin -->
