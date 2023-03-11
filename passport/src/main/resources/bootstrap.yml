@@ -253,3 +253,7 @@ wechat:
       list:
         - appid: ${wx_miniapp_appid:}
           secret: ${wx_miniapp_secret:}
+
+springdoc:
+  # 关闭 springdoc kotlin 配置
+  enable-kotlin: false
