@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -16,6 +17,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import java.security.interfaces.RSAPublicKey;
 
 import static cloud.xuxiaowei.next.oauth2.impl.CsrfRequestMatcherImpl.CSRF_REQUEST_MATCHER_BEAN_NAME;
+import static cloud.xuxiaowei.next.webservice.point.CxfAuthenticationEntryPointImpl.CXF_AUTHENTICATIONENTRY_POINT_BEAN_NAME;
 
 /**
  * 资源服务配置
@@ -43,6 +45,7 @@ public class ResourceServerConfiguration {
 	}
 
 	@Autowired
+	@Qualifier(CXF_AUTHENTICATIONENTRY_POINT_BEAN_NAME)
 	public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
 		this.authenticationEntryPoint = authenticationEntryPoint;
 	}
@@ -79,6 +82,9 @@ public class ResourceServerConfiguration {
 				.permitAll()
 				// 放行错误地址
 				.requestMatchers("/error")
+				.permitAll()
+				// 放行 CXF GET 请求
+				.requestMatchers(HttpMethod.GET, "/cxf/**")
 				.permitAll()
 				// 其他路径均需要授权
 				.anyRequest()

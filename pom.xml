@@ -140,6 +140,15 @@
         <!-- https://github.com/dromara/hutool -->
         <hutool-all.version>5.8.15</hutool-all.version>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-features-logging -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/apache/cxf/cxf-rt-frontend-jaxws -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/apache/cxf/cxf-rt-transports-http -->
+        <!-- https://oss.sonatype.org/content/repositories/public/org/apache/cxf/cxf-rt-features-logging -->
+        <!-- https://github.com/apache/cxf -->
+        <cxf.version>4.0.0</cxf.version>
+
         <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/dom4j/dom4j -->
         <!-- https://github.com/dom4j/dom4j -->
@@ -181,9 +190,6 @@
         <!-- https://repo1.maven.org/maven2/com/github/therapi/therapi-runtime-javadoc/ -->
         <therapi-runtime-javadoc.version>0.15.0</therapi-runtime-javadoc.version>
 
-
-        <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
-        <httpspi-servlet.version>4.0.0</httpspi-servlet.version>
 
         <!-- https://nodejs.org/dist/ -->
         <!-- http://mirrors.aliyun.com/nodejs-release/ -->
@@ -416,6 +422,26 @@
                 <version>${hutool-all.version}</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+                <version>${cxf.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-features-logging -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-features-logging</artifactId>
+                <version>${cxf.version}</version>
+                <!--<scope>test</scope>-->
+            </dependency>
+
             <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
             <dependency>
                 <groupId>org.dom4j</groupId>
@@ -478,13 +504,6 @@
                 <version>${springdoc-openapi-starter.version}</version>
             </dependency>
 
-
-            <!-- https://mvnrepository.com/artifact/com.sun.xml.ws/httpspi-servlet -->
-            <dependency>
-                <groupId>com.sun.xml.ws</groupId>
-                <artifactId>httpspi-servlet</artifactId>
-                <version>${httpspi-servlet.version}</version>
-            </dependency>
 
             <!-- 工具类 -->
             <dependency>
