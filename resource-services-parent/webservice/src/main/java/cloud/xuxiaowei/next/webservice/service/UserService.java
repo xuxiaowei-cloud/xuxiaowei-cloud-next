@@ -1,7 +1,7 @@
 package cloud.xuxiaowei.next.webservice.service;
 
 import cloud.xuxiaowei.next.webservice.bo.UserBo;
-import cloud.xuxiaowei.next.webservice.vo.UserVo;
+import cloud.xuxiaowei.next.webservice.vo.ResponseUserVo;
 
 /**
  * 用户 WebService 接口
@@ -15,6 +15,6 @@ public interface UserService {
 	 * @param userBo 用户ID
 	 * @return 返回 用户
 	 */
-	UserVo getById(UserBo userBo);
+	ResponseUserVo getById(UserBo userBo);
 
 }

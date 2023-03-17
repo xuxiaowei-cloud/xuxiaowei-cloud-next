@@ -1,0 +1,2 @@
+server:
+  port: ${cxf_client_port:10002}

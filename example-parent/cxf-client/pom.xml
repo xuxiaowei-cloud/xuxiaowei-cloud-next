@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>cloud.xuxiaowei.next.example</groupId>
-    <artifactId>oauth2-client</artifactId>
+    <artifactId>cxf-client</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
-    <name>oauth2-client</name>
-    <description>OAuth 2.0 客户端（独立服务）</description>
+    <name>cxf-client</name>
+    <description>CXF 客户端（独立服务）</description>
     <url>https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next</url>
     <inceptionYear>2022</inceptionYear>
 
@@ -22,14 +22,19 @@
 
         <!-- Spring Boot 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
-        <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-parent -->
-        <!-- https://repo.spring.io/ui/native/milestone/org/springframework/boot/spring-boot-starter-parent -->
         <spring-boot.version>3.0.4</spring-boot.version>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-features-logging -->
+        <cxf.version>4.0.0</cxf.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/license-maven-plugin -->
+        <license-maven-plugin.version>2.0.0</license-maven-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
@@ -44,20 +49,40 @@
 
         <!-- 打包时跳过单元测试 -->
         <skipTests>true</skipTests>
-
     </properties>
     <dependencies>
+
+        <dependency>
+            <groupId>cloud.xuxiaowei</groupId>
+            <artifactId>utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${cxf.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-features-logging -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-features-logging</artifactId>
+            <version>${cxf.version}</version>
+            <!--<scope>test</scope>-->
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -147,6 +172,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>${maven-source-plugin.version}</version>
+            </plugin>
+
+            <!-- 列举开源协议：license:license-list -->
+            <!-- 添加开源协议：mvn license:update-file-header -->
+            <!-- http://www.mojohaus.org/license-maven-plugin/index.html -->
+            <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/license-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>${license-maven-plugin.version}</version>
+                <configuration>
+                    <licenseName>apache_v2</licenseName>
+                </configuration>
             </plugin>
 
             <!-- mvn lombok:delombok -->

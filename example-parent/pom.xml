@@ -26,6 +26,8 @@
     </properties>
 
     <modules>
+        <!-- CXF 客户端（独立服务） -->
+        <module>cxf-client</module>
         <!-- OAuth 2.0 客户端（独立服务） -->
         <module>oauth2-client</module>
     </modules>
@@ -76,9 +78,9 @@
     <build>
         <plugins>
             <!--
-				./mvnw spring-javaformat:apply
-				mvn spring-javaformat:apply
-			 -->
+                ./mvnw spring-javaformat:apply
+                mvn spring-javaformat:apply
+             -->
             <!-- https://mvnrepository.com/artifact/io.spring.javaformat/spring-javaformat-maven-plugin -->
             <plugin>
                 <groupId>io.spring.javaformat</groupId>

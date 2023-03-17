@@ -2,6 +2,7 @@ package cloud.xuxiaowei.next.webservice.service.impl;
 
 import cloud.xuxiaowei.next.webservice.bo.UserBo;
 import cloud.xuxiaowei.next.webservice.service.UserService;
+import cloud.xuxiaowei.next.webservice.vo.ResponseUserVo;
 import cloud.xuxiaowei.next.webservice.vo.UserVo;
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@WebMethod
 	@WebResult(name = "response")
-	public UserVo getById(@WebParam(name = "request") UserBo userBo) {
+	public ResponseUserVo getById(@WebParam(name = "request") UserBo userBo) {
 		UserVo userVo = new UserVo();
 
 		String id = userBo.getId();
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
 		userVo.setId(id);
 		userVo.setUsername("用户-" + id);
 		userVo.setPassword("用户-" + id + "-密码");
-		return userVo;
+		return ResponseUserVo.ok(userVo);
 	}
 
 }
