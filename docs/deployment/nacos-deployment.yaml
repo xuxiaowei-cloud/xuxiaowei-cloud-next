@@ -44,7 +44,7 @@ spec:
           # [GitHub](https://github.com/alibaba/nacos/blob/develop/distribution/conf/nacos-mysql.sql)
           # [GitCode 镜像仓库](https://gitcode.net/mirrors/alibaba/nacos/-/blob/develop/distribution/conf/mysql-schema.sql)
           # [Gitee 镜像仓库](https://gitee.com/mirrors/Nacos/blob/develop/distribution/conf/mysql-schema.sql)
-          image: nacos/nacos-server:v2.2.0
+          image: nacos/nacos-server:v2.2.1
           env:
             - name: MODE
               value: standalone
@@ -61,6 +61,15 @@ spec:
               value: characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
             - name: MYSQL_SERVICE_USER
               value: root
+            - name: NACOS_AUTH_TOKEN
+              # 需要自行修改，否则有安全隐患，文档：https://nacos.io/zh-cn/docs/v2/guide/user/auth.html
+              value: SecretKey012345678901234567890123456789012345678901234567890123456789
+            - name: NACOS_AUTH_IDENTITY_KEY
+              # 需要自行修改，否则有安全隐患，文档：https://nacos.io/zh-cn/docs/v2/guide/user/auth.html
+              value: serverIdentity
+            - name: NACOS_AUTH_IDENTITY_VALUE
+              # 需要自行修改，否则有安全隐患，文档：https://nacos.io/zh-cn/docs/v2/guide/user/auth.html
+              value: security
             - name: MYSQL_SERVICE_PASSWORD
               valueFrom:
                 secretKeyRef:
