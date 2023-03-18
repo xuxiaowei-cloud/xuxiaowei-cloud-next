@@ -1,3 +1,8 @@
+#
+# 此处与 Cookie 自定义有关系
+spring.main.allow-bean-definition-overriding: true
+---
+
 # 服务器
 server:
   # 端口
