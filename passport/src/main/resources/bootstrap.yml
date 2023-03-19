@@ -262,6 +262,10 @@ wechat:
 springdoc:
   # 关闭 springdoc kotlin 配置
   enable-kotlin: false
+  swagger-ui:
+    # 展开深度
+    default-models-expand-depth: 10
+    default-model-expand-depth: 10
 
 cloud:
   http-exchange:
