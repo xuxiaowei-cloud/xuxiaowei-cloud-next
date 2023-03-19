@@ -26,15 +26,9 @@ import java.util.Set;
 @Configuration(proxyBeanMethods = false)
 public class HttpExchangeConfiguration {
 
-	private ApplicationContext applicationContext;
-
 	@Autowired
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
-
-	@Autowired
-	public void setHttpExchange(WebClient webClient, CloudHttpExchangeProperties cloudHttpExchangeProperties) {
+	public void setHttpExchange(ApplicationContext applicationContext, WebClient webClient,
+			CloudHttpExchangeProperties cloudHttpExchangeProperties) {
 
 		String[] packages = cloudHttpExchangeProperties.getPackages();
 
