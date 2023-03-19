@@ -28,6 +28,12 @@
             <artifactId>cloud-starter-core</artifactId>
         </dependency>
 
+        <!-- 工具类 -->
+        <dependency>
+            <groupId>cloud.xuxiaowei.next</groupId>
+            <artifactId>utils</artifactId>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
         <dependency>
             <groupId>org.reflections</groupId>

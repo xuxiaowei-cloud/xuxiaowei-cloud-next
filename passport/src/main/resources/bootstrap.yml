@@ -262,3 +262,8 @@ wechat:
 springdoc:
   # 关闭 springdoc kotlin 配置
   enable-kotlin: false
+
+cloud:
+  http-exchange:
+    packages:
+      - cloud.xuxiaowei.next.passport.web.service
