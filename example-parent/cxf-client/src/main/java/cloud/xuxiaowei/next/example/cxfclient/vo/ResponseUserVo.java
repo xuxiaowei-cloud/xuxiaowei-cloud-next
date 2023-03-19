@@ -1,7 +1,7 @@
 package cloud.xuxiaowei.next.example.cxfclient.vo;
 
-import cloud.xuxiaowei.utils.CodeEnums;
-import cloud.xuxiaowei.utils.Constant;
+import cloud.xuxiaowei.next.utils.CodeEnums;
+import cloud.xuxiaowei.next.utils.Constant;
 import lombok.Data;
 import org.slf4j.MDC;
 
