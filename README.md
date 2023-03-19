@@ -145,6 +145,7 @@
 
 ## [代码格式规范 spring-javaformat](https://github.com/spring-io/spring-javaformat)
 
+- [代码贡献说明](https://www.yuque.com/xuxiaowei-com-cn/xuxiaowei-cloud/how-to-contribute-code)
 - IntelliJ IDEA
   -
   项目添加 [io.spring.javaformat:spring-javaformat-maven-plugin](https://repo1.maven.org/maven2/io/spring/javaformat/spring-javaformat-maven-plugin)
@@ -158,11 +159,7 @@
   mvn spring-javaformat:apply
   ```
 
-## [阿里云盘分享](https://www.aliyundrive.com/s/QaUy1DQRkV4)
-
-## [语雀文档](https://www.yuque.com/xuxiaowei-com-cn)
-
-1. [GitLab、kubernetes（k8s）、私库等](https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s)
+## [本项目文档](https://www.yuque.com/xuxiaowei-com-cn/xuxiaowei-cloud)
 
 ## 依赖版本对比
 
@@ -260,6 +257,7 @@ cloud.xuxiaowei
 │    └──xxl-job-admin                       // XXL JOB Admin
 │    └──example-parent                      // 示例模块（独立模块）
 │        └──oauth2-client                   // OAuth 2.0 客户端（独立服务）
+│        └──cxf-client                      // CXF 2.0 客户端（独立服务）
 ```
 
 ### 端口
@@ -288,6 +286,7 @@ cloud.xuxiaowei
 | xxl-job-admin      | XXL Job Admin               |                                             | 5101  |
 |                    |                             |                                             |       |
 | oauth2-client      | OAuth 2.0 客户端（独立服务）         |                                             | 10001 |
+| cxf-client         | CXF 客户端（独立服务）               |                                             | 10002 |
 
 - 流控防护限流端口
 
@@ -302,7 +301,8 @@ cloud.xuxiaowei
 | 名称               | 地址                                                  | 账户名   | 密码        |
 |------------------|-----------------------------------------------------|-------|-----------|
 | XXL Job          | http://127.0.0.1:5101/xxl-job-admin                 | admin | 123456    |
-| Swagger          | http://127.0.0.1:1101/webjars/swagger-ui/index.html |       |           |
+| 网关 Swagger       | http://127.0.0.1:1101/webjars/swagger-ui/index.html |       |           |
+| 服务 Swagger       | http://127.0.0.1:端口/swagger-ui/index.html           |       |           |
 | docker 守护程序的 URL | http://host.docker.example.xuxiaowei.cloud:2375     |       |           |
 | docker 私库 URL    | registry.docker.example.xuxiaowei.cloud             | admin | xuxiaowei |
 
