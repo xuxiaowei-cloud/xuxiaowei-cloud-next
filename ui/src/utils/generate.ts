@@ -31,27 +31,27 @@ interface PasswordOption {
   /**
    * 数字个数
    */
-  number: Number
+  number: number
 
   /**
    * 小写字母个数
    */
-  lowerCase: Number
+  lowerCase: number
 
   /**
    * 大写字母个数
    */
-  upperCase: Number
+  upperCase: number
 
   /**
    * 符号个数
    */
-  symbol: Number
+  symbol: number
 
   /**
    * 补充长度
    */
-  suppl: Number
+  suppl: number
 }
 
 /**
@@ -59,7 +59,7 @@ interface PasswordOption {
  * @param chars
  * @param length
  */
-const generate = (chars: string, length: Number) => {
+const generate = (chars: string, length: number) => {
   let password = ''
   for (let i = 0; i < length; i++) {
     password += chars.charAt(Math.floor(Math.random() * chars.length))
