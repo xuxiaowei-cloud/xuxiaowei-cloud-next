@@ -227,7 +227,7 @@
 
 ```
 cloud.xuxiaowei
-├──xuxiaowei-cloud-starter-parent           // 微服务父模块
+├──xuxiaowei-cloud-next-starter-parent      // 微服务父模块
 │    └──gateway                             // 网关服务
 │    └──admin-server                        // 监控（管理）服务
 │    └──passport-ui                         // 登录服务UI

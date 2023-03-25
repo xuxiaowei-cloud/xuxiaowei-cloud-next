@@ -1,7 +1,7 @@
 # dependencies
 
 ```
-cloud.xuxiaowei.next:xuxiaowei-cloud-starter-parent:pom:0.0.1-SNAPSHOT
+cloud.xuxiaowei.next:xuxiaowei-cloud-next-starter-parent:pom:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:admin-server:jar:0.0.1-SNAPSHOT
