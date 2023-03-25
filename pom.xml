@@ -213,9 +213,9 @@
 
         <docker-maven-plugin.version>0.41.0</docker-maven-plugin.version>
         <!-- docker 守护程序的 URL -->
-        <docker.host>http://host.docker.example.xuxiaowei.cloud:2375</docker.host>
+        <docker.host>http://host.docker.example.next.xuxiaowei.cloud:2375</docker.host>
         <!-- docker 私库 -->
-        <docker.registry>registry.docker.example.xuxiaowei.cloud</docker.registry>
+        <docker.registry>registry.docker.example.next.xuxiaowei.cloud</docker.registry>
         <!-- docker 上传时的用户名 -->
         <docker.username>admin</docker.username>
         <!-- docker 上传时的密码，请使用：-Ddocker.password=xxx 来指定真实密码，请勿将真实密码写在此处 -->
