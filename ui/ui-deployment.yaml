@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: ui
-          image: registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT
+          image: registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT
           ports:
             - containerPort: 80
 

@@ -227,15 +227,15 @@ shell-publish-k8s:
   script:
     # -n xuxiaowei-cloud：指定命名空间为 xuxiaowei-cloud
     # $CI_PIPELINE_ID：当前管道的实例级ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/canal-deployment canal=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/file-deployment file=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/gateway-deployment gateway=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/master-data-deployment master-data=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/passport-deployment passport=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/ui-deployment ui=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/user-deployment user=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/webservice-deployment webservice=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/websocket-deployment websocket=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/canal-deployment canal=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/file-deployment file=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/gateway-deployment gateway=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/master-data-deployment master-data=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/passport-deployment passport=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/ui-deployment ui=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/user-deployment user=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/webservice-deployment webservice=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/websocket-deployment websocket=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:

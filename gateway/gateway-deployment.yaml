@@ -11,7 +11,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: gateway-next-data-volume
-  namespace: xuxiaowei-cloud-next
 spec:
   capacity:
     storage: 10Gi
@@ -22,7 +21,7 @@ spec:
   nfs:
     # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
     # 需要存在此文件夹
-    path: /nfs/next/gateway/data
+    path: /nfs/next/gateway/logs
     # 填写你的 NFS（Network File System，网络文件系统） 地址
     server: 192.168.0.12
 
@@ -46,7 +45,7 @@ spec:
     spec:
       containers:
         - name: gateway
-          image: registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT
+          image: registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT
           env:
             - name: nacos_xuxiaowei_cloud_addr
               value: nacos-service
@@ -73,7 +72,7 @@ spec:
         - name: gateway-next-data-volume
           nfs:
             # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
-            path: /nfs/next/gateway/data
+            path: /nfs/next/gateway/logs
             server: 192.168.0.12
 
 ---

@@ -11,7 +11,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: redis-next-data-volume
-  namespace: xuxiaowei-cloud-next
 spec:
   capacity:
     storage: 10Gi

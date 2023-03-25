@@ -22,7 +22,7 @@ spec:
   nfs:
     # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
     # 需要存在此文件夹
-    path: /nfs/next/master-data/data
+    path: /nfs/next/master-data/logs
     # 填写你的 NFS（Network File System，网络文件系统） 地址
     server: 192.168.0.12
 
@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
         - name: master-data
-          image: registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT
+          image: registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT
           env:
             - name: nacos_xuxiaowei_cloud_addr
               value: nacos-service
@@ -74,7 +74,7 @@ spec:
         - name: master-data-next-data-volume
           nfs:
             # NFS 文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nfs
-            path: /nfs/next/master-data/data
+            path: /nfs/next/master-data/logs
             server: 192.168.0.12
 
 ---
