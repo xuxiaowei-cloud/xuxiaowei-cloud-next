@@ -1,8 +1,6 @@
 # 此流水线为 gitlab.com、jihulab.com、自建 gitlab 使用
 
 stages:
-  # 墨菲安全扫描供应链
-  - murphysec
   # 使用 k8s（也可使用 docker、shell 等执行器，需要能使用 docker 相关命令）构建、制作 docker 镜像、推送到 docker 私服
   - package
   # 在 k8s 所在的服务器上执行项目滚动发布
@@ -43,6 +41,44 @@ murphysec:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
     # PR 合并到 main 后执行
     - if: $CI_COMMIT_BRANCH == "main"
+
+# sonarqube
+sonarqube-check:
+  stage: package
+  image: maven:3.6.3-openjdk-17
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+      - .m2/repository
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
+  script:
+    - PRIVATE_SERVER_HOST=xuxiaowei
+    - if [[ $CI_SERVER_HOST =~ $PRIVATE_SERVER_HOST || $KUBERNETES_SERVICE_HOST ]];
+      then
+    # 自建 GitLab 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install）
+    - mvn verify sonar:sonar -s settings-private.xml;
+      else
+    # 非自建 GitLab 使用 阿里/腾讯 Maven 镜像
+    - mvn verify sonar:sonar -s settings.xml;
+      fi
+  allow_failure: true
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
+  rules:
+    # PR 合并到 main 后执行
+    # 此处禁用 gitlab.com、jihulab.com 上的流水线，仅在个人搭建的 gitlab 上运行
+    # - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com'
+    # 此处禁用 gitlab.com
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com'
 
 #
 # package
@@ -143,7 +179,7 @@ package:
     - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:push;
     - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:push;
-    - mvn -pl ui docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl ui -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - mvn -pl ui -s settings-private.xml docker:push;
     - mvn -pl xxl-job-admin -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - mvn -pl xxl-job-admin -s settings-private.xml docker:push;
@@ -313,7 +349,7 @@ docker-package:
     - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:push;
     - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:push;
-    - mvn -pl ui docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl ui -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - mvn -pl ui -s settings-private.xml docker:push;
     - mvn -pl xxl-job-admin -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - mvn -pl xxl-job-admin -s settings-private.xml docker:push;
