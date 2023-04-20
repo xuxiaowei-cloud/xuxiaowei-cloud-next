@@ -59,7 +59,7 @@ spec:
             - "java"
           args:
             - "-jar"
-            - "passport-0.0.1-SNAPSHOT.jar"
+            - "app.jar"
             # 正式环境
             - "--spring.profiles.active=prod"
           volumeMounts:

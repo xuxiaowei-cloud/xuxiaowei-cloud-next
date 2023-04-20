@@ -39,7 +39,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.5</spring-boot.version>
+        <spring-boot.version>3.0.6</spring-boot.version>
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/cloud/spring-cloud-dependencies -->
@@ -65,7 +65,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://github.com/spring-projects/spring-authorization-server -->
-        <spring-security-oauth2-authorization-server.version>1.0.1
+        <spring-security-oauth2-authorization-server.version>1.0.2
         </spring-security-oauth2-authorization-server.version>
 
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-oauth2 -->
@@ -756,7 +756,7 @@
                     <offline>true</offline>
                     <!-- 输出详细内容 -->
                     <!--<verbose>true</verbose>-->
-                    <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
+                    <dateFormatTimeZone>GMT+8</dateFormatTimeZone>
                     <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
                     <format>json</format>
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.json
@@ -807,6 +807,22 @@
                             <password>${docker.password}</password>
                         </push>
                     </authConfig>
+                    <buildArgs>
+                        <!--
+                            用于在 Docker 中确定 jar 包名称
+                        -->
+                        <GROUP_ID>${project.groupId}</GROUP_ID>
+                        <ARTIFACT_ID>${project.artifactId}</ARTIFACT_ID>
+                        <VERSION>${project.version}</VERSION>
+                        <!--
+                            CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/pipelines/${CI_PIPELINE_ID}
+                         -->
+                        <CI_PIPELINE_ID>${CI_PIPELINE_ID}</CI_PIPELINE_ID>
+                        <!--
+                            CI_JOB_ID：代表作业ID，用于确定作业的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/jobs/${CI_JOB_ID}
+                        -->
+                        <CI_JOB_ID>${CI_JOB_ID}</CI_JOB_ID>
+                    </buildArgs>
                     <images>
                         <image>
                             <!-- 镜像名称 -->
@@ -818,7 +834,7 @@
                         <image>
                             <!--
                                 镜像名称：在版本后面增加了数字，用于储存历史记录、快速恢复容器（也可使用k8s滚动发布进行恢复）、k8s更改镜像中使用（用于发布），不需要者请注释掉此 image
-                                CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines/${CI_PIPELINE_ID}
+                                CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines/${CI_PIPELINE_ID}
                              -->
                             <name>
                                 ${docker.registry}/${project.groupId}/${project.artifactId}:${project.version}-${CI_PIPELINE_ID}
