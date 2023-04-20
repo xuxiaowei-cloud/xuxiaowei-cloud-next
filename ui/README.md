@@ -2,25 +2,25 @@
 
 ## 项目设置
 
-```
+```shell
 npm install
 ```
 
 ### 编译、热加载
 
-```
+```shell
 npm run dev
 ```
 
 ### 生产编译和压缩
 
-```
+```shell
 npm run build
 ```
 
 ### lints和修复文件
 
-```
+```shell
 npm run lint
 ```
 
@@ -59,6 +59,16 @@ npm create vite@latest ui -- --template vue-ts
 
 4. [axios](https://www.npmjs.com/package/axios)
 
+5. [terser](https://www.npmjs.com/package/terser)
+    1. [General Changes](https://vitejs.dev/guide/migration.html#general-changes)
+
+6. [unocss](https://github.com/unocss/unocss)
+    - https://uno.antfu.me/
+    - https://github.com/unocss/unocss/#vite
+    ```
+    npm i -D unocss
+    ```
+
 ## 依赖说明
 
 1. 创建项目时自动生成
@@ -70,12 +80,13 @@ npm create vite@latest ui -- --template vue-ts
 
 2. lint
     - 开发依赖
-        - @vue/cli-plugin-eslint
-        - @vue/cli-service
-        - @vue/eslint-config-standard
+        - @typescript-eslint/eslint-plugin
+        - @typescript-eslint/parser
+        - @vitejs/plugin-vue
         - eslint
+        - eslint-config-standard
         - eslint-plugin-import
-        - eslint-plugin-node
+        - eslint-plugin-n
         - eslint-plugin-promise
         - eslint-plugin-vue
         - lint-staged
@@ -105,15 +116,19 @@ npm create vite@latest ui -- --template vue-ts
     - pinia
         - 已手动添加缓存持久化，缓存刷新时保留
 
-8. 富文本
+8. CSS 引擎
+    - unocss
+        - 即时按需原子 CSS 引擎。
+
+9. 富文本
     - @toast-ui/editor
     - @wangeditor/editor-for-vue
 
-9. WebSocket
+10. WebSocket
     - sockjs-client
     - stompjs
 
-10. [tauri](https://tauri.studio)
+11. [tauri](https://tauri.studio)
     - [GitHub](https://github.com/tauri-apps/tauri)
     - @tauri-apps/api
     - @tauri-apps/cli
@@ -157,13 +172,13 @@ npm create vite@latest ui -- --template vue-ts
 - [vite](https://www.npmjs.com/package/vite)
 - [vue-tsc](https://www.npmjs.com/package/vue-tsc)
 
-```
+```shell
 npm i vue
 npm i @element-plus/icons-vue @tauri-apps/api @toast-ui/editor @wangeditor/editor-for-vue@5 axios crypto-js echarts element-plus js-cookie jsencrypt pinia sockjs-client stompjs vue-clipboard3 vue-echarts vue-router
 ```
 
-```
-npm i -D @tauri-apps/cli @types/crypto-js @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue lint-staged terser typescript unocss unplugin-auto-import unplugin-vue-components vite vue-tsc
+```shell
+npm i -D @tauri-apps/cli @types/crypto-js @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser @vitejs/plugin-vue eslint eslint-config-standard eslint-plugin-import eslint-plugin-n eslint-plugin-promise eslint-plugin-vue lint-staged terser typescript unocss unplugin-auto-import unplugin-vue-components vite vue-tsc
 ```
 
 ## 其他说明

@@ -39,7 +39,7 @@
         <!-- https://github.com/FasterXML/jackson-dataformat-yaml -->
         <!-- https://github.com/FasterXML/jackson-dataformat-properties -->
         <!-- https://github.com/FasterXML/jackson-dataformat-ini -->
-        <spring-boot.version>3.0.5</spring-boot.version>
+        <spring-boot.version>3.0.6</spring-boot.version>
         <!-- Spring Cloud 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/cloud/spring-cloud-dependencies -->
@@ -65,7 +65,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://github.com/spring-projects/spring-authorization-server -->
-        <spring-security-oauth2-authorization-server.version>1.0.1
+        <spring-security-oauth2-authorization-server.version>1.0.2
         </spring-security-oauth2-authorization-server.version>
 
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-oauth2 -->
@@ -133,12 +133,12 @@
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/fastjson -->
         <!-- https://github.com/alibaba/fastjson -->
-        <fastjson.version>2.0.26</fastjson.version>
+        <fastjson.version>2.0.27</fastjson.version>
 
         <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-all -->
         <!-- https://oss.sonatype.org/content/repositories/public/cn/hutool/hutool-all -->
         <!-- https://github.com/dromara/hutool -->
-        <hutool-all.version>5.8.15</hutool-all.version>
+        <hutool-all.version>5.8.17</hutool-all.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
@@ -164,7 +164,7 @@
         <!-- https://mvnrepository.com/artifact/com.xuxueli/xxl-job-core -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/xuxueli/xxl-job-core -->
         <!-- https://github.com/xuxueli/xxl-job -->
-        <xxl-job-core.version>2.3.1</xxl-job-core.version>
+        <xxl-job-core.version>2.4.0</xxl-job-core.version>
 
         <!-- 图片验证码 -->
         <!-- https://mvnrepository.com/artifact/com.github.bingoohuang/patchca -->
@@ -178,7 +178,7 @@
         <!-- 阿里云 短信服务 升级版 SDK Java（异步）：https://next.api.aliyun.com/api-tools/sdk/Dysmsapi?language=java-async-tea -->
         <!-- https://mvnrepository.com/artifact/com.aliyun/alibabacloud-dysmsapi20170525 -->
         <!-- https://repo1.maven.org/maven2/com/aliyun/alibabacloud-dysmsapi20170525/ -->
-        <alibabacloud-dysmsapi20170525.version>2.0.22</alibabacloud-dysmsapi20170525.version>
+        <alibabacloud-dysmsapi20170525.version>2.0.23</alibabacloud-dysmsapi20170525.version>
 
 
         <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
@@ -211,7 +211,11 @@
         <!-- 如：https://registry.npmmirror.com/npm/-/npm-8.12.1.tgz -->
         <npm-download-root>https://registry.npmmirror.com/npm/-/</npm-download-root>
 
-        <docker-maven-plugin.version>0.41.0</docker-maven-plugin.version>
+        <!-- https://github.com/fabric8io/docker-maven-plugin -->
+        <!-- https://repo1.maven.org/maven2/io/fabric8/docker-maven-plugin/ -->
+        <!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin -->
+        <!-- https://dmp.fabric8.io/ -->
+        <docker-maven-plugin.version>0.42.1</docker-maven-plugin.version>
         <!-- docker 守护程序的 URL -->
         <docker.host>http://host.docker.example.next.xuxiaowei.cloud:2375</docker.host>
         <!-- docker 私库 -->
@@ -222,11 +226,11 @@
         <docker.password>xuxiaowei</docker.password>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-resources-plugin -->
-        <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
@@ -756,7 +760,7 @@
                     <offline>true</offline>
                     <!-- 输出详细内容 -->
                     <!--<verbose>true</verbose>-->
-                    <dateFormatTimeZone>${user.timezone}</dateFormatTimeZone>
+                    <dateFormatTimeZone>GMT+8</dateFormatTimeZone>
                     <dateFormat>yyyy-MM-dd HH:mm:ss</dateFormat>
                     <format>json</format>
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.json
@@ -807,6 +811,22 @@
                             <password>${docker.password}</password>
                         </push>
                     </authConfig>
+                    <buildArgs>
+                        <!--
+                            用于在 Docker 中确定 jar 包名称
+                        -->
+                        <GROUP_ID>${project.groupId}</GROUP_ID>
+                        <ARTIFACT_ID>${project.artifactId}</ARTIFACT_ID>
+                        <VERSION>${project.version}</VERSION>
+                        <!--
+                            CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/pipelines/${CI_PIPELINE_ID}
+                         -->
+                        <CI_PIPELINE_ID>${CI_PIPELINE_ID}</CI_PIPELINE_ID>
+                        <!--
+                            CI_JOB_ID：代表作业ID，用于确定作业的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/jobs/${CI_JOB_ID}
+                        -->
+                        <CI_JOB_ID>${CI_JOB_ID}</CI_JOB_ID>
+                    </buildArgs>
                     <images>
                         <image>
                             <!-- 镜像名称 -->
@@ -818,7 +838,7 @@
                         <image>
                             <!--
                                 镜像名称：在版本后面增加了数字，用于储存历史记录、快速恢复容器（也可使用k8s滚动发布进行恢复）、k8s更改镜像中使用（用于发布），不需要者请注释掉此 image
-                                CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines/${CI_PIPELINE_ID}
+                                CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines/${CI_PIPELINE_ID}
                              -->
                             <name>
                                 ${docker.registry}/${project.groupId}/${project.artifactId}:${project.version}-${CI_PIPELINE_ID}
