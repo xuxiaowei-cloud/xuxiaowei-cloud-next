@@ -38,9 +38,11 @@ murphysec:
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
     # PR 到 main 分支时预执行
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    # 此处禁用 gitlab.com 上的流水线
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_SERVER_HOST != 'gitlab.com'
     # PR 合并到 main 后执行
-    - if: $CI_COMMIT_BRANCH == "main"
+    # 此处禁用 gitlab.com 上的流水线
+    - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com'
 
 # sonarqube
 sonarqube-check:
@@ -74,10 +76,11 @@ sonarqube-check:
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
+    # PR 到 main 分支时预执行
+    # 此处禁用 gitlab.com 上的流水线
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_SERVER_HOST != 'gitlab.com'
     # PR 合并到 main 后执行
-    # 此处禁用 gitlab.com、jihulab.com 上的流水线，仅在个人搭建的 gitlab 上运行
-    # - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com'
-    # 此处禁用 gitlab.com
+    # 此处禁用 gitlab.com 上的流水线
     - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com'
 
 #
@@ -145,7 +148,7 @@ package:
     - if [[ $CI_SERVER_HOST =~ $PRIVATE_SERVER_HOST || $KUBERNETES_SERVICE_HOST ]];
       then
     # 自建 GitLab 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install）
-    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1;
+    - mvn clean -e -U package install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1;
       else
     # 非自建 GitLab 使用 阿里/腾讯 Maven 镜像
     - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings.xml && PACKAGE_FLAG=1;
@@ -227,6 +230,7 @@ shell-publish-k8s:
   script:
     # -n xuxiaowei-cloud：指定命名空间为 xuxiaowei-cloud
     # $CI_PIPELINE_ID：当前管道的实例级ID
+    - kubectl -n xuxiaowei-cloud set image deployment/admin-server-deployment admin-server=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
     - kubectl -n xuxiaowei-cloud-next set image deployment/canal-deployment canal=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
     - kubectl -n xuxiaowei-cloud-next set image deployment/file-deployment file=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
     - kubectl -n xuxiaowei-cloud-next set image deployment/gateway-deployment gateway=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
@@ -236,13 +240,17 @@ shell-publish-k8s:
     - kubectl -n xuxiaowei-cloud-next set image deployment/user-deployment user=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
     - kubectl -n xuxiaowei-cloud-next set image deployment/webservice-deployment webservice=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
     - kubectl -n xuxiaowei-cloud-next set image deployment/websocket-deployment websocket=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/wechat-miniprogram-deployment wechat-miniprogram=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/wechat-offiaccount-deployment wechat-offiaccount=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/xxl-job-admin-deployment xxl-job-admin=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
+    # PR 到 main 分支时预执行
+    # 此处禁用 gitlab.com 上的流水线
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_SERVER_HOST != 'gitlab.com'
     # PR 合并到 main 后执行
-    # 此处禁用 gitlab.com、jihulab.com 上的流水线，仅在个人搭建的 gitlab 上运行
-    # - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com'
-    # 此处禁用 gitlab.com
+    # 此处禁用 gitlab.com 上的流水线
     - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com'
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
