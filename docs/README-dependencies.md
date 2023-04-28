@@ -10,7 +10,7 @@ cloud.xuxiaowei.next:admin-server:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.2:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.6:compile
 │        └──org.springframework.cloud:spring-cloud-starter-loadbalancer:jar:4.0.2:compile
-│        └──de.codecentric:spring-boot-admin-starter-server:jar:3.0.2:compile
+│        └──de.codecentric:spring-boot-admin-starter-server:jar:3.0.3:compile
 
 
 cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
