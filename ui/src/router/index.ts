@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import { queryToken } from '../store'
 import { hasAnyAuthority } from '../utils/authority'
 import settings from '../settings'
@@ -6,7 +6,7 @@ import Layout from '../components/Layout.vue'
 
 import ConsoleView from '../views/home/ConsoleView.vue'
 
-export const routes: Array<RouteRecordRaw> = [
+export const routes = [
   {
     name: '主页',
     path: '',
