@@ -341,7 +341,7 @@ cloud.xuxiaowei.next:webservice:jar:0.0.1-SNAPSHOT
 
 cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-websocket:jar:3.0.6:compile
-│        └──com.alibaba:fastjson:jar:2.0.28:compile
+│        └──com.alibaba:fastjson:jar:2.0.29:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile

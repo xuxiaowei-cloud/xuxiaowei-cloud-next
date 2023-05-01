@@ -105,7 +105,7 @@ interface ProvinceOption {
   provinceName: string;
 }
 
-const provinceOptions = ref<ProvinceOption[]>()
+const provinceOptions = ref<ProvinceOption[]>([])
 
 // 一共31个省
 provincePage({ size: 40 }).then(response => {
@@ -121,7 +121,7 @@ interface CityOption {
   cityName: string;
 }
 
-const cityOptions = ref<CityOption[]>()
+const cityOptions = ref<CityOption[]>([])
 
 watch(() => province.value, (newValue, oldValue) => {
   city.value = undefined
@@ -144,7 +144,7 @@ interface CountyOption {
   countyName: string;
 }
 
-const countyOptions = ref<CountyOption[]>()
+const countyOptions = ref<CountyOption[]>([])
 
 watch(() => city.value, (newValue, oldValue) => {
   county.value = undefined
@@ -167,7 +167,7 @@ interface TownOption {
   townName: string;
 }
 
-const townOptions = ref<TownOption[]>()
+const townOptions = ref<TownOption[]>([])
 
 watch(() => county.value, (newValue, oldValue) => {
   town.value = undefined
@@ -191,7 +191,7 @@ interface VillageOption {
   villageTypeCode: string;
 }
 
-const villageOptions = ref<VillageOption[]>()
+const villageOptions = ref<VillageOption[]>([])
 
 watch(() => town.value, (newValue, oldValue) => {
   village.value = undefined
