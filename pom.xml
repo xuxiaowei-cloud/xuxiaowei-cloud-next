@@ -159,7 +159,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/com/github/binarywang/weixin-java-miniapp -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/github/binarywang/weixin-mp-miniapp -->
         <!-- https://github.com/Wechat-Group/WxJava -->
-        <weixin-java.version>4.4.0</weixin-java.version>
+        <weixin-java.version>4.5.0</weixin-java.version>
 
         <!-- https://mvnrepository.com/artifact/com.xuxueli/xxl-job-core -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/xuxueli/xxl-job-core -->
