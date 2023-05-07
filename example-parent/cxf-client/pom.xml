@@ -30,7 +30,7 @@
         <cxf.version>4.0.0</cxf.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/license-maven-plugin -->
