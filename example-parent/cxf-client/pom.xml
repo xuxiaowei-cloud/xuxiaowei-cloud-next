@@ -27,7 +27,7 @@
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-features-logging -->
-        <cxf.version>4.0.0</cxf.version>
+        <cxf.version>4.0.1</cxf.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
