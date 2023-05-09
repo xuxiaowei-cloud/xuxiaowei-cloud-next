@@ -58,7 +58,7 @@
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-vue": "9.11.1",
     "lint-staged": "13.2.2",
-    "terser": "5.17.2",
+    "terser": "5.17.3",
     "typescript": "5.0.4",
     "unocss": "0.51.12",
     "unplugin-auto-import": "0.15.3",
