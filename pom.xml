@@ -819,11 +819,11 @@
                         <ARTIFACT_ID>${project.artifactId}</ARTIFACT_ID>
                         <VERSION>${project.version}</VERSION>
                         <!--
-                            CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/pipelines/${CI_PIPELINE_ID}
+                            CI_PIPELINE_ID：代表管道ID，用于确定管道的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/pipelines/${CI_PIPELINE_ID}
                          -->
                         <CI_PIPELINE_ID>${CI_PIPELINE_ID}</CI_PIPELINE_ID>
                         <!--
-                            CI_JOB_ID：代表作业ID，用于确定作业的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud/-/jobs/${CI_JOB_ID}
+                            CI_JOB_ID：代表作业ID，用于确定作业的链接：https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next/-/jobs/${CI_JOB_ID}
                         -->
                         <CI_JOB_ID>${CI_JOB_ID}</CI_JOB_ID>
                     </buildArgs>
