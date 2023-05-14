@@ -1,4 +1,4 @@
-FROM alibabadragonwell/dragonwell:17-anolis
+FROM docker.io/alibabadragonwell/dragonwell:17-anolis
 
 WORKDIR /home
 
