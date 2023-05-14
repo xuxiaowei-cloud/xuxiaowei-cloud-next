@@ -27,7 +27,7 @@
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-features-logging -->
-        <cxf.version>4.0.0</cxf.version>
+        <cxf.version>4.0.1</cxf.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
@@ -40,7 +40,7 @@
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
         <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
-        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
         <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
         <!-- https://mvnrepository.com/artifact/io.spring.javaformat/spring-javaformat-maven-plugin -->
