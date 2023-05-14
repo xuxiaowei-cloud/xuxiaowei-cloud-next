@@ -69,7 +69,7 @@
         <!-- 用户菜单 -->
         <el-dropdown id="cloud-el-dropdown" @command="handleCommand">
           <span class="el-dropdown-link">
-            {{ nickname }}
+            {{ useStore.getNickname }}
             <el-icon class="el-icon--right">
               <arrow-down/>
             </el-icon>
@@ -100,9 +100,9 @@
 
         <router-view v-slot="{ Component }">
           <keep-alive :exclude="keepAliveExclude">
-            <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive"/>
+            <component :is="Component" :key="route.name" v-if="route.meta.keepAlive"/>
           </keep-alive>
-          <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive"/>
+          <component :is="Component" :key="route.name" v-if="!route.meta.keepAlive"/>
         </router-view>
 
       </el-main>
@@ -274,8 +274,7 @@ const removeTab = (targetName: string) => {
   location.hash = activeName
 
   const routeRecords = router.getRoutes()
-  for (const i in routeRecords) {
-    const routeRecord = routeRecords[i]
+  for (const routeRecord of routeRecords) {
     if (routeRecord.path === targetName) {
       const components = routeRecord.components
       if (components) {
@@ -292,7 +291,7 @@ const removeTab = (targetName: string) => {
 // 是否折叠菜单
 const isCollapse = ref(useStore.getIsCollapse)
 // 昵称
-const nickname = ref(useStore.getNickname)
+// const nickname = ref(useStore.getNickname)
 
 const handleOpen = (key: number, keyPath: string) => {
   // console.log('handleOpen：', key, keyPath)
@@ -402,7 +401,7 @@ const handleCommand = (command: any, e: any) => {
 
 router.isReady().then(() => {
   // 获取昵称并显示
-  nickname.value = useStore.getNickname
+  // nickname.value = useStore.getNickname
 })
 
 </script>

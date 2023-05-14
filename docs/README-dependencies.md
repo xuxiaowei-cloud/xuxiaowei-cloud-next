@@ -10,7 +10,7 @@ cloud.xuxiaowei.next:admin-server:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.2:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.0.6:compile
 │        └──org.springframework.cloud:spring-cloud-starter-loadbalancer:jar:4.0.2:compile
-│        └──de.codecentric:spring-boot-admin-starter-server:jar:3.0.3:compile
+│        └──de.codecentric:spring-boot-admin-starter-server:jar:3.0.4:compile
 
 
 cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT
@@ -185,9 +185,9 @@ cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT
 
 cloud.xuxiaowei.next.example:cxf-client:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next:utils:jar:0.0.1-SNAPSHOT:compile
-│        └──org.apache.cxf:cxf-rt-frontend-jaxws:jar:4.0.0:compile
-│        └──org.apache.cxf:cxf-rt-transports-http:jar:4.0.0:compile
-│        └──org.apache.cxf:cxf-rt-features-logging:jar:4.0.0:compile
+│        └──org.apache.cxf:cxf-rt-frontend-jaxws:jar:4.0.1:compile
+│        └──org.apache.cxf:cxf-rt-transports-http:jar:4.0.1:compile
+│        └──org.apache.cxf:cxf-rt-features-logging:jar:4.0.1:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.0.6:compile
 │        └──org.projectlombok:lombok:jar:1.18.26:compile
 
@@ -321,9 +321,9 @@ cloud.xuxiaowei.next:user:jar:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:webservice:jar:0.0.1-SNAPSHOT
-│        └──org.apache.cxf:cxf-rt-frontend-jaxws:jar:4.0.0:compile
-│        └──org.apache.cxf:cxf-rt-transports-http:jar:4.0.0:compile
-│        └──org.apache.cxf:cxf-rt-features-logging:jar:4.0.0:compile
+│        └──org.apache.cxf:cxf-rt-frontend-jaxws:jar:4.0.1:compile
+│        └──org.apache.cxf:cxf-rt-transports-http:jar:4.0.1:compile
+│        └──org.apache.cxf:cxf-rt-features-logging:jar:4.0.1:compile
 │        └──com.fasterxml.jackson.dataformat:jackson-dataformat-xml:jar:2.14.2:compile
 │        └──org.dom4j:dom4j:jar:2.1.4:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
@@ -341,7 +341,7 @@ cloud.xuxiaowei.next:webservice:jar:0.0.1-SNAPSHOT
 
 cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
 │        └──org.springframework.boot:spring-boot-starter-websocket:jar:3.0.6:compile
-│        └──com.alibaba:fastjson:jar:2.0.29:compile
+│        └──com.alibaba:fastjson:jar:2.0.31:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
@@ -356,7 +356,7 @@ cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:wechat-miniprogram:jar:0.0.1-SNAPSHOT
-│        └──com.github.binarywang:wx-java-miniapp-spring-boot-starter:jar:4.4.0:compile
+│        └──com.github.binarywang:wx-java-miniapp-spring-boot-starter:jar:4.5.0:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-system:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
