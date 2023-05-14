@@ -10,22 +10,80 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
+    name: Build
+    runs-on: ${{ matrix.os }}
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [ 17 ]
+        os: [ "ubuntu-latest" ]
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up JDK 17
+      # 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 设置JDK版本
+      - name: Set up JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
-          cache: maven
+
+      - name: Cache modules
+        uses: actions/cache@v3
+        id: cache-modules
+        with:
+          path: |
+            ~/.m2/repository
+            ~/.npm
+            $GITHUB_WORKSPACE/passport-ui/node/
+            $GITHUB_WORKSPACE/passport-ui/node_modules/
+            $GITHUB_WORKSPACE/ui/node/
+            $GITHUB_WORKSPACE/ui/node_modules/
+          key: ${{ matrix.os }}-${{ hashFiles('pom.xml', '**/pom.xml', '**/**/pom.xml', '**/package.json') }}
+          restore-keys: |
+            ${{ matrix.os }}-
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: CI ENV
+        id: date
+        # bash, sh, cmd, powershell, pwsh
+        # shell 类型必须为 sh，否则：
+        # $GITHUB_ENV：仅支持 ubuntu、macos
+        # $env:GITHUB_ENV：仅支持 windows
+        shell: sh
+        run: |
+          env
+          echo $GITHUB_RUN_ID
+          echo $GITHUB_JOB-${{ matrix.java-version }}
+          echo "CI_PIPELINE_ID=$GITHUB_RUN_ID" >> $GITHUB_ENV
+          echo "CI_JOB_ID=$GITHUB_JOB-${{ matrix.java-version }}" >> $GITHUB_ENV
+
       - name: Build with Maven
-        run: mvn clean -e -U package source:jar javadoc:jar install -DskipTests
+        run: |
+          mvn clean -e -U package source:jar javadoc:jar install -DskipTests
+          mvn -pl admin-server docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl gateway docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl passport docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/canal docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/file docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/master-data docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/user docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/webservice docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/websocket docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/wechat-miniprogram docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl resource-services-parent/wechat-offiaccount docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl ui docker:build -Ddocker.host=unix:///var/run/docker.sock
+          mvn -pl xxl-job-admin docker:build -Ddocker.host=unix:///var/run/docker.sock
+          docker images
+          rm -rf /home/runner/.m2/repository/cloud/xuxiaowei
+          rm -rf /home/runner/.m2/repository/cn/com/xuxiaowei

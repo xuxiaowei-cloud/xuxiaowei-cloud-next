@@ -2,7 +2,10 @@
 # package ecosystems to update and where the package manifests are located.
 # Please see the documentation for all configuration options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
-# https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+# dependabot.yml 文件的配置选项：https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+# 自定义依赖项更新：https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/customizing-dependency-updates
+# 管理依赖项更新的所有拉取请求：https://docs.github.com/zh/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates
 
 version: 2
 updates:
@@ -10,11 +13,17 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
+      time: "08:00"
+      timezone: "Asia/Shanghai"
   - package-ecosystem: "npm"
     directory: "/passport-ui"
     schedule:
       interval: "daily"
+      time: "08:00"
+      timezone: "Asia/Shanghai"
   - package-ecosystem: "npm"
     directory: "/ui"
     schedule:
       interval: "daily"
+      time: "08:00"
+      timezone: "Asia/Shanghai"
