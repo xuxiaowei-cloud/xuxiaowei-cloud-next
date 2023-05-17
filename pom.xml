@@ -116,7 +116,7 @@
         <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <!-- https://oss.sonatype.org/content/repositories/public/commons-io/commons-io -->
         <!-- https://github.com/apache/commons-io -->
-        <commons-io.version>2.11.0</commons-io.version>
+        <commons-io.version>2.12.0</commons-io.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/apache/commons/commons-lang3 -->
