@@ -58,7 +58,7 @@
     "element-plus": "2.3.4",
     "js-cookie": "3.0.5",
     "jsencrypt": "3.3.2",
-    "pinia": "2.1.1",
+    "pinia": "2.1.2",
     "sockjs-client": "1.6.1",
     "stompjs": "2.3.3",
     "vue": "3.3.4",
