@@ -1,0 +1,90 @@
+# 创建命名空间  ：kubectl create namespace xuxiaowei-cloud-next
+# 创建 pod    ：kubectl apply -f sentinel-deployment.yaml
+# 查看 pod    ：kubectl -n xuxiaowei-cloud-next get pod -o wide
+# 查看 pod 描述：kubectl -n xuxiaowei-cloud-next describe pod pod名称
+# 进入 pod    ：kubectl -n xuxiaowei-cloud-next exec -it pod名称 bash
+# 编辑 pod    ：kubectl -n xuxiaowei-cloud-next edit deployment sentinel-deployment
+# 删除 pod    ：kubectl -n xuxiaowei-cloud-next delete deployment sentinel-deployment
+
+# https://kubernetes.io/zh-cn/docs/concepts/workloads/controllers/deployment/
+# 创建 Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Deployment 名称
+  name: sentinel-deployment
+  # 命名空间
+  namespace: xuxiaowei-cloud-next
+spec:
+  selector:
+    matchLabels:
+      app: sentinel
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sentinel
+    spec:
+      containers:
+        - name: sentinel
+          # https://hub.docker.com/r/xuxiaoweicomcn/sentinel
+          # sentinel 版本
+          image: xuxiaoweicomcn/sentinel:v1.8.6-dragonwell8
+          ports:
+            # 容器开放的端口号
+            - containerPort: 22222
+          # 创建容器时的命令
+          command:
+            - "java"
+          # 创建容器时的参数
+          args:
+            - "-Dserver.port=22222"
+            - "-Dcsp.sentinel.dashboard.server=localhost:22222"
+            - "-Dproject.name=sentinel-dashboard"
+            - "-jar"
+            - "sentinel-dashboard.jar"
+          volumeMounts:
+            # 挂载主机的时区文件
+            - name: time-zone
+              mountPath: /etc/localtime
+      # https://kubernetes.io/zh-cn/docs/concepts/storage/volumes/
+      # 配置挂载的数据卷
+      volumes:
+        # 挂载主机的时区文件
+        - name: time-zone
+          hostPath:
+            path: /etc/localtime
+
+---
+
+# 创建 Service（不能指定 nodePort） ：kubectl -n xuxiaowei-cloud-next expose deployment sentinel-deployment --type=NodePort --name=sentinel-service
+# 编辑 Service                    ：kubectl -n xuxiaowei-cloud-next edit service sentinel-service
+# 删除 Service                    ：kubectl -n xuxiaowei-cloud-next delete service sentinel-service
+# 查看 pod、Service               ：kubectl -n xuxiaowei-cloud-next get pod,svc -o wide
+
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/service/
+# 创建 Service
+apiVersion: v1
+kind: Service
+metadata:
+  # Service 名称
+  name: sentinel-service
+  # 命名空间
+  namespace: xuxiaowei-cloud-next
+spec:
+  ports:
+    # NodePort：集群外部对 Service 访问使用的端口（默认范围：30000~32767）
+    # port：Service 内部的端口号
+    # targetPort：暴露的 Deployment 中容器的端口号
+    # protocol：端口协议，TCP 或 UDP
+    # name：仅在存在多个配置时需要填写，如果填写，必须使用字符串（数字需要添加引号）
+    - nodePort: 32222
+      port: 22222
+      protocol: TCP
+      targetPort: 22222
+  selector:
+    # 将 Service 和 Deployment 关联起来
+    app: sentinel
+  # NodePort 会将该 Service 暴露到整个集群中的节点上，让外部客户端可以通过节点 IP + NodePort 的方式来访问该 Service
+  # 还有 ClusterIP 和 LoadBalancer 类型，具体可参考文档
+  type: NodePort
