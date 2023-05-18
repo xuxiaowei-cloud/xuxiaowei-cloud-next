@@ -432,6 +432,24 @@ cloud.xuxiaowei
         2. 这些分支代码相同，CI/CD 根据分支名进行触发，即：想使用某个分支的某些执行器执行 CI/CD，就将代码 `PR`
            （推荐使用PR，方便一键回滚代码、将回滚的内容进行恢复） 到指定的分支。
 
+## 批量添加远端仓库地址
+
+<details>
+<summary>点击展开</summary>
+
+git remote add gitee https://gitee.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git
+
+git remote add gitlab https://gitlab.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git
+
+git remote add jihulab https://jihulab.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git
+
+git remote add github https://github.com/xuxiaowei-cloud/xuxiaowei-cloud-next.git
+
+git remote add gitcode https://gitcode.net/xuxiaowei-cloud/xuxiaowei-cloud-next.git
+
+git remote add gitlink https://gitlink.org.cn/xuxiaowei-cloud/xuxiaowei-cloud-next.git
+</details>
+
 ## 鸣谢
 
 1. 感谢 [![jetbrains](./docs/static/jetbrains.ico)](https://www.jetbrains.com/)

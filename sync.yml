@@ -1,0 +1,99 @@
+#
+# 同步代码
+#
+
+sync-gitee:
+  stage: sync
+  variables:
+    GIT_DEPTH: 0 # 取消浅层克隆
+  image: bitnami/git:2.40.1
+  script:
+    - git config --global user.email $GITLAB_USER_EMAIL
+    - git config --global user.name $GITLAB_USER_NAME
+    - git config --global user.email
+    - git config --global user.name
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - git checkout -b $CI_COMMIT_BRANCH
+    - git remote add gitee https://xuxiaowei-com-cn:$GITEE_PRIVATE_TOKEN@gitee.com/$CI_PROJECT_PATH.git
+    - git push -u gitee $CI_COMMIT_BRANCH
+  rules:
+    # 非 PR 时触发
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+
+sync-gitcode:
+  stage: sync
+  variables:
+    GIT_DEPTH: 0 # 取消浅层克隆
+  image: bitnami/git:2.40.1
+  script:
+    - git config --global user.email $GITLAB_USER_EMAIL
+    - git config --global user.name $GITLAB_USER_NAME
+    - git config --global user.email
+    - git config --global user.name
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - git checkout -b $CI_COMMIT_BRANCH
+    - git remote add gitcode https://qq_32596527:$GITCODE_PRIVATE_TOKEN@gitcode.net/$CI_PROJECT_PATH.git
+    - git push -u gitcode $CI_COMMIT_BRANCH
+  rules:
+    # 非 PR 时触发
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+
+#sync-gitlink:
+#  stage: sync
+#  variables:
+#    GIT_DEPTH: 0 # 取消浅层克隆
+#  image: bitnami/git:2.40.1
+#  script:
+#    - git config --global user.email $GITLAB_USER_EMAIL
+#    - git config --global user.name $GITLAB_USER_NAME
+#    - git config --global user.email
+#    - git config --global user.name
+#    - echo 当前分支：$CI_COMMIT_BRANCH
+#    - git checkout -b $CI_COMMIT_BRANCH
+#    # - git remote add gitlink https://xuxiaowei:$GITLINK_PRIVATE_TOKEN@gitlink.org.cn/$CI_PROJECT_PATH.git
+#    - git remote add gitlink https://gitlink.org.cn/$CI_PROJECT_PATH.git
+#    - git config --global credential.helper store
+#    - git config --global credential.https://gitlink.org.cn.username xuxiaowei
+#    - git config --global credential.https://gitlink.org.cn.password "$GITLINK_PRIVATE_TOKEN"
+#    - git push -u gitlink $CI_COMMIT_BRANCH
+#  rules:
+#    # 非 PR 时触发
+#    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+
+sync-gitlab:
+  stage: sync
+  variables:
+    GIT_DEPTH: 0 # 取消浅层克隆
+  image: bitnami/git:2.40.1
+  script:
+    - git config --global user.email $GITLAB_USER_EMAIL
+    - git config --global user.name $GITLAB_USER_NAME
+    - git config --global user.email
+    - git config --global user.name
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - git checkout -b $CI_COMMIT_BRANCH
+    - git remote add gitlab https://xuxiaowei-com-cn:$GITLAB_PRIVATE_TOKEN@gitlab.com/$CI_PROJECT_PATH.git
+    - git push -u gitlab $CI_COMMIT_BRANCH
+  rules:
+    # 非 PR 时触发
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2
+
+sync-github:
+  stage: sync
+  variables:
+    GIT_DEPTH: 0 # 取消浅层克隆
+  image: bitnami/git:2.40.1
+  script:
+    - git config --global user.email $GITLAB_USER_EMAIL
+    - git config --global user.name $GITLAB_USER_NAME
+    - git config --global user.email
+    - git config --global user.name
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - git checkout -b $CI_COMMIT_BRANCH
+    - git remote add github https://xuxiaowei-com-cn:$GITHUB_PRIVATE_TOKEN@github.com/$CI_PROJECT_PATH.git
+    - git push -u github $CI_COMMIT_BRANCH
+  rules:
+    # 非 PR 时触发
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2

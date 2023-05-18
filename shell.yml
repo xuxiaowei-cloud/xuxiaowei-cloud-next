@@ -1,4 +1,50 @@
 #
+# 使用 shell 执行器 打包
+shell-package:
+  stage: shell-package
+  script:
+    # 只能导入一次，否则会报错（开发者自己导入，或者不使用 gpg）
+    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    # - echo $GPG_FILE
+    # - gpg --import $GPG_FILE
+    - git --version
+    - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 主分支：$CI_DEFAULT_BRANCH
+    - echo 项目路径：$CI_PROJECT_DIR
+    # 在 Shell 执行器中，如果手动导入 gpg，可使用参数 -Pgpg
+    # 在 Shell 执行器中，如果不指定 settings.xml，可使用系统默认
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1
+    - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
+  cache:
+    paths:
+      - .m2/repository
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
+  artifacts:
+    name: package
+    paths:
+      - target/*.jar
+      - target/*.asc
+      - target/*.pom
+      - "*/target/*.jar"
+      - "*/target/*.asc"
+      - "*/target/*.pom"
+      - "*/*/target/*.jar"
+      - "*/*/target/*.asc"
+      - "*/*/target/*.pom"
+      - ui/dist
+  rules:
+    # 仅在 shell 分支中执行
+    - if: $CI_COMMIT_BRANCH == "shell"
+  tags:
+    # 仅在 tags 名称为 shell 的执行器上执行
+    - shell
+
+#
 # shell 发布网关服务
 shell-service-gateway:
   stage: shell-service
@@ -45,8 +91,7 @@ shell-service-gateway:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -98,8 +143,7 @@ shell-service-admin-server:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -152,8 +196,7 @@ shell-service-passport:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -207,8 +250,7 @@ shell-service-canal:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -262,8 +304,7 @@ shell-service-user:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -317,8 +358,7 @@ shell-service-master-data:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -372,8 +412,7 @@ shell-service-websocket:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -427,8 +466,7 @@ shell-service-webservice:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -482,8 +520,7 @@ shell-service-wechat-miniprogram:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -537,8 +574,7 @@ shell-service-wechat-offiaccount:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -592,8 +628,7 @@ shell-service-file:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -645,8 +680,7 @@ shell-service-xxl-job-admin:
     - if [ "$MODULE_STATUS" == "1" ]; then echo '延时查看项目状态成功'; else echo '查看项目状态失败' && xxxx; fi
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell
@@ -665,11 +699,14 @@ shell-service-ui:
     - if [ ! -f $RELEASE_PATH ]; then sudo mkdir $RELEASE_PATH -p && echo 创建文件夹完成; fi
     - echo RELEASE_PATH：$RELEASE_PATH
     - if [ ! -f $RELEASE_PATH ]; then sudo mkdir $RELEASE_PATH -p && echo 创建发布文件夹完成; fi
+    # 此处每次发包仅仅是将新打包完成的文件，复制到需要发布的文件夹（除了 index.html、favicon.ico 等文件外，其他 CSS/JS 文件名不同，不会覆盖。随着发布次数变多，发布文件夹可能会非常大）
+    # 历史发布的文件没有删除
+    # 用户刷新页面后使用最新的前端（index.html等）
+    # 如果发包后需要用户立即使用最新前端，需要将历史文件删除后再进行复制（发布后，用户不刷新，对于没有之前没有点击的页面可能会出现404，刷新页面后即可）
     - cp -r ./$MODULE/dist/* $RELEASE_PATH && echo 复制新文件夹完成
   rules:
     # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com、gitcode.net 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com' && $CI_SERVER_HOST != 'gitcode.net'
+    - if: $CI_COMMIT_BRANCH == "shell"
   tags:
     # 仅在 tags 名称为 shell 的执行器上执行
     - shell

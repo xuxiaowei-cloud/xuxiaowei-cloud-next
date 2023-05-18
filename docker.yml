@@ -1,0 +1,339 @@
+
+#
+# 使用 docker 执行器 打包
+docker-package:
+  variables:
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  stage: docker-package
+  image: maven:3.6.3-openjdk-17
+  script:
+    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    # - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud.tmp/xuxiaowei_0x97A36125_SECRET
+    # - echo $GPG_FILE
+    # - gpg --import $GPG_FILE
+    - git --version
+    - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 主分支：$CI_DEFAULT_BRANCH
+    - echo 项目路径：$CI_PROJECT_DIR
+    # 配置 Maven 仓库的密码，用于上传 Maven
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings.xml
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings-private.xml
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1
+    - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
+    # 使用指定 setting.xml，用于下载依赖
+    - mvn -pl admin-server -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl admin-server -s settings-private.xml docker:push;
+    - mvn -pl gateway -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl gateway -s settings-private.xml docker:push;
+    - mvn -pl passport -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl passport -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/file -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/file -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/user -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/user -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:push;
+    - mvn -pl ui -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl ui -s settings-private.xml docker:push;
+    - mvn -pl xxl-job-admin -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl xxl-job-admin -s settings-private.xml docker:push;
+    # 删除本地 Maven 仓库中的产物（依赖），以提高缓存速度（本次的产物在下一次使用依赖时是无用的，会重新生成）
+    - rm -rf .m2/repository/cloud/xuxiaowei
+  cache:
+    paths:
+      - .m2/repository
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+#
+# docker 发布网关服务
+docker-service-gateway:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop gateway || echo '容器不存在'
+    - docker rm gateway || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1101:1101 --name gateway -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布监控（管理）服务
+docker-service-admin-server:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop admin-server || echo '容器不存在'
+    - docker rm admin-server || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1201:1201 --name admin-server -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布登录服务
+docker-service-passport:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop passport || echo '容器不存在'
+    - docker rm passport || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1401:1401 --name passport -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布MySQL二进制订阅服务
+docker-service-canal:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop canal || echo '容器不存在'
+    - docker rm canal || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1601:1601 --name canal -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布用户服务
+docker-service-user:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop user || echo '容器不存在'
+    - docker rm user || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1701:1701 --name user -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布主数据服务
+docker-service-master-data:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop master-data || echo '容器不存在'
+    - docker rm master-data || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2201:2201 --name master-data -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布WebSocket服务
+docker-service-websocket:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop websocket || echo '容器不存在'
+    - docker rm websocket || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1801:1801 --name websocket -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布WebService服务
+docker-service-webservice:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop webservice || echo '容器不存在'
+    - docker rm webservice || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1901:1901 --name webservice -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布微信小程序服务
+docker-service-wechat-miniprogram:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop wechat-miniprogram || echo '容器不存在'
+    - docker rm wechat-miniprogram || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2001:2001 --name wechat-miniprogram -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布微信公众号服务
+docker-service-wechat-offiaccount:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop wechat-offiaccount || echo '容器不存在'
+    - docker rm wechat-offiaccount || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2101:2101 --name wechat-offiaccount -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布文件服务
+docker-service-file:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop file || echo '容器不存在'
+    - docker rm file || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2301:2301 --name file -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布 XXL Job
+docker-service-xxl-job-admin:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop xxl-job-admin || echo '容器不存在'
+    - docker rm xxl-job-admin || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 5101:5101 --name xxl-job-admin -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker
+
+
+#
+# docker 发布UI服务
+docker-service-ui:
+  stage: docker-service
+  needs:
+    - job: docker-package
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker stop ui || echo '容器不存在'
+    - docker rm ui || echo '容器不存在'
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1001:80 --name ui -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+  rules:
+    # 仅在 docker 分支中执行
+    - if: $CI_COMMIT_BRANCH == "docker"
+  tags:
+    # 仅在 tags 名称为 docker 的执行器上执行
+    - docker

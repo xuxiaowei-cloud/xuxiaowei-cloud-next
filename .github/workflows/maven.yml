@@ -87,3 +87,37 @@ jobs:
           docker images
           rm -rf /home/runner/.m2/repository/cloud/xuxiaowei
           rm -rf /home/runner/.m2/repository/cn/com/xuxiaowei
+
+
+  sync:
+    name: Sync
+    # 需要所有 build 完成后，才运行
+    needs: build
+    # 仅在推送代码时执行
+    if: github.event_name == 'push'
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ "ubuntu-latest" ]
+
+    steps:
+      # 检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          # 获取所有的代码历史记录，包括分支和标签
+          fetch-depth: 0
+
+      # 将代码同步到 极狐GitLab
+      - name: Sync JihuLab
+        run: |
+          # 查看当前分支
+          echo 当前分支：$GITHUB_REF_NAME
+          echo https://jihulab.com/$GITHUB_REPOSITORY.git
+          # 添加远端 极狐GitLab
+          git remote add jihulab https://xuxiaowei-com-cn:${{secrets.JIHULAB_PRIVATE_TOKEN}}@jihulab.com/$GITHUB_REPOSITORY.git
+          # 拉取
+          git pull --progress -v --no-rebase jihulab $GITHUB_REF_NAME
+          # 推动当前分支
+          git push --progress jihulab $GITHUB_REF_NAME:$GITHUB_REF_NAME

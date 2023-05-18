@@ -1,0 +1,276 @@
+
+# sonarqube
+sonarqube-check:
+  stage: k8s-package
+  image: maven:3.6.3-jdk-11
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+      - .m2/repository
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
+  script:
+    # 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install），用于加速下载依赖
+    - mvn verify sonar:sonar -s settings-private.xml
+  # 允许失败
+  allow_failure: true
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
+  rules:
+    # PR 到 k8s 分支时预执行
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "k8s"
+    # PR 合并到 k8s 后执行、推送到 k8s 分支时
+    - if: $CI_COMMIT_BRANCH == "k8s"
+  tags:
+    # 个人服务器 Runner 标签（仅在个人服务器上执行）
+    - plugin-kubernetes
+
+#
+# k8s-package
+k8s-package:
+  variables:
+    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
+    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
+  stage: k8s-package
+  image: maven:3.6.3-openjdk-17
+  script:
+    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
+    # - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud.tmp/xuxiaowei_0x97A36125_SECRET
+    # - echo $GPG_FILE
+    # - gpg --import $GPG_FILE
+    - git --version
+    - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 分支上存在的上一个最新提交：$CI_COMMIT_BEFORE_SHA
+    - echo 分支上存在的上一个最新提交前八个字符：$CI_COMMIT_SHORT_SHA
+    - echo ISO8601格式的提交时间戳：$CI_COMMIT_TIMESTAMP
+    - echo "Name<email>格式提交的作者：$CI_COMMIT_AUTHOR"
+    - echo 提交标记名称。仅在标签的管道中可用：$CI_COMMIT_TAG
+    - echo 主分支：$CI_DEFAULT_BRANCH
+    - echo 项目路径：$CI_PROJECT_DIR
+    - echo 单个执行器中构建执行的唯一ID：$CI_CONCURRENT_ID
+    - echo 单个执行器和项目中构建执行的唯一ID：$CI_CONCURRENT_PROJECT_ID
+    - echo 作业是否手动启动：$CI_JOB_MANUAL
+    - echo 作业的名称：$CI_JOB_NAME
+    - echo 作业阶段的名称：$CI_JOB_STAGE
+    - echo 作业开始时的UTC日期时间，采用ISO8601格式：$CI_JOB_STARTED_AT
+    - echo 创建管道时的UTC日期时间，采用ISO8601格式：$CI_PIPELINE_CREATED_AT
+    - echo 当前项目的ID，此ID在GitLab实例上的所有项目中都是唯一的：$CI_PROJECT_ID
+    - echo 作业的项目命名空间（用户名或组名）：$CI_PROJECT_NAMESPACE
+    - echo 项目目录的名称：$CI_PROJECT_NAME
+    - echo 包含项目名称的项目命名空间：$CI_PROJECT_PATH
+    - echo GitLab实例的主要版本：$CI_SERVER_VERSION_MAJOR
+    - echo GitLab实例的次要版本：$CI_SERVER_VERSION_MINOR
+    - echo GitLab实例的补丁版本：$CI_SERVER_VERSION_PATCH
+    - echo GitLab实例的完整版本：$CI_SERVER_VERSION
+    - echo 开始作业的用户的电子邮件：$GITLAB_USER_EMAIL
+    - echo 启动作业的用户的ID：$GITLAB_USER_ID
+    - echo 启动作业的用户的用户名：$GITLAB_USER_LOGIN
+    - echo 启动作业的用户的名称：$GITLAB_USER_NAME
+    - echo 合并请求的实例级ID，这是GitLab上所有项目的唯一ID：$CI_MERGE_REQUEST_ID
+    - echo 合并请求的项目级IID（内部ID），此ID对于当前项目是唯一的：$CI_MERGE_REQUEST_IID
+    - echo 合并请求的目标分支名称：$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
+    - echo 作业详细信息URL：$CI_JOB_URL
+    - echo 作业的内部ID，在GitLab实例中的所有作业中是唯一的：$CI_JOB_ID
+    - echo 正在使用的Runner的唯一ID：$CI_RUNNER_ID
+    - echo 运行作业的GitLabRunner的版本：$CI_RUNNER_VERSION
+    - echo 管道详细信息的URL：$CI_PIPELINE_URL
+    - echo 当前管道的实例级ID。此ID在GitLab实例上的所有项目中都是唯一的：$CI_PIPELINE_ID
+    - echo 当前管道的项目级IID（内部ID），此ID仅在当前项目中是唯一的：$CI_PIPELINE_IID
+    - echo GitLab实例URL的主机，没有协议或端口：$CI_SERVER_HOST
+    - echo 项目的HTTP（S）地址：$CI_PROJECT_URL
+    - echo 克隆Git存储库的URL：$CI_REPOSITORY_URL
+    # 配置 Maven 仓库的密码，用于上传 Maven
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings.xml
+    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings-private.xml
+    # 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install），用于加速下载依赖
+    - mvn clean -e -U package install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1;
+    - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
+    # 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install），用于加速下载依赖
+    - mvn -pl admin-server -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl admin-server -s settings-private.xml docker:push;
+    - mvn -pl gateway -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl gateway -s settings-private.xml docker:push;
+    - mvn -pl passport -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl passport -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/file -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/file -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/user -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/user -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:push;
+    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:push;
+    - mvn -pl ui -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl ui -s settings-private.xml docker:push;
+    - mvn -pl xxl-job-admin -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl xxl-job-admin -s settings-private.xml docker:push;
+    # 删除本地 Maven 仓库中的产物（依赖），以提高缓存速度（本次的产物在下一次使用依赖时是无用的，会重新生成）
+    - rm -rf .m2/repository/cloud/xuxiaowei
+  cache:
+    paths:
+      - .m2/repository
+      - passport-ui/node/
+      - passport-ui/node_modules/
+      - ui/node/
+      - ui/node_modules/
+  # 产物超过 1000M，取消产物上传，节省时间
+  #  artifacts:
+  #    name: package
+  #    paths:
+  #      - target/*.jar
+  #      - target/*.asc
+  #      - target/*.pom
+  #      - "*/target/*.jar"
+  #      - "*/target/*.asc"
+  #      - "*/target/*.pom"
+  #      - "*/*/target/*.jar"
+  #      - "*/*/target/*.asc"
+  #      - "*/*/target/*.pom"
+  #      - ui/dist
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
+  rules:
+    # PR 到 k8s 分支时预执行
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "k8s"
+    # PR 合并到 k8s 后执行、推送到 k8s 分支时
+    - if: $CI_COMMIT_BRANCH == "k8s"
+  tags:
+    # 个人服务器 Runner 标签（仅在个人服务器上执行）
+    - plugin-kubernetes
+
+#
+# 使用 shell 发布 k8s
+# 在 k8s 所在的服务器上执行
+k8s-publish:
+  stage: k8s-publish
+  needs:
+    - job: k8s-package
+  script:
+    # 如果要全新部署所有内容，仅需在流水线运行前执行下列被注释的删除命令即可
+    # 如果要全新部署所有内容，完成流水线执行后，可能会有一些 pod 无法启动：原因是：微服务启动依赖于 Nacos、MySQL，Nacos 启动依赖于 MySQL
+    # 即：启动需要有先后顺序，否咋会启动失败，可以多等一段时间，也可以按照 MySQL、Nacos、微服务 这个顺序检查 pod 是否运行正常
+    # 可删除失败的 pod，快速触发故障恢复
+    # 删除命名空间（请确认命名空间 xuxiaowei-cloud 中是否存在与 xuxiaowei-cloud 不相关的 Pod、Service，并将提前将数据进行备份）
+    # kubectl delete ns xuxiaowei-cloud
+    # 删除 PV（请确认下列 PV 中是否存在与 xuxiaowei-cloud 不相关的内容，并将提前将数据进行备份）
+    # kubectl delete pv admin-server-logs-volume
+    # kubectl delete pv canal-logs-volume
+    # kubectl delete pv file-logs-volume
+    # kubectl delete pv gateway-logs-volume
+    # kubectl delete pv generate-logs-volume
+    # kubectl delete pv master-data-logs-volume
+    # kubectl delete pv mysql-data-volume
+    # kubectl delete pv passport-logs-volume
+    # kubectl delete pv redis-data-volume
+    # kubectl delete pv user-logs-volume
+    # kubectl delete pv webservice-logs-volume
+    # kubectl delete pv websocket-logs-volume
+    # kubectl delete pv wechat-miniprogram-logs-volume
+    # kubectl delete pv wechat-offiaccount-logs-volume
+    # kubectl delete pv xxl-job-admin-logs-volume
+    # 删除 NFS 文件夹（请确认下列文件夹 /nfs/* 中是否存在与 xuxiaowei-cloud 不相关的文件夹，并将提前将数据进行备份）
+    # rm -rf /nfs/mysql/init
+    # rm -rf /nfs/mysql/data
+    # rm -rf /nfs/redis/data
+    # rm -rf /nfs/admin-server/logs
+    # rm -rf /nfs/canal/logs
+    # rm -rf /nfs/file/logs
+    # rm -rf /nfs/gateway/logs
+    # rm -rf /nfs/master-data/logs
+    # rm -rf /nfs/passport/logs
+    # rm -rf /nfs/user/logs
+    # rm -rf /nfs/webservice/logs
+    # rm -rf /nfs/websocket/logs
+    # rm -rf /nfs/wechat-miniprogram/logs
+    # rm -rf /nfs/wechat-offiaccount/logs
+    # rm -rf /nfs/xxl-job-admin/logs
+    # 查看是否存在 xuxiaowei-cloud 命名空间，如果不存在，将会创建
+    - kubectl get namespace xuxiaowei-cloud || kubectl create namespace xuxiaowei-cloud
+    # 创建 NFS 文件夹
+    - mkdir -p /nfs/mysql/init
+    - mkdir -p /nfs/mysql/data
+    - mkdir -p /nfs/redis/data
+    - mkdir -p /nfs/admin-server/logs
+    - mkdir -p /nfs/canal/logs
+    - mkdir -p /nfs/file/logs
+    - mkdir -p /nfs/gateway/logs
+    - mkdir -p /nfs/master-data/logs
+    - mkdir -p /nfs/passport/logs
+    - mkdir -p /nfs/user/logs
+    - mkdir -p /nfs/webservice/logs
+    - mkdir -p /nfs/websocket/logs
+    - mkdir -p /nfs/wechat-miniprogram/logs
+    - mkdir -p /nfs/wechat-offiaccount/logs
+    - mkdir -p /nfs/xxl-job-admin/logs
+    # 查看 xuxiaowei-cloud 命名空间是否存在 mysql-deployment，如果不存在，准备创建 MySQL deployment
+    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || ls /nfs/mysql/init
+    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || cp docs/sql/*.sql /nfs/mysql/init
+    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || ls /nfs/mysql/init
+    # 查看 xuxiaowei-cloud 命名空间是否存在 mysql-deployment，如果不存在，使用命令根据文件创建 deployment
+    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || kubectl create -f docs/deployment/mysql-deployment.yaml
+    # 查看 xuxiaowei-cloud 命名空间是否存在 nacos-deployment，如果不存在，使用命令根据文件创建 deployment
+    - kubectl -n xuxiaowei-cloud-nextget deployment nacos-deployment || kubectl create -f docs/deployment/nacos-deployment.yaml
+    # 查看 xuxiaowei-cloud 命名空间是否存在 redis-deployment，如果不存在，使用命令根据文件创建 deployment
+    - kubectl -n xuxiaowei-cloud-nextget deployment redis-deployment || kubectl create -f docs/deployment/redis-deployment.yaml
+    # 查看 xuxiaowei-cloud 命名空间是否存在 sentinel-deployment，如果不存在，使用命令根据文件创建 deployment
+    - kubectl -n xuxiaowei-cloud-nextget deployment sentinel-deployment || kubectl create -f docs/deployment/sentinel-deployment.yaml
+    # -n xuxiaowei-cloud：指定命名空间为 xuxiaowei-cloud
+    # $CI_PIPELINE_ID：当前管道的实例级ID
+    # 查看 xuxiaowei-cloud 命名空间是否存在，如果不存在，使用命令根据文件创建 deployment
+    - kubectl -n xuxiaowei-cloud-nextget deployment admin-server-deployment || kubectl create -f admin-server/admin-server-deployment.yaml
+    # 设置镜像的新版本
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/admin-server-deployment admin-server=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment canal-deployment || kubectl create -f resource-services-parent/canal/canal-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/canal-deployment canal=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment file-deployment || kubectl create -f resource-services-parent/file/file-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/file-deployment file=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment gateway-deployment || kubectl create -f gateway/gateway-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/gateway-deployment gateway=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment master-data-deployment || kubectl create -f resource-services-parent/master-data/master-data-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/master-data-deployment master-data=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment passport-deployment || kubectl create -f passport/passport-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/passport-deployment passport=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment ui-deployment || kubectl create -f ui/ui-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/ui-deployment ui=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment user-deployment || kubectl create -f resource-services-parent/user/user-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/user-deployment user=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment webservice-deployment || kubectl create -f resource-services-parent/webservice/webservice-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/webservice-deployment webservice=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment websocket-deployment || kubectl create -f resource-services-parent/websocket/websocket-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/websocket-deployment websocket=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment wechat-miniprogram-deployment || kubectl create -f resource-services-parent/wechat-miniprogram/wechat-miniprogram-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/wechat-miniprogram-deployment wechat-miniprogram=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment wechat-offiaccount-deployment || kubectl create -f resource-services-parent/wechat-offiaccount/wechat-offiaccount-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/wechat-offiaccount-deployment wechat-offiaccount=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-nextget deployment xxl-job-admin-deployment || kubectl create -f xxl-job-admin/xxl-job-admin-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-nextset image deployment/xxl-job-admin-deployment xxl-job-admin=registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
+  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
+  rules:
+    # PR 到 k8s 分支时预执行
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "k8s"
+    # PR 合并到 k8s 后执行、推送到 k8s 分支时
+    - if: $CI_COMMIT_BRANCH == "k8s"
+  tags:
+    # 仅在 tags 名称为 shell 的执行器上执行
+    # 在 k8s 所在的服务器上执行
+    # 个人服务器 Runner 标签（仅在个人服务器上执行）
+    - k8s-publish

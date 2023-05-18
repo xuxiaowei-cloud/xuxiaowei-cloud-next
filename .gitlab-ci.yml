@@ -1,16 +1,22 @@
 # 此流水线为 gitlab.com、jihulab.com、自建 gitlab 使用
 
 stages:
-  # 使用 k8s（也可使用 docker、shell 等执行器，需要能使用 docker 相关命令）构建、制作 docker 镜像、推送到 docker 私服
+  # 极狐GitLab 构建/测试/扫描依赖漏洞等
   - package
+  # 使用 k8s（也可使用 docker、shell 等执行器，需要能使用 docker 相关命令）构建、制作 docker 镜像、推送到 docker 私服
+  - k8s-package
   # 在 k8s 所在的服务器上执行项目滚动发布
-  - shell-publish-k8s
+  - k8s-publish
   # 使用 shell 执行器构建
   - shell-package
   # 使用 shell 执行器发布
   - shell-service
   # 使用 docker 执行器构建、制作 docker 镜像
   - docker-package
+  # 使用 docker 执行器发布
+  - docker-service
+  # 代码同步
+  - sync
 
 # murphysec
 murphysec:
@@ -19,12 +25,12 @@ murphysec:
     MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
   stage: package
   # Docker 镜像开源地址：https://gitee.com/xuxiaowei-com-cn/murphysec
-  image: xuxiaoweicomcn/murphysec:v3.0.1-maven-3.6.3-openjdk-17
+  image: xuxiaoweicomcn/murphysec:v3.1.1-maven-3.6.3-openjdk-17
   script:
     # murphysec 文档：https://www.murphysec.com/docs/guides/scan-scene/cli.html
     - murphysec -v
     - murphysec auth login $murphysec_token
-    - murphysec scan . --log-level info --write-log-to murphysec.log --json --task-id $task_id
+    - murphysec scan . --log-level info --write-log-to murphysec.log --json
   # https://docs.gitlab.cn/jh/ci/yaml/index.html#cache
   cache:
     key: murphysec
@@ -38,159 +44,49 @@ murphysec:
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
     # PR 到 main 分支时预执行
-    # 此处禁用 gitlab.com 上的流水线
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_SERVER_HOST != 'gitlab.com'
-    # PR 合并到 main 后执行
-    # 此处禁用 gitlab.com 上的流水线
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com'
-
-# sonarqube
-sonarqube-check:
-  stage: package
-  image: maven:3.6.3-openjdk-17
-  variables:
-    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
-    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
-    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
-    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-      - .m2/repository
-      - passport-ui/node/
-      - passport-ui/node_modules/
-      - ui/node/
-      - ui/node_modules/
-  script:
-    - PRIVATE_SERVER_HOST=xuxiaowei
-    - if [[ $CI_SERVER_HOST =~ $PRIVATE_SERVER_HOST || $KUBERNETES_SERVICE_HOST ]];
-      then
-    # 自建 GitLab 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install）
-    - mvn verify sonar:sonar -s settings-private.xml;
-      else
-    # 非自建 GitLab 使用 阿里/腾讯 Maven 镜像
-    - mvn verify sonar:sonar -s settings.xml;
-      fi
-  allow_failure: true
-  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
-  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
-  rules:
-    # PR 到 main 分支时预执行
-    # 此处禁用 gitlab.com 上的流水线
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_SERVER_HOST != 'gitlab.com'
-    # PR 合并到 main 后执行
-    # 此处禁用 gitlab.com 上的流水线
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com'
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
+    # PR 合并到 main 后执行、推送到 main 分支时
+    - if: $CI_COMMIT_BRANCH == "main"
+  tags:
+    # 极狐 GitLab Runner 标签（仅在极狐GitLab共享Runner上执行）
+    - jihulab
 
 #
-# package
-package:
+# coverage
+coverage:
   variables:
     MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
     MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
   stage: package
   image: maven:3.6.3-openjdk-17
+  services:
+    - docker:dind
   script:
-    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
-    # - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
-    # - echo $GPG_FILE
-    # - gpg --import $GPG_FILE
-    - git --version
-    - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - echo 分支上存在的上一个最新提交：$CI_COMMIT_BEFORE_SHA
-    - echo 分支上存在的上一个最新提交前八个字符：$CI_COMMIT_SHORT_SHA
-    - echo ISO8601格式的提交时间戳：$CI_COMMIT_TIMESTAMP
-    - echo "Name<email>格式提交的作者：$CI_COMMIT_AUTHOR"
-    - echo 提交标记名称。仅在标签的管道中可用：$CI_COMMIT_TAG
-    - echo 主分支：$CI_DEFAULT_BRANCH
-    - echo 项目路径：$CI_PROJECT_DIR
-    - echo 单个执行器中构建执行的唯一ID：$CI_CONCURRENT_ID
-    - echo 单个执行器和项目中构建执行的唯一ID：$CI_CONCURRENT_PROJECT_ID
-    - echo 作业是否手动启动：$CI_JOB_MANUAL
-    - echo 作业的名称：$CI_JOB_NAME
-    - echo 作业阶段的名称：$CI_JOB_STAGE
-    - echo 作业开始时的UTC日期时间，采用ISO8601格式：$CI_JOB_STARTED_AT
-    - echo 创建管道时的UTC日期时间，采用ISO8601格式：$CI_PIPELINE_CREATED_AT
-    - echo 当前项目的ID，此ID在GitLab实例上的所有项目中都是唯一的：$CI_PROJECT_ID
-    - echo 作业的项目命名空间（用户名或组名）：$CI_PROJECT_NAMESPACE
-    - echo 项目目录的名称：$CI_PROJECT_NAME
-    - echo 包含项目名称的项目命名空间：$CI_PROJECT_PATH
-    - echo GitLab实例的主要版本：$CI_SERVER_VERSION_MAJOR
-    - echo GitLab实例的次要版本：$CI_SERVER_VERSION_MINOR
-    - echo GitLab实例的补丁版本：$CI_SERVER_VERSION_PATCH
-    - echo GitLab实例的完整版本：$CI_SERVER_VERSION
-    - echo 开始作业的用户的电子邮件：$GITLAB_USER_EMAIL
-    - echo 启动作业的用户的ID：$GITLAB_USER_ID
-    - echo 启动作业的用户的用户名：$GITLAB_USER_LOGIN
-    - echo 启动作业的用户的名称：$GITLAB_USER_NAME
-    - echo 合并请求的实例级ID，这是GitLab上所有项目的唯一ID：$CI_MERGE_REQUEST_ID
-    - echo 合并请求的项目级IID（内部ID），此ID对于当前项目是唯一的：$CI_MERGE_REQUEST_IID
-    - echo 合并请求的目标分支名称：$CI_MERGE_REQUEST_TARGET_BRANCH_NAME
-    - echo 作业详细信息URL：$CI_JOB_URL
-    - echo 作业的内部ID，在GitLab实例中的所有作业中是唯一的：$CI_JOB_ID
-    - echo 正在使用的Runner的唯一ID：$CI_RUNNER_ID
-    - echo 运行作业的GitLabRunner的版本：$CI_RUNNER_VERSION
-    - echo 管道详细信息的URL：$CI_PIPELINE_URL
-    - echo 当前管道的实例级ID。此ID在GitLab实例上的所有项目中都是唯一的：$CI_PIPELINE_ID
-    - echo 当前管道的项目级IID（内部ID），此ID仅在当前项目中是唯一的：$CI_PIPELINE_IID
-    - echo GitLab实例URL的主机，没有协议或端口：$CI_SERVER_HOST
-    - echo 项目的HTTP（S）地址：$CI_PROJECT_URL
-    - echo 克隆Git存储库的URL：$CI_REPOSITORY_URL
-    # 配置 Maven 仓库的密码，用于上传 Maven
-    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings.xml
-    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings-private.xml
-    # 自建 GitLab 实例 URL 的主机（部分域名）
-    # 在 GitLab、JiHuLab 使用的是 docker+machine 执行器，个人的 Runner 使用的是 kubernetes 执行器，此处仅在 kubernetes 执行器上运行
-    - PRIVATE_SERVER_HOST=xuxiaowei
-    - if [[ $CI_SERVER_HOST =~ $PRIVATE_SERVER_HOST || $KUBERNETES_SERVICE_HOST ]];
-      then
-    # 自建 GitLab 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install）
-    - mvn clean -e -U package install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1;
-      else
-    # 非自建 GitLab 使用 阿里/腾讯 Maven 镜像
-    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings.xml && PACKAGE_FLAG=1;
-      fi
+    - echo $DOCKER_PORT
+    - echo $DOCKER_PORT_2375_TCP
+    - echo $DOCKER_PORT_2375_TCP_PROTO
+    - echo $DOCKER_PORT_2375_TCP_PORT
+    - echo $DOCKER_PORT_2375_TCP_ADDR
+    - echo $DOCKER_PORT_2376_TCP
+    - echo $DOCKER_PORT_2376_TCP_PROTO
+    - echo $DOCKER_PORT_2376_TCP_PORT
+    - echo $DOCKER_PORT_2376_TCP_ADDR
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests=true -s settings.xml && PACKAGE_FLAG=1;
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
-    # 自建 GitLab，打包完成后将打包结果构建成 Docker 镜像并推送到 Docker 私服中，方便后期使用（如：k8s）
-    # 相关资料：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s
-    # 在 GitLab、JiHuLab 使用的是 docker+machine 执行器，个人的 Runner 使用的是 kubernetes 执行器，此处仅在 kubernetes 执行器上运行
-    - if [[ $CI_SERVER_HOST =~ $PRIVATE_SERVER_HOST || $KUBERNETES_SERVICE_HOST ]];
-      then
-    # 使用指定 setting.xml，用于下载依赖
-    - mvn -pl admin-server -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl admin-server -s settings-private.xml docker:push;
-    - mvn -pl gateway -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl gateway -s settings-private.xml docker:push;
-    - mvn -pl passport -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl passport -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/file -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/file -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/user -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/user -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:push;
-    - mvn -pl ui -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl ui -s settings-private.xml docker:push;
-    - mvn -pl xxl-job-admin -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl xxl-job-admin -s settings-private.xml docker:push;
-      else
-    - echo '不执行 Docker 相关命令';
-      fi
-    # 删除本地 Maven 仓库中的产物（依赖），以提高缓存速度（本次的产物在下一次使用依赖时是无用的，会重新生成）
-    - rm -rf .m2/repository/cloud/xuxiaowei/next
+    - mvn -pl admin-server -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl gateway -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl passport -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/canal -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/file -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/master-data -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/user -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/webservice -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/websocket -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-miniprogram -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-offiaccount -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl ui -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl xxl-job-admin -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - rm -rf .m2/repository/cloud/xuxiaowei
   cache:
     paths:
       - .m2/repository
@@ -198,201 +94,27 @@ package:
       - passport-ui/node_modules/
       - ui/node/
       - ui/node_modules/
-  # 产物超过 1000M，取消产物上传，节省时间
-  #  artifacts:
-  #    name: package
-  #    paths:
-  #      - target/*.jar
-  #      - target/*.asc
-  #      - target/*.pom
-  #      - "*/target/*.jar"
-  #      - "*/target/*.asc"
-  #      - "*/target/*.pom"
-  #      - "*/*/target/*.jar"
-  #      - "*/*/target/*.asc"
-  #      - "*/*/target/*.pom"
-  #      - ui/dist
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
     # PR 到 main 分支时预执行
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
-    # PR 合并到 main 后执行
+    # PR 合并到 main 后执行、推送到 main 分支时
     - if: $CI_COMMIT_BRANCH == "main"
-
-#
-# 使用 shell 发布 k8s
-# 在 k8s 所在的服务器上执行
-shell-publish-k8s:
-  stage: shell-publish-k8s
-  needs:
-    - job: package
-  script:
-    # -n xuxiaowei-cloud：指定命名空间为 xuxiaowei-cloud
-    # $CI_PIPELINE_ID：当前管道的实例级ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/admin-server-deployment admin-server=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/canal-deployment canal=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/file-deployment file=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/gateway-deployment gateway=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/master-data-deployment master-data=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/passport-deployment passport=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/ui-deployment ui=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/user-deployment user=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/webservice-deployment webservice=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/websocket-deployment websocket=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/wechat-miniprogram-deployment wechat-miniprogram=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/wechat-offiaccount-deployment wechat-offiaccount=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-next set image deployment/xxl-job-admin-deployment xxl-job-admin=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-  # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
-  # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
-  rules:
-    # PR 到 main 分支时预执行
-    # 此处禁用 gitlab.com 上的流水线
-    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $CI_SERVER_HOST != 'gitlab.com'
-    # PR 合并到 main 后执行
-    # 此处禁用 gitlab.com 上的流水线
-    - if: $CI_COMMIT_BRANCH == "main" && $CI_SERVER_HOST != 'gitlab.com'
   tags:
-    # 仅在 tags 名称为 shell 的执行器上执行
-    # 在 k8s 所在的服务器上执行
-    - shell-publish-k8s
-
-#
-# 使用 shell 执行器 打包
-shell-package:
-  stage: shell-package
-  script:
-    # 只能导入一次，否则会报错（开发者自己导入，或者不使用 gpg）
-    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
-    # - echo $GPG_FILE
-    # - gpg --import $GPG_FILE
-    - git --version
-    - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - echo 主分支：$CI_DEFAULT_BRANCH
-    - echo 项目路径：$CI_PROJECT_DIR
-    - mvn -v
-    # 由于本人默认 JAVA_HOME 为 JDK 8，此处作为临时修改为 JDK 17
-    - JAVA_HOME=/software/dragonwell-17.0.6.0.6+9-GA
-    - mvn -v
-    # 在 Shell 执行器中，如果手动导入 gpg，可使用参数 -Pgpg
-    # 在 Shell 执行器中，如果不指定 settings.xml，可使用系统默认
-    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1
-    - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
-  cache:
-    paths:
-      - .m2/repository
-      - passport-ui/node/
-      - passport-ui/node_modules/
-      - ui/node/
-      - ui/node_modules/
-  artifacts:
-    name: package
-    paths:
-      - target/*.jar
-      - target/*.asc
-      - target/*.pom
-      - "*/target/*.jar"
-      - "*/target/*.asc"
-      - "*/target/*.pom"
-      - "*/*/target/*.jar"
-      - "*/*/target/*.asc"
-      - "*/*/target/*.pom"
-      - ui/dist
-  rules:
-    # 仅在 shell 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "shell" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com'
-  tags:
-    # 仅在 tags 名称为 shell 的执行器上执行
-    - shell
-
-#
-# 使用 docker 执行器 打包
-docker-package:
-  variables:
-    MAVEN_OPTS: "-Dhttps.protocols=TLSv1.2 -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
-    MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
-  stage: docker-package
-  image: maven:3.6.3-openjdk-17
-  script:
-    # - GPG_FILE=`find / -name xuxiaowei_0x97A36125_SECRET`
-    # - GPG_FILE=/builds/xuxiaowei-cloud/xuxiaowei-cloud-next.tmp/xuxiaowei_0x97A36125_SECRET
-    # - echo $GPG_FILE
-    # - gpg --import $GPG_FILE
-    - git --version
-    - echo 常量网址：https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-    - echo 常量网址（极狐GitLab中文文档）：https://docs.gitlab.cn/jh/ci/variables/predefined_variables.html
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - echo 主分支：$CI_DEFAULT_BRANCH
-    - echo 项目路径：$CI_PROJECT_DIR
-    # 配置 Maven 仓库的密码，用于上传 Maven
-    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings.xml
-    - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings-private.xml
-    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1
-    - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
-    # 删除本地 Maven 仓库中的产物（依赖），以提高缓存速度（本次的产物在下一次使用依赖时是无用的，会重新生成）
-    - rm -rf .m2/repository/cloud/xuxiaowei/next
-    # 使用指定 setting.xml，用于下载依赖
-    - mvn -pl admin-server -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl admin-server -s settings-private.xml docker:push;
-    - mvn -pl gateway -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl gateway -s settings-private.xml docker:push;
-    - mvn -pl passport -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl passport -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/canal -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/file -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/file -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/master-data -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/user -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/user -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/webservice -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/websocket -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/wechat-miniprogram -s settings-private.xml docker:push;
-    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/wechat-offiaccount -s settings-private.xml docker:push;
-    - mvn -pl ui -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl ui -s settings-private.xml docker:push;
-    - mvn -pl xxl-job-admin -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl xxl-job-admin -s settings-private.xml docker:push;
-  cache:
-    paths:
-      - .m2/repository
-      - passport-ui/node/
-      - passport-ui/node_modules/
-      - ui/node/
-      - ui/node_modules/
-  artifacts:
-    name: package
-    paths:
-      - target/*.jar
-      - target/*.asc
-      - target/*.pom
-      - "*/target/*.jar"
-      - "*/target/*.asc"
-      - "*/target/*.pom"
-      - "*/*/target/*.jar"
-      - "*/*/target/*.asc"
-      - "*/*/target/*.pom"
-      - ui/dist
-  rules:
-    # 仅在 docker 分支中执行
-    # 此处禁用 gitlab.com、jihulab.com 上的流水线，仅在个人搭建的 gitlab 上运行
-    - if: $CI_COMMIT_BRANCH == "docker" && $CI_SERVER_HOST != 'gitlab.com' && $CI_SERVER_HOST != 'jihulab.com'
-  tags:
-    # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    # 极狐 GitLab Runner 标签（仅在极狐GitLab共享Runner上执行）
+    - jihulab
 
 # 嵌入
 include:
   # 对象储存
   # 已禁用，有需要时才开放此内容
   # - /upload.yml
-  # 使用 shell 执行器 部署服务
-  - /shell-service.yml
+  # 使用 k8s 执行器 打包、部署服务
+  - /k8s.yml
+  # 使用 shell 执行器 打包、部署服务
+  - /shell.yml
+  # 使用 docker 执行器 打包、部署服务
+  - /docker.yml
+  # 同步代码
+  - /sync.yml
