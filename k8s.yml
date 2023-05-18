@@ -221,47 +221,47 @@ k8s-publish:
     - mkdir -p /nfs/wechat-offiaccount/logs
     - mkdir -p /nfs/xxl-job-admin/logs
     # 查看 xuxiaowei-cloud 命名空间是否存在 mysql-deployment，如果不存在，准备创建 MySQL deployment
-    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || ls /nfs/mysql/init
-    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || cp docs/sql/*.sql /nfs/mysql/init
-    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || ls /nfs/mysql/init
+    - kubectl -n xuxiaowei-cloud-next get deployment mysql-deployment || ls /nfs/mysql/init
+    - kubectl -n xuxiaowei-cloud-next get deployment mysql-deployment || cp docs/sql/*.sql /nfs/mysql/init
+    - kubectl -n xuxiaowei-cloud-next get deployment mysql-deployment || ls /nfs/mysql/init
     # 查看 xuxiaowei-cloud 命名空间是否存在 mysql-deployment，如果不存在，使用命令根据文件创建 deployment
-    - kubectl -n xuxiaowei-cloud-nextget deployment mysql-deployment || kubectl create -f docs/deployment/mysql-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next get deployment mysql-deployment || kubectl create -f docs/deployment/mysql-deployment.yaml
     # 查看 xuxiaowei-cloud 命名空间是否存在 nacos-deployment，如果不存在，使用命令根据文件创建 deployment
-    - kubectl -n xuxiaowei-cloud-nextget deployment nacos-deployment || kubectl create -f docs/deployment/nacos-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next get deployment nacos-deployment || kubectl create -f docs/deployment/nacos-deployment.yaml
     # 查看 xuxiaowei-cloud 命名空间是否存在 redis-deployment，如果不存在，使用命令根据文件创建 deployment
-    - kubectl -n xuxiaowei-cloud-nextget deployment redis-deployment || kubectl create -f docs/deployment/redis-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next get deployment redis-deployment || kubectl create -f docs/deployment/redis-deployment.yaml
     # 查看 xuxiaowei-cloud 命名空间是否存在 sentinel-deployment，如果不存在，使用命令根据文件创建 deployment
-    - kubectl -n xuxiaowei-cloud-nextget deployment sentinel-deployment || kubectl create -f docs/deployment/sentinel-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next get deployment sentinel-deployment || kubectl create -f docs/deployment/sentinel-deployment.yaml
     # -n xuxiaowei-cloud：指定命名空间为 xuxiaowei-cloud
     # $CI_PIPELINE_ID：当前管道的实例级ID
     # 查看 xuxiaowei-cloud 命名空间是否存在，如果不存在，使用命令根据文件创建 deployment
-    - kubectl -n xuxiaowei-cloud-nextget deployment admin-server-deployment || kubectl create -f admin-server/admin-server-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next get deployment admin-server-deployment || kubectl create -f admin-server/admin-server-deployment.yaml
     # 设置镜像的新版本
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/admin-server-deployment admin-server=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment canal-deployment || kubectl create -f resource-services-parent/canal/canal-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/canal-deployment canal=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment file-deployment || kubectl create -f resource-services-parent/file/file-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/file-deployment file=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment gateway-deployment || kubectl create -f gateway/gateway-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/gateway-deployment gateway=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment master-data-deployment || kubectl create -f resource-services-parent/master-data/master-data-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/master-data-deployment master-data=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment passport-deployment || kubectl create -f passport/passport-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/passport-deployment passport=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment ui-deployment || kubectl create -f ui/ui-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/ui-deployment ui=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment user-deployment || kubectl create -f resource-services-parent/user/user-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/user-deployment user=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment webservice-deployment || kubectl create -f resource-services-parent/webservice/webservice-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/webservice-deployment webservice=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment websocket-deployment || kubectl create -f resource-services-parent/websocket/websocket-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/websocket-deployment websocket=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment wechat-miniprogram-deployment || kubectl create -f resource-services-parent/wechat-miniprogram/wechat-miniprogram-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/wechat-miniprogram-deployment wechat-miniprogram=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment wechat-offiaccount-deployment || kubectl create -f resource-services-parent/wechat-offiaccount/wechat-offiaccount-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/wechat-offiaccount-deployment wechat-offiaccount=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
-    - kubectl -n xuxiaowei-cloud-nextget deployment xxl-job-admin-deployment || kubectl create -f xxl-job-admin/xxl-job-admin-deployment.yaml
-    - kubectl -n xuxiaowei-cloud-nextset image deployment/xxl-job-admin-deployment xxl-job-admin=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next set image deployment/admin-server-deployment admin-server=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment canal-deployment || kubectl create -f resource-services-parent/canal/canal-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/canal-deployment canal=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment file-deployment || kubectl create -f resource-services-parent/file/file-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/file-deployment file=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment gateway-deployment || kubectl create -f gateway/gateway-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/gateway-deployment gateway=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment master-data-deployment || kubectl create -f resource-services-parent/master-data/master-data-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/master-data-deployment master-data=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment passport-deployment || kubectl create -f passport/passport-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/passport-deployment passport=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment ui-deployment || kubectl create -f ui/ui-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/ui-deployment ui=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment user-deployment || kubectl create -f resource-services-parent/user/user-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/user-deployment user=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment webservice-deployment || kubectl create -f resource-services-parent/webservice/webservice-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/webservice-deployment webservice=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment websocket-deployment || kubectl create -f resource-services-parent/websocket/websocket-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/websocket-deployment websocket=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment wechat-miniprogram-deployment || kubectl create -f resource-services-parent/wechat-miniprogram/wechat-miniprogram-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/wechat-miniprogram-deployment wechat-miniprogram=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment wechat-offiaccount-deployment || kubectl create -f resource-services-parent/wechat-offiaccount/wechat-offiaccount-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/wechat-offiaccount-deployment wechat-offiaccount=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - kubectl -n xuxiaowei-cloud-next get deployment xxl-job-admin-deployment || kubectl create -f xxl-job-admin/xxl-job-admin-deployment.yaml
+    - kubectl -n xuxiaowei-cloud-next set image deployment/xxl-job-admin-deployment xxl-job-admin=registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
   # https://docs.gitlab.com/ee/ci/yaml/index.html#rules
   # 极狐GitLab中文文档：https://docs.gitlab.cn/jh/ci/yaml/index.html#rules
   rules:
