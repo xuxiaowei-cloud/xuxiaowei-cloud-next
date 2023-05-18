@@ -78,7 +78,7 @@ docker-service-gateway:
   script:
     - docker stop gateway || echo '容器不存在'
     - docker rm gateway || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1101:1101 --name gateway -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1101:1101 --name gateway -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/gateway:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -99,7 +99,7 @@ docker-service-admin-server:
   script:
     - docker stop admin-server || echo '容器不存在'
     - docker rm admin-server || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1201:1201 --name admin-server -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1201:1201 --name admin-server -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/admin-server:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -120,7 +120,7 @@ docker-service-passport:
   script:
     - docker stop passport || echo '容器不存在'
     - docker rm passport || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1401:1401 --name passport -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1401:1401 --name passport -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/passport:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -141,7 +141,7 @@ docker-service-canal:
   script:
     - docker stop canal || echo '容器不存在'
     - docker rm canal || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1601:1601 --name canal -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1601:1601 --name canal -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/canal:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -162,7 +162,7 @@ docker-service-user:
   script:
     - docker stop user || echo '容器不存在'
     - docker rm user || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1701:1701 --name user -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1701:1701 --name user -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/user:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -183,7 +183,7 @@ docker-service-master-data:
   script:
     - docker stop master-data || echo '容器不存在'
     - docker rm master-data || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2201:2201 --name master-data -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2201:2201 --name master-data -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/master-data:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -204,7 +204,7 @@ docker-service-websocket:
   script:
     - docker stop websocket || echo '容器不存在'
     - docker rm websocket || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1801:1801 --name websocket -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1801:1801 --name websocket -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/websocket:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -225,7 +225,7 @@ docker-service-webservice:
   script:
     - docker stop webservice || echo '容器不存在'
     - docker rm webservice || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1901:1901 --name webservice -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1901:1901 --name webservice -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/webservice:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -246,7 +246,7 @@ docker-service-wechat-miniprogram:
   script:
     - docker stop wechat-miniprogram || echo '容器不存在'
     - docker rm wechat-miniprogram || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2001:2001 --name wechat-miniprogram -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2001:2001 --name wechat-miniprogram -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-miniprogram:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -267,7 +267,7 @@ docker-service-wechat-offiaccount:
   script:
     - docker stop wechat-offiaccount || echo '容器不存在'
     - docker rm wechat-offiaccount || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2101:2101 --name wechat-offiaccount -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2101:2101 --name wechat-offiaccount -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/wechat-offiaccount:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -288,7 +288,7 @@ docker-service-file:
   script:
     - docker stop file || echo '容器不存在'
     - docker rm file || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2301:2301 --name file -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 2301:2301 --name file -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/file:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -309,7 +309,7 @@ docker-service-xxl-job-admin:
   script:
     - docker stop xxl-job-admin || echo '容器不存在'
     - docker rm xxl-job-admin || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 5101:5101 --name xxl-job-admin -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 5101:5101 --name xxl-job-admin -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/xxl-job-admin:0.0.1-SNAPSHOT-$CI_PIPELINE_ID java -jar app.jar --spring.profiles.active=prod
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
@@ -330,7 +330,7 @@ docker-service-ui:
   script:
     - docker stop ui || echo '容器不存在'
     - docker rm ui || echo '容器不存在'
-    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1001:80 --name ui -d registry.docker.example.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
+    - docker run -itd --restart always -v /logs:/logs -v /etc/hosts:/etc/hosts -p 1001:80 --name ui -d registry.docker.example.next.xuxiaowei.cloud/cloud.xuxiaowei.next/ui:0.0.1-SNAPSHOT-$CI_PIPELINE_ID
   rules:
     # 仅在 docker 分支中执行
     - if: $CI_COMMIT_BRANCH == "docker"
