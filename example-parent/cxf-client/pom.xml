@@ -22,7 +22,7 @@
 
         <!-- Spring Boot 依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
-        <spring-boot.version>3.0.6</spring-boot.version>
+        <spring-boot.version>3.0.7</spring-boot.version>
 
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-frontend-jaxws -->
         <!-- https://mvnrepository.com/artifact/org.apache.cxf/cxf-rt-transports-http -->
