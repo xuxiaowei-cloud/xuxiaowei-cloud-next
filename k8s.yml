@@ -2,7 +2,7 @@
 # sonarqube
 sonarqube-check:
   stage: k8s-package
-  image: maven:3.6.3-jdk-11
+  image: maven:3.6.3-openjdk-17
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
     GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
