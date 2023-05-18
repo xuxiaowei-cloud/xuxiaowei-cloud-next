@@ -18,6 +18,10 @@ sync-gitee:
     - git pull --progress -v --no-rebase gitee $CI_COMMIT_BRANCH
     - git push -u gitee $CI_COMMIT_BRANCH
   rules:
+    # 匹配以 dependabot 开头的分支
+    - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
+      # 不执行
+      when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
 
@@ -37,6 +41,10 @@ sync-gitcode:
     - git pull --progress -v --no-rebase gitcode $CI_COMMIT_BRANCH
     - git push -u gitcode $CI_COMMIT_BRANCH
   rules:
+    # 匹配以 dependabot 开头的分支
+    - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
+      # 不执行
+      when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
 
@@ -59,6 +67,10 @@ sync-gitcode:
 #    - git config --global credential.https://gitlink.org.cn.password "$GITLINK_PRIVATE_TOKEN"
 #    - git push -u gitlink $CI_COMMIT_BRANCH
 #  rules:
+#    # 匹配以 dependabot 开头的分支
+#    - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
+#      # 不执行
+#      when: never
 #    # 非 PR 时触发
 #    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
 
@@ -78,6 +90,10 @@ sync-gitlab:
     - git pull --progress -v --no-rebase gitlab $CI_COMMIT_BRANCH
     - git push -u gitlab $CI_COMMIT_BRANCH
   rules:
+    # 匹配以 dependabot 开头的分支
+    - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
+      # 不执行
+      when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
   retry: 2
@@ -98,6 +114,10 @@ sync-github:
     - git pull --progress -v --no-rebase github $CI_COMMIT_BRANCH
     - git push -u github $CI_COMMIT_BRANCH
   rules:
+    # 匹配以 dependabot 开头的分支
+    - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
+      # 不执行
+      when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
   retry: 2
