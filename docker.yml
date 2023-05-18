@@ -64,7 +64,7 @@ docker-package:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 #
 # docker 发布网关服务
@@ -84,7 +84,7 @@ docker-service-gateway:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -105,7 +105,7 @@ docker-service-admin-server:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -126,7 +126,7 @@ docker-service-passport:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -147,7 +147,7 @@ docker-service-canal:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -168,7 +168,7 @@ docker-service-user:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -189,7 +189,7 @@ docker-service-master-data:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -210,7 +210,7 @@ docker-service-websocket:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -231,7 +231,7 @@ docker-service-webservice:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -252,7 +252,7 @@ docker-service-wechat-miniprogram:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -273,7 +273,7 @@ docker-service-wechat-offiaccount:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -294,7 +294,7 @@ docker-service-file:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -315,7 +315,7 @@ docker-service-xxl-job-admin:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
 
 
 #
@@ -336,4 +336,4 @@ docker-service-ui:
     - if: $CI_COMMIT_BRANCH == "docker"
   tags:
     # 仅在 tags 名称为 docker 的执行器上执行
-    - docker
+    - plugin-docker
