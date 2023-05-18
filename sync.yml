@@ -15,6 +15,7 @@ sync-gitee:
     - echo 当前分支：$CI_COMMIT_BRANCH
     - git checkout -b $CI_COMMIT_BRANCH
     - git remote add gitee https://xuxiaowei-com-cn:$GITEE_PRIVATE_TOKEN@gitee.com/$CI_PROJECT_PATH.git
+    - git pull --progress -v --no-rebase gitee $CI_COMMIT_BRANCH
     - git push -u gitee $CI_COMMIT_BRANCH
   rules:
     # 非 PR 时触发
@@ -33,6 +34,7 @@ sync-gitcode:
     - echo 当前分支：$CI_COMMIT_BRANCH
     - git checkout -b $CI_COMMIT_BRANCH
     - git remote add gitcode https://qq_32596527:$GITCODE_PRIVATE_TOKEN@gitcode.net/$CI_PROJECT_PATH.git
+    - git pull --progress -v --no-rebase gitcode $CI_COMMIT_BRANCH
     - git push -u gitcode $CI_COMMIT_BRANCH
   rules:
     # 非 PR 时触发
@@ -73,6 +75,7 @@ sync-gitlab:
     - echo 当前分支：$CI_COMMIT_BRANCH
     - git checkout -b $CI_COMMIT_BRANCH
     - git remote add gitlab https://xuxiaowei-com-cn:$GITLAB_PRIVATE_TOKEN@gitlab.com/$CI_PROJECT_PATH.git
+    - git pull --progress -v --no-rebase gitlab $CI_COMMIT_BRANCH
     - git push -u gitlab $CI_COMMIT_BRANCH
   rules:
     # 非 PR 时触发
@@ -92,6 +95,7 @@ sync-github:
     - echo 当前分支：$CI_COMMIT_BRANCH
     - git checkout -b $CI_COMMIT_BRANCH
     - git remote add github https://xuxiaowei-com-cn:$GITHUB_PRIVATE_TOKEN@github.com/$CI_PROJECT_PATH.git
+    - git pull --progress -v --no-rebase github $CI_COMMIT_BRANCH
     - git push -u github $CI_COMMIT_BRANCH
   rules:
     # 非 PR 时触发
