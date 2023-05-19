@@ -153,6 +153,8 @@ jobs:
       # 将代码同步到 极狐GitLab
       - name: Sync JihuLab
         run: |
+          git config --global user.email "xuxiaowei@xuxiaowei.com.cn"
+          git config --global user.name "徐晓伟"
           # 查看当前分支
           echo 当前分支：$GITHUB_REF_NAME
           echo https://jihulab.com/$GITHUB_REPOSITORY.git
