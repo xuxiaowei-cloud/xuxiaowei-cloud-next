@@ -89,6 +89,47 @@ jobs:
           rm -rf /home/runner/.m2/repository/cn/com/xuxiaowei
 
 
+  # https://docs.github.com/zh/enterprise-cloud@latest/code-security/dependabot/working-with-dependabot/automating-dependabot-with-github-actions
+  dependabot:
+    name: Dependabot
+    # 需要所有 build 完成后，才运行
+    needs: build
+    runs-on: ${{ matrix.os }}
+    permissions:
+      # 可以修改仓库中的文件内容
+      contents: write
+      # # 可以新建或修改 Pull Request
+      pull-requests: write
+    # 依赖机器人 && 仅PR
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request' }}
+
+    strategy:
+      matrix:
+        os: [ "ubuntu-latest" ]
+
+    steps:
+
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: echo
+        run: |
+          echo ${{ github.event.pull_request.html_url }}
+          echo ${{ steps.metadata.outputs.dependency-names }}
+          echo ${{ steps.metadata.outputs.update-type }}
+          echo ${{ 'version-update:semver-patch' }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        # if: ${{contains(steps.metadata.outputs.dependency-names, 'my-dependency') && steps.metadata.outputs.update-type == 'version-update:semver-patch'}}
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
   sync:
     name: Sync
     # 需要所有 build 完成后，才运行
