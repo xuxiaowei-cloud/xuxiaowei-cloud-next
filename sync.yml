@@ -24,6 +24,9 @@ sync-gitee:
       when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2
+  # 允许失败
+  allow_failure: true
 
 sync-gitcode:
   stage: sync
@@ -47,6 +50,9 @@ sync-gitcode:
       when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2
+  # 允许失败
+  allow_failure: true
 
 #sync-gitlink:
 #  stage: sync
@@ -73,6 +79,9 @@ sync-gitcode:
 #      when: never
 #    # 非 PR 时触发
 #    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+#  retry: 2
+#  # 允许失败
+#  allow_failure: true
 
 sync-gitlab:
   stage: sync
@@ -97,6 +106,8 @@ sync-gitlab:
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
   retry: 2
+  # 允许失败
+  allow_failure: true
 
 sync-github:
   stage: sync
@@ -121,3 +132,5 @@ sync-github:
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
   retry: 2
+  # 允许失败
+  allow_failure: true
