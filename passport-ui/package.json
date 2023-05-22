@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@types/crypto-js": "4.1.1",
-    "@types/node": "20.2.1",
+    "@types/node": "20.2.3",
     "@typescript-eslint/eslint-plugin": "5.59.6",
     "@typescript-eslint/parser": "5.59.6",
     "@vitejs/plugin-vue": "4.2.3",
@@ -60,7 +60,7 @@
     "lint-staged": "13.2.2",
     "terser": "5.17.4",
     "typescript": "5.0.4",
-    "unocss": "0.51.13",
+    "unocss": "0.52.0",
     "unplugin-auto-import": "0.16.0",
     "unplugin-vue-components": "0.24.1",
     "vite": "4.3.8",
