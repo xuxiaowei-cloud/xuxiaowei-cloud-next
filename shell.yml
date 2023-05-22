@@ -18,6 +18,7 @@ shell-package:
     - mvn clean -e -U package source:jar javadoc:jar install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
   cache:
+    key: "${CI_JOB_NAME}"
     paths:
       - .m2/repository
       - passport-ui/node/

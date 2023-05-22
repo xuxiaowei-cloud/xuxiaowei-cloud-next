@@ -3,6 +3,8 @@
 stages:
   # 极狐GitLab 构建/测试/扫描依赖漏洞等
   - package
+  # 代码自动合并
+  - merge
   # 使用 k8s（也可使用 docker、shell 等执行器，需要能使用 docker 相关命令）构建、制作 docker 镜像、推送到 docker 私服
   - k8s-package
   # 在 k8s 所在的服务器上执行项目滚动发布
@@ -33,7 +35,7 @@ murphysec:
     - murphysec scan . --log-level info --write-log-to murphysec.log --json
   # https://docs.gitlab.cn/jh/ci/yaml/index.html#cache
   cache:
-    key: murphysec
+    key: "${CI_JOB_NAME}"
     paths:
       - .m2/repository
   artifacts:
@@ -88,6 +90,7 @@ coverage:
     - mvn -pl xxl-job-admin -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - rm -rf .m2/repository/cloud/xuxiaowei
   cache:
+    key: "${CI_JOB_NAME}"
     paths:
       - .m2/repository
       - passport-ui/node/
@@ -104,6 +107,23 @@ coverage:
   tags:
     # 极狐 GitLab Runner 标签（仅在极狐GitLab共享Runner上执行）
     - jihulab
+
+
+# dependabot
+dependabot:
+  stage: merge
+  image: bitnami/git:2.40.1
+  needs:
+    - job: coverage
+  script:
+    # https://docs.gitlab.cn/jh/api/merge_requests.html#%E5%90%88%E5%B9%B6%E5%90%88%E5%B9%B6%E8%AF%B7%E6%B1%82
+    - echo "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/merge"
+    # PR_TOKEN：需要有合并权限
+    - 'curl -H "PRIVATE-TOKEN: $PR_TOKEN" --request PUT --url "$CI_API_V4_URL/projects/$CI_PROJECT_ID/merge_requests/$CI_MERGE_REQUEST_IID/merge"'
+  rules:
+    # PR 到 main 分支时预执行 && 作者是 xuxiaowei-com-cn
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main" && $GITLAB_USER_LOGIN == 'xuxiaowei-com-cn'
+
 
 # 嵌入
 include:
