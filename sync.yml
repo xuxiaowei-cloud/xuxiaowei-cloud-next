@@ -61,7 +61,11 @@ sync-gitlink:
   image: bitnami/git:2.40.1
   script:
     - mkdir -p ~/.ssh
-    - echo "$GITLINK_ID_RSA" > ~/.ssh/gitlink_id_rsa
+    # 为了让GitLab隐藏变量 GITLINK_ID_RSA，所以添加 GITLINK_ID_RSA 时，去掉了开头、结尾与换行
+    # 在此处添加开头与结尾（ssh 添加时必须包含）
+    - echo "-----BEGIN OPENSSH PRIVATE KEY-----" >> ~/.ssh/gitlink_id_rsa
+    - echo "$GITLINK_ID_RSA" >> ~/.ssh/gitlink_id_rsa
+    - echo "-----END OPENSSH PRIVATE KEY-----" >> ~/.ssh/gitlink_id_rsa
     - chmod 600 ~/.ssh/gitlink_id_rsa
     - eval $(ssh-agent -s)
     - ssh-add ~/.ssh/gitlink_id_rsa
