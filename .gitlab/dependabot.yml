@@ -12,6 +12,7 @@
 version: 2
 updates:
   - package-ecosystem: "maven" # See documentation for possible values
+    auto-merge: true
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
@@ -19,12 +20,14 @@ updates:
       timezone: "Asia/Shanghai"
   - package-ecosystem: "npm"
     directory: "/passport-ui"
+    auto-merge: true
     schedule:
       interval: "daily"
       time: "08:00"
       timezone: "Asia/Shanghai"
   - package-ecosystem: "npm"
     directory: "/ui"
+    auto-merge: true
     schedule:
       interval: "daily"
       time: "08:00"

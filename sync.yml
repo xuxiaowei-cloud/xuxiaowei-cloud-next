@@ -24,6 +24,9 @@ sync-gitee:
       when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2
+  # 允许失败
+  allow_failure: true
 
 sync-gitcode:
   stage: sync
@@ -47,32 +50,44 @@ sync-gitcode:
       when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2
+  # 允许失败
+  allow_failure: true
 
-#sync-gitlink:
-#  stage: sync
-#  variables:
-#    GIT_DEPTH: 0 # 取消浅层克隆
-#  image: bitnami/git:2.40.1
-#  script:
-#    - git config --global user.email $GITLAB_USER_EMAIL
-#    - git config --global user.name $GITLAB_USER_NAME
-#    - git config --global user.email
-#    - git config --global user.name
-#    - echo 当前分支：$CI_COMMIT_BRANCH
-#    - git checkout -b $CI_COMMIT_BRANCH
-#    # - git remote add gitlink https://xuxiaowei:$GITLINK_PRIVATE_TOKEN@gitlink.org.cn/$CI_PROJECT_PATH.git
-#    - git remote add gitlink https://gitlink.org.cn/$CI_PROJECT_PATH.git
-#    - git config --global credential.helper store
-#    - git config --global credential.https://gitlink.org.cn.username xuxiaowei
-#    - git config --global credential.https://gitlink.org.cn.password "$GITLINK_PRIVATE_TOKEN"
-#    - git push -u gitlink $CI_COMMIT_BRANCH
-#  rules:
-#    # 匹配以 dependabot 开头的分支
-#    - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
-#      # 不执行
-#      when: never
-#    # 非 PR 时触发
-#    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+sync-gitlink:
+  stage: sync
+  variables:
+    GIT_DEPTH: 0 # 取消浅层克隆
+  image: bitnami/git:2.40.1
+  script:
+    - mkdir -p ~/.ssh
+    # 为了让GitLab隐藏变量 GITLINK_ID_RSA，所以添加 GITLINK_ID_RSA 时，去掉了开头、结尾与换行
+    # 在此处添加开头与结尾（ssh 添加时必须包含）
+    - echo "-----BEGIN OPENSSH PRIVATE KEY-----" >> ~/.ssh/gitlink_id_rsa
+    - echo "$GITLINK_ID_RSA" >> ~/.ssh/gitlink_id_rsa
+    - echo "-----END OPENSSH PRIVATE KEY-----" >> ~/.ssh/gitlink_id_rsa
+    - chmod 600 ~/.ssh/gitlink_id_rsa
+    - eval $(ssh-agent -s)
+    - ssh-add ~/.ssh/gitlink_id_rsa
+    - git config --global user.email $GITLAB_USER_EMAIL
+    - git config --global user.name $GITLAB_USER_NAME
+    - git config --global user.email
+    - git config --global user.name
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - git checkout -b $CI_COMMIT_BRANCH
+    - ssh-keyscan -H code.gitlink.org.cn >> ~/.ssh/known_hosts
+    - git remote add gitlink git@code.gitlink.org.cn:$CI_PROJECT_PATH.git
+    - git push -u gitlink $CI_COMMIT_BRANCH
+  rules:
+    # 匹配以 dependabot 开头的分支
+    - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
+      # 不执行
+      when: never
+    # 非 PR 时触发
+    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2
+  # 允许失败
+  allow_failure: true
 
 sync-gitlab:
   stage: sync
@@ -97,6 +112,8 @@ sync-gitlab:
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
   retry: 2
+  # 允许失败
+  allow_failure: true
 
 sync-github:
   stage: sync
@@ -121,3 +138,5 @@ sync-github:
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
   retry: 2
+  # 允许失败
+  allow_failure: true

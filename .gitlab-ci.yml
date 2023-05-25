@@ -33,7 +33,7 @@ murphysec:
     - murphysec scan . --log-level info --write-log-to murphysec.log --json
   # https://docs.gitlab.cn/jh/ci/yaml/index.html#cache
   cache:
-    key: murphysec
+    key: "${CI_JOB_NAME}"
     paths:
       - .m2/repository
   artifacts:
@@ -88,6 +88,7 @@ coverage:
     - mvn -pl xxl-job-admin -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - rm -rf .m2/repository/cloud/xuxiaowei
   cache:
+    key: "${CI_JOB_NAME}"
     paths:
       - .m2/repository
       - passport-ui/node/
@@ -104,6 +105,7 @@ coverage:
   tags:
     # 极狐 GitLab Runner 标签（仅在极狐GitLab共享Runner上执行）
     - jihulab
+
 
 # 嵌入
 include:

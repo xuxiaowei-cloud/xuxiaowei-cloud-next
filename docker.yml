@@ -53,6 +53,7 @@ docker-package:
     # 删除本地 Maven 仓库中的产物（依赖），以提高缓存速度（本次的产物在下一次使用依赖时是无用的，会重新生成）
     - rm -rf .m2/repository/cloud/xuxiaowei
   cache:
+    key: "${CI_JOB_NAME}"
     paths:
       - .m2/repository
       - passport-ui/node/
