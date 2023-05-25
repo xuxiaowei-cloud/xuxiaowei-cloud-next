@@ -108,25 +108,31 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 	public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
 
 		// 反应式授权管理器
-		http.authorizeExchange().anyExchange().access(this);
+		http.authorizeExchange(authorizeExchangeCustomizer -> {
+			authorizeExchangeCustomizer.anyExchange().access(this);
+		});
 
 		// 临时禁用 跨站请求伪造 CSRF
 		// 待转化为配置文件
-		http.csrf().disable();
+		http.csrf(ServerHttpSecurity.CsrfSpec::disable);
 
 		// 禁用 form 登录
-		http.formLogin().disable();
+		http.formLogin(ServerHttpSecurity.FormLoginSpec::disable);
 
 		http.oauth2ResourceServer(oauth2ResourceServerCustomizer -> {
 
 			// 资源服务配置秘钥
 			// 启用 OAuth2 JWT 资源服务器支持
 			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
-			oauth2ResourceServerCustomizer.jwt().publicKey(rsaPublicKey);
+			oauth2ResourceServerCustomizer.jwt(jwtCustomizer -> {
+				jwtCustomizer.publicKey(rsaPublicKey);
+			});
 
 			// 检查数据库中是否存在Token
 			// 该功能仅在网关中使用，否则会造成数据库压力较大
-			oauth2ResourceServerCustomizer.jwt().jwtAuthenticationConverter(jwtAuthenticationConverter);
+			oauth2ResourceServerCustomizer.jwt(jwtCustomizer -> {
+				jwtCustomizer.jwtAuthenticationConverter(jwtAuthenticationConverter);
+			});
 
 			// 资源服务异常切入点（验证Token异常）
 			oauth2ResourceServerCustomizer.authenticationEntryPoint(serverAuthenticationEntryPoint);
@@ -141,12 +147,18 @@ public class ReactiveAuthorizationManagerConfiguration implements ReactiveAuthor
 		// 设置是否支持使用 URI 查询参数传输访问令牌。默认为 {@code false}。
 		ServerBearerTokenAuthenticationConverter bearerTokenConverter = new ServerBearerTokenAuthenticationConverter();
 		bearerTokenConverter.setAllowUriQueryParameter(true);
-		http.oauth2ResourceServer().bearerTokenConverter(bearerTokenConverter);
+		http.oauth2ResourceServer(oauth2ResourceServerCustomizer -> {
+			oauth2ResourceServerCustomizer.bearerTokenConverter(bearerTokenConverter);
+		});
 
 		// 身份验证入口点
-		http.exceptionHandling().authenticationEntryPoint(serverAuthenticationEntryPoint);
+		http.exceptionHandling(exceptionHandlingCustomizer -> {
+			exceptionHandlingCustomizer.authenticationEntryPoint(serverAuthenticationEntryPoint);
+		});
 		// 服务器访问被拒绝处理程序
-		http.oauth2ResourceServer().accessDeniedHandler(serverAccessDeniedHandler);
+		http.exceptionHandling(exceptionHandlingCustomizer -> {
+			exceptionHandlingCustomizer.accessDeniedHandler(serverAccessDeniedHandler);
+		});
 
 		return http.build();
 	}

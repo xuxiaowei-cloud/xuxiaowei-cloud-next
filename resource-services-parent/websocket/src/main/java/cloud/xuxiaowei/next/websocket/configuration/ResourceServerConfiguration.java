@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -87,16 +87,17 @@ public class ResourceServerConfiguration {
 		});
 
 		// 禁用 form 登录
-		http.formLogin().disable();
+		http.formLogin(AbstractHttpConfigurer::disable);
 
 		// 资源服务配置秘钥
-		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
-			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
-			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
-				.withPublicKey(rsaPublicKey);
-			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
-			oauth2ResourceServer.decoder(nimbusJwtDecoder);
-		});
+		http.oauth2ResourceServer(
+				oauth2ResourceServerCustomizer -> oauth2ResourceServerCustomizer.jwt(oauth2ResourceServer -> {
+					RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
+					NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
+						.withPublicKey(rsaPublicKey);
+					NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
+					oauth2ResourceServer.decoder(nimbusJwtDecoder);
+				}));
 
 		// 异常处理
 		http.exceptionHandling(exceptionHandlingCustomizer -> {
@@ -108,7 +109,7 @@ public class ResourceServerConfiguration {
 		});
 
 		// CSRF 配置
-		http.csrf().requireCsrfProtectionMatcher(csrfRequestMatcher);
+		http.csrf(csrfCustomizer -> csrfCustomizer.requireCsrfProtectionMatcher(csrfRequestMatcher));
 
 		return http.build();
 	}

@@ -125,13 +125,14 @@ public class WebSecurityConfigurerAdapterConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 		// 资源服务配置秘钥
-		http.oauth2ResourceServer().jwt(oauth2ResourceServer -> {
-			RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
-			NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
-				.withPublicKey(rsaPublicKey);
-			NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
-			oauth2ResourceServer.decoder(nimbusJwtDecoder);
-		});
+		http.oauth2ResourceServer(
+				oauth2ResourceServerCustomizer -> oauth2ResourceServerCustomizer.jwt(oauth2ResourceServer -> {
+					RSAPublicKey rsaPublicKey = cloudJwkKeyProperties.rsaPublicKey();
+					NimbusJwtDecoder.PublicKeyJwtDecoderBuilder publicKeyJwtDecoderBuilder = NimbusJwtDecoder
+						.withPublicKey(rsaPublicKey);
+					NimbusJwtDecoder nimbusJwtDecoder = publicKeyJwtDecoderBuilder.build();
+					oauth2ResourceServer.decoder(nimbusJwtDecoder);
+				}));
 
 		// 异常处理
 		http.exceptionHandling(exceptionHandlingCustomizer -> {
@@ -201,7 +202,7 @@ public class WebSecurityConfigurerAdapterConfiguration {
 			.tokenValiditySeconds(cloudRememberMeProperties.getTokenValiditySeconds()));
 
 		// CSRF 配置
-		http.csrf().requireCsrfProtectionMatcher(csrfRequestMatcher);
+		http.csrf(csrfCustomizer -> csrfCustomizer.requireCsrfProtectionMatcher(csrfRequestMatcher));
 
 		return http.build();
 	}
