@@ -1,4 +1,4 @@
-FROM docker.io/library/nginx:1.23.3
+FROM docker.io/library/nginx:1.25.0
 
 WORKDIR /home
 
