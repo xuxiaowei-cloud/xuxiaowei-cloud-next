@@ -60,7 +60,7 @@
     "lint-staged": "13.2.2",
     "terser": "5.17.6",
     "typescript": "5.0.4",
-    "unocss": "0.52.3",
+    "unocss": "0.52.4",
     "unplugin-auto-import": "0.16.2",
     "unplugin-vue-components": "0.24.1",
     "vite": "4.3.9",
