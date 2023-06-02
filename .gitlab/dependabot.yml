@@ -9,10 +9,13 @@
 # 自定义依赖项更新：https://docs.github.com/zh/code-security/dependabot/dependabot-version-updates/customizing-dependency-updates
 # 管理依赖项更新的所有拉取请求：https://docs.github.com/zh/code-security/dependabot/working-with-dependabot/managing-pull-requests-for-dependency-updates
 
+# 配置：https://dependabot-gitlab.gitlab.io/dependabot/config/configuration.html
+
 version: 2
 updates:
   - package-ecosystem: "maven" # See documentation for possible values
     auto-merge: true
+    open-pull-requests-limit: 3
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
@@ -22,6 +25,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/passport-ui"
     auto-merge: true
+    open-pull-requests-limit: 3
     schedule:
       interval: "daily"
       time: "08:00"
@@ -29,6 +33,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/ui"
     auto-merge: true
+    open-pull-requests-limit: 3
     schedule:
       interval: "daily"
       time: "08:00"
