@@ -140,19 +140,25 @@ jobs:
         run: |
           git config --global user.email "xuxiaowei@xuxiaowei.com.cn"
           git config --global user.name "徐晓伟"
-          # 切换
+          # 设置 SSH 秘钥
+          mkdir -p ~/.ssh
+          echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval $(ssh-agent -s) && ssh-add ~/.ssh/id_rsa
+          # 信任域名
+          ssh-keyscan -H jihulab.com >> ~/.ssh/known_hosts
+          # 切换 main 分支
           git checkout main
-          # 拉取
+          # 拉取 main 分支
           git pull origin main
-          # 查看当前分支
-          echo https://jihulab.com/$GITHUB_REPOSITORY.git
+          # 查看远端 极狐GitLab
+          echo git@jihulab.com:$GITHUB_REPOSITORY.git
           # 添加远端 极狐GitLab
-          git remote add jihulab https://xuxiaowei-com-cn:${{secrets.JIHULAB_PRIVATE_TOKEN}}@jihulab.com/$GITHUB_REPOSITORY.git
-          # 拉取
+          git remote add jihulab git@jihulab.com:$GITHUB_REPOSITORY.git
+          # 拉取 main 分支
           git pull --progress -v --no-rebase jihulab main
-          # 推动当前分支
+          # 推送 main 分支
           git push --progress jihulab main:main
-
 
   sync:
     name: Sync
@@ -179,12 +185,20 @@ jobs:
         run: |
           git config --global user.email "xuxiaowei@xuxiaowei.com.cn"
           git config --global user.name "徐晓伟"
+          # 设置 SSH 秘钥
+          mkdir -p ~/.ssh
+          echo "${{ secrets.JIHULAB_ID_RSA }}" >> ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          eval $(ssh-agent -s) && ssh-add ~/.ssh/id_rsa
+          # 信任域名
+          ssh-keyscan -H jihulab.com >> ~/.ssh/known_hosts
           # 查看当前分支
           echo 当前分支：$GITHUB_REF_NAME
-          echo https://jihulab.com/$GITHUB_REPOSITORY.git
+          # 查看远端 极狐GitLab
+          echo git@jihulab.com:$GITHUB_REPOSITORY.git
           # 添加远端 极狐GitLab
-          git remote add jihulab https://xuxiaowei-com-cn:${{secrets.JIHULAB_PRIVATE_TOKEN}}@jihulab.com/$GITHUB_REPOSITORY.git
+          git remote add jihulab git@jihulab.com:$GITHUB_REPOSITORY.git
           # 拉取
           git pull --progress -v --no-rebase jihulab $GITHUB_REF_NAME
-          # 推动当前分支
+          # 推送当前分支
           git push --progress jihulab $GITHUB_REF_NAME:$GITHUB_REF_NAME
