@@ -71,6 +71,8 @@ jobs:
       - name: Build with Maven
         run: |
           mvn clean -e -U package source:jar javadoc:jar install -DskipTests
+          sed -i 's@registry\.jihulab\.com/xuxiaowei-cloud/xuxiaowei-cloud-next/alibabadragonwell/dragonwell@docker.io/alibabadragonwell/dragonwell@g' ./**/Dockerfile ./**/**/Dockerfile
+          sed -i 's@registry\.jihulab\.com/xuxiaowei-cloud/xuxiaowei-cloud-next/nginx@docker.io/library/nginx@g' ./**/Dockerfile
           mvn -pl admin-server docker:build -Ddocker.host=unix:///var/run/docker.sock
           mvn -pl gateway docker:build -Ddocker.host=unix:///var/run/docker.sock
           mvn -pl passport docker:build -Ddocker.host=unix:///var/run/docker.sock
