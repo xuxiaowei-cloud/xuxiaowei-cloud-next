@@ -79,7 +79,7 @@
     "eslint-plugin-n": "16.0.1",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-vue": "9.15.1",
-    "lint-staged": "13.2.2",
+    "lint-staged": "13.2.3",
     "terser": "5.18.2",
     "typescript": "5.1.5",
     "unocss": "0.53.4",
