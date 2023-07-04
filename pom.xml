@@ -173,7 +173,7 @@
         <!-- 阿里云 短信服务 升级版 SDK Java：https://next.api.aliyun.com/api-tools/sdk/Dysmsapi?language=java-tea -->
         <!-- https://mvnrepository.com/artifact/com.aliyun/dysmsapi20170525 -->
         <!-- https://repo1.maven.org/maven2/com/aliyun/dysmsapi20170525 -->
-        <dysmsapi20170525.version>2.0.23</dysmsapi20170525.version>
+        <dysmsapi20170525.version>2.0.24</dysmsapi20170525.version>
         <!-- 阿里云 短信服务 升级版 SDK Java（异步）：https://next.api.aliyun.com/api-tools/sdk/Dysmsapi?language=java-async-tea -->
         <!-- https://mvnrepository.com/artifact/com.aliyun/alibabacloud-dysmsapi20170525 -->
         <!-- https://repo1.maven.org/maven2/com/aliyun/alibabacloud-dysmsapi20170525/ -->
