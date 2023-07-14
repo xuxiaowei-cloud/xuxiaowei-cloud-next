@@ -55,7 +55,7 @@
     "axios": "1.4.0",
     "crypto-js": "4.1.1",
     "echarts": "5.4.2",
-    "element-plus": "2.3.7",
+    "element-plus": "2.3.8",
     "js-cookie": "3.0.5",
     "jsencrypt": "3.3.2",
     "pinia": "2.1.4",
