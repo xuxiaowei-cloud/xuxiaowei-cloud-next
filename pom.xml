@@ -92,10 +92,10 @@
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/boot/spring-boot-starter-velocity -->
         <spring-boot-starter-velocity.version>1.4.7.RELEASE</spring-boot-starter-velocity.version>
         <!-- 多数据源 -->
-        <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
-        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/dynamic-datasource-spring-boot-starter -->
-        <!-- https://github.com/baomidou/dynamic-datasource-spring-boot-starter -->
-        <dynamic-datasource-spring-boot-starter.version>4.1.2</dynamic-datasource-spring-boot-starter.version>
+        <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
+        <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/dynamic-datasource-spring-boot3-starter -->
+        <!-- https://github.com/baomidou/dynamic-datasource-spring-boot3-starter -->
+        <dynamic-datasource-spring-boot3-starter.version>4.1.2</dynamic-datasource-spring-boot3-starter.version>
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-extension -->
         <!-- https://github.com/baomidou/mybatis-plus -->
@@ -357,11 +357,11 @@
                 <version>${spring-boot-starter-velocity.version}</version>
             </dependency>
             <!-- 多数据源 -->
-            <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot-starter -->
+            <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
-                <version>${dynamic-datasource-spring-boot-starter.version}</version>
+                <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
+                <version>${dynamic-datasource-spring-boot3-starter.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
             <dependency>
