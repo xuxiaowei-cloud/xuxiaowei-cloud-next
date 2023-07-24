@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : 192.168.5.4-docker
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80028
- Source Host           : 192.168.5.4:3306
+ Source Server Version : 50736
+ Source Host           : localhost:3306
  Source Schema         : xuxiaowei_cloud_next
 
  Target Server Type    : MySQL
- Target Server Version : 80028
+ Target Server Version : 50736
  File Encoding         : 65001
 
- Date: 22/06/2022 23:48:36
+ Date: 24/07/2023 16:37:45
 */
 
 SET NAMES utf8mb4;
@@ -172,6 +172,14 @@ CREATE TABLE `oauth2_authorization`  (
   `refresh_token_issued_at` timestamp NULL DEFAULT NULL,
   `refresh_token_expires_at` timestamp NULL DEFAULT NULL,
   `refresh_token_metadata` blob NULL,
+  `user_code_value` blob NULL,
+  `user_code_issued_at` timestamp NULL DEFAULT NULL,
+  `user_code_expires_at` timestamp NULL DEFAULT NULL,
+  `user_code_metadata` blob NULL,
+  `device_code_value` blob NULL,
+  `device_code_issued_at` timestamp NULL DEFAULT NULL,
+  `device_code_expires_at` timestamp NULL DEFAULT NULL,
+  `device_code_metadata` blob NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '授权表。\r\n原表结构：oauth2-authorization-server-*.*.*.jar!/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql\r\n原表结构：https://github.com/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql\r\nGitCode 镜像仓库：https://gitcode.net/mirrors/spring-projects/spring-authorization-server/blob/main/oauth2-authorization-server/src/main/resources/org/springframework/security/oauth2/server/authorization/oauth2-authorization-schema.sql\r\n' ROW_FORMAT = DYNAMIC;
 
@@ -200,6 +208,7 @@ CREATE TABLE `oauth2_registered_client`  (
   `client_authentication_methods` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `authorization_grant_types` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `redirect_uris` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `post_logout_redirect_uris` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `scopes` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `client_settings` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `token_settings` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
