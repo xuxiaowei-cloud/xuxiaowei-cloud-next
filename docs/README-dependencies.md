@@ -1,14 +1,14 @@
 # dependencies
 
-- 更新日期：2023-07-24
+- 更新日期：2023-07-27
 
 ```
 cloud.xuxiaowei.next:xuxiaowei-cloud-next-starter-parent:pom:0.0.1-SNAPSHOT
 
 
 cloud.xuxiaowei.next:admin-server:jar:0.0.1-SNAPSHOT
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.3:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.1.2:compile
 │        └──org.springframework.cloud:spring-cloud-starter-loadbalancer:jar:4.0.3:compile
@@ -109,7 +109,7 @@ cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT
 cloud.xuxiaowei.next.commons:cloud-starter-log:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-core:jar:0.0.1-SNAPSHOT:compile
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-mybatis:jar:0.0.1-SNAPSHOT:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-test:jar:3.1.2:test
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.3:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.1.2:compile
@@ -213,8 +213,8 @@ cloud.xuxiaowei.next:gateway:jar:0.0.1-SNAPSHOT
 │        └──cn.hutool:hutool-all:jar:5.8.20:compile
 │        └──org.springframework.security:spring-security-oauth2-authorization-server:jar:1.1.1:compile
 │        └──org.springframework.boot:spring-boot-starter-oauth2-resource-server:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.3:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.1.2:compile
 │        └──org.springframework.cloud:spring-cloud-starter-gateway:jar:4.0.6:compile
@@ -239,8 +239,8 @@ cloud.xuxiaowei.next:passport:jar:0.0.1-SNAPSHOT
 │        └──cn.com.xuxiaowei.boot.next:spring-boot-starter-oauth2:jar:0.1.0-SNAPSHOT:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
 │        └──cn.hutool:hutool-all:jar:5.8.20:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.3:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -253,8 +253,8 @@ cloud.xuxiaowei.next:resource-services-parent:pom:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -270,8 +270,8 @@ cloud.xuxiaowei.next:canal:jar:0.0.1-SNAPSHOT
 │        └──cloud.xuxiaowei.next.commons:cloud-starter-oauth2:jar:0.0.1-SNAPSHOT:compile
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -284,8 +284,8 @@ cloud.xuxiaowei.next:file:jar:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -298,8 +298,8 @@ cloud.xuxiaowei.next:master-data:jar:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -314,8 +314,8 @@ cloud.xuxiaowei.next:user:jar:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -333,8 +333,8 @@ cloud.xuxiaowei.next:webservice:jar:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -349,8 +349,8 @@ cloud.xuxiaowei.next:websocket:jar:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -364,8 +364,8 @@ cloud.xuxiaowei.next:wechat-miniprogram:jar:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -378,8 +378,8 @@ cloud.xuxiaowei.next:wechat-offiaccount:jar:0.0.1-SNAPSHOT
 │        └──org.springdoc:springdoc-openapi-starter-webmvc-ui:jar:2.1.0:compile
 │        └──com.github.therapi:therapi-runtime-javadoc:jar:0.15.0:compile
 │        └──org.springframework.boot:spring-boot-starter-web:jar:3.1.2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──org.springframework.boot:spring-boot-starter-jdbc:jar:3.1.2:compile
 │        └──org.springframework.boot:spring-boot-configuration-processor:jar:3.1.2:compile
 │        └──org.projectlombok:lombok:jar:1.18.28:compile
@@ -391,8 +391,8 @@ cloud.xuxiaowei.next:ui:jar:0.0.1-SNAPSHOT
 
 cloud.xuxiaowei.next:xxl-job-admin:jar:0.0.1-SNAPSHOT
 │        └──com.xuxueli:xxl-job-core:jar:2.4.0:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0-RC2:compile
-│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0-RC2:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:jar:2022.0.0.0:compile
+│        └──com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:jar:2022.0.0.0:compile
 │        └──p6spy:p6spy:jar:3.9.1:compile
 │        └──org.springframework.cloud:spring-cloud-starter-bootstrap:jar:4.0.3:compile
 │        └──org.springframework.boot:spring-boot-starter-actuator:jar:3.1.2:compile
