@@ -119,7 +119,7 @@
 
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/apache/commons/commons-lang3 -->
-        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <commons-lang3.version>3.13.0</commons-lang3.version>
 
         <!-- 阿里巴巴 MySQL binlog 增量订阅、消费服务 -->
         <!-- https://mvnrepository.com/artifact/com.alibaba.otter/canal.client -->
