@@ -214,7 +214,7 @@
         <!-- https://repo1.maven.org/maven2/io/fabric8/docker-maven-plugin/ -->
         <!-- https://mvnrepository.com/artifact/io.fabric8/docker-maven-plugin -->
         <!-- https://dmp.fabric8.io/ -->
-        <docker-maven-plugin.version>0.43.1</docker-maven-plugin.version>
+        <docker-maven-plugin.version>0.43.2</docker-maven-plugin.version>
         <!-- docker 守护程序的 URL -->
         <docker.host>http://host.docker.example.next.xuxiaowei.cloud:2375</docker.host>
         <!-- docker 私库 -->
