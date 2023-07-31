@@ -82,7 +82,7 @@
     "lint-staged": "13.2.3",
     "terser": "5.19.2",
     "typescript": "5.1.6",
-    "unocss": "0.53.6",
+    "unocss": "0.54.1",
     "unplugin-auto-import": "0.16.6",
     "unplugin-vue-components": "0.25.1",
     "vite": "4.4.7",
