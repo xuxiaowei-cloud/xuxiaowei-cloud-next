@@ -60,7 +60,10 @@ coverage:
   stage: package
   image: maven:3.6.3-openjdk-17
   services:
-    - docker:dind
+    - name: docker:dind
+      variables:
+        # 关闭 TLS
+        DOCKER_TLS_CERTDIR: ""
   script:
     - echo $DOCKER_PORT
     - echo $DOCKER_PORT_2375_TCP
@@ -71,21 +74,31 @@ coverage:
     - echo $DOCKER_PORT_2376_TCP_PROTO
     - echo $DOCKER_PORT_2376_TCP_PORT
     - echo $DOCKER_PORT_2376_TCP_ADDR
-    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests=true -s settings.xml && PACKAGE_FLAG=1;
+    # 自建 GitLab 实例 URL 的主机（部分域名）
+    - PRIVATE_SERVER_HOST=xuxiaowei
+    - if [[ $CI_SERVER_HOST =~ $PRIVATE_SERVER_HOST ]];
+      then
+    # 自建 GitLab 使用 Maven 私库（文档：https://gitlab-k8s.xuxiaowei.com.cn/gitlab-k8s/docs/nexus/docker-install-nexus）
+    - SETTINGS_FILE_NAME=settings-private.xml;
+      else
+    # 非自建 GitLab 使用 阿里/腾讯 Maven 镜像
+    - SETTINGS_FILE_NAME=settings.xml;
+      fi
+    - mvn clean -e -U package source:jar javadoc:jar install -DskipTests=true -s $SETTINGS_FILE_NAME && PACKAGE_FLAG=1;
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
-    - mvn -pl admin-server -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl gateway -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl passport -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/canal -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/file -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/master-data -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/user -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/webservice -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/websocket -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/wechat-miniprogram -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl resource-services-parent/wechat-offiaccount -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl ui -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
-    - mvn -pl xxl-job-admin -s settings.xml docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl admin-server -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl gateway -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl passport -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/canal -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/file -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/master-data -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/user -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/webservice -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/websocket -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-miniprogram -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl resource-services-parent/wechat-offiaccount -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl ui -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
+    - mvn -pl xxl-job-admin -s $SETTINGS_FILE_NAME docker:build -Ddocker.host=$DOCKER_PORT -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - rm -rf .m2/repository/cloud/xuxiaowei
   cache:
     key: "${CI_JOB_NAME}"
