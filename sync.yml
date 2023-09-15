@@ -12,11 +12,17 @@ sync-gitee:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email
     - git config --global user.name
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - git checkout -b $CI_COMMIT_BRANCH
     - git remote add gitee https://xuxiaowei-com-cn:$GITEE_PRIVATE_TOKEN@gitee.com/$CI_PROJECT_PATH.git
-    - git pull --progress -v --no-rebase gitee $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
-    - git push -u gitee $CI_COMMIT_BRANCH
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 当前标签：$CI_COMMIT_TAG
+    - if [ "$CI_COMMIT_BRANCH" ]; then
+      git checkout -b $CI_COMMIT_BRANCH;
+      git pull --progress -v --no-rebase gitee $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支;
+      git push -u gitee $CI_COMMIT_BRANCH;
+      fi
+    - if [ "$CI_COMMIT_TAG" ]; then
+      git push -u gitee $CI_COMMIT_TAG;
+      fi
   rules:
     # 匹配以 dependabot 开头的分支
     - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
@@ -38,11 +44,17 @@ sync-gitcode:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email
     - git config --global user.name
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - git checkout -b $CI_COMMIT_BRANCH
     - git remote add gitcode https://qq_32596527:$GITCODE_PRIVATE_TOKEN@gitcode.net/$CI_PROJECT_PATH.git
-    - git pull --progress -v --no-rebase gitcode $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
-    - git push -u gitcode $CI_COMMIT_BRANCH
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 当前标签：$CI_COMMIT_TAG
+    - if [ "$CI_COMMIT_BRANCH" ]; then
+      git checkout -b $CI_COMMIT_BRANCH;
+      git pull --progress -v --no-rebase gitcode $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支;
+      git push -u gitcode $CI_COMMIT_BRANCH;
+      fi
+    - if [ "$CI_COMMIT_TAG" ]; then
+      git push -u gitcode $CI_COMMIT_TAG;
+      fi
   rules:
     # 匹配以 dependabot 开头的分支
     - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
@@ -73,12 +85,18 @@ sync-gitlink:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email
     - git config --global user.name
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - git checkout -b $CI_COMMIT_BRANCH
-    - ssh-keyscan -H code.gitlink.org.cn >> ~/.ssh/known_hosts
     - git remote add gitlink git@code.gitlink.org.cn:$CI_PROJECT_PATH.git
-    - git pull --progress -v --no-rebase gitlink $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
-    - git push -u gitlink $CI_COMMIT_BRANCH
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 当前标签：$CI_COMMIT_TAG
+    - ssh-keyscan -H code.gitlink.org.cn >> ~/.ssh/known_hosts
+    - if [ "$CI_COMMIT_BRANCH" ]; then
+      git checkout -b $CI_COMMIT_BRANCH;
+      git pull --progress -v --no-rebase gitlink $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支;
+      git push -u gitlink $CI_COMMIT_BRANCH;
+      fi
+    - if [ "$CI_COMMIT_TAG" ]; then
+      git push -u gitlink $CI_COMMIT_TAG;
+      fi
   rules:
     # 匹配以 dependabot 开头的分支
     - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
@@ -100,11 +118,17 @@ sync-gitlab:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email
     - git config --global user.name
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - git checkout -b $CI_COMMIT_BRANCH
     - git remote add gitlab https://xuxiaowei-com-cn:$GITLAB_PRIVATE_TOKEN@gitlab.com/$CI_PROJECT_PATH.git
-    - git pull --progress -v --no-rebase gitlab $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
-    - git push -u gitlab $CI_COMMIT_BRANCH
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 当前标签：$CI_COMMIT_TAG
+    - if [ "$CI_COMMIT_BRANCH" ]; then
+      git checkout -b $CI_COMMIT_BRANCH;
+      git pull --progress -v --no-rebase gitlab $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支;
+      git push -u gitlab $CI_COMMIT_BRANCH;
+      fi
+    - if [ "$CI_COMMIT_TAG" ]; then
+      git push -u gitlab $CI_COMMIT_TAG;
+      fi
   rules:
     # 匹配以 dependabot 开头的分支
     - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
@@ -126,11 +150,17 @@ sync-github:
     - git config --global user.name $GITLAB_USER_NAME
     - git config --global user.email
     - git config --global user.name
-    - echo 当前分支：$CI_COMMIT_BRANCH
-    - git checkout -b $CI_COMMIT_BRANCH
     - git remote add github https://xuxiaowei-com-cn:$GITHUB_PRIVATE_TOKEN@github.com/$CI_PROJECT_PATH.git
-    - git pull --progress -v --no-rebase github $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支
-    - git push -u github $CI_COMMIT_BRANCH
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 当前标签：$CI_COMMIT_TAG
+    - if [ "$CI_COMMIT_BRANCH" ]; then
+      git checkout -b $CI_COMMIT_BRANCH;
+      git pull --progress -v --no-rebase github $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支;
+      git push -u github $CI_COMMIT_BRANCH;
+      fi
+    - if [ "$CI_COMMIT_TAG" ]; then
+      git push -u github $CI_COMMIT_TAG;
+      fi
   rules:
     # 匹配以 dependabot 开头的分支
     - if: $CI_COMMIT_BRANCH =~ /^dependabot*/
@@ -138,6 +168,38 @@ sync-github:
       when: never
     # 非 PR 时触发
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
+  retry: 2
+  # 允许失败
+  allow_failure: true
+
+sync-jihulab:
+  stage: sync
+  variables:
+    GIT_DEPTH: 0 # 取消浅层克隆
+  image: bitnami/git:2.40.1
+  script:
+    - git config --global user.email $GITLAB_USER_EMAIL
+    - git config --global user.name $GITLAB_USER_NAME
+    - git config --global user.email
+    - git config --global user.name
+    - git remote add jihulab https://xuxiaowei-com-cn:$JIHULAB_PRIVATE_TOKEN@jihulab.com/$CI_PROJECT_PATH.git
+    - echo 当前分支：$CI_COMMIT_BRANCH
+    - echo 当前标签：$CI_COMMIT_TAG
+    - if [ "$CI_COMMIT_BRANCH" ]; then
+      git checkout -b $CI_COMMIT_BRANCH;
+      git pull --progress -v --no-rebase jihulab $CI_COMMIT_BRANCH || echo 远端不存在$CI_COMMIT_BRANCH分支;
+      git push -u jihulab $CI_COMMIT_BRANCH;
+      fi
+    - if [ "$CI_COMMIT_TAG" ]; then
+      git push -u jihulab $CI_COMMIT_TAG;
+      fi
+  rules:
+    # 匹配以 dependabot 开头的分支
+    - if: $CI_SERVER_HOST == 'gitlab.helm.xuxiaowei.cn' && $CI_COMMIT_BRANCH =~ /^dependabot*/
+      # 不执行
+      when: never
+    # 非 PR 时触发
+    - if: $CI_SERVER_HOST == 'gitlab.helm.xuxiaowei.cn' && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == null
   retry: 2
   # 允许失败
   allow_failure: true
