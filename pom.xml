@@ -146,7 +146,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/org/apache/cxf/cxf-rt-transports-http -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/apache/cxf/cxf-rt-features-logging -->
         <!-- https://github.com/apache/cxf -->
-        <cxf.version>4.0.2</cxf.version>
+        <cxf.version>4.0.3</cxf.version>
 
         <!-- https://mvnrepository.com/artifact/org.dom4j/dom4j -->
         <!-- https://oss.sonatype.org/content/repositories/public/org/dom4j/dom4j -->
