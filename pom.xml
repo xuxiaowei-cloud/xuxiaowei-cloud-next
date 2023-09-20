@@ -235,7 +235,7 @@
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
         <lombok-maven-plugin.version>1.18.20.0</lombok-maven-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-        <lombok.version>1.18.28</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
         <maven-javadoc-plugin.version>3.6.0</maven-javadoc-plugin.version>
         <!-- https://mvnrepository.com/artifact/pl.project13.maven/git-commit-id-plugin -->
