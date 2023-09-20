@@ -18,7 +18,7 @@ sonarqube-check:
       - ui/node/
       - ui/node_modules/
   script:
-    # 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install），用于加速下载依赖
+    # 使用 Maven 私库（文档：https://gitlab-k8s.xuxiaowei.com.cn/gitlab-k8s/docs/nexus/docker-install-nexus），用于加速下载依赖
     - mvn verify sonar:sonar -s settings-private.xml
   # 允许失败
   allow_failure: true
@@ -29,9 +29,6 @@ sonarqube-check:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "k8s"
     # PR 合并到 k8s 后执行、推送到 k8s 分支时
     - if: $CI_COMMIT_BRANCH == "k8s"
-  tags:
-    # 个人服务器 Runner 标签（仅在个人服务器上执行）
-    - plugin-kubernetes
 
 #
 # k8s-package
@@ -92,10 +89,10 @@ k8s-package:
     # 配置 Maven 仓库的密码，用于上传 Maven
     - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings.xml
     - sed -i "s#</servers>#<server><id>ossrh</id><username>$ossrh_user</username><password>$ossrh_pass</password></server>\n&#" settings-private.xml
-    # 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install），用于加速下载依赖
+    # 使用 Maven 私库（文档：https://gitlab-k8s.xuxiaowei.com.cn/gitlab-k8s/docs/nexus/docker-install-nexus），用于加速下载依赖
     - mvn clean -e -U package install -DskipTests -s settings-private.xml && PACKAGE_FLAG=1;
     - if [ "$PACKAGE_FLAG" == "1" ]; then echo '打包完成'; else echo '打包失败' && xxxx; fi
-    # 使用 Maven 私库（文档：https://www.yuque.com/xuxiaowei-com-cn/gitlab-k8s/nexus-docker-install），用于加速下载依赖
+    # 使用 Maven 私库（文档：https://gitlab-k8s.xuxiaowei.com.cn/gitlab-k8s/docs/nexus/docker-install-nexus），用于加速下载依赖
     - mvn -pl admin-server -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
     - mvn -pl admin-server -s settings-private.xml docker:push;
     - mvn -pl gateway -s settings-private.xml docker:build -DCI_PIPELINE_ID=$CI_PIPELINE_ID;
@@ -153,9 +150,6 @@ k8s-package:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "k8s"
     # PR 合并到 k8s 后执行、推送到 k8s 分支时
     - if: $CI_COMMIT_BRANCH == "k8s"
-  tags:
-    # 个人服务器 Runner 标签（仅在个人服务器上执行）
-    - plugin-kubernetes
 
 #
 # 使用 shell 发布 k8s
@@ -164,6 +158,9 @@ k8s-publish:
   stage: k8s-publish
   needs:
     - job: k8s-package
+  image: bitnami/kubectl:1.27.4
+  variables:
+    KUBECONFIG: $RUNNER_TEMP_PROJECT_DIR/KUBECONFIG
   script:
     # 如果要全新部署所有内容，仅需在流水线运行前执行下列被注释的删除命令即可
     # 如果要全新部署所有内容，完成流水线执行后，可能会有一些 pod 无法启动：原因是：微服务启动依赖于 Nacos、MySQL，Nacos 启动依赖于 MySQL
@@ -270,8 +267,4 @@ k8s-publish:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "k8s"
     # PR 合并到 k8s 后执行、推送到 k8s 分支时
     - if: $CI_COMMIT_BRANCH == "k8s"
-  tags:
-    # 仅在 tags 名称为 shell 的执行器上执行
-    # 在 k8s 所在的服务器上执行
-    # 个人服务器 Runner 标签（仅在个人服务器上执行）
-    - k8s-publish
+
