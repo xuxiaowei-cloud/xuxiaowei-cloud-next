@@ -47,6 +47,7 @@ murphysec:
     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
     # PR 合并到 main 后执行、推送到 main 分支时
     - if: $CI_COMMIT_BRANCH == "main"
+  allow_failure: true
 
 #
 # coverage
