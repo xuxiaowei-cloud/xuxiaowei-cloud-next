@@ -127,7 +127,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/otter/canal.client -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/otter/canal.protocol -->
         <!-- https://github.com/alibaba/canal -->
-        <canal.version>1.1.6</canal.version>
+        <canal.version>1.1.7</canal.version>
 
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/alibaba/fastjson -->
