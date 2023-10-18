@@ -49,7 +49,7 @@
   ],
   "dependencies": {
     "@element-plus/icons-vue": "2.1.0",
-    "@tauri-apps/api": "1.5.0",
+    "@tauri-apps/api": "1.5.1",
     "@toast-ui/editor": "3.2.2",
     "@wangeditor/editor-for-vue": "5.1.12",
     "axios": "1.5.1",
