@@ -42,7 +42,7 @@
     "element-plus": "2.4.1",
     "jsencrypt": "3.3.2",
     "pinia": "2.1.7",
-    "vue": "3.3.4",
+    "vue": "3.3.5",
     "vue-router": "4.2.5"
   },
   "devDependencies": {
