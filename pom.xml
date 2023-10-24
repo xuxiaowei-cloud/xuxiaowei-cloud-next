@@ -95,7 +95,7 @@
         <!-- https://mvnrepository.com/artifact/com.baomidou/dynamic-datasource-spring-boot3-starter -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/dynamic-datasource-spring-boot3-starter -->
         <!-- https://github.com/baomidou/dynamic-datasource-spring-boot3-starter -->
-        <dynamic-datasource-spring-boot3-starter.version>4.1.3</dynamic-datasource-spring-boot3-starter.version>
+        <dynamic-datasource-spring-boot3-starter.version>4.2.0</dynamic-datasource-spring-boot3-starter.version>
         <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-extension -->
         <!-- https://oss.sonatype.org/content/repositories/public/com/baomidou/mybatis-plus-extension -->
         <!-- https://github.com/baomidou/mybatis-plus -->
