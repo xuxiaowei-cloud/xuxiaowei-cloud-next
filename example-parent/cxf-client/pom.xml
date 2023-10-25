@@ -34,7 +34,7 @@
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/license-maven-plugin -->
-        <license-maven-plugin.version>2.2.0</license-maven-plugin.version>
+        <license-maven-plugin.version>2.3.0</license-maven-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
         <maven-gpg-plugin.version>3.1.0</maven-gpg-plugin.version>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok-maven-plugin -->
