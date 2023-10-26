@@ -33,7 +33,7 @@
 
         <el-form-item label="" prop="rememberMe" class="remember-me">
           <el-checkbox-group v-model="cloudForm.rememberMe">
-            <el-checkbox label="true" name="rememberMe" v-bind="true">记住我</el-checkbox>
+            <el-checkbox name="rememberMe">记住我</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
 
