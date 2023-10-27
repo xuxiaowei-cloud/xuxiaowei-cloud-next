@@ -78,7 +78,7 @@
     "eslint-plugin-import": "2.29.0",
     "eslint-plugin-n": "16.2.0",
     "eslint-plugin-promise": "6.1.1",
-    "eslint-plugin-vue": "9.17.0",
+    "eslint-plugin-vue": "9.18.1",
     "lint-staged": "15.0.2",
     "terser": "5.22.0",
     "typescript": "5.2.2",
