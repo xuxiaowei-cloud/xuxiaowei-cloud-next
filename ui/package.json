@@ -52,7 +52,7 @@
     "@tauri-apps/api": "1.5.1",
     "@toast-ui/editor": "3.2.2",
     "@wangeditor/editor-for-vue": "5.1.12",
-    "axios": "1.5.1",
+    "axios": "1.6.0",
     "crypto-js": "4.2.0",
     "echarts": "5.4.3",
     "element-plus": "2.4.1",
