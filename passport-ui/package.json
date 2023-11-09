@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@element-plus/icons-vue": "2.1.0",
-    "axios": "1.6.0",
+    "axios": "1.6.1",
     "crypto-js": "4.2.0",
     "element-plus": "2.4.2",
     "jsencrypt": "3.3.2",
