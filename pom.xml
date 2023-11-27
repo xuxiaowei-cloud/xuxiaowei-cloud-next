@@ -65,7 +65,7 @@
         <!-- https://oss.sonatype.org/content/repositories/public/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://repo.spring.io/ui/native/milestone/org/springframework/security/spring-security-oauth2-authorization-server -->
         <!-- https://github.com/spring-projects/spring-authorization-server -->
-        <spring-security-oauth2-authorization-server.version>1.1.3</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>1.2.0</spring-security-oauth2-authorization-server.version>
 
         <!-- https://mvnrepository.com/artifact/cn.com.xuxiaowei.boot.next/spring-boot-starter-oauth2 -->
         <!-- https://s01.oss.sonatype.org/content/repositories/public/cn/com/xuxiaowei/boot/next/spring-boot-starter-oauth2/ -->
