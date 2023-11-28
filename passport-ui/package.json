@@ -36,7 +36,7 @@
     "vue-router"
   ],
   "dependencies": {
-    "@element-plus/icons-vue": "2.1.0",
+    "@element-plus/icons-vue": "2.3.1",
     "axios": "1.6.2",
     "crypto-js": "4.2.0",
     "element-plus": "2.4.3",
