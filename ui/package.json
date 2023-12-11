@@ -63,7 +63,7 @@
     "stompjs": "2.3.3",
     "vue": "3.3.11",
     "vue-clipboard3": "2.0.0",
-    "vue-echarts": "6.6.1",
+    "vue-echarts": "6.6.2",
     "vue-router": "4.2.5"
   },
   "devDependencies": {
