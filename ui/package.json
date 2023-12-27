@@ -67,7 +67,7 @@
     "vue-router": "4.2.5"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "1.5.8",
+    "@tauri-apps/cli": "1.5.9",
     "@types/crypto-js": "4.2.1",
     "@types/node": "20.10.5",
     "@typescript-eslint/eslint-plugin": "6.16.0",
