@@ -70,7 +70,7 @@
     "@tauri-apps/cli": "1.5.9",
     "@types/crypto-js": "4.2.1",
     "@types/node": "20.10.6",
-    "@typescript-eslint/eslint-plugin": "6.17.0",
+    "@typescript-eslint/eslint-plugin": "6.18.0",
     "@typescript-eslint/parser": "6.17.0",
     "@vitejs/plugin-vue": "5.0.2",
     "eslint": "8.56.0",
