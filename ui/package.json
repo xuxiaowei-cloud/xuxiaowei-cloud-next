@@ -64,7 +64,7 @@
     "vue": "3.4.21",
     "vue-clipboard3": "2.0.0",
     "vue-echarts": "6.6.9",
-    "vue-router": "4.2.5"
+    "vue-router": "4.3.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "1.5.10",
